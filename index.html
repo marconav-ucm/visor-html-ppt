@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Visor HTML interactivo</title>
+<script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
+<style>
+  html, body { margin:0; height:100%; overflow:hidden; font-family:-apple-system, "Segoe UI", Helvetica, Arial, sans-serif; background:#fff; }
+  #stage { position:absolute; inset:0; width:100%; height:100%; border:0; display:none; background:#fff; }
+  #empty { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; color:#667; font-size:14px; text-align:center; padding:16px; }
+  #gear { position:absolute; right:6px; bottom:6px; z-index:10; border:1px solid #ccd; background:rgba(255,255,255,.92); border-radius:6px; padding:4px 9px; font-size:13px; cursor:pointer; display:none; }
+  #panel { position:absolute; inset:0; z-index:20; background:#f6f7fa; display:none; flex-direction:column; padding:12px; box-sizing:border-box; gap:8px; font-size:13px; }
+  #panel h2 { margin:0; font-size:15px; }
+  .tabs { display:flex; gap:4px; }
+  .tabs button { flex:1; padding:6px; border:1px solid #ccd; background:#fff; border-radius:5px; cursor:pointer; }
+  .tabs button.on { background:#1e5aa0; color:#fff; border-color:#1e5aa0; }
+  .pane { display:none; flex:1; flex-direction:column; gap:6px; min-height:0; }
+  .pane.on { display:flex; }
+  textarea { flex:1; min-height:60px; font-family:Menlo, monospace; font-size:11px; resize:none; }
+  input[type=url] { padding:6px; font-size:13px; }
+  .row { display:flex; gap:6px; justify-content:flex-end; }
+  .row button { padding:6px 14px; border-radius:5px; border:1px solid #1e5aa0; background:#1e5aa0; color:#fff; cursor:pointer; }
+  .row button.sec { background:#fff; color:#1e5aa0; }
+  .note { color:#556; font-size:11px; }
+  #msg { color:#a33; font-size:12px; min-height:14px; }
+</style>
+</head>
+<body>
+<div id="empty">Pulsa ⚙ para cargar un HTML</div>
+<iframe id="stage" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-pointer-lock" allow="fullscreen; autoplay"></iframe>
+<button id="gear" title="Configurar">⚙</button>
+
+<div id="panel">
+  <h2>Contenido de esta diapositiva</h2>
+  <div class="tabs">
+    <button data-t="file" class="on">Archivo .html</button>
+    <button data-t="paste">Pegar código</button>
+    <button data-t="url">Dirección web</button>
+  </div>
+  <div class="pane on" id="p-file">
+    <input type="file" id="file" accept=".html,.htm,text/html">
+    <div class="note">Recomendado. El HTML se guarda dentro del .pptx y funciona sin internet una vez cargado el complemento.</div>
+  </div>
+  <div class="pane" id="p-paste">
+    <textarea id="code" placeholder="Pega aquí el código HTML completo"></textarea>
+  </div>
+  <div class="pane" id="p-url">
+    <input type="url" id="url" placeholder="https://...">
+    <div class="note">Necesita internet en clase. Algunas páginas, incluidos muchos artefactos de claude.ai, no se dejan mostrar dentro de otra aplicación. Si sale en blanco, usa «Archivo .html».</div>
+  </div>
+  <div id="msg"></div>
+  <div class="row">
+    <button class="sec" id="cancel">Cancelar</button>
+    <button id="save">Guardar y mostrar</button>
+  </div>
+</div>
+
+<script>
+(function () {
+  var KEY_MODE = 'visorMode', KEY_DATA = 'visorData';
+  var inOffice = false, settings = null, tab = 'file', fileText = null;
+  var $ = function (id) { return document.getElementById(id); };
+
+  // ---- almacenamiento: dentro del documento en Office, localStorage fuera (pruebas) ----
+  function get(k) {
+    if (inOffice) return settings.get(k);
+    try { return localStorage.getItem(k); } catch (e) { return null; }
+  }
+  function put(obj, cb) {
+    if (inOffice) {
+      Object.keys(obj).forEach(function (k) { settings.set(k, obj[k]); });
+      settings.saveAsync(function (r) {
+        cb(r.status === Office.AsyncResultStatus.Succeeded ? null : (r.error && r.error.message) || 'error');
+      });
+    } else {
+      try { Object.keys(obj).forEach(function (k) { localStorage.setItem(k, obj[k]); }); cb(null); }
+      catch (e) { cb(e.message); }
+    }
+  }
+
+  // ---- render ----
+  function render() {
+    var mode = get(KEY_MODE), data = get(KEY_DATA), st = $('stage');
+    if (!mode || !data) { st.style.display = 'none'; $('empty').style.display = 'flex'; return; }
+    $('empty').style.display = 'none';
+    st.style.display = 'block';
+    if (mode === 'url') { st.removeAttribute('srcdoc'); st.src = data; }
+    else { st.removeAttribute('src'); st.srcdoc = data; }
+  }
+
+  // ---- vista edición / presentación ----
+  function updateView() {
+    if (!inOffice || !Office.context.document.getActiveViewAsync) { $('gear').style.display = 'block'; return; }
+    Office.context.document.getActiveViewAsync(function (r) {
+      var reading = r.status === Office.AsyncResultStatus.Succeeded && r.value === 'read';
+      $('gear').style.display = reading ? 'none' : 'block';
+      if (reading) $('panel').style.display = 'none';
+    });
+  }
+
+  // ---- panel ----
+  function openPanel() {
+    $('msg').textContent = '';
+    var mode = get(KEY_MODE), data = get(KEY_DATA) || '';
+    if (mode === 'url') { selectTab('url'); $('url').value = data; }
+    else if (mode === 'html' && data) { $('code').value = data; }
+    $('panel').style.display = 'flex';
+  }
+  function selectTab(t) {
+    tab = t;
+    document.querySelectorAll('.tabs button').forEach(function (b) { b.classList.toggle('on', b.dataset.t === t); });
+    document.querySelectorAll('.pane').forEach(function (p) { p.classList.toggle('on', p.id === 'p-' + t); });
+  }
+  document.querySelectorAll('.tabs button').forEach(function (b) { b.onclick = function () { selectTab(b.dataset.t); }; });
+  $('gear').onclick = openPanel;
+  $('cancel').onclick = function () { $('panel').style.display = 'none'; };
+  $('file').onchange = function (e) {
+    var f = e.target.files[0]; if (!f) return;
+    var rd = new FileReader();
+    rd.onload = function () { fileText = rd.result; $('msg').style.color = '#264'; $('msg').textContent = f.name + ' cargado (' + Math.round(f.size / 1024) + ' KB)'; };
+    rd.readAsText(f);
+  };
+  $('save').onclick = function () {
+    var mode, data;
+    if (tab === 'url') {
+      mode = 'url'; data = $('url').value.trim();
+      if (!/^https:\/\//i.test(data)) return err('La dirección debe empezar por https://');
+    } else {
+      mode = 'html'; data = tab === 'file' ? fileText : $('code').value;
+      if (!data || !data.trim()) return err(tab === 'file' ? 'Elige primero un archivo .html' : 'Pega el código HTML');
+      if (data.length > 1800000) return err('El HTML es demasiado grande (máx. ~1,8 MB). Quita imágenes incrustadas o usa la opción de dirección web.');
+    }
+    put({ visorMode: mode, visorData: data }, function (e) {
+      if (e) return err('No se pudo guardar: ' + e);
+      $('panel').style.display = 'none'; render();
+    });
+  };
+  function err(t) { $('msg').style.color = '#a33'; $('msg').textContent = t; }
+
+  // ---- arranque ----
+  function start() { render(); updateView(); if (!get(KEY_DATA) && $('gear').style.display !== 'none') { /* nada */ } }
+  if (window.Office && Office.onReady) {
+    Office.onReady(function (info) {
+      inOffice = !!(info && info.host);
+      if (inOffice) {
+        settings = Office.context.document.settings;
+        try {
+          Office.context.document.addHandlerAsync(Office.EventType.ActiveViewChanged, updateView);
+        } catch (e) {}
+      }
+      start();
+    });
+  } else { start(); }
+})();
+</script>
+</body>
+</html>
