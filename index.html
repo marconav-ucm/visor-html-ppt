@@ -34,11 +34,16 @@
 <div id="panel">
   <h2>Contenido de esta diapositiva</h2>
   <div class="tabs">
-    <button data-t="file" class="on">Archivo .html</button>
+    <button data-t="lib" class="on">Biblioteca</button>
+    <button data-t="file">Archivo .html</button>
     <button data-t="paste">Pegar código</button>
     <button data-t="url">Dirección web</button>
   </div>
-  <div class="pane on" id="p-file">
+  <div class="pane on" id="p-lib">
+    <select id="lib" size="6" style="flex:1;font-size:13px"></select>
+    <div class="note">Artefactos guardados en tu biblioteca de GitHub. Si actualizas uno, todas las presentaciones que lo usan muestran la versión nueva al abrirse. Se guarda una copia dentro del .pptx por si no hay internet.</div>
+  </div>
+  <div class="pane" id="p-file">
     <input type="file" id="file" accept=".html,.htm,text/html">
     <div class="note">Recomendado. El HTML se guarda dentro del .pptx y funciona sin internet una vez cargado el complemento.</div>
   </div>
@@ -59,7 +64,7 @@
 <script>
 (function () {
   var KEY_MODE = 'visorMode', KEY_DATA = 'visorData';
-  var inOffice = false, settings = null, tab = 'file', fileText = null;
+  var inOffice = false, settings = null, tab = 'lib', fileText = null, KEY_CACHE = 'visorCache';
   var $ = function (id) { return document.getElementById(id); };
 
   // ---- almacenamiento: dentro del documento en Office, localStorage fuera (pruebas) ----
@@ -86,6 +91,17 @@
     $('empty').style.display = 'none';
     st.style.display = 'block';
     if (mode === 'url') { st.removeAttribute('srcdoc'); st.src = data; }
+    else if (mode === 'lib') {
+      var cached = get(KEY_CACHE);
+      st.removeAttribute('src');
+      if (cached) st.srcdoc = cached;
+      fetch('artefactos/' + encodeURIComponent(data) + '?t=' + Date.now(), { cache: 'no-store' })
+        .then(function (r) { if (!r.ok) throw 0; return r.text(); })
+        .then(function (t) {
+          if (t !== cached) { st.srcdoc = t; put({ visorCache: t }, function () {}); }
+        })
+        .catch(function () { if (!cached) { $('empty').style.display = 'flex'; $('empty').textContent = 'Sin conexión y sin copia guardada de ' + data; st.style.display = 'none'; } });
+    }
     else { st.removeAttribute('src'); st.srcdoc = data; }
   }
 
@@ -103,9 +119,25 @@
   function openPanel() {
     $('msg').textContent = '';
     var mode = get(KEY_MODE), data = get(KEY_DATA) || '';
+    loadLib(mode === 'lib' ? data : null);
     if (mode === 'url') { selectTab('url'); $('url').value = data; }
+    else if (mode === 'html') { selectTab('paste'); }
     else if (mode === 'html' && data) { $('code').value = data; }
     $('panel').style.display = 'flex';
+  }
+  function loadLib(sel) {
+    var box = $('lib'); box.innerHTML = '<option disabled>Cargando…</option>';
+    fetch('artefactos/lista.json?t=' + Date.now(), { cache: 'no-store' })
+      .then(function (r) { return r.json(); })
+      .then(function (list) {
+        box.innerHTML = '';
+        if (!list.length) box.innerHTML = '<option disabled>Biblioteca vacía</option>';
+        list.forEach(function (a) {
+          var o = document.createElement('option'); o.value = a.archivo; o.textContent = a.titulo || a.archivo;
+          if (a.archivo === sel) o.selected = true; box.appendChild(o);
+        });
+      })
+      .catch(function () { box.innerHTML = '<option disabled>No se pudo cargar la biblioteca (¿sin internet?)</option>'; });
   }
   function selectTab(t) {
     tab = t;
@@ -123,6 +155,14 @@
   };
   $('save').onclick = function () {
     var mode, data;
+    if (tab === 'lib') {
+      mode = 'lib'; data = $('lib').value;
+      if (!data) return err('Elige un artefacto de la lista');
+      return put({ visorMode: mode, visorData: data, visorCache: '' }, function (e) {
+        if (e) return err('No se pudo guardar: ' + e);
+        $('panel').style.display = 'none'; render();
+      });
+    }
     if (tab === 'url') {
       mode = 'url'; data = $('url').value.trim();
       if (!/^https:\/\//i.test(data)) return err('La dirección debe empezar por https://');
