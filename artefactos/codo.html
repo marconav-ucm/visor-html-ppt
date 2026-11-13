@@ -1,0 +1,1054 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Biomecánica del codo</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Serif:wght@500;600&display=swap">
+<style>
+/* Layout: columna lateral de navegación por apartados + columna de lectura de ~68 caracteres. Figuras con el lenguaje de las diapositivas: hueso beis con contorno pardo, cartílago azul claro, cabeza del radio anaranjada, flechas azules rotuladas y cabeceras de tabla en rojo. */
+:root{
+  --bg:#f6f7f9; --surface:#ffffff; --sunk:#eceef2; --fg:#1b1f27; --muted:#59606d; --line:#d5d9e0;
+  --accent:#b3142d; --accent-ink:#ffffff; --accent-soft:#f7e2e5;
+  --fig:#fffdf8; --bone:#f0dcae; --bone-dk:#e2c88f; --bone-line:#8a6a3a; --cart:#a8d4ec; --radhead:#e57d52;
+  --arrow:#3b86c8; --arrow-ink:#ffffff; --lig:#f4f1ea; --lig-line:#9a9081; --hl:#d0263c; --muscle:#c9483a; --comp:#c27413; --pink:#f6c9c9;
+  --ok:#1f6b45; --ok-soft:#e1f1e7; --bad:#9a2a1c; --bad-soft:#f8e3df;
+  --f-display:"IBM Plex Serif", Georgia, "Times New Roman", serif;
+  --f-body:"IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono:"IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#13161b; --surface:#1b1f26; --sunk:#232832; --fg:#e7e9ee; --muted:#a3a9b5; --line:#343b47;
+  --accent:#ef8a99; --accent-ink:#1b1f26; --accent-soft:#3a2328;
+  --fig:#22262d; --bone:#d9c18e; --bone-dk:#c4a86f; --bone-line:#f0dcae; --cart:#5e9bbd; --radhead:#e57d52;
+  --arrow:#5a9fdb; --arrow-ink:#ffffff; --lig:#3a3f48; --lig-line:#a9a090; --hl:#ff5d6f; --muscle:#d86252; --comp:#efa54a; --pink:#5b3338;
+  --ok:#7fd1a2; --ok-soft:#1d3327; --bad:#f19a88; --bad-soft:#3b221d; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#13161b; --surface:#1b1f26; --sunk:#232832; --fg:#e7e9ee; --muted:#a3a9b5; --line:#343b47;
+  --accent:#ef8a99; --accent-ink:#1b1f26; --accent-soft:#3a2328;
+  --fig:#22262d; --bone:#d9c18e; --bone-dk:#c4a86f; --bone-line:#f0dcae; --cart:#5e9bbd; --radhead:#e57d52;
+  --arrow:#5a9fdb; --arrow-ink:#ffffff; --lig:#3a3f48; --lig-line:#a9a090; --hl:#ff5d6f; --muscle:#d86252; --comp:#efa54a; --pink:#5b3338;
+  --ok:#7fd1a2; --ok-soft:#1d3327; --bad:#f19a88; --bad-soft:#3b221d; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:16px;line-height:1.6}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+a{color:var(--accent)}
+:focus-visible{outline:3px solid var(--arrow);outline-offset:2px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1.2;font-weight:600}
+h2{font-size:1.65rem;margin:0 0 .4rem}
+h3{font-size:1.2rem;margin:1.8rem 0 .5rem}
+p{margin:.6rem 0}
+.topbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--surface);border-bottom:3px solid var(--accent);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:.55rem;
+  display:flex;align-items:center;gap:.75rem}
+.topbar .brand{font-family:var(--f-display);font-weight:600;font-size:1rem;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.topbar .brand small{font-family:var(--f-body);font-weight:400;color:var(--muted);font-size:.8rem;margin-left:.5rem}
+button{font:inherit;color:inherit;cursor:pointer}
+.btn{border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:.4rem .75rem;font-size:.88rem}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+#navToggle{display:none}
+.shell{display:grid;grid-template-columns:260px minmax(0,1fr);max-width:1180px;margin:0 auto;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));gap:2.5rem}
+nav.side{position:sticky;top:calc(env(safe-area-inset-top,0px) + 3.4rem);align-self:start;max-height:calc(100vh - 4rem);overflow:auto;padding-block:1.5rem}
+nav.side ol{list-style:none;margin:0;padding:0;display:grid;gap:.1rem}
+nav.side a{display:flex;gap:.55rem;align-items:baseline;text-decoration:none;color:var(--fg);padding:.35rem .5rem;border-radius:5px;font-size:.92rem}
+nav.side a:hover{background:var(--sunk)}
+nav.side a .n{font-family:var(--f-mono);color:var(--muted);font-size:.78rem;min-width:2.1rem}
+nav.side a .tick{margin-left:auto;color:var(--ok);font-size:.8rem}
+nav.side .grp{font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:1rem .5rem .3rem}
+main{padding-block:1.5rem 4rem;min-width:0}
+.prose{max-width:68ch}
+section.block{padding-block:1.6rem 2rem;border-bottom:1px solid var(--line)}
+.eyebrow{font-family:var(--f-mono);font-size:.78rem;color:var(--accent);letter-spacing:.04em}
+.hero h1{font-size:clamp(1.9rem,4vw,2.7rem);margin:.3rem 0 .6rem}
+.hero .lede{color:var(--muted);max-width:60ch}
+.progress{margin-top:1.2rem;max-width:560px}
+.bar{height:10px;background:var(--sunk);border-radius:5px;overflow:hidden;border:1px solid var(--line)}
+.bar > span{display:block;height:100%;background:var(--accent);width:0;transition:width .3s}
+.progress .row{display:flex;justify-content:space-between;font-size:.85rem;color:var(--muted);margin-top:.35rem;gap:1rem;flex-wrap:wrap}
+.quick{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1rem;align-items:center}
+.quick a{font-size:.88rem;text-decoration:none;border:1px solid var(--line);border-radius:6px;padding:.35rem .7rem;background:var(--surface)}
+.done-row{display:flex;justify-content:flex-end;margin-top:1.2rem}
+.done-btn[aria-pressed="true"]{background:var(--ok-soft);border-color:var(--ok);color:var(--ok)}
+ol.obj{padding-left:1.3rem}
+ol.obj li{margin:.35rem 0}
+.def{font-weight:600}
+.box{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:1rem 1.1rem;margin:1rem 0}
+.box.clin{border-left:4px solid var(--accent)}
+.box h4{margin:0 0 .3rem;font-size:.82rem;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);font-family:var(--f-body)}
+.src{font-size:.82rem;color:var(--muted)}
+.tw{overflow-x:auto;margin:1rem 0;border:1px solid var(--line);border-radius:4px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:.9rem}
+th,td{text-align:left;padding:.5rem .7rem;border-bottom:1px solid var(--line);vertical-align:top}
+thead th{font-weight:600;background:var(--accent);color:var(--accent-ink);font-size:.84rem}
+tbody th{background:var(--sunk);font-weight:600;font-size:.84rem}
+td.num,th.num{text-align:right;font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+tr:last-child td{border-bottom:0}
+caption{caption-side:bottom;text-align:left;padding:.5rem .7rem;font-size:.8rem;color:var(--muted)}
+.lab{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:1.1rem;margin:1.4rem 0}
+.lab .head{display:flex;justify-content:space-between;gap:1rem;align-items:baseline;flex-wrap:wrap}
+.lab .head h3{margin:0}
+.lab .tag{font-family:var(--f-mono);font-size:.75rem;color:var(--muted)}
+.lab-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:1.2rem;margin-top:.8rem;align-items:start}
+.ctrl{display:grid;gap:.85rem;align-content:start}
+.ctrl label{display:grid;gap:.2rem;font-size:.88rem}
+.ctrl label .v{font-family:var(--f-mono);color:var(--accent)}
+input[type=range]{width:100%;accent-color:var(--accent)}
+.out{background:var(--sunk);border-radius:8px;padding:.8rem .9rem;font-size:.9rem;display:grid;gap:.35rem}
+.out .k{color:var(--muted)}
+.meter{height:12px;background:var(--surface);border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.meter span{display:block;height:100%;background:var(--arrow)}
+svg.fig{width:100%;height:auto;max-width:100%;display:block;background:var(--fig);border-radius:8px;border:1px solid var(--line)}
+svg text{font-family:var(--f-body);fill:var(--fg)}
+.pill{display:inline-block;padding:.1rem .55rem;border-radius:99px;font-size:.8rem;font-weight:600}
+.pill.ok{background:var(--ok-soft);color:var(--ok)}
+.pill.bad{background:var(--bad-soft);color:var(--bad)}
+.seg{display:flex;flex-wrap:wrap;gap:.35rem}
+.seg button{border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:.35rem .6rem;font-size:.85rem}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.err{display:grid;gap:.8rem}
+.err > div{border:1px solid var(--line);border-radius:8px;padding:.8rem 1rem;background:var(--surface)}
+.err .wrong{color:var(--bad);font-weight:600}
+.err .right{color:var(--ok);font-weight:600}
+.quiz{display:grid;gap:1rem;counter-reset:q}
+.q{border:1px solid var(--line);border-radius:8px;padding:1rem;background:var(--surface)}
+.q .stem{font-weight:500;margin:0 0 .6rem}
+.q .stem::before{counter-increment:q;content:counter(q) ". ";font-family:var(--f-mono);color:var(--accent)}
+.opts{display:grid;gap:.4rem}
+.opts button{text-align:left;border:1px solid var(--line);background:var(--bg);border-radius:6px;padding:.5rem .7rem;font-size:.92rem}
+.opts button:hover:not(:disabled){border-color:var(--accent)}
+.opts button:disabled{cursor:default}
+.opts button.correct{background:var(--ok-soft);border-color:var(--ok);color:var(--fg)}
+.opts button.wrongsel{background:var(--bad-soft);border-color:var(--bad);color:var(--fg)}
+.expl{margin-top:.6rem;font-size:.9rem;border-top:1px dashed var(--line);padding-top:.6rem}
+.score{display:flex;gap:1rem;align-items:center;flex-wrap:wrap;margin-top:1rem}
+.refs{padding-left:1.4rem;font-size:.92rem}
+.refs li{margin:.5rem 0;overflow-wrap:anywhere}
+#gloss-search{width:100%;max-width:420px;font:inherit;padding:.5rem .7rem;border:1px solid var(--line);border-radius:6px;background:var(--surface);color:var(--fg)}
+dl.gloss{display:grid;gap:.1rem;margin-top:1rem}
+dl.gloss div{padding:.6rem 0;border-bottom:1px solid var(--line)}
+dl.gloss dt{font-weight:600}
+dl.gloss dd{margin:.15rem 0 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:.8rem;margin-top:1rem}
+.card{perspective:900px;height:170px;border:0;background:none;padding:0;text-align:left}
+.card .in{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
+.card[aria-pressed="true"] .in{transform:rotateY(180deg)}
+.card .f,.card .b{position:absolute;inset:0;backface-visibility:hidden;border:1px solid var(--line);border-radius:8px;padding:.9rem;display:flex;flex-direction:column;justify-content:center;font-size:.92rem;overflow:auto}
+.card .f{background:var(--surface);font-weight:500}
+.card .f small{color:var(--muted);font-weight:400;font-size:.75rem;margin-top:.5rem}
+.card .b{background:var(--accent-soft);transform:rotateY(180deg)}
+footer{color:var(--muted);font-size:.82rem;padding-block:2rem}
+.confirm{display:inline-flex;gap:.5rem;align-items:center;font-size:.85rem;flex-wrap:wrap}
+@media (max-width:860px){
+  .shell{grid-template-columns:minmax(0,1fr);gap:0}
+  #navToggle{display:inline-block}
+  nav.side{position:fixed;inset:calc(env(safe-area-inset-top,0px) + 3.2rem) 0 0 0;max-height:none;background:var(--surface);z-index:8;
+    padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));border-top:1px solid var(--line)}
+  .lab-grid{grid-template-columns:minmax(0,1fr)}
+  .topbar .brand small{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<header class="topbar">
+  <button class="btn" id="navToggle" aria-expanded="false" aria-controls="sidenav">Índice</button>
+  <div class="brand">Biomecánica del codo y del antebrazo<small>Universidad Complutense de Madrid · Grado en Fisioterapia</small></div>
+  <button class="btn" id="themeBtn" aria-label="Cambiar entre modo claro y modo oscuro">Modo</button>
+</header>
+
+<div class="shell">
+<nav class="side" id="sidenav" aria-label="Apartados del tema">
+  <div class="grp">Tema</div>
+  <ol>
+    <li><a href="#inicio"><span class="n">0</span>Portada</a></li>
+    <li><a href="#objetivos"><span class="n">1</span>Objetivos</a></li>
+    <li><a href="#anatomia" data-sec="anatomia"><span class="n">2.1</span>Anatomía funcional<span class="tick"></span></a></li>
+    <li><a href="#alineacion" data-sec="alineacion"><span class="n">2.2</span>Alineación y ángulo de transporte<span class="tick"></span></a></li>
+    <li><a href="#estabilidad" data-sec="estabilidad"><span class="n">2.3</span>Estabilización pasiva<span class="tick"></span></a></li>
+    <li><a href="#movilidad" data-sec="movilidad"><span class="n">2.4</span>Movilidad<span class="tick"></span></a></li>
+    <li><a href="#artro" data-sec="artro"><span class="n">2.5</span>Artrocinemática<span class="tick"></span></a></li>
+    <li><a href="#musculos" data-sec="musculos"><span class="n">2.6</span>Acción muscular<span class="tick"></span></a></li>
+    <li><a href="#errores"><span class="n">3</span>Errores frecuentes</a></li>
+    <li><a href="#resumen"><span class="n">4</span>Resumen</a></li>
+    <li><a href="#test"><span class="n">5</span>Autoevaluación</a></li>
+    <li><a href="#lecturas"><span class="n">6</span>Lecturas</a></li>
+  </ol>
+  <div class="grp">Repaso</div>
+  <ol>
+    <li><a href="#glosario"><span class="n">G</span>Glosario</a></li>
+    <li><a href="#tarjetas"><span class="n">T</span>Tarjetas</a></li>
+  </ol>
+</nav>
+
+<main id="contenido">
+
+<section class="block hero" id="inicio">
+  <div class="eyebrow">Biomecánica del Aparato Locomotor · Curso 2026-27</div>
+  <h1>Biomecánica del codo y del antebrazo</h1>
+  <p class="lede">Material de estudio que acompaña a la clase. Repasen cada apartado, manipulen las figuras interactivas y comprueben lo aprendido con la autoevaluación. El progreso se guarda en este navegador.</p>
+  <div class="progress" aria-live="polite">
+    <div class="bar" role="progressbar" aria-label="Progreso del tema" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="pbar"></span></div>
+    <div class="row"><span id="ptext">0 de 6 apartados estudiados</span><span id="qtext">Autoevaluación: 0 de 10 respondidas</span></div>
+  </div>
+  <div class="quick">
+    <a href="#test">Ir a la autoevaluación</a>
+    <a href="#glosario">Glosario</a>
+    <a href="#tarjetas">Tarjetas de repaso</a>
+    <span class="confirm"><button class="btn" id="resetBtn">Reiniciar progreso</button><span id="resetAsk" hidden>¿Seguro? <button class="btn primary" id="resetYes">Sí, borrar</button> <button class="btn" id="resetNo">No</button></span></span>
+  </div>
+</section>
+
+<section class="block" id="objetivos">
+  <div class="prose">
+  <div class="eyebrow">1</div>
+  <h2>Objetivos de aprendizaje</h2>
+  <p>Al terminar el tema, ustedes deberían ser capaces de:</p>
+  <ol class="obj">
+    <li>Identificar las cuatro articulaciones del complejo del codo y del antebrazo, su tipo y la forma cóncava o convexa de cada superficie articular.</li>
+    <li>Relacionar cada ligamento con el movimiento o la fuerza que aumenta su tensión y clasificar los estabilizadores del codo en primarios y secundarios.</li>
+    <li>Describir el rodamiento y el deslizamiento de la flexoextensión y de la pronosupinación en cadena cinética abierta, y nombrar las estructuras que limitan cada movimiento.</li>
+    <li>Explicar cómo cambian el brazo de momento de una carga y el de un músculo con el ángulo articular, y por qué eso modifica el momento de fuerza.</li>
+    <li>Justificar, a partir del volumen, la longitud de fibra, la sección transversal fisiológica y el brazo de momento, qué músculos dominan la flexión, la extensión, la supinación y la pronación.</li>
+  </ol>
+  </div>
+</section>
+
+<section class="block" id="anatomia">
+  <div class="prose">
+  <div class="eyebrow">2.1</div>
+  <h2>Recuerdo anatómico funcional</h2>
+  <p>El codo es la articulación intermedia del miembro superior y realiza la unión mecánica entre el brazo y el antebrazo. Permite acercar la mano a la boca y alejarla de ella, por lo que interviene en la alimentación, el aseo y casi cualquier tarea de alcance. Desde el punto de vista biomecánico se estudian dos funciones distintas: la <span class="def">flexoextensión</span>, que se produce en el plano sagital alrededor de un eje mediolateral, y la <span class="def">pronosupinación</span>, que es la rotación del antebrazo alrededor de su eje longitudinal.</p>
+  <p>Estas dos funciones dependen de cuatro articulaciones. La flexoextensión se produce en las articulaciones humerocubital y humerorradial, que forman el codo propiamente dicho. La pronosupinación se produce en las articulaciones radiocubitales proximal y distal, que forman la articulación del antebrazo, con la participación de la humerorradial.</p>
+  </div>
+  <div class="tw"><table>
+    <thead><tr><th>Articulación</th><th>Tipo</th><th>Superficie convexa</th><th>Superficie cóncava</th><th>Función</th></tr></thead>
+    <tbody>
+      <tr><td>Humerocubital</td><td>Troclear (gínglimo)</td><td>Tróclea humeral</td><td>Escotadura troclear del cúbito (cavidad sigmoidea mayor)</td><td>Flexoextensión</td></tr>
+      <tr><td>Humerorradial</td><td>Condílea (elipsoidal)</td><td>Cóndilo humeral (capítulo)</td><td>Fosita o fóvea de la cabeza del radio</td><td>Flexoextensión y pronosupinación</td></tr>
+      <tr><td>Radiocubital proximal</td><td>Trocoide</td><td>Cabeza del radio (segmento de cilindro macizo)</td><td>Escotadura radial del cúbito (cavidad sigmoidea menor) y ligamento anular</td><td>Pronosupinación</td></tr>
+      <tr><td>Radiocubital distal</td><td>Trocoide</td><td>Cabeza del cúbito (segmento de cilindro macizo)</td><td>Escotadura cubital del radio (segmento de cilindro hueco)</td><td>Pronosupinación</td></tr>
+    </tbody>
+  </table></div>
+  <div class="prose">
+  <p>Un <span class="def">gínglimo</span> o articulación troclear es una articulación en bisagra con un solo grado de libertad. El codo se describe como un gínglimo modificado porque, además de flexionarse y extenderse, el cúbito realiza pequeños movimientos en valgo y en varo y una ligera rotación axial. Estos movimientos fuera del plano sagital son pequeños, pero se tienen en cuenta en el diseño de las prótesis de codo, ya que, si se ignoran, los implantes tienden a aflojarse antes de tiempo (Neumann, 2017). Una <span class="def">trocoide</span> es una articulación en la que un cilindro macizo gira dentro de un anillo, como ocurre con la cabeza del radio dentro del anillo que forman la escotadura radial del cúbito y el ligamento anular.</p>
+  <p>La <span class="def">congruencia articular</span> es el grado de ajuste entre dos superficies. La humerocubital es muy congruente, de modo que su estabilidad es sobre todo estructural, es decir, depende de la forma de los huesos. La humerorradial es menos congruente y depende más de la cápsula y de los ligamentos.</p>
+  <h3>Superficies del húmero distal</h3>
+  <p>La paleta humeral sostiene entre sus dos columnas el eje de las superficies articulares y está reforzada a los lados por el epicóndilo lateral y la epitróclea (epicóndilo medial). En la cara posterior se encuentra la fosa olecraniana, que recibe el olécranon en extensión. En la cara anterior están la fosa coronoidea y la fosa radial, que reciben la apófisis coronoides y la cabeza del radio en flexión. La tróclea tiene forma de polea, parecida a un diábolo o a un reloj de arena, con su eje mayor transversal. El capítulo o cóndilo humeral es esférico y convexo, ocupa la cara anterior y se articula con la cabeza del radio.</p>
+  <h3>Superficies del cúbito y del radio proximales</h3>
+  <p>La cavidad sigmoidea mayor (escotadura troclear) está formada por la cara superior del olécranon y por la apófisis coronoides, y es la parte cóncava de la humerocubital. La cavidad sigmoidea menor se sitúa en la cara externa de la apófisis coronoides y recibe la cabeza del radio. La cúpula o fosita radial tiene una curvatura que se adapta al capítulo. En la radiocubital proximal, el ligamento anular rodea la cabeza del radio y forma parte de la superficie articular. Las radiocubitales proximal y distal están unidas por la membrana interósea y, en el extremo distal, por el fibrocartílago triangular.</p>
+  </div>
+  <div class="lab" id="lab-planos">
+    <div class="head"><h3>Figura interactiva 1. Plano, eje y articulaciones</h3><span class="tag">planos y ejes</span></div>
+    <p>Elijan un movimiento. La figura muestra el eje alrededor del cual se produce y el texto indica el plano y las articulaciones que intervienen.</p>
+    <div class="lab-grid">
+      <div class="ctrl">
+        <div class="seg" role="group" aria-label="Movimiento">
+          <button type="button" data-mv="flex" aria-pressed="true">Flexión</button>
+          <button type="button" data-mv="ext" aria-pressed="false">Extensión</button>
+          <button type="button" data-mv="sup" aria-pressed="false">Supinación</button>
+          <button type="button" data-mv="pro" aria-pressed="false">Pronación</button>
+        </div>
+        <div class="out" id="pl-out" aria-live="polite"></div>
+      </div>
+      <svg class="fig" id="pl-svg" viewBox="0 0 340 300" role="img" aria-labelledby="pl-t"><title id="pl-t">Miembro superior con el eje y el sentido del movimiento elegido</title></svg>
+    </div>
+  </div>
+  <div class="done-row"><button class="btn done-btn" data-done="anatomia" aria-pressed="false">Marcar como estudiado</button></div>
+</section>
+
+<section class="block" id="alineacion">
+  <div class="prose">
+  <div class="eyebrow">2.2</div>
+  <h2>Alineación del codo: el ángulo de transporte</h2>
+  <p>La tróclea es asimétrica, porque su labio medial se prolonga más en sentido distal que el lateral. Por eso, con el codo extendido y el antebrazo en supinación, el cúbito se desvía lateralmente respecto al húmero. Este ángulo del plano frontal se llama <span class="def">valgo fisiológico del codo</span> o <span class="def">ángulo de transporte</span>, porque aleja del muslo los objetos que se llevan en la mano al caminar. En el material de clase se da un valor normal de 13-15°. Neumann (2017) recoge una media de unos 13° en adultos sanos, con una desviación típica cercana a 6°, algo mayor en las mujeres (unos 2°) y en el brazo dominante.</p>
+  <p>Cuando el antebrazo se desvía en exceso hacia fuera se habla de <span class="def">deformidad en valgo</span> (Neumann la sitúa por encima de unos 20-25°). Cuando se desvía hacia la línea media del cuerpo se habla de <span class="def">deformidad en varo</span>. Los términos valgo y varo proceden del latín y significan, respectivamente, vuelto hacia fuera y vuelto hacia dentro. Una deformidad marcada suele ser secuela de un traumatismo, por ejemplo de una fractura que afecta al cartílago de crecimiento del húmero distal en la infancia.</p>
+  <h3>¿Predispone la alineación a la lesión?</h3>
+  <p>La etiología del dolor de codo es multifactorial, y atribuirla a un único factor biomecánico es un error. En cuanto a la epicondilalgia lateral, un estudio retrospectivo con 62 participantes encontró un ángulo de transporte mayor en las personas con epicondilalgia que en el grupo control, y sus autores proponen que esta desviación aumentaría la tensión y el roce del tendón del extensor radial corto del carpo sobre el capítulo (Umur y Surucu, 2022). Sin embargo, se trata de un estudio retrospectivo y pequeño, y los datos disponibles no son consistentes. El valgo excesivo sí se ha relacionado con el estiramiento del nervio cubital, que discurre por la cara medial del codo (Neumann, 2017).</p>
+  <p>La revisión de Heijink et al. (2016) señala que las fuerzas que soportan las superficies del codo podrían ser similares a las de las articulaciones de carga del miembro inferior, pero no encontró datos que relacionen la mala alineación del codo con la artrosis. Por tanto, con la evidencia actual no puede afirmarse que el valgo o el varo predispongan a la lesión del codo, y en la clínica conviene valorarlos junto con el resto de factores.</p>
+  </div>
+  <div class="lab" id="lab-valgo">
+    <div class="head"><h3>Figura interactiva 2. Ángulo de transporte</h3><span class="tag">plano frontal</span></div>
+    <p>Muevan el antebrazo en el plano frontal. Los umbrales siguen a Neumann (2017): valgo fisiológico en torno a 13° (DE ≈ 6°), deformidad en valgo por encima de unos 20-25° y varo cuando el antebrazo se dirige hacia la línea media.</p>
+    <div class="lab-grid">
+      <div class="ctrl">
+        <label for="vg-ang">Ángulo entre el eje del antebrazo y el del húmero <span class="v" id="vg-v">13°</span>
+          <input type="range" id="vg-ang" min="-15" max="35" step="1" value="13"></label>
+        <div class="out" id="vg-out" aria-live="polite"></div>
+      </div>
+      <svg class="fig" id="vg-svg" viewBox="0 0 300 340" role="img" aria-labelledby="vg-t"><title id="vg-t">Vista anterior de un miembro superior derecho extendido con el ángulo de transporte seleccionado</title></svg>
+    </div>
+  </div>
+  <div class="done-row"><button class="btn done-btn" data-done="alineacion" aria-pressed="false">Marcar como estudiado</button></div>
+</section>
+
+<section class="block" id="estabilidad">
+  <div class="prose">
+  <div class="eyebrow">2.3</div>
+  <h2>Elementos de estabilización pasiva</h2>
+  <p>Las articulaciones humerocubital, humerorradial y radiocubital proximal comparten una única cavidad articular, con una cápsula y una membrana sinovial comunes. La cápsula es fina y laxa, y está reforzada a los lados por los ligamentos colaterales. Estos ligamentos resisten sobre todo los movimientos del plano frontal: el ligamento colateral medial (LCM) es el principal estabilizador frente al valgo y el ligamento colateral lateral (LCL) es el principal estabilizador frente al varo.</p>
+  </div>
+  <div class="tw"><table>
+    <thead><tr><th>Ligamento</th><th>Movimientos que aumentan su tensión</th></tr></thead>
+    <tbody>
+      <tr><td>LCM (fibras anteriores)</td><td>Valgo. Extensión (su parte anterior) y flexión (su parte posterior)</td></tr>
+      <tr><td>LCM (fibras posteriores)</td><td>Valgo. Flexión</td></tr>
+      <tr><td>Ligamento colateral radial</td><td>Varo</td></tr>
+      <tr><td>Ligamento colateral lateral (ulnar)</td><td>Varo. Rotación externa del codo. Flexión</td></tr>
+      <tr><td>Ligamento anular</td><td>Distracción del radio</td></tr>
+    </tbody>
+    <caption>Principales ligamentos del codo y movimientos que aumentan su tensión.</caption>
+  </table></div>
+  <div class="prose">
+  <h3>Ligamento colateral medial</h3>
+  <p>El LCM consta de tres haces: anterior, posterior y transverso. Las fibras anteriores son las más fuertes y rígidas y proporcionan la mayor estabilidad frente al valgo. Como sus fascículos se sitúan a ambos lados del eje de giro, siempre hay alguno tenso a lo largo del recorrido de flexoextensión: sus componentes anteriores se tensan en extensión y los posteriores en flexión. Las fibras anteriores trabajan sobre todo entre 0° y 80° de flexión. Las fibras posteriores son un engrosamiento en abanico de la cápsula posteromedial, resisten el valgo y se tensan en los extremos de la flexión, sobre todo entre 80° y 145°. El fascículo transverso apenas contribuye a la estabilidad.</p>
+  <p>Las fibras proximales de la musculatura flexopronadora, que se origina en la epitróclea, también resisten el valgo, en especial el flexor cubital del carpo (Lin et al., 2007).</p>
+  </div>
+  <div class="box clin prose">
+    <h4>Conexión con la clínica</h4>
+    <p>El <span class="def">codo de golfista</span> (epicondilalgia medial) se atribuye al tendón común de los flexores de la muñeca, y los tendones del flexor radial del carpo y del pronador redondo suelen ser los más afectados. Es mucho menos frecuente que la epicondilalgia lateral.</p>
+    <p>La <span class="def">inestabilidad en valgo</span> aparece cuando el LCM se lesiona por un valgo forzado, a menudo en una caída con el miembro superior extendido y en supinación. También puede lesionarse en actividades repetitivas con poca carga. En los traumatismos con el peso del cuerpo, la lesión del LCM puede acompañarse de fractura de la cabeza o del cuello del radio, avulsión del epicóndilo medial, neuralgia del nervio cubital o avulsión de la apófisis coronoides. La inestabilidad se ha asociado a una mayor probabilidad de artrosis de codo, aunque esa relación todavía no está bien definida (Heijink et al., 2016).</p>
+  </div>
+  <div class="prose">
+  <h3>Ligamento colateral lateral y ligamento anular</h3>
+  <p>El LCL se divide en ligamento colateral radial y ligamento colateral lateral ulnar (también llamado colateral cubital lateral). Ambos estabilizan el codo frente al varo. Las fibras del colateral lateral ulnar y las del colateral medial actúan como cables de sujeción a cada lado, que estabilizan el cúbito durante el movimiento en el plano sagital. El ligamento anular mantiene la cabeza del radio contra la cavidad sigmoidea menor del cúbito, forma parte de la superficie articular y se opone a la distracción del radio.</p>
+  <p>Cuando se lesionan gravemente los estabilizadores posterolaterales, sobre todo el colateral lateral ulnar, la cabeza del radio se luxa en sentido posterior y lateral por debajo del capítulo. El resultado es una <span class="def">inestabilidad rotatoria posterolateral</span> de todo el complejo del codo.</p>
+  </div>
+  <div class="tw"><table>
+    <thead><tr><th>Estabilizador</th><th>Función</th></tr></thead>
+    <tbody>
+      <tr><th colspan="2">Primarios</th></tr>
+      <tr><td>Articulación humerocubital (coronoides, olécranon y tróclea)</td><td>Estabilidad en todos los planos, sobre todo por debajo de 20° o por encima de 120° de flexión</td></tr>
+      <tr><td>LCM (haz anterior)</td><td>Resiste el valgo y las inestabilidades rotatorias posteromediales</td></tr>
+      <tr><td>LCM (fibras posteriores)</td><td>Resiste el valgo. Se tensa en flexión</td></tr>
+      <tr><td>Colateral lateral ulnar</td><td>Resiste la inestabilidad rotatoria posterolateral y el varo</td></tr>
+      <tr><td>Colateral radial</td><td>Varo</td></tr>
+      <tr><td>Ligamento anular</td><td>Distracción del radio</td></tr>
+      <tr><th colspan="2">Secundarios</th></tr>
+      <tr><td>Articulación humerorradial (cabeza del radio, capítulo)</td><td>Resiste la inestabilidad rotatoria posterolateral y el varo</td></tr>
+      <tr><td>Cápsula</td><td>Estabilidad en todos los planos, sobre todo por debajo de 20° o por encima de 120° de flexión</td></tr>
+      <tr><td>Origen común de los flexores</td><td>Resiste el valgo y las inestabilidades rotatorias posteromediales</td></tr>
+      <tr><td>Origen común de los extensores</td><td>Resiste la inestabilidad rotatoria posterolateral y el varo</td></tr>
+    </tbody>
+    <caption>Estabilizadores primarios y secundarios del codo (Marinelli et al., 2021).</caption>
+  </table></div>
+  <div class="lab" id="lab-lig">
+    <div class="head"><h3>Figura interactiva 3. ¿Qué estructura se tensa?</h3><span class="tag">estabilidad</span></div>
+    <p>Apliquen una solicitación al codo derecho. En las vistas medial y lateral se resaltan en rojo los ligamentos que se oponen a ella.</p>
+    <div class="seg" role="group" aria-label="Solicitación" style="margin-top:.6rem">
+      <button type="button" data-st="valgo" aria-pressed="true">Valgo</button>
+      <button type="button" data-st="varo" aria-pressed="false">Varo</button>
+      <button type="button" data-st="ext" aria-pressed="false">Extensión</button>
+      <button type="button" data-st="flex" aria-pressed="false">Flexión</button>
+      <button type="button" data-st="dist" aria-pressed="false">Distracción del radio</button>
+      <button type="button" data-st="pl" aria-pressed="false">Rotatoria posterolateral</button>
+    </div>
+    <svg class="fig" id="lg-svg" viewBox="0 0 640 300" role="img" aria-labelledby="lg-t" style="margin-top:.8rem"><title id="lg-t">Vistas medial y lateral del codo derecho con los ligamentos colaterales y el ligamento anular</title></svg>
+    <div class="out" id="lg-out" aria-live="polite" style="margin-top:.6rem"></div>
+  </div>
+  <div class="prose">
+  <h3>Membrana interósea</h3>
+  <p>La membrana interósea une el radio y el cúbito y es especialmente resistente en su parte anterior. Está formada por la banda central, el cordón oblicuo y unas fibras oblicuas distales que no siempre están presentes. La banda central une firmemente ambos huesos, sirve de inserción a músculos extrínsecos de la mano y transmite fuerzas en sentido proximal a lo largo del miembro superior. Cuando se agarra con fuerza, la compresión que generan los músculos llega sobre todo al radio, y la banda central ayuda a desviar parte de esa carga hacia el cúbito. La tracción del radio aumenta la tensión del cordón oblicuo y del ligamento anular. Además, la contracción del braquiorradial y de otros músculos que intervienen en la prensión ayuda a mantener el radio apoyado contra el capítulo humeral.</p>
+  <h3>Presión intracapsular y posición de confort</h3>
+  <p>La presión dentro de la cápsula del codo es mínima hacia los 80° de flexión. Por eso las personas con inflamación y derrame articular suelen mantener el codo en esa posición, llamada <span class="def">posición de confort</span>. Mantenerla resulta cómodo durante la fase inflamatoria, pero, si se prolonga, favorece un codo rígido en flexión (Neumann, 2017). En una persona con un derrame postraumático que lleva semanas con el brazo en cabestrillo, por ejemplo, el objetivo de la fisioterapia será recuperar la extensión sin esperar a que el derrame haya desaparecido del todo.</p>
+  </div>
+  <div class="done-row"><button class="btn done-btn" data-done="estabilidad" aria-pressed="false">Marcar como estudiado</button></div>
+</section>
+
+<section class="block" id="movilidad">
+  <div class="prose">
+  <div class="eyebrow">2.4</div>
+  <h2>Movilidad del codo y del antebrazo</h2>
+  <p>La <span class="def">osteocinemática</span> describe el movimiento de los huesos en el espacio mediante planos, ejes y ángulos, mientras que la artrocinemática, que se estudia en el apartado siguiente, describe lo que ocurre entre las superficies articulares. Medido con goniómetro, el codo pasa de unos 5° más allá de la extensión neutra (-5° a 0°) a 145-150° de flexión. La flexión sirve para tirar, levantar, comer y asearse, y la extensión se utiliza al lanzar, empujar y alcanzar. En el antebrazo, desde la posición neutra con el pulgar hacia arriba, se alcanzan unos 75° de pronación y 85° de supinación (Neumann, 2017).</p>
+  <p>Muchas actividades de la vida diaria utilizan un <span class="def">arco funcional</span> más reducido: entre 30° y 130° de flexión, y entre 50° de pronación y 50° de supinación. A diferencia de lo que ocurre en la rodilla, perder los extremos del recorrido del codo suele causar una alteración funcional mínima. El codo sirve para colocar la mano en el espacio, y el hombro puede compensar parte de la pérdida de pronosupinación (rotación interna y abducción para la pronación, rotación externa para la supinación).</p>
+  <p>En clase se ha definido el <span class="def">codo rígido</span> como aquel que pierde más de 30° de extensión y no alcanza los 120° de flexión (Di Giacomo, 2018). Las causas registradas en el material de clase son todas traumáticas.</p>
+  </div>
+  <div class="lab" id="lab-rom">
+    <div class="head"><h3>Figura interactiva 4. ¿Llega al arco funcional?</h3><span class="tag">recorrido articular</span></div>
+    <p>Ajusten el recorrido de una persona ficticia tras una fractura de la cabeza del radio. El sector rosado es el recorrido completo, el sector rayado es el arco funcional y la banda roja es el recorrido de la persona.</p>
+    <div class="lab-grid">
+      <div class="ctrl">
+        <label for="rm-ext">Déficit de extensión <span class="v" id="rm-ext-v">20°</span><input type="range" id="rm-ext" min="0" max="70" value="20"></label>
+        <label for="rm-flx">Flexión máxima <span class="v" id="rm-flx-v">125°</span><input type="range" id="rm-flx" min="80" max="150" value="125"></label>
+        <label for="rm-pro">Pronación máxima <span class="v" id="rm-pro-v">60°</span><input type="range" id="rm-pro" min="0" max="75" value="60"></label>
+        <label for="rm-sup">Supinación máxima <span class="v" id="rm-sup-v">40°</span><input type="range" id="rm-sup" min="0" max="85" value="40"></label>
+        <div class="out" id="rm-out" aria-live="polite"></div>
+      </div>
+      <svg class="fig" id="rm-svg" viewBox="0 0 340 430" role="img" aria-labelledby="rm-t"><title id="rm-t">Abanicos del recorrido de flexoextensión y de pronosupinación frente al arco funcional</title></svg>
+    </div>
+  </div>
+  <div class="done-row"><button class="btn done-btn" data-done="movilidad" aria-pressed="false">Marcar como estudiado</button></div>
+</section>
+
+<section class="block" id="artro">
+  <div class="prose">
+  <div class="eyebrow">2.5</div>
+  <h2>Artrocinemática</h2>
+  <p>La <span class="def">artrocinemática</span> estudia los movimientos entre las superficies articulares, que son el <span class="def">rodamiento</span> (puntos sucesivos de una superficie contactan con puntos sucesivos de la otra) y el <span class="def">deslizamiento</span> (un mismo punto de una superficie contacta con puntos sucesivos de la otra). Cuando la superficie que se mueve es cóncava sobre una convexa fija, rueda y se desliza en el mismo sentido que el hueso. Si fuera convexa sobre una cóncava, rodaría en el sentido del movimiento y se deslizaría en el sentido contrario. En este tema todos los movimientos se describen en <span class="def">cadena cinética abierta</span> (CCA), es decir, con el segmento distal libre y el húmero fijo, como al llevarse un vaso a la boca.</p>
+  <h3>Flexoextensión en la humerocubital</h3>
+  <p>La escotadura troclear (cóncava) se mueve sobre la tróclea (convexa). Su congruencia y su forma limitan el movimiento casi por completo al plano sagital, y la apófisis coronoides es el principal freno óseo a la traslación posterior del cúbito respecto al húmero.</p>
+  </div>
+  <div class="tw"><table>
+    <thead><tr><th>Movimiento</th><th>Rodamiento y deslizamiento</th><th>Estructuras que limitan el final del recorrido</th></tr></thead>
+    <tbody>
+      <tr><td><b>Extensión</b></td><td>La escotadura troclear rueda y se desliza en sentido posterior sobre la tróclea</td><td>Choque del pico del olécranon con el fondo de la fosa olecraniana. Tensión de la parte anterior de la cápsula. Resistencia de los músculos flexores</td></tr>
+      <tr><td><b>Flexión</b></td><td>La escotadura troclear rueda y se desliza en sentido anterior sobre la tróclea</td><td>Tensión capsuloligamentosa posterior. Impacto óseo. Contacto de las masas musculares del brazo y del antebrazo</td></tr>
+    </tbody>
+  </table></div>
+  <div class="lab" id="lab-hc">
+    <div class="head"><h3>Figura interactiva 5. Corte sagital de la humerocubital</h3><span class="tag">rodamiento y deslizamiento</span></div>
+    <p>Muevan el cúbito. Las flechas azules indican el sentido del rodamiento y del deslizamiento de la escotadura troclear sobre la tróclea.</p>
+    <div class="lab-grid">
+      <div class="ctrl">
+        <label for="hc-ang">Ángulo de flexión <span class="v" id="hc-v">60°</span><input type="range" id="hc-ang" min="0" max="145" value="60"></label>
+        <div class="out" id="hc-out" aria-live="polite"></div>
+      </div>
+      <svg class="fig" id="hc-svg" viewBox="0 0 340 330" role="img" aria-labelledby="hc-t"><title id="hc-t">Corte sagital de la articulación humerocubital con la tróclea, la escotadura troclear y el sentido del movimiento</title></svg>
+    </div>
+  </div>
+  <div class="prose">
+  <h3>Flexoextensión en la humerorradial</h3>
+  <p>Durante el movimiento en CCA, la fosita radial (cóncava) rueda y se desliza sobre el capítulo (convexo). En la flexión, la acción muscular presiona la fóvea contra el capítulo, mientras que el colateral lateral ulnar y la cápsula posterior se alargan. La humerorradial actúa, además, como tope lateral dinámico frente al valgo gracias a la angulación del radio, al tamaño y la profundidad de la fóvea y a la compresión muscular activa del braquial y del bíceps.</p>
+  <h3>Pronosupinación</h3>
+  <p>En la radiocubital proximal, el radio gira dentro de un anillo formado por el ligamento anular y la escotadura radial del cúbito. En la radiocubital distal, la escotadura cubital del radio (cóncava) rueda y se desliza en el mismo sentido sobre la cabeza del cúbito (convexa). Durante la supinación en CCA, el radio y su concavidad se desplazan en el sentido de la supinación, y en la pronación ocurre lo mismo en el sentido contrario.</p>
+  </div>
+  <div class="tw"><table>
+    <thead><tr><th>Movimiento</th><th>Músculos que lo limitan</th><th>Tejidos capsuloligamentosos que lo limitan</th></tr></thead>
+    <tbody>
+      <tr><td><b>Supinación</b></td><td>Pronador redondo, pronador cuadrado, flexor radial del carpo, flexores de los dedos</td><td>Fibrocartílago triangular, banda central de la membrana interósea, ligamento cuadrado, ligamento capsular palmar de la radiocubital distal</td></tr>
+      <tr><td><b>Pronación</b></td><td>Bíceps braquial, supinador, extensores radiales del carpo, extensor largo del pulgar</td><td>Fibrocartílago triangular, banda central de la membrana interósea, ligamento cuadrado, ligamento capsular dorsal de la radiocubital distal</td></tr>
+    </tbody>
+    <caption>Los músculos que limitan un movimiento son los que realizan el movimiento contrario, porque se estiran al final del recorrido.</caption>
+  </table></div>
+  <div class="lab" id="lab-rc">
+    <div class="head"><h3>Figura interactiva 6. Radiocubital proximal vista desde arriba</h3><span class="tag">pronosupinación</span></div>
+    <p>Giren la cabeza del radio dentro del anillo que forman el ligamento anular y la escotadura radial del cúbito, que permanece fijo.</p>
+    <div class="lab-grid">
+      <div class="ctrl">
+        <label for="rc-ang">Pronación (-) o supinación (+) desde la posición neutra <span class="v" id="rc-v">40°</span><input type="range" id="rc-ang" min="-75" max="85" value="40"></label>
+        <div class="out" id="rc-out" aria-live="polite"></div>
+      </div>
+      <svg class="fig" id="rc-svg" viewBox="0 0 340 300" role="img" aria-labelledby="rc-t"><title id="rc-t">Cabeza del radio girando dentro del ligamento anular frente al cúbito fijo</title></svg>
+    </div>
+  </div>
+  <div class="done-row"><button class="btn done-btn" data-done="artro" aria-pressed="false">Marcar como estudiado</button></div>
+</section>
+
+<section class="block" id="musculos">
+  <div class="prose">
+  <div class="eyebrow">2.6</div>
+  <h2>Acción muscular</h2>
+  <p>Un músculo flexiona el codo si su línea de fuerza pasa por delante del eje mediolateral de la articulación y lo extiende si pasa por detrás. Los músculos que se insertan en el cúbito solo pueden flexionar o extender, mientras que los que se insertan en el radio pueden, además, pronar o supinar. Para comparar los músculos se utilizan cuatro variables.</p>
+  </div>
+  <div class="tw"><table>
+    <thead><tr><th>Variable</th><th>Qué indica</th></tr></thead>
+    <tbody>
+      <tr><td>Volumen (cm³)</td><td>Capacidad total de trabajo del músculo a lo largo del tiempo</td></tr>
+      <tr><td>Longitud de fibra (cm)</td><td>Cuánto puede acortarse el músculo</td></tr>
+      <tr><td>Sección transversal fisiológica (cm²)</td><td>Capacidad de generar fuerza máxima (pico de fuerza)</td></tr>
+      <tr><td>Brazo de momento interno (cm)</td><td>Ventaja mecánica del músculo, es decir, su palanca respecto al eje articular</td></tr>
+    </tbody>
+  </table></div>
+  <div class="prose">
+  <p>El <span class="def">brazo de momento</span> es la distancia perpendicular entre la línea de acción de una fuerza y el eje de giro. El <span class="def">momento de fuerza</span> (en los textos en inglés, <i>torque</i>) es el producto de la fuerza por su brazo de momento y expresa la capacidad de esa fuerza para hacer girar un segmento. Se mide en newton metro (N·m). La <span class="def">sección transversal fisiológica</span> (STF) es el área de un corte perpendicular a las fibras del músculo y es proporcional a la fuerza máxima que este puede producir.</p>
+  </div>
+  <div class="lab" id="lab-mom">
+    <div class="head"><h3>Figura interactiva 7. Brazo de momento de una carga en la mano</h3><span class="tag">momento externo</span></div>
+    <p>Una persona sostiene una mancuerna con el brazo vertical, como en un curl de bíceps. Cambien el ángulo del codo y observen la distancia perpendicular (en azul) entre la línea del peso y el eje del codo.</p>
+    <div class="lab-grid">
+      <div class="ctrl">
+        <label for="mm-ang">Ángulo de flexión del codo <span class="v" id="mm-v">90°</span><input type="range" id="mm-ang" min="0" max="145" value="90"></label>
+        <div class="out" id="mm-out" aria-live="polite"></div>
+      </div>
+      <svg class="fig" id="mm-svg" viewBox="0 0 340 330" role="img" aria-labelledby="mm-t"><title id="mm-t">Brazo vertical con el antebrazo flexionado, la mancuerna, la línea de su peso y su brazo de momento</title></svg>
+    </div>
+  </div>
+  <div class="prose">
+  <h3>Flexores del codo</h3>
+  <p>El bíceps braquial, el braquial, el braquiorradial y el pronador redondo son los principales flexores del codo. Todos producen una fuerza que pasa por delante del eje mediolateral.</p>
+  </div>
+  <div class="tw"><table>
+    <thead><tr><th>Músculo</th><th class="num">Volumen (cm³)</th><th class="num">Longitud de fibra (cm)</th><th class="num">STF (cm²)</th><th class="num">Brazo de momento (cm)</th></tr></thead>
+    <tbody>
+      <tr><td>Bíceps braquial (cabeza larga)</td><td class="num">33,4</td><td class="num">13,6</td><td class="num">2,5</td><td class="num">3,20</td></tr>
+      <tr><td>Bíceps braquial (cabeza corta)</td><td class="num">30,8</td><td class="num">15,0</td><td class="num">2,1</td><td class="num">3,20</td></tr>
+      <tr><td>Braquial</td><td class="num">59,3</td><td class="num">9,0</td><td class="num">7,0</td><td class="num">1,98</td></tr>
+      <tr><td>Braquiorradial</td><td class="num">21,9</td><td class="num">16,4</td><td class="num">1,5</td><td class="num">5,19</td></tr>
+      <tr><td>Pronador redondo</td><td class="num">18,7</td><td class="num">5,6</td><td class="num">3,4</td><td class="num">2,01</td></tr>
+    </tbody>
+    <caption>Datos de An et al. (1981) recogidos por Neumann (2017, tabla 6.5). Longitud medida a 70° de flexión. Brazo de momento medido a 100° de flexión con el antebrazo en supinación completa.</caption>
+  </table></div>
+  <div class="prose">
+  <p><b>Bíceps braquial.</b> La porción larga se origina en el tubérculo supraglenoideo y la corta en la apófisis coracoides. Ambas se insertan mediante un tendón común en la tuberosidad bicipital del radio. Flexiona el codo y supina el antebrazo, y su mayor actividad aparece cuando se combinan la flexión y la supinación.</p>
+  <p><b>Braquial.</b> Se origina en la cara anterior de la diáfisis humeral y se inserta en la apófisis coronoides y la tuberosidad del cúbito. Es el flexor con mayor STF y mayor volumen, por lo que cabe esperar que genere la mayor fuerza de flexión. Al insertarse en el cúbito, la pronosupinación no modifica su longitud ni su brazo de momento. En clase se ha visto que su actividad se aísla mejor hacia los 110° de flexión con el antebrazo en pronación.</p>
+  <p><b>Braquiorradial.</b> Se extiende desde el tercio distal de la cresta supracondílea lateral del húmero hasta la cara lateral de la apófisis estiloides del radio. Tiene el mayor brazo de momento de todos los flexores, pero una STF pequeña. Interviene en movimientos rápidos y con mucha resistencia, actúa como coaptador de la humerorradial y alcanza su máxima eficacia hacia los 110° de flexión con el antebrazo en posición neutra.</p>
+  <p><b>Pronador redondo.</b> Su cabeza humeral nace de la epitróclea, junto a los flexores superficiales del antebrazo, y su cabeza cubital, de la apófisis coronoides. Se inserta en el tercio medio de la cara lateral del radio. Es pronador y flexor secundario del codo y contribuye a su estabilidad medial.</p>
+  <p>El momento flexor máximo del codo aparece cerca de los 85-95° de flexión. Con el codo en ángulo recto, el tendón del bíceps llega casi perpendicular al radio y el brazo de momento de los flexores es grande.</p>
+  </div>
+  <div class="box clin prose">
+    <h4>¿Por qué entrenar el bíceps braquial?</h4>
+    <p>Varios estudios observacionales relacionan la masa muscular del brazo con la salud general. En 6.769 adultos de la cohorte NHANES III, una menor circunferencia muscular del brazo medio se asoció con mayor mortalidad por cualquier causa en los hombres, aunque en las mujeres la asociación no fue significativa (Wu et al., 2017). En 179 personas mayores de 60 años, la sección transversal del bíceps medida con ecografía se asoció de forma independiente con la sarcopenia (Li et al., 2020). Son asociaciones y no demuestran causalidad, pero apoyan la valoración y el entrenamiento de la musculatura del brazo en personas mayores y con enfermedades crónicas.</p>
+  </div>
+  <div class="prose">
+  <h3>Extensores del codo</h3>
+  <p>El tríceps braquial y el ancóneo son los principales extensores. Su fuerza pasa por detrás del eje mediolateral del codo.</p>
+  </div>
+  <div class="tw"><table>
+    <thead><tr><th>Músculo</th><th class="num">Volumen (cm³)</th><th class="num">Longitud de fibra (cm)</th><th class="num">STF (cm²)</th><th class="num">Brazo de momento (cm)</th></tr></thead>
+    <tbody>
+      <tr><td>Tríceps braquial (cabeza larga)</td><td class="num">66,6</td><td class="num">10,2</td><td class="num">6,7</td><td class="num">1,87</td></tr>
+      <tr><td>Tríceps braquial (cabeza medial)</td><td class="num">38,7</td><td class="num">6,3</td><td class="num">6,1</td><td class="num">1,87</td></tr>
+      <tr><td>Tríceps braquial (cabeza lateral)</td><td class="num">47,3</td><td class="num">8,4</td><td class="num">6,0</td><td class="num">1,87</td></tr>
+      <tr><td>Ancóneo</td><td class="num">6,7</td><td class="num">2,7</td><td class="num">2,5</td><td class="num">0,72</td></tr>
+    </tbody>
+    <caption>Datos de An et al. (1981) recogidos por Neumann (2017, tabla 6.7). Longitud medida a 70° de flexión. Brazo de momento medido a 100° de flexión.</caption>
+  </table></div>
+  <div class="prose">
+  <p><b>Tríceps braquial.</b> La cabeza larga nace del tubérculo infraglenoideo de la escápula, la lateral de la cara lateral del húmero y la medial de la cara posteromedial del húmero. Las tres se insertan en el olécranon. Además de extender el codo, la cabeza larga extiende y aduce el hombro, de modo que su eficacia depende de la posición del hombro y del grado de flexión del codo. Su volumen es el mayor de todos los músculos del codo.</p>
+  <p><b>Ancóneo.</b> Se extiende del epicóndilo lateral a la cara posterior del cúbito proximal. Tiene una STF pequeña y una palanca corta, y se le atribuye en torno al 15 % del momento extensor. Aporta estabilidad articular, porque estabiliza el cúbito durante la pronosupinación.</p>
+  <p>El reclutamiento sigue una jerarquía. Las tareas de baja demanda suelen iniciarse con el ancóneo y la cabeza medial del tríceps, y las cabezas medial y larga se activan especialmente en las actividades de gran demanda. Usar solo la cabeza larga en tareas pequeñas obligaría a activar los flexores del hombro para neutralizar su acción extensora, lo que sería poco eficiente. En las tareas de empuje, el deltoides anterior actúa como sinergista y reduce la velocidad de acortamiento del tríceps. El momento extensor máximo aparece hacia los 80-90° de flexión, aunque el brazo de momento del tríceps es mayor cerca de la extensión, porque el olécranon separa el tendón del eje. Esto sugiere que la longitud del músculo influye más que la palanca en el ángulo al que se alcanza el máximo (Neumann, 2017).</p>
+  <h3>Supinadores</h3>
+  <p>Los supinadores principales son el bíceps braquial y el supinador. Los secundarios son los extensores radiales del carpo, el extensor largo del pulgar, el extensor del índice y el braquiorradial cuando el antebrazo parte de pronación. El supinador (corto) nace del epicóndilo lateral, de los ligamentos colateral radial y anular y de la cresta del supinador del cúbito, y se inserta en el tercio proximal del radio. Se recluta en actividades de baja demanda y actúa con independencia del ángulo de flexión del codo. El bíceps tiene unas tres veces la sección transversal del supinador, se recluta en actividades de alta demanda asociadas a la flexión del codo y es más eficaz con el codo a 90°.</p>
+  <p>Al apretar un tornillo con fuerza, el bíceps se suma al supinador y al extensor largo del pulgar. Como el bíceps también flexiona, el tríceps se contrae a la vez para mantener el codo a 90°. Así, bíceps y tríceps son sinergistas en la supinación y antagonistas en la flexoextensión. En conjunto, los supinadores generan alrededor de un 25 % más de momento isométrico que los pronadores, en parte porque tienen el doble de STF (Neumann, 2017).</p>
+  </div>
+  <div class="lab" id="lab-sup">
+    <div class="head"><h3>Figura interactiva 8. El bíceps como supinador</h3><span class="tag">descomposición de fuerzas</span></div>
+    <p>El ángulo de inserción del tendón del bíceps en el radio cambia con la flexión del codo. Con el codo a unos 90°, el tendón se inserta casi perpendicular al radio, y con el codo a 30°, el ángulo de inserción ronda los 30° (Neumann, 2017). La fuerza del bíceps se descompone en una componente rotatoria, perpendicular al radio, y una componente compresiva, a lo largo del radio.</p>
+    <div class="lab-grid">
+      <div class="ctrl">
+        <label for="sp-a">Ángulo de inserción del tendón en el radio <span class="v" id="sp-v">90°</span><input type="range" id="sp-a" min="5" max="90" value="90"></label>
+        <div class="out" id="sp-out" aria-live="polite"></div>
+      </div>
+      <svg class="fig" id="sp-svg" viewBox="0 0 340 260" role="img" aria-labelledby="sp-t"><title id="sp-t">Tendón del bíceps insertándose en el radio con sus componentes rotatoria y compresiva</title></svg>
+    </div>
+  </div>
+  <div class="prose">
+  <h3>Pronadores</h3>
+  <p>Los pronadores principales son el pronador redondo y el pronador cuadrado. Los secundarios son el flexor radial del carpo, el palmar largo y el braquiorradial cuando el antebrazo parte de supinación. El pronador redondo se recluta en actividades de alta demanda y tiene un ligero componente flexor del codo. El pronador cuadrado se extiende de la cara anterior del extremo distal del cúbito a la cara anteroexterna del extremo distal del radio, se recluta en todas las actividades sea cual sea su intensidad y estabiliza la radiocubital distal.</p>
+  </div>
+  <div class="tw"><table>
+    <thead><tr><th>Movimiento</th><th class="num">Hombres (N·m)</th><th class="num">Mujeres (N·m)</th></tr></thead>
+    <tbody>
+      <tr><td>Flexión</td><td class="num">71,0</td><td class="num">32,9</td></tr>
+      <tr><td>Extensión</td><td class="num">41,3</td><td class="num">20,6</td></tr>
+      <tr><td>Pronación</td><td class="num">7,2</td><td class="num">3,5</td></tr>
+      <tr><td>Supinación</td><td class="num">8,9</td><td class="num">4,3</td></tr>
+    </tbody>
+    <caption>Momento isométrico máximo medio con el codo a 90° y el antebrazo en posición neutra, brazo dominante, 104 adultos sanos (Askew et al., 1987, recogido por Neumann, 2017, tabla 6.6).</caption>
+  </table></div>
+  <div class="done-row"><button class="btn done-btn" data-done="musculos" aria-pressed="false">Marcar como estudiado</button></div>
+</section>
+
+<section class="block" id="errores">
+  <div class="prose">
+  <div class="eyebrow">3</div>
+  <h2>Errores frecuentes y cómo evitarlos</h2>
+  </div>
+  <div class="err prose">
+    <div><p><span class="wrong">Aplicar al codo la regla de la superficie convexa.</span> Por ejemplo, afirmar que en la flexión la escotadura troclear se desliza en sentido posterior.</p><p><span class="right">Correcto:</span> en el codo, la superficie que se mueve en CCA es cóncava (cúbito y radio), así que rueda y se desliza en el mismo sentido que el hueso. En la flexión, en sentido anterior.</p></div>
+    <div><p><span class="wrong">Pensar que el braquial cambia con la pronosupinación.</span></p><p><span class="right">Correcto:</span> se inserta en el cúbito, que no rota. Su longitud y su brazo de momento no dependen de la posición del antebrazo.</p></div>
+    <div><p><span class="wrong">Creer que el músculo con mayor brazo de momento es el más fuerte.</span></p><p><span class="right">Correcto:</span> el momento depende de la fuerza y del brazo. El braquiorradial tiene el mayor brazo de momento (5,19 cm), pero poca STF (1,5 cm²). El braquial tiene la mayor STF de los flexores (7,0 cm²).</p></div>
+    <div><p><span class="wrong">Confundir qué fibras del LCM se tensan en cada posición.</span></p><p><span class="right">Correcto:</span> los componentes anteriores se tensan en extensión y los posteriores en flexión. Ambos se oponen al valgo, y el haz anterior es el más importante.</p></div>
+    <div><p><span class="wrong">Considerar una deformidad el ángulo de transporte de 13-15°.</span></p><p><span class="right">Correcto:</span> es el valgo fisiológico. Se habla de deformidad en valgo cuando el ángulo es excesivo (unos 20-25° según Neumann) y de varo cuando el antebrazo se dirige hacia la línea media.</p></div>
+    <div><p><span class="wrong">Olvidar que la eficacia supinadora del bíceps depende del ángulo del codo.</span></p><p><span class="right">Correcto:</span> con el codo a 90°, casi toda su fuerza es rotatoria. Con el codo cerca de la extensión, buena parte de la fuerza comprime el radio contra el capítulo y apenas lo hace girar.</p></div>
+    <div><p><span class="wrong">Pensar que una carga en la mano genera el mismo momento en cualquier ángulo.</span></p><p><span class="right">Correcto:</span> con el brazo vertical, el brazo de momento de la carga es máximo con el antebrazo horizontal (90°) y casi nulo con el codo extendido.</p></div>
+    <div><p><span class="wrong">Recomendar mantener la posición de confort (80°) hasta que desaparezca el derrame.</span></p><p><span class="right">Correcto:</span> alivia la presión intracapsular, pero, si se mantiene, favorece un codo rígido en flexión.</p></div>
+  </div>
+</section>
+
+<section class="block" id="resumen">
+  <div class="prose">
+  <div class="eyebrow">4</div>
+  <h2>Resumen</h2>
+  <p>El complejo del codo reúne cuatro articulaciones. La humerocubital y la humerorradial permiten la flexoextensión, y las radiocubitales proximal y distal, la pronosupinación. La humerocubital es muy congruente y aporta estabilidad estructural, mientras que el LCM se opone al valgo y el complejo lateral, al varo y a la inestabilidad rotatoria posterolateral. Como las superficies que se mueven son cóncavas, ruedan y se deslizan en el mismo sentido que el hueso. El arco funcional (30-130° de flexión y 50° de pronación a 50° de supinación) es menor que el recorrido completo. El braquial es el flexor con mayor fuerza, el tríceps domina la extensión y la acción supinadora del bíceps es máxima con el codo a 90°.</p>
+  </div>
+</section>
+
+<section class="block" id="test">
+  <div class="prose">
+  <div class="eyebrow">5</div>
+  <h2>Autoevaluación</h2>
+  <p>Diez preguntas con corrección inmediata. Sus respuestas se guardan en este navegador.</p>
+  </div>
+  <div class="quiz prose" id="quiz"></div>
+  <div class="score prose"><span id="score" aria-live="polite"></span><button class="btn" id="quizReset">Borrar respuestas</button></div>
+</section>
+
+<section class="block" id="lecturas">
+  <div class="prose">
+  <div class="eyebrow">6</div>
+  <h2>Lecturas recomendadas</h2>
+  <ol class="refs">
+    <li>Neumann DA. Kinesiology of the musculoskeletal system: foundations for rehabilitation. 3rd ed. St. Louis: Elsevier; 2017. Chapter 6, Elbow and forearm.</li>
+    <li>Marinelli A, Graves BR, Bain GI, Pederzini L. Treatment of elbow instability: state of the art. J ISAKOS. 2021;6(2):102-15. doi: <a href="https://doi.org/10.1136/jisakos-2019-000316" target="_blank" rel="noopener">10.1136/jisakos-2019-000316</a></li>
+    <li>Heijink A, Vanhees M, van den Ende K, van den Bekerom MP, van Riet RP, Van Dijk CN, et al. Biomechanical considerations in the pathogenesis of osteoarthritis of the elbow. Knee Surg Sports Traumatol Arthrosc. 2016;24(7):2313-8. doi: <a href="https://doi.org/10.1007/s00167-015-3518-7" target="_blank" rel="noopener">10.1007/s00167-015-3518-7</a></li>
+    <li>Umur LF, Surucu S. Association between increased elbow carrying angle and lateral epicondylitis. Cureus. 2022;14(3):e22981. doi: <a href="https://doi.org/10.7759/cureus.22981" target="_blank" rel="noopener">10.7759/cureus.22981</a></li>
+  </ol>
+  <p class="src">Otras fuentes citadas en el texto: Wu LW, et al. PLoS One. 2017;12(2):e0171707. doi: 10.1371/journal.pone.0171707. Li S, et al. Int J Med Sci. 2020;17(18):2947-53. doi: 10.7150/ijms.49637. Lin F, et al. J Shoulder Elbow Surg. 2007;16(6):795-802.</p>
+  </div>
+</section>
+
+<section class="block" id="glosario">
+  <div class="prose">
+  <div class="eyebrow">Repaso</div>
+  <h2>Glosario</h2>
+  <label for="gloss-search" class="src">Buscar un término</label><br>
+  <input type="search" id="gloss-search" placeholder="Por ejemplo: trocoide">
+  <dl class="gloss" id="gloss"></dl>
+  </div>
+</section>
+
+<section class="block" id="tarjetas">
+  <div class="eyebrow">Repaso</div>
+  <h2>Tarjetas de repaso</h2>
+  <p class="prose">Pulsen una tarjeta (o usen la tecla Intro) para ver la respuesta.</p>
+  <div class="cards" id="cards"></div>
+</section>
+
+<footer>Biomecánica del Aparato Locomotor · Grado en Fisioterapia · Universidad Complutense de Madrid · Curso 2026-27. Material complementario de las clases.</footer>
+</main>
+</div>
+
+<script>
+(function(){
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const fmt=(x,d=0)=>x.toLocaleString('es-ES',{minimumFractionDigits:d,maximumFractionDigits:d});
+const KEY='biomec-codo-v2';
+let st={done:{},quiz:{}};
+try{const r=localStorage.getItem(KEY); if(r){const o=JSON.parse(r); st={done:o.done||{},quiz:o.quiz||{}}}}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}};
+const SECS=['anatomia','alineacion','estabilidad','movilidad','artro','musculos'];
+const R=d=>d*Math.PI/180;
+
+/* tema y navegación */
+const root=document.documentElement;
+$('#themeBtn').addEventListener('click',()=>{const dark=root.dataset.theme?root.dataset.theme==='dark':matchMedia('(prefers-color-scheme: dark)').matches; root.dataset.theme=dark?'light':'dark'});
+const nav=$('#sidenav'), tg=$('#navToggle'), mq=matchMedia('(max-width:860px)');
+function setNav(open){tg.setAttribute('aria-expanded',open); nav.hidden=mq.matches&&!open}
+setNav(false); mq.addEventListener('change',()=>setNav(false));
+tg.addEventListener('click',()=>setNav(tg.getAttribute('aria-expanded')!=='true'));
+nav.addEventListener('click',e=>{if(e.target.closest('a')&&mq.matches)setNav(false)});
+
+/* progreso */
+function renderProgress(){
+  const d=SECS.filter(s=>st.done[s]).length, q=Object.keys(st.quiz).length;
+  const pct=Math.round((d/SECS.length*0.6+q/QZ.length*0.4)*100);
+  $('#pbar').style.width=pct+'%'; $('.bar').setAttribute('aria-valuenow',pct);
+  $('#ptext').textContent=d+' de '+SECS.length+' apartados estudiados · '+pct+' %';
+  $('#qtext').textContent='Autoevaluación: '+q+' de '+QZ.length+' respondidas';
+  $$('.done-btn').forEach(b=>{const on=!!st.done[b.dataset.done]; b.setAttribute('aria-pressed',on); b.textContent=on?'Estudiado ✓':'Marcar como estudiado'});
+  $$('nav a[data-sec]').forEach(a=>{a.querySelector('.tick').textContent=st.done[a.dataset.sec]?'✓':''});
+}
+$$('.done-btn').forEach(b=>b.addEventListener('click',()=>{const k=b.dataset.done; st.done[k]=!st.done[k]; save(); renderProgress()}));
+$('#resetBtn').addEventListener('click',()=>{$('#resetAsk').hidden=false});
+$('#resetNo').addEventListener('click',()=>{$('#resetAsk').hidden=true});
+$('#resetYes').addEventListener('click',()=>{st={done:{},quiz:{}}; save(); $('#resetAsk').hidden=true; renderQuiz(); renderProgress()});
+
+/* utilidades SVG */
+const NS='http://www.w3.org/2000/svg';
+function el(tag,a,p,t){const e=document.createElementNS(NS,tag); for(const k in a)e.setAttribute(k,a[k]); if(t!=null)e.textContent=t; if(p)p.appendChild(e); return e}
+function clear(s){[...s.childNodes].forEach(n=>{if(n.nodeName!=='title')s.removeChild(n)})}
+function marker(s,id,color){const d=el('defs',{},s); const m=el('marker',{id:id,viewBox:'0 0 10 10',refX:'5',refY:'5',markerWidth:'4',markerHeight:'4',orient:'auto-start-reverse'},d); el('path',{d:'M0,0 L10,5 L0,10 z',fill:color},m); return d}
+const B={fill:'var(--bone)',stroke:'var(--bone-line)','stroke-width':'2','stroke-linejoin':'round'};
+const T=(p,x,y,t,o={})=>el('text',Object.assign({x:x,y:y,'font-size':'11'},o),p,t);
+/* flecha azul ancha con rótulo, al estilo de las diapositivas */
+function bigArc(s,id,cx,cy,r,a0,a1,label){
+  const p=(a)=>[cx+r*Math.cos(R(a)),cy+r*Math.sin(R(a))];
+  const [x0,y0]=p(a0),[x1,y1]=p(a1), large=Math.abs(a1-a0)>180?1:0, sw=a1>a0?1:0;
+  const d='M '+x0+' '+y0+' A '+r+' '+r+' 0 '+large+' '+sw+' '+x1+' '+y1;
+  const defs=el('defs',{},s);
+  const mid=((a0+a1)/2%360+360)%360, below=mid>0&&mid<180;
+  const lo=Math.min(a0,a1), hi=Math.max(a0,a1); const [ux0,uy0]=p(below?hi:lo),[ux1,uy1]=p(below?lo:hi);
+  el('path',{id:id,d:'M '+ux0+' '+uy0+' A '+r+' '+r+' 0 '+large+' '+(below?0:1)+' '+ux1+' '+uy1},defs);
+  const mk=el('marker',{id:id+'m',viewBox:'0 0 10 10',refX:'3',refY:'5',markerWidth:'2.1',markerHeight:'2.1',orient:'auto'},defs); el('path',{d:'M0,0 L10,5 L0,10 z',fill:'var(--arrow)'},mk);
+  el('path',{d:d,fill:'none',stroke:'var(--arrow)','stroke-width':'20','marker-end':'url(#'+id+'m)'},s);
+  const t=el('text',{'font-size':'11','font-weight':'700','letter-spacing':'1.5',fill:'var(--arrow-ink)',dy:'4'},s); t.style.fill='var(--arrow-ink)';
+  el('textPath',{href:'#'+id,startOffset:'50%','text-anchor':'middle'},t,label);
+}
+function straightArrow(s,id,x1,y1,x2,y2,color,w){
+  const d=el('defs',{},s); const m=el('marker',{id:id,viewBox:'0 0 10 10',refX:'5',refY:'5',markerWidth:'3.2',markerHeight:'3.2',orient:'auto'},d); el('path',{d:'M0,0 L10,5 L0,10 z',fill:color},m);
+  el('line',{x1:x1,y1:y1,x2:x2,y2:y2,stroke:color,'stroke-width':w||5,'marker-end':'url(#'+id+')'},s);
+}
+/* hueso largo con epífisis redondeadas */
+function longBone(p,x,y,w,h){el('path',Object.assign({d:'M '+(x-w/2)+' '+y+' q '+(-6)+' 8 0 16 L '+(x-w/2+3)+' '+(y+h-16)+' q -6 8 0 16 L '+(x+w/2)+' '+(y+h)+' q 6 -8 0 -16 L '+(x+w/2-3)+' '+(y+16)+' q 6 -8 0 -16 Z'},B),p)}
+
+/* Figura 1: planos y ejes */
+const MV={
+ flex:{t:'Flexión',plano:'Sagital',eje:'Mediolateral, que atraviesa el capítulo y la tróclea',art:'Humerocubital y humerorradial'},
+ ext:{t:'Extensión',plano:'Sagital',eje:'Mediolateral, que atraviesa el capítulo y la tróclea',art:'Humerocubital y humerorradial'},
+ sup:{t:'Supinación',plano:'Transversal (con el antebrazo vertical, en posición anatómica)',eje:'Longitudinal del antebrazo, desde la cabeza del radio hasta la cabeza del cúbito',art:'Radiocubitales proximal y distal, con participación de la humerorradial'},
+ pro:{t:'Pronación',plano:'Transversal (con el antebrazo vertical, en posición anatómica)',eje:'Longitudinal del antebrazo, desde la cabeza del radio hasta la cabeza del cúbito',art:'Radiocubitales proximal y distal, con participación de la humerorradial'}
+};
+let mv='flex';
+function drawPl(){
+  const s=$('#pl-svg'); clear(s); const m=MV[mv];
+  if(mv==='flex'||mv==='ext'){
+    T(s,12,20,'Vista lateral',{'font-weight':'600'});
+    longBone(s,110,20,26,135);
+    const a=mv==='flex'?-60:-15;
+    const g=el('g',{transform:'rotate('+a+' 110 150)'},s);
+    longBone(g,104,150,14,120); longBone(g,120,150,12,118);
+    el('circle',{cx:'110',cy:'150',r:'15',fill:'var(--cart)',stroke:'var(--bone-line)','stroke-width':'2'},s);
+    el('circle',{cx:'110',cy:'150',r:'4',fill:'var(--fg)'},s);
+    bigArc(s,'plA',110,150,115,mv==='flex'?80:-10,mv==='flex'?-10:80,mv==='flex'?'FLEXIÓN':'EXTENSIÓN');
+    T(s,20,290,'El eje mediolateral atraviesa el codo perpendicular al papel');
+    T(s,70,105,'Húmero',{transform:'rotate(-90 70 105)'});
+  }else{
+    T(s,12,20,'Vista anterior',{'font-weight':'600'});
+    longBone(s,170,20,26,120);
+    longBone(s,158,140,14,130); longBone(s,182,140,14,130);
+    el('line',{x1:'170',y1:'128',x2:'170',y2:'285',stroke:'var(--fg)','stroke-width':'2','stroke-dasharray':'6 4'},s);
+    const sup=mv==='sup';
+    const defs=el('defs',{},s); const mk=el('marker',{id:'plE',viewBox:'0 0 10 10',refX:'3',refY:'5',markerWidth:'2.2',markerHeight:'2.2',orient:'auto'},defs); el('path',{d:'M0,0 L10,5 L0,10 z',fill:'var(--arrow)'},mk);
+    el('path',{d:sup?'M 105 210 Q 170 255 235 210':'M 235 210 Q 170 255 105 210',fill:'none',stroke:'var(--arrow)','stroke-width':'18','marker-end':'url(#plE)'},s);
+    el('path',{id:'plP',d:'M 112 222 Q 170 262 228 222',fill:'none'},defs);
+    const t=el('text',{'font-size':'11','font-weight':'700','letter-spacing':'1.5'},s); t.style.fill='var(--arrow-ink)';
+    el('textPath',{href:'#plP',startOffset:'50%','text-anchor':'middle'},t,sup?'SUPINACIÓN':'PRONACIÓN');
+    T(s,190,295,'Eje longitudinal del antebrazo');
+    T(s,126,165,'Radio',{'text-anchor':'end'}); T(s,214,165,'Cúbito');
+  }
+  $('#pl-out').innerHTML='<div><span class="k">Movimiento:</span> '+m.t+'</div><div><span class="k">Plano:</span> '+m.plano+'</div><div><span class="k">Eje:</span> '+m.eje+'</div><div><span class="k">Articulaciones:</span> '+m.art+'</div>';
+}
+$$('#lab-planos [data-mv]').forEach(b=>b.addEventListener('click',()=>{mv=b.dataset.mv; $$('#lab-planos [data-mv]').forEach(x=>x.setAttribute('aria-pressed',x===b)); drawPl()}));
+
+/* Figura 2: ángulo de transporte */
+function drawVg(){
+  const a=+$('#vg-ang').value; $('#vg-v').textContent=a+'°';
+  const s=$('#vg-svg'); clear(s);
+  const ex=150, ey=150;
+  el('line',{x1:ex,y1:'10',x2:ex,y2:'330',stroke:'var(--muted)','stroke-width':'1.5','stroke-dasharray':'6 5'},s);
+  longBone(s,ex,15,30,118);
+  el('path',Object.assign({d:'M 118 128 Q 116 150 128 158 L 172 158 Q 186 150 184 126 Q 168 136 150 134 Q 132 136 118 128 Z'},B),s);
+  const g=el('g',{transform:'rotate('+a+' '+ex+' '+ey+')'},s);
+  longBone(g,ex-12,160,15,150); longBone(g,ex+12,158,15,152);
+  el('line',{x1:ex,y1:ey,x2:ex,y2:'330',stroke:'var(--hl)','stroke-width':'2','stroke-dasharray':'6 5'},g);
+  const r=165, x2=ex-r*Math.sin(R(a)), y2=ey+r*Math.cos(R(a));
+  if(a!==0) el('path',{d:'M '+ex+' '+(ey+r)+' A '+r+' '+r+' 0 0 '+(a>0?1:0)+' '+x2+' '+y2,fill:'none',stroke:'var(--hl)','stroke-width':'3'},s);
+  const lx=ex-(r+14)*Math.sin(R(a/2))-(a>=0?22:-6), ly=ey+(r+14)*Math.cos(R(a/2))+14;
+  T(s,lx,ly,a+'°',{'font-size':'14','font-weight':'700'}).style.fill='var(--hl)';
+  T(s,14,330,'Lateral',{'font-weight':'600'}); T(s,240,330,'Medial',{'font-weight':'600'});
+  T(s,180,40,'Brazo derecho,'); T(s,180,54,'vista anterior');
+  T(s,192,110,'Eje del húmero'); T(s,192,124,'(discontinuo gris)');
+  let cls,txt;
+  if(a<0){cls='bad';txt='Deformidad en varo: el antebrazo se dirige hacia la línea media.'}
+  else if(a<=20){cls='ok';txt='Valgo fisiológico (media en torno a 13°, DE ≈ 6°).'}
+  else if(a<25){cls='bad';txt='Zona límite: Neumann sitúa la deformidad en valgo por encima de unos 20-25°.'}
+  else{cls='bad';txt='Deformidad en valgo (valgo excesivo). Puede estirar el nervio cubital.'}
+  $('#vg-out').innerHTML='<div><span class="pill '+cls+'">'+(cls==='ok'?'Fisiológico':'Alterado')+'</span></div><div>'+txt+'</div>';
+}
+$('#vg-ang').addEventListener('input',drawVg);
+
+/* Figura 3: ligamentos, vistas medial y lateral */
+const ST={
+ valgo:{on:['lcmA','lcmP'],t:'Valgo: LCM, sobre todo su haz anterior, y fibras posteriores. Como estabilizador secundario actúa el origen común de los flexores (flexor cubital del carpo).'},
+ varo:{on:['lcr','lclu'],t:'Varo: ligamento colateral radial y colateral lateral ulnar. Como estabilizadores secundarios actúan la humerorradial y el origen común de los extensores.'},
+ ext:{on:['lcmA'],t:'Extensión: componentes anteriores del LCM y parte anterior de la cápsula. El tope óseo es el olécranon en la fosa olecraniana.'},
+ flex:{on:['lcmP','lclu'],t:'Flexión: fibras posteriores del LCM, colateral lateral ulnar y cápsula posterior.'},
+ dist:{on:['an'],t:'Distracción del radio: ligamento anular, con ayuda del cordón oblicuo.'},
+ pl:{on:['lclu'],t:'Inestabilidad rotatoria posterolateral: el colateral lateral ulnar es el freno principal. Si se rompe, la cabeza del radio se luxa en sentido posterior y lateral por debajo del capítulo.'}
+};
+let stk='valgo';
+function lig(p,d,k,on,w){el('path',{d:d,fill:'none',stroke:on.includes(k)?'var(--hl)':'var(--lig-line)','stroke-width':(w||10)+2,'stroke-linecap':'round'},p); el('path',{d:d,fill:'none',stroke:on.includes(k)?'var(--hl)':'var(--lig)','stroke-width':w||10,'stroke-linecap':'round'},p)}
+function drawLg(){
+  const s=$('#lg-svg'); clear(s); const on=ST[stk].on;
+  /* vista medial: anterior a la izquierda */
+  const m=el('g',{},s);
+  T(m,12,22,'Vista medial',{'font-weight':'600','font-size':'12'});
+  longBone(m,112,176,16,114);
+  el('path',Object.assign({d:'M 135 30 L 180 30 L 182 115 Q 200 128 195 150 Q 185 165 165 162 L 140 162 Q 125 150 132 115 Z'},B),m);
+  el('path',Object.assign({d:'M 200 150 Q 214 162 206 184 L 180 196 L 176 290 L 152 290 L 150 200 Q 132 192 126 178 Q 138 170 150 176 Q 166 168 180 166 Q 190 152 200 150 Z'},B),m);
+  el('circle',Object.assign({cx:'172',cy:'140',r:'12'},B),m);
+  lig(m,'M 172 140 Q 150 160 134 180','lcmA',on);
+  lig(m,'M 176 148 Q 194 158 202 172','lcmP',on,12);
+  lig(m,'M 138 188 Q 170 198 200 182','lcmT',[],6);
+  T(m,172,120,'Epitróclea',{'text-anchor':'middle'});
+  T(m,14,150,'Haz anterior'); el('line',{x1:'78',y1:'154',x2:'146',y2:'164',stroke:'var(--muted)'},m);
+  T(m,212,148,'Haz posterior');
+  T(m,200,226,'Fascículo transverso'); el('line',{x1:'204',y1:'216',x2:'176',y2:'196',stroke:'var(--muted)'},m);
+  T(m,164,278,'Cúbito',{'text-anchor':'middle'}); T(m,112,278,'Radio',{'text-anchor':'middle'});
+  T(m,14,292,'Anterior',{'font-size':'10'}); T(m,250,292,'Posterior',{'font-size':'10'});
+  /* vista lateral: anterior a la derecha */
+  const l=el('g',{transform:'translate(320,0)'},s);
+  T(l,12,22,'Vista lateral',{'font-weight':'600','font-size':'12'});
+  el('path',Object.assign({d:'M 110 150 Q 96 166 108 186 L 128 198 L 130 290 L 152 290 L 154 200 Q 166 186 162 172 Q 140 168 130 160 Q 120 150 110 150 Z'},B),l);
+  el('path',Object.assign({d:'M 130 30 L 175 30 L 178 115 Q 195 128 192 150 Q 180 165 160 162 L 135 162 Q 118 150 128 115 Z'},B),l);
+  longBone(l,190,180,18,110);
+  el('rect',{x:'171',y:'166',width:'38',height:'18',rx:'7',fill:'var(--bone-dk)',stroke:'var(--bone-line)','stroke-width':'2'},l);
+  el('circle',Object.assign({cx:'140',cy:'140',r:'12'},B),l);
+  lig(l,'M 140 142 Q 160 152 176 168','lcr',on);
+  lig(l,'M 134 148 Q 116 186 136 222','lclu',on);
+  lig(l,'M 168 176 L 212 176','an',on,13);
+  T(l,140,120,'Epicóndilo',{'text-anchor':'middle'});
+  T(l,192,148,'Colateral radial'); T(l,220,180,'Anular');
+  T(l,10,240,'Colateral lateral'); T(l,10,253,'ulnar'); el('line',{x1:'70',y1:'236',x2:'126',y2:'208',stroke:'var(--muted)'},l);
+  T(l,141,278,'Cúbito',{'text-anchor':'middle'}); T(l,190,278,'Radio',{'text-anchor':'middle'});
+  T(l,10,292,'Posterior',{'font-size':'10'}); T(l,252,292,'Anterior',{'font-size':'10'});
+  $('#lg-out').textContent=ST[stk].t;
+}
+$$('#lab-lig [data-st]').forEach(b=>b.addEventListener('click',()=>{stk=b.dataset.st; $$('#lab-lig [data-st]').forEach(x=>x.setAttribute('aria-pressed',x===b)); drawLg()}));
+
+/* Figura 4: arco funcional en abanico */
+function sector(p,cx,cy,r,a0,a1,attrs){ /* ángulos matemáticos en grados, antihorario */
+  const P=a=>[cx+r*Math.cos(R(a)),cy-r*Math.sin(R(a))];
+  const [x0,y0]=P(a0),[x1,y1]=P(a1);
+  return el('path',Object.assign({d:'M '+cx+' '+cy+' L '+x0+' '+y0+' A '+r+' '+r+' 0 '+(a1-a0>180?1:0)+' 0 '+x1+' '+y1+' Z'},attrs),p);
+}
+function arcLine(p,cx,cy,r,a0,a1,attrs){const P=a=>[cx+r*Math.cos(R(a)),cy-r*Math.sin(R(a))]; const [x0,y0]=P(a0),[x1,y1]=P(a1); return el('path',Object.assign({d:'M '+x0+' '+y0+' A '+r+' '+r+' 0 '+(a1-a0>180?1:0)+' 0 '+x1+' '+y1,fill:'none'},attrs),p)}
+function drawRm(){
+  const de=+$('#rm-ext').value, fx=Math.max(+$('#rm-flx').value,de), pr=+$('#rm-pro').value, su=+$('#rm-sup').value;
+  $('#rm-ext-v').textContent=de+'°'; $('#rm-flx-v').textContent=fx+'°'; $('#rm-pro-v').textContent=pr+'°'; $('#rm-sup-v').textContent=su+'°';
+  const s=$('#rm-svg'); clear(s);
+  const d=el('defs',{},s); const pat=el('pattern',{id:'hatch',width:'7',height:'7',patternUnits:'userSpaceOnUse',patternTransform:'rotate(45)'},d); el('line',{x1:'0',y1:'0',x2:'0',y2:'7',stroke:'var(--hl)','stroke-width':'1.6'},pat);
+  /* flexoextensión: húmero horizontal hacia la izquierda, antebrazo gira en sentido antihorario */
+  const cx=150, cy=185, r=125;
+  T(s,12,20,'Flexoextensión',{'font-weight':'600','font-size':'12'});
+  sector(s,cx,cy,r,-5,150,{fill:'var(--pink)',stroke:'none'});
+  sector(s,cx,cy,r,30,130,{fill:'url(#hatch)',stroke:'var(--hl)','stroke-width':'1'});
+  arcLine(s,cx,cy,r-8,de,fx,{stroke:'var(--hl)','stroke-width':'10','stroke-linecap':'round'});
+  el('rect',Object.assign({x:'10',y:cy-11,width:cx-10,height:'22',rx:'10'},B),s);
+  const g=el('g',{transform:'rotate('+(-fx)+' '+cx+' '+cy+')'},s);
+  el('rect',Object.assign({x:cx,y:cy-9,width:'112',height:'18',rx:'9'},B),g);
+  el('circle',Object.assign({cx:cx,cy:cy,r:'12'},B),s);
+  [[-5,'-5°'],[0,'0°'],[30,'30°'],[90,'90°'],[130,'130°'],[145,'145°']].forEach(([a,t])=>{const x=cx+(r+16)*Math.cos(R(a)), y=cy-(r+16)*Math.sin(R(a)); T(s,x,y+4,t,{'text-anchor':'middle','font-size':'10'})});
+  T(s,20,cy+30,'Húmero');
+  /* pronosupinación: vista de frente del puño, pulgar arriba = 0° */
+  const px=170, py=410, pr2=110;
+  T(s,12,250,'Pronosupinación',{'font-weight':'600','font-size':'12'});
+  sector(s,px,py,pr2,90-85,90+75,{fill:'var(--pink)',stroke:'none'});
+  sector(s,px,py,pr2,90-50,90+50,{fill:'url(#hatch)',stroke:'var(--hl)','stroke-width':'1'});
+  arcLine(s,px,py,pr2-8,90-su,90+pr,{stroke:'var(--hl)','stroke-width':'10','stroke-linecap':'round'});
+  el('ellipse',Object.assign({cx:px,cy:py-8,rx:'24',ry:'20'},B),s);
+  el('rect',Object.assign({x:px-6,y:py-42,width:'12',height:'22',rx:'6'},B),s);
+  [[90,'0°'],[90-50,'50°'],[90+50,'50°'],[90-85,'85° S'],[90+75,'75° P']].forEach(([a,t])=>{const x=px+(pr2+16)*Math.cos(R(a)), y=py-(pr2+16)*Math.sin(R(a)); T(s,x,y+4,t,{'text-anchor':'middle','font-size':'10'})});
+  T(s,px+60,py+14,'Supinación',{'font-size':'10'}); T(s,px-118,py+14,'Pronación',{'font-size':'10'});
+  const fe=de<=30&&fx>=130, ps=pr>=50&&su>=50, rig=de>30&&fx<120;
+  $('#rm-out').innerHTML=
+   '<div><span class="pill '+(fe?'ok':'bad')+'">'+(fe?'Cubre':'No cubre')+'</span> el arco funcional de flexoextensión (30-130°).</div>'+
+   '<div><span class="pill '+(ps?'ok':'bad')+'">'+(ps?'Cubre':'No cubre')+'</span> el arco funcional de pronosupinación (50° y 50°).</div>'+
+   '<div>'+(rig?'<b>Codo rígido</b> según la definición de clase (déficit de extensión mayor de 30° y flexión menor de 120°).':'No cumple la definición de codo rígido.')+'</div>';
+}
+['#rm-ext','#rm-flx','#rm-pro','#rm-sup'].forEach(id=>$(id).addEventListener('input',drawRm));
+
+/* Figura 5: corte sagital de la humerocubital */
+let hcPrev=60, hcDir=1;
+function drawHc(){
+  const a=+$('#hc-ang').value; if(a!==hcPrev){hcDir=a>hcPrev?1:-1; hcPrev=a} $('#hc-v').textContent=a+'°';
+  const s=$('#hc-svg'); clear(s);
+  const cx=170, cy=135;
+  T(s,12,20,'Corte sagital · anterior a la derecha',{'font-weight':'600'});
+  /* húmero con fosas */
+  el('path',Object.assign({d:'M 130 32 L 200 32 L 204 80 Q 214 100 214 125 L 126 125 Q 124 100 132 80 Z'},B),s);
+  el('ellipse',{cx:'138',cy:'92',rx:'9',ry:'16',fill:'var(--fig)',stroke:'var(--bone-line)','stroke-width':'1.5'},s);
+  el('ellipse',{cx:'204',cy:'98',rx:'7',ry:'12',fill:'var(--fig)',stroke:'var(--bone-line)','stroke-width':'1.5'},s);
+  el('circle',{cx:cx,cy:cy,r:'46',fill:'var(--cart)',stroke:'var(--bone-line)','stroke-width':'2'},s);
+  el('circle',Object.assign({cx:cx,cy:cy,r:'39'},B),s);
+  T(s,cx,cy+4,'Tróclea',{'text-anchor':'middle','font-weight':'600'});
+  T(s,62,92,'Fosa olecraniana',{'font-size':'10'}); T(s,214,74,'Fosa coronoidea',{'font-size':'10'});
+  /* cúbito: rota alrededor del centro de la tróclea */
+  const g=el('g',{transform:'rotate('+(-a)+' '+cx+' '+cy+')'},s);
+  const P=(rr,ang)=>[cx+rr*Math.cos(R(ang)),cy+rr*Math.sin(R(ang))];
+  const [ox,oy]=P(60,200),[ix,iy]=P(48,200),[kx,ky]=P(48,350),[qx,qy]=P(64,352);
+  el('path',Object.assign({d:'M '+ix+' '+iy+' A 48 48 0 1 0 '+kx+' '+ky+' L '+qx+' '+qy+' Q '+(cx+34)+' '+(cy+50)+' '+(cx+16)+' '+(cy+76)+' L '+(cx+12)+' '+(cy+190)+' L '+(cx-12)+' '+(cy+190)+' L '+(cx-18)+' '+(cy+78)+' Q '+(cx-52)+' '+(cy+50)+' '+ox+' '+oy+' Z'},B),g);
+  el('path',{d:'M '+ix+' '+iy+' A 48 48 0 1 0 '+kx+' '+ky,fill:'none',stroke:'var(--cart)','stroke-width':'5'},g);
+  T(g,cx-3,cy+150,'Cúbito',{transform:'rotate(90 '+(cx-3)+' '+(cy+150)+')'});
+  T(g,ox-8,oy+20,'Olécranon',{'font-size':'10','text-anchor':'end'});
+  T(g,qx+6,qy+12,'Coronoides',{'font-size':'10'});
+  /* flechas de rodamiento y deslizamiento sobre la superficie */
+  const dir=hcDir; const base=90-a; /* punto de contacto central en coordenadas de pantalla */
+  const arcA=(rr,id,lab)=>{
+    const a0=base+dir*28, a1=base-dir*28;
+    const p0=P(rr,a0), p1=P(rr,a1);
+    const defs=el('defs',{},s); const mk=el('marker',{id:id,viewBox:'0 0 10 10',refX:'3',refY:'5',markerWidth:'2.6',markerHeight:'2.6',orient:'auto'},defs); el('path',{d:'M0,0 L10,5 L0,10 z',fill:'var(--arrow)'},mk);
+    el('path',{d:'M '+p0[0]+' '+p0[1]+' A '+rr+' '+rr+' 0 0 '+(dir>0?0:1)+' '+p1[0]+' '+p1[1],fill:'none',stroke:'var(--arrow)','stroke-width':'7','marker-end':'url(#'+id+')'},s);
+  };
+  arcA(76,'hcR'); arcA(100,'hcD');
+  T(s,12,322,'Flecha interior: rodamiento · flecha exterior: deslizamiento',{'font-size':'10'});
+  let lim='';
+  if(a<=3) lim='Tope en extensión: el pico del olécranon choca con la fosa olecraniana y se tensa la cápsula anterior.';
+  else if(a>=140) lim='Tope en flexión: tensión de la cápsula posterior, impacto óseo y contacto de las masas musculares.';
+  $('#hc-out').innerHTML='<div><span class="k">Último movimiento:</span> '+(dir>0?'flexión':'extensión')+'</div><div>La escotadura troclear (cóncava) rueda y se desliza en sentido <b>'+(dir>0?'anterior':'posterior')+'</b>, el mismo que el del cúbito.</div>'+(lim?'<div>'+lim+'</div>':'');
+}
+$('#hc-ang').addEventListener('input',drawHc);
+
+/* Figura 6: radiocubital proximal desde arriba */
+function drawRc(){
+  const a=+$('#rc-ang').value; $('#rc-v').textContent=(a>0?'+':'')+a+'°';
+  const s=$('#rc-svg'); clear(s);
+  const cx=190, cy=150;
+  T(s,12,20,'Vista superior · antebrazo derecho',{'font-weight':'600'});
+  el('path',Object.assign({d:'M 20 90 Q 60 70 110 92 Q 140 110 140 150 Q 140 190 110 208 Q 60 230 20 210 Z'},B),s);
+  el('path',{d:'M 140 112 A 50 50 0 0 1 140 188',fill:'none',stroke:'var(--cart)','stroke-width':'6'},s);
+  T(s,40,155,'Cúbito fijo',{'font-weight':'600'});
+  el('circle',{cx:cx,cy:cy,r:'58',fill:'none',stroke:'var(--lig-line)','stroke-width':'14'},s);
+  el('circle',{cx:cx,cy:cy,r:'58',fill:'none',stroke:'var(--lig)','stroke-width':'11'},s);
+  const g=el('g',{transform:'rotate('+a+' '+cx+' '+cy+')'},s);
+  el('circle',{cx:cx,cy:cy,r:'48',fill:'var(--radhead)',stroke:'var(--bone-line)','stroke-width':'2'},g);
+  el('circle',{cx:cx,cy:cy,r:'22',fill:'var(--bone)',stroke:'var(--bone-line)','stroke-width':'2'},g);
+  el('path',Object.assign({d:'M '+(cx-14)+' '+(cy-46)+' Q '+cx+' '+(cy-72)+' '+(cx+14)+' '+(cy-46)+' Z'},B),g);
+  T(s,cx,cy+4,'Radio',{'text-anchor':'middle','font-weight':'600'});
+  T(s,cx,cy+88,'Ligamento anular',{'font-size':'10','text-anchor':'middle'}); T(s,12,290,'El saliente de la cabeza del radio es la tuberosidad bicipital',{'font-size':'10'});
+  if(a!==0) bigArc(s,'rcA',cx,cy,96,a>0?-150:-30,a>0?-30:-150,a>0?'SUPINACIÓN':'PRONACIÓN');
+  const out=a>0?'Supinación de '+a+'°. Se estiran los pronadores (pronador redondo, pronador cuadrado, flexor radial del carpo) y el ligamento capsular palmar de la radiocubital distal.':a<0?'Pronación de '+(-a)+'°. Se estiran el bíceps, el supinador, los extensores radiales y el extensor largo del pulgar, y el ligamento capsular dorsal de la radiocubital distal.':'Posición neutra (pulgar hacia arriba).';
+  $('#rc-out').innerHTML='<div>'+out+'</div><div class="src">La cabeza del radio gira dentro del anillo osteofibroso. En la radiocubital distal, la escotadura cubital del radio rueda y se desliza en el mismo sentido sobre la cabeza del cúbito.</div>';
+}
+$('#rc-ang').addEventListener('input',drawRc);
+
+/* Figura 7: brazo de momento de la carga */
+function drawMm(){
+  const ang=+$('#mm-ang').value; $('#mm-v').textContent=ang+'°';
+  const rel=Math.sin(R(ang));
+  const s=$('#mm-svg'); clear(s);
+  const ex=120, ey=150, L=150, hx=ex+L*Math.sin(R(ang)), hy=ey+L*Math.cos(R(ang));
+  longBone(s,ex,10,28,140);
+  const fa=el('g',{transform:'rotate('+(-ang)+' '+ex+' '+ey+')'},s);
+  longBone(fa,ex,ey,22,L);
+  el('circle',Object.assign({cx:ex,cy:ey,r:'13'},B),s); el('circle',{cx:ex,cy:ey,r:'4',fill:'var(--fg)'},s);
+  el('rect',{x:hx-22,y:hy-8,width:'44',height:'16',rx:'4',fill:'var(--fg)'},s);
+  el('rect',{x:hx-30,y:hy-14,width:'10',height:'28',rx:'3',fill:'var(--fg)'},s); el('rect',{x:hx+20,y:hy-14,width:'10',height:'28',rx:'3',fill:'var(--fg)'},s);
+  straightArrow(s,'mmW',hx,hy+16,hx,hy+80,'var(--comp)',5);
+  T(s,hx+8,hy+60,'Peso',{'font-weight':'600'});
+  const yb=Math.min(Math.max(ey,hy)+100,318);
+  el('line',{x1:ex,y1:ey,x2:ex,y2:yb,stroke:'var(--muted)','stroke-dasharray':'4 4'},s);
+  el('line',{x1:hx,y1:hy+80,x2:hx,y2:yb,stroke:'var(--muted)','stroke-dasharray':'4 4'},s);
+  if(Math.abs(hx-ex)>2){el('line',{x1:ex,y1:yb-6,x2:hx,y2:yb-6,stroke:'var(--arrow)','stroke-width':'5'},s); T(s,(ex+hx)/2,yb-14,'Brazo de momento',{'text-anchor':'middle','font-weight':'600',fill:'var(--arrow)'}).style.fill='var(--arrow)'}
+  T(s,ex-24,ey+4,'Codo',{'text-anchor':'end'});
+  $('#mm-out').innerHTML='<div><span class="k">Brazo de momento de la carga:</span> '+fmt(rel*100)+' % del máximo</div><div class="meter" aria-hidden="true"><span style="width:'+(rel*100)+'%"></span></div>'+
+   '<div>'+(ang>=80&&ang<=100?'Con el antebrazo cerca de la horizontal, la línea del peso pasa lo más lejos posible del eje y el momento externo es máximo. Los flexores deben hacer su mayor esfuerzo.':ang<30?'Cerca de la extensión, la línea del peso pasa muy cerca del eje del codo y el momento externo es pequeño.':'El momento externo es intermedio. Al acercarse a 90° aumenta y al alejarse disminuye.')+'</div>'+
+   '<div class="src">Como el brazo de momento de los flexores es de pocos centímetros y el de la carga es de varios decímetros, la fuerza que tienen que hacer los flexores es muchas veces mayor que el peso de la mancuerna.</div>';
+}
+$('#mm-ang').addEventListener('input',drawMm);
+
+/* Figura 8: bíceps como supinador */
+function drawSp(){
+  const a=+$('#sp-a').value; $('#sp-v').textContent=a+'°';
+  const s=$('#sp-svg'); clear(s);
+  const ox=150, oy=180, k=120, r=R(a);
+  el('rect',Object.assign({x:'20',y:oy,width:'300',height:'26',rx:'13'},B),s);
+  el('circle',{cx:ox,cy:oy+2,r:'9',fill:'var(--bone-dk)',stroke:'var(--bone-line)','stroke-width':'2'},s);
+  T(s,250,oy+18,'Radio',{'font-weight':'600'});
+  T(s,ox,oy+44,'Tuberosidad bicipital',{'text-anchor':'middle','font-size':'10'});
+  const fx=ox-k*Math.cos(r), fy=oy-k*Math.sin(r);
+  const mx=ox-(k+40)*Math.cos(r), my=oy-(k+40)*Math.sin(r);
+  el('ellipse',{cx:(fx+mx)/2,cy:(fy+my)/2,rx:'34',ry:'13',fill:'var(--muscle)',stroke:'var(--bone-line)','stroke-width':'1.5',transform:'rotate('+(180+a)+' '+((fx+mx)/2)+' '+((fy+my)/2)+')'},s);
+  T(s,mx+(a>60?24:-6),my-4,'Bíceps',{'font-weight':'600','text-anchor':a>60?'start':'end'});
+  straightArrow(s,'spF',ox,oy,fx,fy,'var(--muscle)',5);
+  const rot=Math.sin(r), comp=Math.cos(r);
+  if(rot>0.03) straightArrow(s,'spR',ox,oy,ox,oy-k*rot,'var(--arrow)',5);
+  if(comp>0.03) straightArrow(s,'spC',ox,oy,ox-k*comp,oy,'var(--comp)',5);
+  el('line',{x1:fx,y1:fy,x2:ox,y2:fy,stroke:'var(--muted)','stroke-dasharray':'3 3'},s);
+  el('line',{x1:fx,y1:fy,x2:fx,y2:oy,stroke:'var(--muted)','stroke-dasharray':'3 3'},s);
+  if(rot>0.15) T(s,ox+8,oy-k*rot/2,'Rotatoria',{'font-weight':'600'}).style.fill='var(--arrow)';
+  if(comp>0.15) T(s,ox-k*comp/2,oy-8,'Compresiva',{'text-anchor':'middle','font-weight':'600'}).style.fill='var(--comp)';
+  $('#sp-out').innerHTML='<div><span class="k">Fuerza que se aprovecha para supinar:</span> '+fmt(rot*100)+' %</div><div class="meter" aria-hidden="true"><span style="width:'+(rot*100)+'%"></span></div>'+
+   '<div><span class="k">Fuerza que comprime el radio contra el capítulo:</span> '+fmt(comp*100)+' %</div>'+
+   '<div>'+(a>=75?'Con el codo cerca de 90°, casi toda la fuerza del bíceps hace girar el radio.':a<=35?'Con el codo poco flexionado, la mitad o más de la fuerza se pierde en comprimir el radio.':'Situación intermedia.')+'</div>';
+}
+$('#sp-a').addEventListener('input',drawSp);
+
+/* Autoevaluación */
+const QZ=[
+ {s:'¿Qué tipo de articulación es la humerorradial según el material de clase?',o:['Trocoide','Gínglimo (troclear)','Condílea (elipsoidal)','Artrodia'],c:2,e:'La humerorradial es condílea o elipsoidal. Es menos congruente que la humerocubital (gínglimo) y depende más de la cápsula y de los ligamentos. Las radiocubitales son trocoides.'},
+ {s:'Durante la flexión del codo en cadena cinética abierta, la escotadura troclear del cúbito…',o:['Rueda en sentido anterior y se desliza en sentido posterior','Rueda y se desliza en sentido anterior','Rueda y se desliza en sentido posterior','Solo se desliza, sin rodar'],c:1,e:'La escotadura troclear es cóncava y se mueve sobre la tróclea convexa, de modo que rueda y se desliza en el mismo sentido que el cúbito, es decir, en sentido anterior durante la flexión.'},
+ {s:'¿Cuál es el principal estabilizador ligamentoso frente al valgo?',o:['Ligamento anular','Ligamento colateral radial','Haz anterior del ligamento colateral medial','Fascículo transverso del ligamento colateral medial'],c:2,e:'Las fibras anteriores del LCM son las más fuertes y rígidas y ofrecen la mayor resistencia al valgo. El fascículo transverso apenas contribuye a la estabilidad.'},
+ {s:'La lesión del ligamento colateral lateral ulnar se asocia sobre todo a…',o:['Inestabilidad rotatoria posterolateral','Inestabilidad en valgo','Luxación anterior del cúbito','Rigidez en flexión'],c:0,e:'El colateral lateral ulnar se opone al varo y a la inestabilidad rotatoria posterolateral. Si se lesiona, la cabeza del radio se desplaza en sentido posterior y lateral por debajo del capítulo.'},
+ {s:'¿A qué ángulo de flexión es mínima la presión intracapsular del codo?',o:['0°','Unos 30°','Unos 80°','Unos 130°'],c:2,e:'Hacia los 80° de flexión. Es la posición de confort cuando hay derrame, aunque mantenerla mucho tiempo favorece la rigidez en flexión.'},
+ {s:'Una persona sostiene una mancuerna con el brazo vertical. ¿Con qué ángulo de codo es mayor el momento externo que genera la carga?',o:['Con el codo extendido (0°)','Hacia los 45°','Hacia los 90°','En la flexión máxima'],c:2,e:'Con el antebrazo horizontal (90°), la línea del peso pasa lo más lejos posible del eje del codo, de modo que el brazo de momento de la carga y el momento externo son máximos.'},
+ {s:'¿Por qué la eficacia supinadora del bíceps es mayor con el codo a 90°?',o:['Porque a 90° el bíceps alcanza su máxima longitud','Porque su tendón se inserta casi perpendicular al radio y casi toda su fuerza es rotatoria','Porque a 90° se relaja el supinador','Porque el ligamento anular se destensa'],c:1,e:'A 90° el ángulo de inserción del tendón se acerca a 90° y la componente rotatoria es máxima. Cerca de la extensión, buena parte de la fuerza se convierte en compresión a lo largo del radio.'},
+ {s:'¿Qué flexor del codo tiene la mayor sección transversal fisiológica?',o:['Bíceps braquial (cabeza larga)','Braquiorradial','Braquial','Pronador redondo'],c:2,e:'El braquial tiene 7,0 cm² de STF y el mayor volumen de los flexores (59,3 cm³). El braquiorradial tiene el mayor brazo de momento (5,19 cm), pero solo 1,5 cm² de STF.'},
+ {s:'¿Cuál de estos músculos limita la pronación al final del recorrido?',o:['Pronador cuadrado','Bíceps braquial','Flexor radial del carpo','Braquial'],c:1,e:'Los músculos que limitan la pronación son los supinadores, que se estiran al final del movimiento: bíceps braquial, supinador, extensores radiales del carpo y extensor largo del pulgar. El braquial se inserta en el cúbito y no interviene.'},
+ {s:'¿Por qué el tríceps se contrae al apretar con fuerza un tornillo con un destornillador?',o:['Porque es supinador','Para neutralizar la acción flexora del bíceps y mantener el codo a 90°','Para estabilizar la radiocubital distal','Para tensar el ligamento anular'],c:1,e:'El bíceps supina y también flexiona el codo. El tríceps, que se inserta en el cúbito, neutraliza esa flexión sin interferir en la supinación. Son sinergistas en la tarea y antagonistas en la flexoextensión.'}
+];
+function renderQuiz(){
+  const box=$('#quiz'); box.innerHTML='';
+  QZ.forEach((q,i)=>{
+    const d=document.createElement('div'); d.className='q';
+    const p=document.createElement('p'); p.className='stem'; p.id='qs'+i; p.textContent=q.s; d.appendChild(p);
+    const o=document.createElement('div'); o.className='opts'; o.setAttribute('role','group'); o.setAttribute('aria-labelledby','qs'+i);
+    const ans=st.quiz[i];
+    q.o.forEach((t,j)=>{
+      const b=document.createElement('button'); b.type='button'; b.textContent=String.fromCharCode(97+j)+') '+t;
+      if(ans!=null){b.disabled=true; if(j===q.c)b.classList.add('correct'); else if(j===ans)b.classList.add('wrongsel')}
+      b.addEventListener('click',()=>{st.quiz[i]=j; save(); renderQuiz(); renderProgress(); const e=document.querySelector('#qs'+i)?.parentElement.querySelector('.expl'); if(e)e.focus()});
+      o.appendChild(b);
+    });
+    d.appendChild(o);
+    if(ans!=null){const e=document.createElement('div'); e.className='expl'; e.tabIndex=-1; const bb=document.createElement('b'); bb.textContent=ans===q.c?'Correcto. ':'Incorrecto. '; e.appendChild(bb); e.appendChild(document.createTextNode(q.e)); d.appendChild(e)}
+    box.appendChild(d);
+  });
+  const n=Object.keys(st.quiz).length, ok=Object.entries(st.quiz).filter(([i,a])=>QZ[i]&&QZ[i].c===a).length;
+  $('#score').textContent=n?'Aciertos: '+ok+' de '+n+' respondidas'+(n===QZ.length?' · Nota: '+fmt(ok/QZ.length*10,1)+' sobre 10':''):'Todavía no han respondido ninguna pregunta.';
+}
+$('#quizReset').addEventListener('click',()=>{st.quiz={}; save(); renderQuiz(); renderProgress()});
+
+/* Glosario */
+const GL=[
+ ['Ancóneo','Músculo extensor del codo que va del epicóndilo lateral al cúbito proximal. Aporta en torno al 15 % del momento extensor y estabiliza el cúbito durante la pronosupinación.'],
+ ['Ángulo de transporte','Véase valgo fisiológico.'],
+ ['Arco funcional','Recorrido que necesitan la mayoría de las actividades de la vida diaria: 30-130° de flexión, y de 50° de pronación a 50° de supinación.'],
+ ['Artrocinemática','Estudio de los movimientos entre las superficies articulares (rodamiento y deslizamiento).'],
+ ['Brazo de momento','Distancia perpendicular entre la línea de acción de una fuerza y el eje de giro.'],
+ ['Cadena cinética abierta','Situación en la que el segmento distal se mueve libremente y el proximal permanece fijo.'],
+ ['Capítulo (cóndilo humeral)','Superficie convexa y esférica del húmero distal que se articula con la cabeza del radio.'],
+ ['Codo rígido','Codo que pierde más de 30° de extensión y no alcanza los 120° de flexión, según la definición vista en clase.'],
+ ['Congruencia articular','Grado de ajuste entre dos superficies articulares. Cuanto mayor es, más estabilidad estructural aporta.'],
+ ['Deformidad en valgo','Desviación lateral excesiva del antebrazo respecto al húmero, por encima de unos 20-25° según Neumann.'],
+ ['Deformidad en varo','Desviación del antebrazo hacia la línea media del cuerpo.'],
+ ['Deslizamiento','Movimiento articular en el que un mismo punto de una superficie contacta con puntos sucesivos de la otra.'],
+ ['Escotadura troclear','Cavidad sigmoidea mayor del cúbito, formada por el olécranon y la apófisis coronoides. Es cóncava.'],
+ ['Gínglimo','Articulación en bisagra con un solo grado de libertad. El codo es un gínglimo modificado.'],
+ ['Inestabilidad rotatoria posterolateral','Luxación de la cabeza del radio en sentido posterior y lateral por debajo del capítulo tras la lesión de los estabilizadores posterolaterales, sobre todo del colateral lateral ulnar.'],
+ ['Ligamento anular','Ligamento que rodea la cabeza del radio, la mantiene contra la cavidad sigmoidea menor y se opone a la distracción del radio.'],
+ ['Ligamento colateral medial','Ligamento con haces anterior, posterior y transverso. Es el principal estabilizador frente al valgo.'],
+ ['Membrana interósea','Lámina fibrosa que une el radio y el cúbito, formada por la banda central, el cordón oblicuo y las fibras oblicuas distales. Transmite fuerzas del radio al cúbito.'],
+ ['Momento de fuerza','Producto de una fuerza por su brazo de momento. Expresa la capacidad de la fuerza para hacer girar un segmento y se mide en newton metro (N·m).'],
+ ['Osteocinemática','Descripción del movimiento de los huesos en el espacio mediante planos, ejes y ángulos.'],
+ ['Posición de confort','Unos 80° de flexión del codo, ángulo en el que la presión intracapsular es mínima.'],
+ ['Pronosupinación','Rotación del antebrazo alrededor de su eje longitudinal en las radiocubitales proximal y distal.'],
+ ['Rodamiento','Movimiento articular en el que puntos sucesivos de una superficie contactan con puntos sucesivos de la otra.'],
+ ['Sección transversal fisiológica','Área de un corte perpendicular a las fibras musculares. Indica la capacidad de producir fuerza máxima.'],
+ ['Trocoide','Articulación en la que un cilindro macizo gira dentro de un anillo, como la radiocubital proximal.'],
+ ['Valgo fisiológico (ángulo de transporte)','Desviación lateral normal del antebrazo respecto al húmero con el codo extendido y el antebrazo en supinación, en torno a 13-15°.']
+];
+const norm=t=>t.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
+function renderGloss(){
+  const q=norm(($('#gloss-search').value||'').trim()); const box=$('#gloss'); box.innerHTML='';
+  GL.filter(([t,d])=>norm(t+' '+d).includes(q)).forEach(([t,d])=>{const w=document.createElement('div'); const dt=document.createElement('dt'); dt.textContent=t; const dd=document.createElement('dd'); dd.textContent=d; w.append(dt,dd); box.appendChild(w)});
+  if(!box.children.length){const w=document.createElement('div'); const dd=document.createElement('dd'); dd.textContent='No hay ningún término que coincida.'; w.appendChild(dd); box.appendChild(w)}
+}
+$('#gloss-search').addEventListener('input',renderGloss);
+
+/* Tarjetas */
+const CD=[
+ ['¿Qué superficies forman la humerocubital y cuál es cóncava?','La tróclea humeral (convexa) y la escotadura troclear del cúbito (cóncava).'],
+ ['¿Por qué el codo es un gínglimo modificado?','Porque, además de la flexoextensión, el cúbito realiza pequeños movimientos en valgo, en varo y de rotación axial.'],
+ ['Ángulo de transporte normal','En torno a 13-15°. Neumann recoge 13° de media, con una DE cercana a 6°.'],
+ ['Principal estabilizador frente al valgo','El haz anterior del ligamento colateral medial.'],
+ ['Principal freno de la inestabilidad rotatoria posterolateral','El ligamento colateral lateral ulnar.'],
+ ['¿Qué se opone a la distracción del radio?','El ligamento anular.'],
+ ['Posición de confort del codo','Unos 80° de flexión, donde la presión intracapsular es mínima.'],
+ ['Arco funcional del codo','30-130° de flexión, y de 50° de pronación a 50° de supinación.'],
+ ['Límites de la extensión del codo','Choque del olécranon con su fosa, tensión de la cápsula anterior y resistencia de los flexores.'],
+ ['Sentido del deslizamiento del cúbito en la extensión','Posterior, igual que el rodamiento, porque una superficie cóncava se mueve sobre una convexa.'],
+ ['Flexor con mayor STF y volumen','El braquial (7,0 cm² y 59,3 cm³).'],
+ ['Flexor con mayor brazo de momento','El braquiorradial (5,19 cm).'],
+ ['¿Por qué el tríceps se contrae al apretar un tornillo?','Para neutralizar la acción flexora del bíceps y mantener el codo a 90°.'],
+ ['¿Cuándo es más eficaz el bíceps como supinador?','Con el codo a unos 90°, cuando su tendón se inserta casi perpendicular al radio.'],
+ ['Pronador que se recluta en todas las actividades','El pronador cuadrado, que además estabiliza la radiocubital distal.'],
+ ['¿Cuánto más momento generan los supinadores que los pronadores?','Alrededor de un 25 % más (Neumann, con datos de Askew et al.).']
+];
+function renderCards(){
+  const box=$('#cards'); box.innerHTML='';
+  CD.forEach(([f,b])=>{
+    const c=document.createElement('button'); c.type='button'; c.className='card'; c.setAttribute('aria-pressed','false'); c.setAttribute('aria-label','Tarjeta: '+f+'. Pulsen para ver la respuesta.');
+    c.innerHTML='<div class="in"><div class="f"></div><div class="b"></div></div>';
+    c.querySelector('.f').textContent=f; const sm=document.createElement('small'); sm.textContent='Codo y antebrazo'; c.querySelector('.f').appendChild(sm);
+    c.querySelector('.b').textContent=b;
+    c.addEventListener('click',()=>{const on=c.getAttribute('aria-pressed')!=='true'; c.setAttribute('aria-pressed',on); c.setAttribute('aria-label',on?'Respuesta: '+b:'Tarjeta: '+f+'. Pulsen para ver la respuesta.')});
+    box.appendChild(c)});
+}
+
+drawPl(); drawVg(); drawLg(); drawRm(); drawHc(); drawRc(); drawMm(); drawSp();
+renderQuiz(); renderGloss(); renderCards(); renderProgress();
+})();
+</script>
+
+</body></html>
