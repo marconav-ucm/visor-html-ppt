@@ -1,0 +1,336 @@
+<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Muñeca: corte transversal y músculos</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Serif:wght@500;600&display=swap">
+<style>
+/* Misma plantilla que el tema de codo. Figuras al estilo Neumann: hueso beis con contorno pardo, fila proximal anaranjada, cartílago azul claro, fibrocartílago azul, ligamentos claros que se tiñen de rojo al tensarse y flechas azules anchas rotuladas. */
+:root{
+  --bg:#f6f7f9; --surface:#ffffff; --sunk:#eceef2; --fg:#1b1f27; --muted:#59606d; --line:#d5d9e0;
+  --accent:#b3142d; --accent-ink:#ffffff; --accent-soft:#f7e2e5;
+  --fig:#fffdf8; --bone:#f0dcae; --bone-dk:#e2c88f; --bone-line:#8a6a3a; --cart:#a8d4ec; --row1:#eeb487; --disc:#7fb3d8;
+  --arrow:#3b86c8; --arrow-ink:#ffffff; --lig:#f4f1ea; --lig-line:#9a9081; --hl:#d0263c; --muscle:#c9483a; --comp:#c27413; --pink:#f6c9c9; --vessel:#c0392b;
+  --ok:#1f6b45; --ok-soft:#e1f1e7; --bad:#9a2a1c; --bad-soft:#f8e3df;
+  --bone-hi:#fcf3de; --row1-hi:#f9d9bf; --row1-dk:#d98f5c; --skin:#f2d3bc; --skin-hi:#fbe9dc; --skin-dk:#dfae8e; --skin-line:#9a6a4c; --wood:#c9965f; --wood-dk:#9c6d3c; --metal:#a7b0ba; --metal-dk:#6c7682;
+  --f-display:"IBM Plex Serif", Georgia, "Times New Roman", serif;
+  --f-body:"IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono:"IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#13161b; --surface:#1b1f26; --sunk:#232832; --fg:#e7e9ee; --muted:#a3a9b5; --line:#343b47;
+  --accent:#ef8a99; --accent-ink:#1b1f26; --accent-soft:#3a2328;
+  --fig:#22262d; --bone:#d9c18e; --bone-dk:#c4a86f; --bone-line:#f0dcae; --cart:#5e9bbd; --row1:#d98f5c; --disc:#4f8fbd;
+  --arrow:#5a9fdb; --arrow-ink:#ffffff; --lig:#3a3f48; --lig-line:#a9a090; --hl:#ff5d6f; --muscle:#d86252; --comp:#efa54a; --pink:#5b3338; --vessel:#ff6b5b;
+  --ok:#7fd1a2; --ok-soft:#1d3327; --bad:#f19a88; --bad-soft:#3b221d; --bone-hi:#ead6a8; --row1-hi:#eaa877; --row1-dk:#b8703f; --skin:#a9846c; --skin-hi:#c39d84; --skin-dk:#86634f; --skin-line:#e3c2aa; --wood:#a97a48; --wood-dk:#7d5630; --metal:#8b949e; --metal-dk:#5b636c; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#13161b; --surface:#1b1f26; --sunk:#232832; --fg:#e7e9ee; --muted:#a3a9b5; --line:#343b47;
+  --accent:#ef8a99; --accent-ink:#1b1f26; --accent-soft:#3a2328;
+  --fig:#22262d; --bone:#d9c18e; --bone-dk:#c4a86f; --bone-line:#f0dcae; --cart:#5e9bbd; --row1:#d98f5c; --disc:#4f8fbd;
+  --arrow:#5a9fdb; --arrow-ink:#ffffff; --lig:#3a3f48; --lig-line:#a9a090; --hl:#ff5d6f; --muscle:#d86252; --comp:#efa54a; --pink:#5b3338; --vessel:#ff6b5b;
+  --ok:#7fd1a2; --ok-soft:#1d3327; --bad:#f19a88; --bad-soft:#3b221d; --bone-hi:#ead6a8; --row1-hi:#eaa877; --row1-dk:#b8703f; --skin:#a9846c; --skin-hi:#c39d84; --skin-dk:#86634f; --skin-line:#e3c2aa; --wood:#a97a48; --wood-dk:#7d5630; --metal:#8b949e; --metal-dk:#5b636c; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:16px;line-height:1.6}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+a{color:var(--accent)}
+:focus-visible{outline:3px solid var(--arrow);outline-offset:2px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1.2;font-weight:600}
+h2{font-size:1.65rem;margin:0 0 .4rem}
+h3{font-size:1.2rem;margin:1.8rem 0 .5rem}
+p{margin:.6rem 0}
+.topbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--surface);border-bottom:3px solid var(--accent);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:.55rem;
+  display:flex;align-items:center;gap:.75rem}
+.topbar .brand{font-family:var(--f-display);font-weight:600;font-size:1rem;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.topbar .brand small{font-family:var(--f-body);font-weight:400;color:var(--muted);font-size:.8rem;margin-left:.5rem}
+button{font:inherit;color:inherit;cursor:pointer}
+.btn{border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:.4rem .75rem;font-size:.88rem}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+#navToggle{display:none}
+.shell{display:grid;grid-template-columns:260px minmax(0,1fr);max-width:1180px;margin:0 auto;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));gap:2.5rem}
+nav.side{position:sticky;top:calc(env(safe-area-inset-top,0px) + 3.4rem);align-self:start;max-height:calc(100vh - 4rem);overflow:auto;padding-block:1.5rem}
+nav.side ol{list-style:none;margin:0;padding:0;display:grid;gap:.1rem}
+nav.side a{display:flex;gap:.55rem;align-items:baseline;text-decoration:none;color:var(--fg);padding:.35rem .5rem;border-radius:5px;font-size:.92rem}
+nav.side a:hover{background:var(--sunk)}
+nav.side a .n{font-family:var(--f-mono);color:var(--muted);font-size:.78rem;min-width:2.1rem}
+nav.side a .tick{margin-left:auto;color:var(--ok);font-size:.8rem}
+nav.side .grp{font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:1rem .5rem .3rem}
+main{padding-block:1.5rem 4rem;min-width:0}
+.prose{max-width:68ch}
+section.block{padding-block:1.6rem 2rem;border-bottom:1px solid var(--line)}
+.eyebrow{font-family:var(--f-mono);font-size:.78rem;color:var(--accent);letter-spacing:.04em}
+.hero h1{font-size:clamp(1.9rem,4vw,2.7rem);margin:.3rem 0 .6rem}
+.hero .lede{color:var(--muted);max-width:60ch}
+.progress{margin-top:1.2rem;max-width:560px}
+.bar{height:10px;background:var(--sunk);border-radius:5px;overflow:hidden;border:1px solid var(--line)}
+.bar > span{display:block;height:100%;background:var(--accent);width:0;transition:width .3s}
+.progress .row{display:flex;justify-content:space-between;font-size:.85rem;color:var(--muted);margin-top:.35rem;gap:1rem;flex-wrap:wrap}
+.quick{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1rem;align-items:center}
+.quick a{font-size:.88rem;text-decoration:none;border:1px solid var(--line);border-radius:6px;padding:.35rem .7rem;background:var(--surface)}
+.done-row{display:flex;justify-content:flex-end;margin-top:1.2rem}
+.done-btn[aria-pressed="true"]{background:var(--ok-soft);border-color:var(--ok);color:var(--ok)}
+ol.obj{padding-left:1.3rem}
+ol.obj li{margin:.35rem 0}
+.def{font-weight:600}
+.box{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:1rem 1.1rem;margin:1rem 0}
+.box.clin{border-left:4px solid var(--accent)}
+.box h4{margin:0 0 .3rem;font-size:.82rem;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);font-family:var(--f-body)}
+.box ul{margin:.3rem 0;padding-left:1.2rem}
+.src{font-size:.82rem;color:var(--muted)}
+.tw{overflow-x:auto;margin:1rem 0;border:1px solid var(--line);border-radius:4px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:.9rem}
+th,td{text-align:left;padding:.5rem .7rem;border-bottom:1px solid var(--line);vertical-align:top}
+thead th{font-weight:600;background:var(--accent);color:var(--accent-ink);font-size:.84rem}
+tbody th{background:var(--sunk);font-weight:600;font-size:.84rem}
+td.num,th.num{text-align:right;font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+tr:last-child td{border-bottom:0}
+caption{caption-side:bottom;text-align:left;padding:.5rem .7rem;font-size:.8rem;color:var(--muted)}
+.lab{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:1.1rem;margin:1.4rem 0}
+.lab .head{display:flex;justify-content:space-between;gap:1rem;align-items:baseline;flex-wrap:wrap}
+.lab .head h3{margin:0}
+.lab .tag{font-family:var(--f-mono);font-size:.75rem;color:var(--muted)}
+.lab-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:1.2rem;margin-top:.8rem;align-items:start}
+.ctrl{display:grid;gap:.85rem;align-content:start}
+.ctrl label{display:grid;gap:.2rem;font-size:.88rem}
+.ctrl label .v{font-family:var(--f-mono);color:var(--accent)}
+input[type=range]{width:100%;accent-color:var(--accent)}
+.out{background:var(--sunk);border-radius:8px;padding:.8rem .9rem;font-size:.9rem;display:grid;gap:.35rem}
+.out .k{color:var(--muted)}
+.meter{height:12px;background:var(--surface);border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.meter span{display:block;height:100%;background:var(--arrow)}
+svg.fig{width:100%;height:auto;max-width:100%;display:block;background:var(--fig);border-radius:8px;border:1px solid var(--line)}
+svg text{font-family:var(--f-body);fill:var(--fg)}
+svg text.lbl{font-size:11px;font-weight:500}
+.play{display:inline-flex;align-items:center;gap:.4rem}
+.play[aria-pressed="true"]{background:var(--sunk)}
+svg .hit{cursor:pointer}
+svg .hit:focus-visible{outline:none}
+svg .hit:focus-visible > path:first-child,svg .hit:focus-visible > ellipse:first-child,svg .hit:focus-visible > circle:first-child{stroke:var(--arrow);stroke-width:4}
+.pill{display:inline-block;padding:.1rem .55rem;border-radius:99px;font-size:.8rem;font-weight:600}
+.pill.ok{background:var(--ok-soft);color:var(--ok)}
+.pill.bad{background:var(--bad-soft);color:var(--bad)}
+.pill.mid{background:var(--sunk);color:var(--fg);border:1px solid var(--line)}
+.seg{display:flex;flex-wrap:wrap;gap:.35rem}
+.seg button{border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:.35rem .6rem;font-size:.85rem}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.legend{display:flex;flex-wrap:wrap;gap:.4rem 1rem;font-size:.8rem;color:var(--muted)}
+.legend i{display:inline-block;width:.9rem;height:.9rem;border-radius:3px;vertical-align:-2px;margin-right:.3rem;border:1px solid var(--bone-line)}
+.err{display:grid;gap:.8rem}
+.err > div{border:1px solid var(--line);border-radius:8px;padding:.8rem 1rem;background:var(--surface)}
+.err .wrong{color:var(--bad);font-weight:600}
+.err .right{color:var(--ok);font-weight:600}
+.quiz{display:grid;gap:1rem;counter-reset:q}
+.q{border:1px solid var(--line);border-radius:8px;padding:1rem;background:var(--surface)}
+.q .stem{font-weight:500;margin:0 0 .6rem}
+.q .stem::before{counter-increment:q;content:counter(q) ". ";font-family:var(--f-mono);color:var(--accent)}
+.opts{display:grid;gap:.4rem}
+.opts button{text-align:left;border:1px solid var(--line);background:var(--bg);border-radius:6px;padding:.5rem .7rem;font-size:.92rem}
+.opts button:hover:not(:disabled){border-color:var(--accent)}
+.opts button:disabled{cursor:default}
+.opts button.correct{background:var(--ok-soft);border-color:var(--ok);color:var(--fg)}
+.opts button.wrongsel{background:var(--bad-soft);border-color:var(--bad);color:var(--fg)}
+.expl{margin-top:.6rem;font-size:.9rem;border-top:1px dashed var(--line);padding-top:.6rem}
+.score{display:flex;gap:1rem;align-items:center;flex-wrap:wrap;margin-top:1rem}
+.refs{padding-left:1.4rem;font-size:.92rem}
+.refs li{margin:.5rem 0;overflow-wrap:anywhere}
+.case{display:grid;gap:.8rem}
+.case details{border:1px solid var(--line);border-radius:8px;background:var(--surface);padding:.7rem 1rem}
+.case summary{cursor:pointer;font-weight:500}
+.case details[open] summary{margin-bottom:.4rem}
+#gloss-search{width:100%;max-width:420px;font:inherit;padding:.5rem .7rem;border:1px solid var(--line);border-radius:6px;background:var(--surface);color:var(--fg)}
+dl.gloss{display:grid;gap:.1rem;margin-top:1rem}
+dl.gloss div{padding:.6rem 0;border-bottom:1px solid var(--line)}
+dl.gloss dt{font-weight:600}
+dl.gloss dd{margin:.15rem 0 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:.8rem;margin-top:1rem}
+.card{perspective:900px;height:170px;border:0;background:none;padding:0;text-align:left}
+.card .in{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
+.card[aria-pressed="true"] .in{transform:rotateY(180deg)}
+.card .f,.card .b{position:absolute;inset:0;backface-visibility:hidden;border:1px solid var(--line);border-radius:8px;padding:.9rem;display:flex;flex-direction:column;justify-content:center;font-size:.92rem;overflow:auto}
+.card .f{background:var(--surface);font-weight:500}
+.card .f small{color:var(--muted);font-weight:400;font-size:.75rem;margin-top:.5rem}
+.card .b{background:var(--accent-soft);transform:rotateY(180deg)}
+footer{color:var(--muted);font-size:.82rem;padding-block:2rem}
+.confirm{display:inline-flex;gap:.5rem;align-items:center;font-size:.85rem;flex-wrap:wrap}
+@media (max-width:860px){
+  .shell{grid-template-columns:minmax(0,1fr);gap:0}
+  #navToggle{display:inline-block}
+  nav.side{position:fixed;inset:calc(env(safe-area-inset-top,0px) + 3.2rem) 0 0 0;max-height:none;background:var(--surface);z-index:8;
+    padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));border-top:1px solid var(--line)}
+  .lab-grid{grid-template-columns:minmax(0,1fr)}
+  .topbar .brand small{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+<style>
+/* ajuste a diapositiva 16:9 */
+html,body{height:100%;margin:0}
+body{overflow:hidden;background:var(--surface)}
+body::before{display:none}
+.slide{height:100vh;box-sizing:border-box;padding:2.2vh 2.4vw;display:flex;flex-direction:column}
+.slide .lab{border:0;margin:0;padding:0;flex:1;display:flex;flex-direction:column;min-height:0;background:transparent}
+.slide .lab .head h3{font-size:clamp(1rem,3.2vh,1.9rem)}
+.slide .lab .tag{font-size:clamp(.65rem,1.7vh,.95rem)}
+.slide .lab>p{font-size:clamp(.7rem,2vh,1.05rem);margin:.4vh 0 0;color:var(--muted)}
+.slide .lab-grid{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.25fr);gap:2vw;margin-top:1.2vh;align-items:stretch}
+.slide .ctrl{overflow:auto;min-height:0;font-size:clamp(.7rem,2vh,1rem)}
+.slide .seg button{font-size:clamp(.7rem,2vh,1rem);padding:.6vh .8vw}
+.slide .out{font-size:clamp(.7rem,2vh,1rem)}
+.slide .src{font-size:clamp(.6rem,1.7vh,.88rem)}
+.slide svg.fig{width:100%;height:100%;max-height:100%;min-height:0}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+<radialGradient id="gBone" cx="38%" cy="32%" r="78%"><stop offset="0" style="stop-color:var(--bone-hi)"/><stop offset=".55" style="stop-color:var(--bone)"/><stop offset="1" style="stop-color:var(--bone-dk)"/></radialGradient>
+<radialGradient id="gRow1" cx="38%" cy="32%" r="78%"><stop offset="0" style="stop-color:var(--row1-hi)"/><stop offset=".55" style="stop-color:var(--row1)"/><stop offset="1" style="stop-color:var(--row1-dk)"/></radialGradient>
+<linearGradient id="gSkin" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:var(--skin-hi)"/><stop offset=".6" style="stop-color:var(--skin)"/><stop offset="1" style="stop-color:var(--skin-dk)"/></linearGradient>
+<linearGradient id="gWood" x1="0" y1="0" x2="1" y2="0"><stop offset="0" style="stop-color:var(--wood-dk)"/><stop offset=".45" style="stop-color:var(--wood)"/><stop offset="1" style="stop-color:var(--wood-dk)"/></linearGradient>
+<linearGradient id="gMetal" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:var(--metal)"/><stop offset="1" style="stop-color:var(--metal-dk)"/></linearGradient>
+<pattern id="pMus" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(8)"><rect width="6" height="6" style="fill:var(--muscle)"/><line x1="0" y1="1" x2="6" y2="1" style="stroke:var(--bone-hi);stroke-opacity:.35" stroke-width="1"/></pattern>
+<filter id="fIn" x="-8%" y="-8%" width="116%" height="116%"><feComponentTransfer in="SourceAlpha" result="inv"><feFuncA type="table" tableValues="1 0"/></feComponentTransfer><feGaussianBlur in="inv" stdDeviation="2.2" result="bl"/><feOffset in="bl" dx="-1.4" dy="-1.8" result="of"/><feFlood flood-color="#5e3f17" flood-opacity=".42"/><feComposite in2="of" operator="in" result="sh"/><feComposite in="sh" in2="SourceAlpha" operator="in" result="ish"/><feMerge><feMergeNode in="SourceGraphic"/><feMergeNode in="ish"/></feMerge></filter>
+<filter id="fSh" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="1.2" stdDeviation="1.2" flood-opacity=".22"/></filter>
+</defs></svg>
+<div class="slide">
+  <div class="lab" id="lab-sec">
+    <div class="head"><h3>Corte transversal de la muñeca a nivel de la cabeza del hueso grande</h3><span class="tag">vista distal · muñeca derecha</span></div>
+    <p>Elijan una acción para resaltar los tendones capaces de producirla y su brazo de momento respecto al eje correspondiente. Pulsen un tendón para ver su ficha. Las posiciones son aproximadas y todos los tendones se dibujan del mismo tamaño, sin indicar su sección transversal.</p>
+    <div class="lab-grid">
+      <div class="ctrl">
+        <div class="seg" role="group" aria-label="Acción">
+          <button type="button" data-mv="flex" aria-pressed="true">Flexión</button>
+          <button type="button" data-mv="ext" aria-pressed="false">Extensión</button>
+          <button type="button" data-mv="rad" aria-pressed="false">Desviación radial</button>
+          <button type="button" data-mv="cub" aria-pressed="false">Desviación cubital</button>
+          <button type="button" data-mv="pro" aria-pressed="false">Pronan el carpo</button>
+          <button type="button" data-mv="sup" aria-pressed="false">Supinan el carpo</button>
+        </div>
+        <div class="out" id="se-out" aria-live="polite"></div>
+      </div>
+      <svg class="fig" id="se-svg" viewBox="0 0 400 330" role="img" aria-labelledby="se-t"><title id="se-t">Corte transversal de la muñeca con los ejes mediolateral y anteroposterior y la posición de los tendones</title></svg>
+    </div>
+  </div>
+</div>
+<script>
+(function(){
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const fmt=(x,d=0)=>x.toLocaleString('es-ES',{minimumFractionDigits:d,maximumFractionDigits:d});
+const KEY='biomec-muneca-v1';
+let st={done:{},quiz:{}};
+try{const r=localStorage.getItem(KEY); if(r){const o=JSON.parse(r); st={done:o.done||{},quiz:o.quiz||{}}}}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}};
+const SECS=['osteo','artro','osteocin','artrocin','musc','pato','caso'];
+const R=d=>d*Math.PI/180;
+const sgn=v=>v<0?'−'+fmt(-v):fmt(v);
+
+/* tema y navegación */
+const root=document.documentElement;
+
+/* utilidades SVG */
+const NS='http://www.w3.org/2000/svg';
+function el(tag,a,p,t){const e=document.createElementNS(NS,tag); for(const k in a)e.setAttribute(k,a[k]); if(t!=null)e.textContent=t; if(p)p.appendChild(e); return e}
+function clear(s){[...s.childNodes].forEach(n=>{if(n.nodeName!=='title')s.removeChild(n)})}
+const B={fill:'url(#gBone)',stroke:'var(--bone-line)','stroke-width':'1.5','stroke-linejoin':'round',filter:'url(#fIn)'};
+const B1={fill:'url(#gRow1)',stroke:'var(--bone-line)','stroke-width':'1.5','stroke-linejoin':'round',filter:'url(#fIn)'};
+const T=(p,x,y,t,o={})=>el('text',Object.assign({x:x,y:y,'font-size':'11'},o),p,t);
+const lead=(p,x1,y1,x2,y2)=>el('line',{x1:x1,y1:y1,x2:x2,y2:y2,stroke:'var(--muted)','stroke-width':'1'},p);
+let mkN=0;
+function arrow(p,x1,y1,x2,y2,color,w){
+  const id='ar'+(mkN++); const d=el('defs',{},p); const m=el('marker',{id:id,viewBox:'0 0 10 10',refX:'5',refY:'5',markerWidth:'3.2',markerHeight:'3.2',orient:'auto'},d); el('path',{d:'M0,0 L10,5 L0,10 z',fill:color},m);
+  return el('line',{x1:x1,y1:y1,x2:x2,y2:y2,stroke:color,'stroke-width':w||5,'marker-end':'url(#'+id+')'},p);
+}
+function arrowPath(p,d,color,w){
+  const id='ar'+(mkN++); const df=el('defs',{},p); const m=el('marker',{id:id,viewBox:'0 0 10 10',refX:'5',refY:'5',markerWidth:'3',markerHeight:'3',orient:'auto'},df); el('path',{d:'M0,0 L10,5 L0,10 z',fill:color},m);
+  return el('path',{d:d,fill:'none',stroke:color,'stroke-width':w||5,'marker-end':'url(#'+id+')','stroke-linecap':'round'},p);
+}
+/* flecha azul ancha con rótulo, como en las diapositivas */
+function band(p,d,label,w){
+  const id='bd'+(mkN++); const df=el('defs',{},p);
+  const m=el('marker',{id:id+'m',viewBox:'0 0 10 10',refX:'3',refY:'5',markerWidth:'2.1',markerHeight:'2.1',orient:'auto'},df); el('path',{d:'M0,0 L10,5 L0,10 z',fill:'var(--arrow)'},m);
+  el('path',{id:id,d:d,fill:'none'},df);
+  el('path',{d:d,fill:'none',stroke:'var(--arrow)','stroke-width':w||20,'marker-end':'url(#'+id+'m)'},p);
+  const t=el('text',{'font-size':'10','font-weight':'700','letter-spacing':'1.2',dy:'3.5'},p); t.style.fill='var(--arrow-ink)';
+  el('textPath',{href:'#'+id,startOffset:'45%','text-anchor':'middle'},t,label);
+}
+function rot(pt,c,a){const r=R(a),dx=pt[0]-c[0],dy=pt[1]-c[1]; return [c[0]+dx*Math.cos(r)-dy*Math.sin(r), c[1]+dx*Math.sin(r)+dy*Math.cos(r)]}
+const dist=(a,b)=>Math.hypot(a[0]-b[0],a[1]-b[1]);
+function seg(sel,attr,fn){$$(sel+' ['+attr+']').forEach(b=>b.addEventListener('click',()=>{$$(sel+' ['+attr+']').forEach(x=>x.setAttribute('aria-pressed',x===b)); fn(b.getAttribute(attr))}))}
+function hitGroup(p,label,fn){const g=el('g',{class:'hit',tabindex:'0',role:'button','aria-label':label},p); g.addEventListener('click',fn); g.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();fn()}}); return g}
+
+/* ===== Figura 7: corte transversal ===== */
+const TD={
+ FCU:{n:'Flexor cubital del carpo',p:[92,116],a:'Flexión y desviación cubital (potente en ambas). Supina el carpo.',i:'Nervio cubital',d:'Pisiforme, ligamentos pisoganchoso y pisometacarpiano y base del 5.º metacarpiano'},
+ FDS:{n:'Flexor superficial de los dedos',p:[196,117],g:[[174,120],[189,115],[204,115],[219,119]],a:'Flexión de muñeca y desviación cubital (grupo secundario). Su potencial flexor puede superar al de los primarios.',i:'Nervio mediano',d:'Falanges medias de los dedos'},
+ FDP:{n:'Flexor profundo de los dedos',p:[194,136],g:[[170,138],[186,134],[202,134],[218,137]],a:'Flexión de muñeca y desviación cubital (grupo secundario).',i:'Nervios mediano y cubital',d:'Falanges distales de los dedos'},
+ PL:{n:'Palmar largo',p:[200,88],a:'Flexión. Su tendón pasa casi por el eje anteroposterior, superficial al ligamento transverso.',i:'Nervio mediano',d:'Aponeurosis palmar y ligamento transverso del carpo. Falta en cerca del 15 % de las personas'},
+ FCR:{n:'Flexor radial del carpo',p:[278,124],a:'Flexión y desviación radial. Prona el hueso grande y el piramidal y supina el escafoides.',i:'Nervio mediano',d:'Base palmar del 2.º (a veces 3.º) metacarpiano, por un túnel propio junto al trapecio, fuera del túnel carpiano'},
+ FPL:{n:'Flexor largo del pulgar',p:[246,136],a:'Flexión y desviación radial (grupo secundario).',i:'Nervio mediano (interóseo anterior)',d:'Falange distal del pulgar'},
+ APL:{n:'Abductor largo del pulgar',p:[334,150],a:'Desviación radial, con un pequeño brazo flexor en neutro. Gran producto sección × brazo para la desviación radial. Supina el carpo y estabiliza el lado radial.',i:'Nervio radial',d:'Base del 1.er metacarpiano. Compartimento I'},
+ EPB:{n:'Extensor corto del pulgar',p:[344,166],a:'Desviación radial: el mayor brazo de momento, pero poca sección y poco momento. Pequeño brazo flexor en neutro.',i:'Nervio radial',d:'Falange proximal del pulgar. Compartimento I'},
+ ECRL:{n:'Extensor radial largo del carpo',p:[318,212],a:'Extensión y desviación radial. Con el abductor largo del pulgar, el mayor producto sección × brazo para la desviación radial. Supina el carpo.',i:'Nervio radial',d:'Base dorsal del 2.º metacarpiano. Compartimento II'},
+ ECRB:{n:'Extensor radial corto del carpo',p:[240,234],a:'Extensión, con el mayor brazo de momento extensor por ser el más central. Algo de desviación radial. El más activo en el agarre ligero.',i:'Nervio radial',d:'Base dorsal del 3.er metacarpiano. Compartimento II'},
+ EPL:{n:'Extensor largo del pulgar',p:[292,232],a:'Extensión y desviación radial (grupo secundario).',i:'Nervio radial',d:'Falange distal del pulgar. Compartimento III'},
+ ED:{n:'Extensor común de los dedos',p:[186,248],g:[[160,244],[178,250],[196,251],[214,248]],a:'Extensión de muñeca y desviación cubital (grupo secundario).',i:'Nervio radial',d:'Aparato extensor de los dedos. Compartimento IV'},
+ ECU:{n:'Extensor cubital del carpo',p:[96,220],a:'Mejor desviador cubital que extensor. Prona las dos filas del carpo y su vaina es clave para ese efecto.',i:'Nervio radial',d:'Base del 5.º metacarpiano. Compartimento VI'}
+};
+const SEC={flex:{f:k=>TD[k].p[1]<170,ax:'ml',t:'Flexión: los tendones palmares al eje mediolateral. El flexor cubital del carpo es el flexor primario con más potencial, y los flexores de los dedos tienen un brazo de momento importante.'},
+ ext:{f:k=>TD[k].p[1]>170,ax:'ml',t:'Extensión: los tendones dorsales al eje mediolateral. El extensor radial corto, el más central, tiene el mayor brazo de momento extensor. El extensor cubital está tan cerca del eje mediolateral que extiende poco.'},
+ rad:{f:k=>TD[k].p[0]>200,ax:'ap',t:'Desviación radial: los tendones laterales al eje anteroposterior. Se combinan un flexor y un extensor radiales para que se anulen sus acciones en el plano sagital.'},
+ cub:{f:k=>TD[k].p[0]<200,ax:'ap',t:'Desviación cubital: los tendones mediales al eje anteroposterior. Los más eficaces, con diferencia, son el extensor y el flexor cubital del carpo.'},
+ pro:{f:k=>['ECU','FCR'].includes(k),ax:null,t:'Pronadores del carpo (Salva-Coll et al., 2011): el extensor cubital prona las dos filas y el flexor radial prona el hueso grande y el piramidal, aunque supina el escafoides.'},
+ sup:{f:k=>['FCU','ECRL','APL'].includes(k),ax:null,t:'Supinadores del carpo (Salva-Coll et al., 2011): flexor cubital del carpo, extensor radial largo y abductor largo del pulgar. La estabilidad dependería del equilibrio con los pronadores.'}};
+let seMv='flex', seSel=null;
+function drawSe(){
+  const s=$('#se-svg'); clear(s); const m=SEC[seMv], O=[200,170];
+  /* piel y tejido subcutáneo */
+  el('path',{d:'M 36 164 C 34 104 104 64 200 62 C 296 64 368 100 368 158 C 368 218 300 274 200 276 C 100 276 38 222 36 164 Z',fill:'url(#gSkin)',stroke:'var(--skin-line)','stroke-width':'1.5'},s);
+  el('path',{d:'M 48 164 C 48 112 112 76 200 74 C 288 76 356 110 356 158 C 356 212 296 262 200 264 C 104 264 50 216 48 164 Z',fill:'var(--fig)',opacity:'.55'},s);
+  if(m.ax==='ml') el('rect',{x:'36',y:seMv==='flex'?62:170,width:'332',height:'108',fill:'var(--accent)',opacity:'.07'},s);
+  if(m.ax==='ap') el('rect',{x:seMv==='rad'?200:36,y:'62',width:'168',height:'214',fill:'var(--accent)',opacity:'.07'},s);
+  /* huesos en corte */
+  el('path',Object.assign({d:'M 70 196 C 66 180 76 166 92 164 C 108 162 122 170 126 184 C 128 198 120 210 106 212 C 90 214 74 208 70 196 Z'},B1),s);
+  el('path',Object.assign({d:'M 82 146 C 80 136 88 128 98 128 C 110 128 116 136 114 146 C 112 156 104 160 96 160 C 88 158 82 154 82 146 Z'},B1),s);
+  el('path',Object.assign({d:'M 126 182 C 126 166 136 156 148 152 L 140 132 C 138 126 146 122 152 126 L 160 146 C 166 152 170 162 170 174 C 170 190 162 202 148 204 C 136 204 126 196 126 182 Z'},B),s);
+  el('path',Object.assign({d:'M 172 170 C 172 154 186 146 200 146 C 216 146 228 156 228 172 C 228 190 216 202 200 202 C 184 202 172 190 172 170 Z'},B),s);
+  el('path',Object.assign({d:'M 230 174 C 230 160 240 150 254 148 C 266 146 280 140 292 140 C 304 142 310 150 306 160 C 302 172 292 178 284 186 C 274 196 260 200 248 196 C 236 192 230 184 230 174 Z'},B1),s);
+  el('path',Object.assign({d:'M 288 144 C 290 132 300 124 312 126 C 324 128 330 140 326 152 C 322 162 310 166 300 162 C 292 158 286 152 288 144 Z'},B),s);
+  /* ligamento transverso del carpo y retináculo extensor */
+  el('path',{d:'M 100 128 C 134 98 262 96 300 124',fill:'none',stroke:'var(--lig-line)','stroke-width':'8','stroke-linecap':'round'},s);
+  el('path',{d:'M 100 128 C 134 98 262 96 300 124',fill:'none',stroke:'var(--lig)','stroke-width':'5.5','stroke-linecap':'round'},s);
+  el('path',{d:'M 74 218 C 110 258 290 262 334 210',fill:'none',stroke:'var(--lig-line)','stroke-width':'3','stroke-dasharray':'2 0'},s);
+  /* nervio mediano y paquete cubital (Guyon) */
+  el('ellipse',{cx:'240',cy:'108',rx:'8',ry:'5.5',fill:'#f2d16b',stroke:'#a8892b','stroke-width':'1.2'},s);
+  el('circle',{cx:'118',cy:'110',r:'5',fill:'#f2d16b',stroke:'#a8892b','stroke-width':'1.2'},s);
+  el('circle',{cx:'130',cy:'106',r:'4.5',fill:'var(--vessel)',stroke:'#7d1f16','stroke-width':'1'},s);
+  T(s,256,100,'N. mediano',{'font-size':'8','text-anchor':'middle'}); T(s,124,96,'Guyon',{'font-size':'8','text-anchor':'middle'});
+  T(s,200,175,'Grande',{'text-anchor':'middle','font-size':'8.5'}); T(s,148,190,'Ganchoso',{'text-anchor':'middle','font-size':'8'}); T(s,98,192,'Piramidal',{'text-anchor':'middle','font-size':'8'}); T(s,262,176,'Escafoides',{'text-anchor':'middle','font-size':'8'});
+  el('line',{x1:'14',y1:O[1],x2:'386',y2:O[1],stroke:'var(--hl)','stroke-width':'1.8'},s); el('line',{x1:O[0],y1:'34',x2:O[0],y2:'306',stroke:'var(--hl)','stroke-width':'1.8'},s);
+  T(s,14,164,'Eje ML',{'font-size':'10','font-weight':'600'}); T(s,206,40,'Eje AP',{'font-size':'10','font-weight':'600'});
+  T(s,200,322,'Dorsal',{'text-anchor':'middle','font-size':'10'}); T(s,250,24,'Palmar',{'text-anchor':'middle','font-size':'10'});
+  T(s,6,316,'Cubital (medial)',{'font-size':'10'}); T(s,394,316,'Radial (lateral)',{'font-size':'10','text-anchor':'end'});
+  const LO={FCU:[-14,-4,'end'],FDS:[30,1,'start'],FDP:[0,19,'middle'],PL:[12,4,'start'],FCR:[12,4,'start'],FPL:[0,16,'middle'],APL:[12,-4,'start'],EPB:[12,8,'start'],ECRL:[12,8,'start'],ECRB:[0,20,'middle'],EPL:[0,20,'middle'],ED:[0,22,'middle'],ECU:[-14,8,'end']};
+  for(const k in TD){
+    const t=TD[k], on=m.f(k), [x,y]=t.p;
+    if(on&&m.ax==='ml') el('line',{x1:x,y1:y,x2:x,y2:O[1],stroke:'var(--arrow)','stroke-width':'2.5','stroke-dasharray':'4 3'},s);
+    if(on&&m.ax==='ap') el('line',{x1:x,y1:y,x2:O[0],y2:y,stroke:'var(--arrow)','stroke-width':'2.5','stroke-dasharray':'4 3'},s);
+    const g=hitGroup(s,t.n,()=>{seSel=k; drawSe()});
+    const pts=t.g||[[x,y]], r=t.g?5.5:7.5;
+    pts.forEach(([px,py])=>el('circle',{cx:px,cy:py,r:r,fill:on?'var(--muscle)':'#f7f4ee',stroke:seSel===k?'var(--fg)':'var(--bone-line)','stroke-width':seSel===k?'2.2':'1.1'},g));
+    if(t.g) el('circle',{cx:x,cy:y,r:'2',fill:'var(--fg)'},g);
+    const lo=LO[k]||[0,-11,'middle']; T(g,x+lo[0],y+lo[1],k,{'font-size':'9','font-weight':'700','text-anchor':lo[2]});
+  }
+  let html='<div>'+m.t+'</div>';
+  if(m.ax) html+='<div class="src">Línea azul discontinua: brazo de momento, distancia perpendicular del tendón al eje.</div>';
+  if(seSel){const t=TD[seSel]; html+='<div style="border-top:1px dashed var(--line);padding-top:.4rem"><b>'+t.n+' ('+seSel+')</b></div><div><span class="k">Acción:</span> '+t.a+'</div><div><span class="k">Inervación:</span> '+t.i+'</div><div><span class="k">Inserción distal:</span> '+t.d+'</div>'}
+  else html+='<div class="src">Pulsen un tendón para ver su ficha.</div>';
+  $('#se-out').innerHTML=html;
+}
+seg('#lab-sec','data-mv',v=>{seMv=v; drawSe()});
+
+
+
+drawSe();
+})();
+</script></body></html>

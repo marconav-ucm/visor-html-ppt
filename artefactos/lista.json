@@ -1,4 +1,14 @@
 [
-  {"archivo": "codo.html", "titulo": "Biomecánica del codo"},
-  {"archivo": "muneca.html", "titulo": "Biomecánica de la muñeca"}
+  {
+    "archivo": "codo.html",
+    "titulo": "Biomecánica del codo"
+  },
+  {
+    "archivo": "muneca.html",
+    "titulo": "Biomecánica de la muñeca"
+  },
+  {
+    "archivo": "muneca-corte-transversal.html",
+    "titulo": "Muñeca: corte transversal y músculos (diapositiva)"
+  }
 ]
