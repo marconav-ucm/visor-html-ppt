@@ -1,0 +1,4 @@
+# llm-anonimo: nunca subir mapas de reidentificación ni listas de nombres
+mapa*.json
+nombres*.txt
+__pycache__/
