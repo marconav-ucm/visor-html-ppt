@@ -1,0 +1,706 @@
+<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pulgar: oposición por fases</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Serif:wght@500;600&display=swap">
+<style>/* Layout: columna lateral de navegación por apartados + columna de lectura de ~68 caracteres. Figuras con el lenguaje de las diapositivas: hueso beis con contorno pardo, cartílago azul claro, cabeza del radio anaranjada, flechas azules rotuladas y cabeceras de tabla en rojo. */
+:root{
+  --bg:#f6f7f9; --surface:#ffffff; --sunk:#eceef2; --fg:#1b1f27; --muted:#59606d; --line:#d5d9e0;
+  --accent:#b3142d; --accent-ink:#ffffff; --accent-soft:#f7e2e5;
+  --fig:#fffdf8; --bone:#f0dcae; --bone-dk:#e2c88f; --bone-line:#8a6a3a; --cart:#a8d4ec; --radhead:#e57d52;
+  --arrow:#3b86c8; --arrow-ink:#ffffff; --lig:#f4f1ea; --lig-line:#9a9081; --hl:#d0263c; --muscle:#c9483a; --comp:#c27413; --pink:#f6c9c9;
+  --ok:#1f6b45; --ok-soft:#e1f1e7; --bad:#9a2a1c; --bad-soft:#f8e3df;
+  --f-display:"IBM Plex Serif", Georgia, "Times New Roman", serif;
+  --f-body:"IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono:"IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#13161b; --surface:#1b1f26; --sunk:#232832; --fg:#e7e9ee; --muted:#a3a9b5; --line:#343b47;
+  --accent:#ef8a99; --accent-ink:#1b1f26; --accent-soft:#3a2328;
+  --fig:#22262d; --bone:#d9c18e; --bone-dk:#c4a86f; --bone-line:#f0dcae; --cart:#5e9bbd; --radhead:#e57d52;
+  --arrow:#5a9fdb; --arrow-ink:#ffffff; --lig:#3a3f48; --lig-line:#a9a090; --hl:#ff5d6f; --muscle:#d86252; --comp:#efa54a; --pink:#5b3338;
+  --ok:#7fd1a2; --ok-soft:#1d3327; --bad:#f19a88; --bad-soft:#3b221d; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#13161b; --surface:#1b1f26; --sunk:#232832; --fg:#e7e9ee; --muted:#a3a9b5; --line:#343b47;
+  --accent:#ef8a99; --accent-ink:#1b1f26; --accent-soft:#3a2328;
+  --fig:#22262d; --bone:#d9c18e; --bone-dk:#c4a86f; --bone-line:#f0dcae; --cart:#5e9bbd; --radhead:#e57d52;
+  --arrow:#5a9fdb; --arrow-ink:#ffffff; --lig:#3a3f48; --lig-line:#a9a090; --hl:#ff5d6f; --muscle:#d86252; --comp:#efa54a; --pink:#5b3338;
+  --ok:#7fd1a2; --ok-soft:#1d3327; --bad:#f19a88; --bad-soft:#3b221d; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:16px;line-height:1.6}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+a{color:var(--accent)}
+:focus-visible{outline:3px solid var(--arrow);outline-offset:2px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1.2;font-weight:600}
+h2{font-size:1.65rem;margin:0 0 .4rem}
+h3{font-size:1.2rem;margin:1.8rem 0 .5rem}
+p{margin:.6rem 0}
+.topbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--surface);border-bottom:3px solid var(--accent);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:.55rem;
+  display:flex;align-items:center;gap:.75rem}
+.topbar .brand{font-family:var(--f-display);font-weight:600;font-size:1rem;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.topbar .brand small{font-family:var(--f-body);font-weight:400;color:var(--muted);font-size:.8rem;margin-left:.5rem}
+button{font:inherit;color:inherit;cursor:pointer}
+.btn{border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:.4rem .75rem;font-size:.88rem}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+#navToggle{display:none}
+.shell{display:grid;grid-template-columns:260px minmax(0,1fr);max-width:1180px;margin:0 auto;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));gap:2.5rem}
+nav.side{position:sticky;top:calc(env(safe-area-inset-top,0px) + 3.4rem);align-self:start;max-height:calc(100vh - 4rem);overflow:auto;padding-block:1.5rem}
+nav.side ol{list-style:none;margin:0;padding:0;display:grid;gap:.1rem}
+nav.side a{display:flex;gap:.55rem;align-items:baseline;text-decoration:none;color:var(--fg);padding:.35rem .5rem;border-radius:5px;font-size:.92rem}
+nav.side a:hover{background:var(--sunk)}
+nav.side a .n{font-family:var(--f-mono);color:var(--muted);font-size:.78rem;min-width:2.1rem}
+nav.side a .tick{margin-left:auto;color:var(--ok);font-size:.8rem}
+nav.side .grp{font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:1rem .5rem .3rem}
+main{padding-block:1.5rem 4rem;min-width:0}
+.prose{max-width:68ch}
+section.block{padding-block:1.6rem 2rem;border-bottom:1px solid var(--line)}
+.eyebrow{font-family:var(--f-mono);font-size:.78rem;color:var(--accent);letter-spacing:.04em}
+.hero h1{font-size:clamp(1.9rem,4vw,2.7rem);margin:.3rem 0 .6rem}
+.hero .lede{color:var(--muted);max-width:60ch}
+.progress{margin-top:1.2rem;max-width:560px}
+.bar{height:10px;background:var(--sunk);border-radius:5px;overflow:hidden;border:1px solid var(--line)}
+.bar > span{display:block;height:100%;background:var(--accent);width:0;transition:width .3s}
+.progress .row{display:flex;justify-content:space-between;font-size:.85rem;color:var(--muted);margin-top:.35rem;gap:1rem;flex-wrap:wrap}
+.quick{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1rem;align-items:center}
+.quick a{font-size:.88rem;text-decoration:none;border:1px solid var(--line);border-radius:6px;padding:.35rem .7rem;background:var(--surface)}
+.done-row{display:flex;justify-content:flex-end;margin-top:1.2rem}
+.done-btn[aria-pressed="true"]{background:var(--ok-soft);border-color:var(--ok);color:var(--ok)}
+ol.obj{padding-left:1.3rem}
+ol.obj li{margin:.35rem 0}
+.def{font-weight:600}
+.box{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:1rem 1.1rem;margin:1rem 0}
+.box.clin{border-left:4px solid var(--accent)}
+.box h4{margin:0 0 .3rem;font-size:.82rem;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);font-family:var(--f-body)}
+.src{font-size:.82rem;color:var(--muted)}
+.tw{overflow-x:auto;margin:1rem 0;border:1px solid var(--line);border-radius:4px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:.9rem}
+th,td{text-align:left;padding:.5rem .7rem;border-bottom:1px solid var(--line);vertical-align:top}
+thead th{font-weight:600;background:var(--accent);color:var(--accent-ink);font-size:.84rem}
+tbody th{background:var(--sunk);font-weight:600;font-size:.84rem}
+td.num,th.num{text-align:right;font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+tr:last-child td{border-bottom:0}
+caption{caption-side:bottom;text-align:left;padding:.5rem .7rem;font-size:.8rem;color:var(--muted)}
+.lab{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:1.1rem;margin:1.4rem 0}
+.lab .head{display:flex;justify-content:space-between;gap:1rem;align-items:baseline;flex-wrap:wrap}
+.lab .head h3{margin:0}
+.lab .tag{font-family:var(--f-mono);font-size:.75rem;color:var(--muted)}
+.lab-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:1.2rem;margin-top:.8rem;align-items:start}
+.ctrl{display:grid;gap:.85rem;align-content:start}
+.ctrl label{display:grid;gap:.2rem;font-size:.88rem}
+.ctrl label .v{font-family:var(--f-mono);color:var(--accent)}
+input[type=range]{width:100%;accent-color:var(--accent)}
+.out{background:var(--sunk);border-radius:8px;padding:.8rem .9rem;font-size:.9rem;display:grid;gap:.35rem}
+.out .k{color:var(--muted)}
+.meter{height:12px;background:var(--surface);border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.meter span{display:block;height:100%;background:var(--arrow)}
+svg.fig{width:100%;height:auto;max-width:100%;display:block;background:var(--fig);border-radius:8px;border:1px solid var(--line)}
+svg text{font-family:var(--f-body);fill:var(--fg)}
+.pill{display:inline-block;padding:.1rem .55rem;border-radius:99px;font-size:.8rem;font-weight:600}
+.pill.ok{background:var(--ok-soft);color:var(--ok)}
+.pill.bad{background:var(--bad-soft);color:var(--bad)}
+.seg{display:flex;flex-wrap:wrap;gap:.35rem}
+.seg button{border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:.35rem .6rem;font-size:.85rem}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.err{display:grid;gap:.8rem}
+.err > div{border:1px solid var(--line);border-radius:8px;padding:.8rem 1rem;background:var(--surface)}
+.err .wrong{color:var(--bad);font-weight:600}
+.err .right{color:var(--ok);font-weight:600}
+.quiz{display:grid;gap:1rem;counter-reset:q}
+.q{border:1px solid var(--line);border-radius:8px;padding:1rem;background:var(--surface)}
+.q .stem{font-weight:500;margin:0 0 .6rem}
+.q .stem::before{counter-increment:q;content:counter(q) ". ";font-family:var(--f-mono);color:var(--accent)}
+.opts{display:grid;gap:.4rem}
+.opts button{text-align:left;border:1px solid var(--line);background:var(--bg);border-radius:6px;padding:.5rem .7rem;font-size:.92rem}
+.opts button:hover:not(:disabled){border-color:var(--accent)}
+.opts button:disabled{cursor:default}
+.opts button.correct{background:var(--ok-soft);border-color:var(--ok);color:var(--fg)}
+.opts button.wrongsel{background:var(--bad-soft);border-color:var(--bad);color:var(--fg)}
+.expl{margin-top:.6rem;font-size:.9rem;border-top:1px dashed var(--line);padding-top:.6rem}
+.score{display:flex;gap:1rem;align-items:center;flex-wrap:wrap;margin-top:1rem}
+.refs{padding-left:1.4rem;font-size:.92rem}
+.refs li{margin:.5rem 0;overflow-wrap:anywhere}
+#gloss-search{width:100%;max-width:420px;font:inherit;padding:.5rem .7rem;border:1px solid var(--line);border-radius:6px;background:var(--surface);color:var(--fg)}
+dl.gloss{display:grid;gap:.1rem;margin-top:1rem}
+dl.gloss div{padding:.6rem 0;border-bottom:1px solid var(--line)}
+dl.gloss dt{font-weight:600}
+dl.gloss dd{margin:.15rem 0 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:.8rem;margin-top:1rem}
+.card{perspective:900px;height:170px;border:0;background:none;padding:0;text-align:left}
+.card .in{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
+.card[aria-pressed="true"] .in{transform:rotateY(180deg)}
+.card .f,.card .b{position:absolute;inset:0;backface-visibility:hidden;border:1px solid var(--line);border-radius:8px;padding:.9rem;display:flex;flex-direction:column;justify-content:center;font-size:.92rem;overflow:auto}
+.card .f{background:var(--surface);font-weight:500}
+.card .f small{color:var(--muted);font-weight:400;font-size:.75rem;margin-top:.5rem}
+.card .b{background:var(--accent-soft);transform:rotateY(180deg)}
+footer{color:var(--muted);font-size:.82rem;padding-block:2rem}
+.confirm{display:inline-flex;gap:.5rem;align-items:center;font-size:.85rem;flex-wrap:wrap}
+@media (max-width:860px){
+  .shell{grid-template-columns:minmax(0,1fr);gap:0}
+  #navToggle{display:inline-block}
+  nav.side{position:fixed;inset:calc(env(safe-area-inset-top,0px) + 3.2rem) 0 0 0;max-height:none;background:var(--surface);z-index:8;
+    padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));border-top:1px solid var(--line)}
+  .lab-grid{grid-template-columns:minmax(0,1fr)}
+  .topbar .brand small{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+.mus{font-size:.84rem}.mus th[colspan]{background:var(--sunk);text-align:left;font-size:.8rem;letter-spacing:.04em}
+.casos li{margin:.9rem 0}.res{background:var(--sunk);border-radius:6px;padding:.5rem .7rem;margin-top:.4rem}
+.pend{background:var(--accent-soft);border-radius:4px;padding:0 .3rem}.mini{font-size:.88rem;color:var(--muted)}
+.ck{display:flex!important;gap:.4rem;align-items:center}.ctrl ul{margin:.2rem 0;padding-left:1.1rem}
+figure.sf{margin:1.2rem 0;border:1px solid var(--line);border-radius:10px;background:var(--surface);padding:.8rem}
+figure.sf svg{max-height:560px}figcaption{font-size:.88rem;margin-top:.55rem}
+.tagp{display:inline-block;margin-left:.5rem;font-size:.7rem;font-family:var(--f-mono);color:var(--muted);border:1px solid var(--line);border-radius:99px;padding:0 .45rem;white-space:nowrap}
+.chips{display:flex;flex-wrap:wrap;gap:.3rem;margin-top:.55rem}.chip{border:1px solid var(--line);background:var(--surface);border-radius:99px;padding:.15rem .6rem;font-size:.76rem}
+.chip[aria-pressed=true]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+svg.fig .bo{stroke:var(--bone-line);stroke-linecap:round;fill:none}svg.fig .bn{stroke:var(--bone);stroke-linecap:round;fill:none}
+svg.fig .fb{fill:var(--bone);stroke:var(--bone-line);stroke-width:1.6}svg.fig .fc{fill:var(--cart);stroke:var(--bone-line);stroke-width:1.2}
+svg.fig .fm{fill:var(--muscle);fill-opacity:.62;stroke:var(--muscle);stroke-width:1}svg.fig .fm2{fill:var(--comp);fill-opacity:.6;stroke:var(--comp)}svg.fig .fm3{fill:var(--arrow);fill-opacity:.5;stroke:var(--arrow)}
+svg.fig .sk{fill:var(--pink);fill-opacity:.35;stroke:var(--line);stroke-width:1}
+svg.fig text.tx{font-size:11px;fill:var(--fg)}svg.fig text.tx.b{font-weight:600;font-size:12px}svg.fig text.tx.mu{fill:var(--muted)}svg.fig text.tx.sm{font-size:10px;fill:var(--muted)}svg.fig text.tx.hl,svg.fig text.tx.red{fill:var(--hl);font-weight:600}svg.fig text.tx.pend{fill:var(--accent)}svg.fig text.tx.wt{fill:var(--accent-ink);font-size:10px}svg.fig text.xtx{fill:#ddd}
+svg.fig .ld{stroke:var(--muted);stroke-width:1}svg.fig .ldd{fill:var(--accent)}
+svg.fig .lg{stroke:var(--lig-line);stroke-width:2.5;fill:none;stroke-linecap:round}svg.fig .lh{stroke:var(--hl);fill:none}svg.fig .lg.lh{stroke-width:3}svg.fig .lg.dsh,svg.fig .dsh{stroke-dasharray:5 4}svg.fig .lg.gr{stroke:var(--line);stroke-width:1}
+svg.fig .cd{stroke-width:4;stroke:var(--lig-line)}svg.fig .cd.tt{stroke:var(--hl);stroke-width:5}svg.fig .ac{stroke-width:2}svg.fig .tt3{stroke-width:5}
+svg.fig .ar{stroke:var(--arrow);stroke-width:3;stroke-linecap:round;fill:none}svg.fig .ar.red{stroke:var(--hl)}svg.fig .ar.red2{stroke:var(--comp)}svg.fig .ar2{stroke:var(--hl);stroke-width:1.5;fill:none}
+svg.fig .tn{stroke:var(--muscle);stroke-width:3;fill:none;stroke-linejoin:round;stroke-linecap:round}svg.fig .tn.ext{stroke:var(--arrow)}svg.fig .tn.tn3{stroke:var(--comp)}svg.fig .tn.qm{stroke:var(--arrow)}svg.fig .tn.qu{stroke:var(--comp)}svg.fig .tn.qr{stroke:var(--muscle)}
+svg.fig .pl{stroke:var(--cart);stroke-width:5}svg.fig .pl.on2{stroke:var(--hl)}svg.fig .sh{stroke:var(--lig-line);stroke-width:5}
+svg.fig .pu{stroke:var(--fg);stroke-width:5;stroke-linecap:round}svg.fig .pu.cr{stroke-width:3;opacity:.6}svg.fig .pu.bad{stroke:var(--hl);stroke-dasharray:2 3}
+svg.fig .pu2{fill:var(--lig);stroke:var(--lig-line);stroke-width:1.5}svg.fig .pu2.major{fill:var(--accent-soft);stroke:var(--accent)}
+svg.fig .at1{fill:var(--hl);stroke:#fff;stroke-width:1}svg.fig .at2{fill:#8b8f99;stroke:#fff}
+svg.fig .fd,svg.fig .fd0{opacity:.28}
+svg.fig.hl [data-p]{opacity:.2;transition:opacity .15s}svg.fig.hl [data-p].on{opacity:1}svg.fig.hl [data-p].on *{filter:drop-shadow(0 0 3px var(--hl))}
+svg.fig.xr{background:#15171b}svg.fig.xr .bn{stroke:#e8e8e8}svg.fig.xr .bo{stroke:#9aa}svg.fig.xr .fb{fill:#dcdcdc}svg.fig.xr .fc{fill:#bbb}svg.fig.xr .tx{fill:#ddd}
+svg.fig .xrbg{fill:#15171b;stroke:#444}svg.fig .xl{stroke:#e6e6e6;stroke-width:12;stroke-linecap:round;fill:none}svg.fig .xo{fill:#c9c9c9;stroke:#eee}svg.fig .xfl{fill:#555;stroke:#999;fill-opacity:.6}svg.fig .xcirc{fill:none;stroke:#f5c518;stroke-width:3}svg.fig .xfx{stroke:#15171b;stroke-width:3}svg.fig .impl{fill:#8fa6c2;stroke:#eee}
+svg.fig .zm{fill:var(--arrow);fill-opacity:.45}svg.fig .zu{fill:var(--comp);fill-opacity:.5}svg.fig .zr{fill:var(--muscle);fill-opacity:.4}
+svg.fig .nail{fill:var(--surface);stroke:var(--hl);stroke-width:2}svg.fig .axc{fill:var(--surface);stroke:var(--hl);stroke-width:2.5}
+svg.fig .cyl{fill:#b0b6c2;fill-opacity:.5;stroke:#6b7280}svg.fig .tcl{fill:var(--lig);stroke:var(--lig-line)}svg.fig .tdn{fill:var(--comp)}svg.fig .nv2{fill:#f2c94c;stroke:#8a6a1f}
+svg.fig .arcl{fill:none;stroke-width:4;opacity:.85}svg.fig .arcl.a1{stroke:var(--arrow)}svg.fig .arcl.a2{stroke:var(--comp)}svg.fig .arcl.a3{stroke:var(--hl);stroke-dasharray:6 4}
+svg.fig .pillar{fill:none;stroke:var(--accent);stroke-dasharray:5 4;stroke-width:2}
+svg.fig .bar0{fill:var(--sunk)}svg.fig .bar{fill:var(--arrow)}svg.fig .fn{fill:var(--sunk);stroke:var(--line)}svg.fig .fn.on3{fill:var(--accent);stroke:var(--accent)}
+svg.fig .ghost{fill:none;stroke:var(--muted);stroke-dasharray:4 3}svg.fig .hl2{stroke:var(--hl)!important;stroke-width:5}svg.fig .wl{stroke:#fff;stroke-width:3}svg.fig .hid{opacity:0}svg.fig .gr{stroke:var(--line)}
+svg.fig .dl{fill:none;stroke:#7b3fa0;stroke-width:3}svg.fig .dt{fill:none;stroke:#2e9d57;stroke-width:3}svg.fig.xr text{fill:#ddd}svg.fig .gm{stroke:var(--bone-line);stroke-linecap:butt}svg.fig .hm{stroke:var(--hl)}
+.prose figure.sf,.prose .lab,.prose .tw{max-width:none}.prose{max-width:none}.prose > p,.prose > h3,.prose > ol,.prose > ul,.prose > .box,.prose > h2,.prose > .eyebrow{max-width:68ch}
+
+.figtabs{margin:0 0 .5rem}.figtabs button{font-size:.8rem;text-align:left;line-height:1.25}
+
+body{margin:0} .suelta{max-width:1100px;margin:0 auto;padding:12px} .suelta .lab{margin:0}
+.pie{font-size:.75rem;color:var(--muted);margin:.6rem 0 0}
+</style></head><body><main class="suelta">
+<div class="lab" id="lab-oposicion"><div class="head"><h3>Oposición del pulgar por fases</h3><span class="tag">oposición</span></div><p>Muevan el deslizador. Fase 1: abducción. Fase 2: flexión con rotación medial.</p>
+<div class="lab-grid"><div class="ctrl"><label>Progreso de la oposición <span class="v" id="op-s-v"></span><input type="range" id="op-s" min="0" max="100" value="0" step="1" data-u=" %"></label><div class="out" id="oposicion-out" aria-live="polite"></div></div>
+<svg class="fig" id="oposicion-svg" viewBox="0 0 520 300" role="img" aria-label="Oposición del pulgar por fases"></svg></div></div>
+<p class="pie">Biomecánica del Aparato Locomotor · Grado en Fisioterapia · Universidad Complutense de Madrid · Curso 2026-27</p>
+</main>
+<script>/* Motor de esquemas SVG propios (T012 v2). Todo se dibuja con primitivas, sin imágenes. */
+const NS='http://www.w3.org/2000/svg';
+const R=d=>d*Math.PI/180;
+const FIGS={};
+function Ctx(svg,w,h){
+  svg.setAttribute('viewBox','0 0 '+w+' '+h);
+  const E=(t,a,p,tx)=>{const e=document.createElementNS(NS,t);for(const k in a)if(a[k]!=null)e.setAttribute(k,a[k]);if(tx!=null)e.textContent=tx;(p||svg).appendChild(e);return e};
+  const P=id=>id?E('g',{'data-p':id}):svg;
+  const S={svg,w,h,E,labs:[],c:{}};
+  S.defs=E('defs',{});
+  const m=E('marker',{id:svg.id+'-ah',viewBox:'0 0 10 10',refX:'8',refY:'5',markerWidth:'5',markerHeight:'5',orient:'auto-start-reverse'},S.defs);E('path',{d:'M0,0 L10,5 L0,10 z',fill:'context-stroke'},m);
+  S.bone=(x1,y1,x2,y2,w,id,cls)=>{const p=E('g',id?{'data-p':id}:{});const fd=cls&&cls.includes(' fd');if(fd){p.setAttribute('class','fd');cls=cls.replace(' fd','')}E('line',{x1,y1,x2,y2,'stroke-width':w+3,class:'bo'},p);E('line',{x1,y1,x2,y2,'stroke-width':w,class:cls||'bn'},p);return p};
+  S.ell=(cx,cy,rx,ry,cls,id,rot)=>E('ellipse',{cx,cy,rx,ry,class:cls||'fb',transform:rot?'rotate('+rot+' '+cx+' '+cy+')':null},P(id));
+  S.circ=(cx,cy,r,cls,id)=>E('circle',{cx,cy,r,class:cls||'fb'},P(id));
+  S.rect=(x,y,w,h,cls,id,rx,rot)=>E('rect',{x,y,width:w,height:h,rx:rx==null?4:rx,class:cls||'fb',transform:rot?'rotate('+rot+' '+(x+w/2)+' '+(y+h/2)+')':null},P(id));
+  S.path=(d,cls,id)=>E('path',{d,class:cls||'fb'},P(id));
+  S.poly=(pts,cls,id)=>E('polygon',{points:pts.map(q=>q.join(',')).join(' '),class:cls||'fm'},P(id));
+  S.pl=(pts,cls,id)=>E('polyline',{points:pts.map(q=>q.join(',')).join(' '),class:cls||'tn',fill:'none'},P(id));
+  S.line=(x1,y1,x2,y2,cls,id)=>E('line',{x1,y1,x2,y2,class:cls||'lg'},P(id));
+  S.arrow=(x1,y1,x2,y2,cls,id)=>E('line',{x1,y1,x2,y2,class:cls||'ar','marker-end':'url(#'+svg.id+'-ah)'},P(id));
+  S.t=(x,y,s,o)=>{o=o||{};const e=E('text',{x,y,class:'tx'+(o.cls?' '+o.cls:''),'text-anchor':o.a||'start'},o.id?P(o.id):null);
+    const lines=String(s).split('\n');lines.forEach((l,i)=>E('tspan',{x,dy:i?13:0},e,l));return e};
+  S.wrap=(s,n)=>{const out=[];let cur='';s.split(' ').forEach(w=>{if((cur+' '+w).trim().length>n){out.push(cur);cur=w}else cur=(cur+' '+w).trim()});out.push(cur);return out.join('\n')};
+  S.L=(id,text,x,y,tx,ty)=>{const g=E('g',{'data-p':id});const right=tx>x;
+    E('line',{x1:x,y1:y,x2:right?tx-3:tx+3,y2:ty-3,class:'ld'},g);E('circle',{cx:x,cy:y,r:2.5,class:'ldd'},g);
+    S.t(tx,ty,S.wrap(text,Math.max(8,Math.floor(((right?w-tx:tx)-6)/5.6))),{a:right?'start':'end'});
+    g.appendChild(svg.lastChild);S.labs.push([id,text]);return g};
+  /* rotulado automático por lados con separación mínima. items: [id,texto,lado(l|r),(x,y)] */
+  S.LB=(items,c)=>{const sides={l:[],r:[]};items.forEach(it=>{const pt=it[3]!=null?[it[3],it[4]]:c[it[0]];if(!pt)return;sides[it[2]||'r'].push({it,pt})});
+    for(const k in sides){const a=sides[k].sort((p,q)=>p.pt[1]-q.pt[1]);if(!a.length)continue;
+      const txOf=o=>k==='l'?(o.it[5]||S.leftX||150):(w-(o.it[5]||S.rightX||120));
+      const nl=o=>S.wrap(o.it[1],Math.max(8,Math.floor(((k==='l'?txOf(o):w-txOf(o))-6)/5.6))).split('\n').length;
+      let ys=a.map(o=>o.pt[1]);for(let i=1;i<a.length;i++){const g=nl(a[i-1])*12+8;ys[i]=Math.max(ys[i],ys[i-1]+g)}
+      const last=a.length-1;if(ys[last]>h-10)ys[last]=h-10;for(let i=last-1;i>=0;i--){const g=nl(a[i])*12+8;ys[i]=Math.min(ys[i],ys[i+1]-g)}
+      a.forEach((o,i)=>S.L(o.it[0],o.it[1],o.pt[0],o.pt[1],txOf(o),Math.max(12,ys[i])+4))}};
+  return S}
+
+/* ---------- mano completa (vista palmar o dorsal), derecha, pulgar a la izquierda en vista palmar ---------- */
+const HP={car:{esc:[168,392,22,14,-25,'Escafoides'],lun:[204,394,18,15,0,'Semilunar'],tri:[238,390,17,14,20,'Piramidal'],pis:[256,372,8,8,0,'Pisiforme'],tpz:[148,356,16,15,-30,'Trapecio'],tpd:[178,348,13,13,0,'Trapezoide'],cap:[208,348,17,16,0,'Hueso grande'],gan:[240,352,16,15,0,'Ganchoso']},
+  mb:{1:[[150,352],[104,288]],2:[[178,340],[160,226]],3:[[208,338],[203,212]],4:[[238,344],[247,222]],5:[[252,352],[288,246]]},
+  ph:{1:[42,34],2:[52,30,24],3:[58,34,25],4:[52,32,24],5:[42,24,22]}};
+function hand(S,o){o=o||{};const ox=o.ox==null?100:o.ox,oy=o.oy||0,v=o.v==='d';const X=x=>ox+(v?400-x:x);const Y=y=>y+oy;const sh=o.show,f=id=>sh&&!sh.includes(id)?' fd':'';
+  const c={},pts={};
+  if(o.skin!==false){const sk=[[150,352],[104,288],[70,215],[50,176],[84,196],[118,262],[150,212],[160,150],[196,132],[205,150],[212,128],[250,140],[254,160],[250,190],[290,180],[320,215],[300,300],[270,400],[200,430],[150,410]].map(p=>[X(p[0]),Y(p[1])]);
+    S.poly(sk,'sk')}
+  if(o.arm){S.bone(X(185),Y(428),X(185),Y(470),28,'rad');S.bone(X(250),Y(428),X(250),Y(470),20,'uln');c.rad=[X(185),Y(450)];c.uln=[X(250),Y(450)]}
+  for(const id in HP.car){const k=HP.car[id];const cx=X(k[0]),cy=Y(k[1]);S.ell(cx,cy,k[2],k[3],'fb'+f(id),id,v?-k[4]:k[4]);c[id]=[cx,cy]}
+  for(let r=1;r<=5;r++){const B=HP.mb[r][0],H=HP.mb[r][1];let dx=H[0]-B[0],dy=H[1]-B[1];const L=Math.hypot(dx,dy);dx/=L;dy/=L;
+    const w=r===1?15:11;S.bone(X(B[0]),Y(B[1]),X(H[0]),Y(H[1]),w,'m'+r,'bn'+f('m'+r));c['m'+r]=[X((B[0]+H[0])/2),Y((B[1]+H[1])/2)];
+    let p=H.slice();const arr=[B,H];const names=r===1?['pp','dp']:['pp','mp','dp'];
+    let ang=r===1?-14:0;const ca=Math.cos(R(ang)),sa=Math.sin(R(ang));let ddx=dx*ca-dy*sa,ddy=dx*sa+dy*ca;
+    HP.ph[r].forEach((len,i)=>{const q=[p[0]+ddx*len,p[1]+ddy*len];const nm=names[i]+r;S.bone(X(p[0]+ddx*3),Y(p[1]+ddy*3),X(q[0]),Y(q[1]),w-(i+1)*(r===1?1.5:1),nm,'bn'+f(nm));c[nm]=[X((p[0]+q[0])/2),Y((p[1]+q[1])/2)];p=q;arr.push(q)});pts[r]=arr}
+  for(let r=1;r<=5;r++){pts[r].forEach((q,i)=>{if(i>=1&&i<pts[r].length-1){S.circ(X(q[0]),Y(q[1]),3.2,'fc');c[(i===1?'mcf':i===2?'ipp':'ipd')+r]=[X(q[0]),Y(q[1])]}})}
+  c.X=X;c.Y=Y;c.pts=pts;return c}
+
+/* ---------- dedo en vista lateral. a=MCF b=IFP c=IFD (flexión + hacia palmar = abajo) ---------- */
+function fin(S,o){o=o||{};const ox=o.ox||200,oy=o.oy||130,Ls=o.L||[84,52,38],a=o.a||0,b=o.b||0,c=o.c||0,W=[22,18,15];
+  const u=t=>[Math.cos(R(t)),Math.sin(R(t))],n=t=>[-Math.sin(R(t)),Math.cos(R(t))];
+  const p1=[ox,oy],p2=[ox+u(a)[0]*Ls[0],oy+u(a)[1]*Ls[0]],p3=[p2[0]+u(a+b)[0]*Ls[1],p2[1]+u(a+b)[1]*Ls[1]],p4=[p3[0]+u(a+b+c)[0]*Ls[2],p3[1]+u(a+b+c)[1]*Ls[2]];
+  const ang=[a,a+b,a+b+c],seg=[[p1,p2],[p2,p3],[p3,p4]],c0={};
+  const off=(i,t,d)=>{const s=seg[i],q=[s[0][0]+(s[1][0]-s[0][0])*t,s[0][1]+(s[1][1]-s[0][1])*t],nn=n(ang[i]);return [q[0]+nn[0]*d,q[1]+nn[1]*d]};
+  const ML=Math.min(150,ox-10);S.leftX=Math.max(60,ox-ML-8);S.bone(ox-ML,oy,ox-8,oy,26,'mc');S.circ(ox-6,oy,19,'fb','mc');
+  const nm=['pp','mp','dp'];seg.forEach((s,i)=>{S.bone(s[0][0],s[0][1],s[1][0],s[1][1],W[i],nm[i]);c0[nm[i]]=off(i,.5,0)});
+  [p2,p3].forEach(p=>S.circ(p[0],p[1],4.5,'fc'));
+  const hl=o.hl||{};
+  if(o.plate){[[p1,0,'plmcf'],[p2,1,'plpip'],[p3,2,'pldip']].forEach(q=>{const t=ang[q[1]],nn=n(t),uu=u(t);const cx=q[0][0]+nn[0]*(W[q[1]]/2+1),cy=q[0][1]+nn[1]*(W[q[1]]/2+1);
+    S.line(cx-uu[0]*9,cy-uu[1]*9,cx+uu[0]*9,cy+uu[1]*9,'pl'+(hl.plate?' on2':''),q[2]);c0[q[2]]=[cx,cy]})}
+  if(o.cl){const t0=o.cl.t==null?0:o.cl.t;const A=[ox-2,oy-3],Bp=off(0,.08,6);
+    S.line(A[0],A[1],Bp[0],Bp[1],'lg cd'+(t0>.5?' tt':''),'cord');const Bq=off(0,.05,10);S.line(ox-8,oy+6,Bq[0]+6,Bq[1]+2,'lg ac','acc');c0.cord=[(A[0]+Bp[0])/2,(A[1]+Bp[1])/2]}
+  if(o.tend){const d1=W[0]/2+5;
+    if(o.tend.includes('fdp')||o.tend.includes('fds')){const pts=[[ox-120,oy+16],[ox-6,oy+W[0]/2+6]].concat([off(0,.55,d1),off(1,.1,d1-2),off(1,.7,d1-4),off(2,.5,d1-5)]);
+      if(o.bow){S.pl([[ox-120,oy+16],[ox-6,oy+W[0]/2+6],[p2[0]*.6+p4[0]*.4,p2[1]*.6+p4[1]*.4+(o.bow===true?10:o.bow)],off(2,.5,d1-5)],'tn flex','fdp')}else S.pl(pts,'tn flex','fdp');c0.fdp=pts[3]}
+    if(o.tend.includes('ed')){const pts=[[ox-120,oy-17],[ox-6,oy-W[0]/2-5],off(0,.6,-d1+2),off(1,.2,-(W[1]/2+4)),off(1,.8,-(W[1]/2+4)),off(2,.7,-(W[2]/2+4))];S.pl(pts,'tn ext','ed');c0.ed=pts[3]}}
+  if(o.pull){const pp=[off(0,.12,W[0]/2+3),off(0,.4,W[0]/2+3),off(1,.5,W[1]/2+3),off(2,.5,W[2]/2+3)];o.pull.forEach(()=>{})}
+  if(o.pulleys){const pl=o.pulleys,rup=o.rupt||[];const defs={A1:[0,.04],A2:[0,.62],A3:[1,.02],A4:[1,.62],A5:[2,.05],C1:[0,.9],C2:[1,.3],C3:[1,.92]};
+    for(const k of pl){const d=defs[k];if(!d)continue;const i=d[0],pt=off(i,d[1],W[i]/2),pt2=off(i,d[1],W[i]/2+11);const cr=k[0]==='C';
+      const bad=rup.includes(k);
+      S.line(pt[0],pt[1],pt2[0],pt2[1],(cr?'pu cr':'pu')+(bad?' bad':''),k);const tt=off(i,d[1],W[i]/2+20);S.t(tt[0]-6,tt[1]+4,k,{cls:'sm'});c0[k]=pt}}
+  S.t(Math.max(6,ox-ML),oy-34,'dorsal',{cls:'mu'});S.t(Math.max(6,ox-ML),oy+44,'palmar',{cls:'mu'});
+  Object.assign(c0,{p1,p2,p3,p4,u,n,off,W});return c0}
+
+/* ---------- superficies articulares esquemáticas ---------- */
+function surf(S,kind,o){o=o||{};const cx=o.cx||180,cy=o.cy||150;
+  if(kind==='cond'){S.path('M'+(cx-60)+','+(cy-10)+' A60,60 0 0 1 '+(cx+60)+','+(cy-10)+' L'+(cx+40)+','+(cy-90)+' L'+(cx-40)+','+(cy-90)+' Z','fb','head');
+    S.path('M'+(cx-52)+','+(cy+8)+' Q'+cx+','+(cy-60)+' '+(cx+52)+','+(cy+8)+' L'+(cx+46)+','+(cy+80)+' L'+(cx-46)+','+(cy+80)+' Z','fc','base')}
+  else if(kind==='troc'){S.path('M'+(cx-46)+','+(cy-30)+' Q'+(cx-30)+','+(cy-8)+' '+(cx-12)+','+(cy-30)+' Q'+cx+','+(cy-22)+' '+(cx+12)+','+(cy-30)+' Q'+(cx+30)+','+(cy-8)+' '+(cx+46)+','+(cy-30)+' L'+(cx+36)+','+(cy-100)+' L'+(cx-36)+','+(cy-100)+' Z','fb','head');
+    S.path('M'+(cx-46)+','+(cy-6)+' Q'+(cx-30)+','+(cy+26)+' '+(cx-5)+','+(cy-4)+' L'+(cx+5)+','+(cy-4)+' Q'+(cx+30)+','+(cy+26)+' '+(cx+46)+','+(cy-6)+' L'+(cx+40)+','+(cy+70)+' L'+(cx-40)+','+(cy+70)+' Z','fc','base')}
+  else if(kind==='silla'){S.path('M'+(cx-70)+','+(cy-5)+' Q'+cx+','+(cy+40)+' '+(cx+70)+','+(cy-5)+' L'+(cx+60)+','+(cy-70)+' L'+(cx-60)+','+(cy-70)+' Z','fb','mc1');
+    S.path('M'+(cx-70)+','+(cy+10)+' Q'+cx+','+(cy-30)+' '+(cx+70)+','+(cy+10)+' L'+(cx+60)+','+(cy+75)+' L'+(cx-60)+','+(cy+75)+' Z','fc','trap')}
+}
+
+/* Esquemas A: anatomía, conceptos, CMC, MCF, IF */
+const F=(id,t,c,d,w,h,o)=>{FIGS[id]=Object.assign({t,c,d,w:w||520,h:h||470},o||{})};
+const CARP=[['esc','Escafoides'],['lun','Semilunar'],['tri','Piramidal'],['pis','Pisiforme'],['tpz','Trapecio'],['tpd','Trapezoide'],['cap','Hueso grande'],['gan','Ganchoso']];
+const carpL=(l)=>CARP.map((k,i)=>[k[0],k[1],l?'l':(i%2?'l':'r')]);
+function dot(S,x,y,cls,id){return S.circ(x,y,4.5,cls||'at1',id)}
+function mini(S,ox,oy,a,b,c,lab){const f=fin(S,{ox,oy,a,b,c,L:[56,36,26]});S.t(ox-120,oy+70,lab,{cls:'b'});return f}
+
+F('d003_1','Huesos del carpo, vista dorsal','Los ocho huesos del carpo vistos por detrás, con el extremo distal del radio y del cúbito. La fila proximal (escafoides, semilunar, piramidal y pisiforme) es laxa, y la distal (trapecio, trapezoide, hueso grande y ganchoso) forma una base rígida para los metacarpianos. Pulsen un rótulo para resaltarlo.',
+ (S)=>{const h=hand(S,{v:'d',arm:true,show:['esc','lun','tri','pis','tpz','tpd','cap','gan','rad','uln']});
+  S.LB(CARP.filter(k=>k[0]!='pis').map((k,i)=>[k[0],k[1],h[k[0]][0]<260?'l':'r']).concat([['rad','Radio','l'],['uln','Cúbito','r']]),h);
+  S.t(10,24,'Vista dorsal, mano derecha',{cls:'mu'})});
+F('d003_2','Huesos del carpo, vista palmar','Vista palmar del carpo. El gancho del ganchoso y el pisiforme, en el lado cubital, y los tubérculos del escafoides y del trapecio, en el radial, son los cuatro puntos óseos donde se ancla el ligamento transverso del carpo. El surco del flexor radial del carpo queda junto al tubérculo del trapecio (Neumann, cap. 7).',
+ (S)=>{const h=hand(S,{v:'p',arm:true,show:['esc','lun','tri','pis','tpz','tpd','cap','gan','rad','uln']});
+  S.circ(h.gan[0]+4,h.gan[1]+16,6,'fb','hook');S.circ(h.tpz[0]+2,h.tpz[1]+12,5,'fb','tub');h.hook=[h.gan[0]+4,h.gan[1]+16];h.tub=[h.tpz[0]+2,h.tpz[1]+12];
+  S.LB([['esc','Escafoides','l'],['tub','Tubérculo del trapecio','l'],['tpz','Trapecio','l'],['rad','Radio','l'],['hook','Gancho del ganchoso','r'],['pis','Pisiforme','r'],['cap','Hueso grande','r'],['uln','Cúbito','r']],h);S.t(10,24,'Vista palmar',{cls:'mu'})});
+F('d004_1','Huesos de la mano con inserciones musculares, vista palmar','Cada punto rojo marca una inserción proximal y cada punto gris una inserción distal de músculos de la mano, tal como los recoge el apéndice II del Neumann. Los músculos intrínsecos nacen y acaban dentro de la mano. Los extrínsecos acaban en las falanges.',
+ (S)=>{const h=hand(S,{v:'p',arm:true});
+  [[h.tpz[0],h.tpz[1]+12,'at1','a1'],[h.gan[0]+4,h.gan[1]+16,'at1','a2'],[h.pis[0],h.pis[1],'at1','a3'],[h.m5[0],h.m5[1]+30,'at1','a4']].forEach(q=>dot(S,q[0],q[1],q[2],q[3]));
+  [[h.dp2[0],h.dp2[1],'at2','b1'],[h.mp3[0],h.mp3[1],'at2','b2'],[h.pp1[0],h.pp1[1],'at2','b3'],[h.pp5[0],h.pp5[1],'at2','b4']].forEach(q=>dot(S,q[0],q[1],q[2],q[3]));
+  S.LB([['a1','Origen: oponente y flexor corto del pulgar','l'],['a3','Origen: abductor del meñique','r'],['a2','Origen: flexor y oponente del meñique','r'],['b1','Inserción: flexor profundo','l'],['b2','Inserción: flexor superficial','r'],['b3','Inserción: flexor corto y abductor corto del pulgar','l']],h);
+  S.t(10,24,'Rojo: origen. Gris: inserción',{cls:'mu'})},520,470,{});
+F('d004_2','Huesos de la mano con inserciones musculares, vista dorsal','Vista dorsal. Los extensores radiales del carpo se insertan en las bases del 2.º y del 3.er metacarpiano y el extensor cubital del carpo en la del 5.º. Los tendones del extensor de los dedos acaban en el mecanismo extensor y en la falange distal (Neumann, cap. 8 y apéndice II).',
+ (S)=>{const h=hand(S,{v:'d',arm:true});
+  [[h.m2[0],h.m2[1]+55,'at2','a1'],[h.m3[0],h.m3[1]+55,'at2','a2'],[h.m5[0],h.m5[1]+30,'at2','a3'],[h.dp3[0],h.dp3[1],'at2','b1'],[h.mp3[0],h.mp3[1],'at2','b2'],[h.pp3[0],h.pp3[1],'at2','b3']].forEach(q=>dot(S,q[0],q[1],q[2],q[3]));
+  S.LB([['a1','Extensor radial largo del carpo','l'],['a2','Extensor radial corto del carpo','l'],['a3','Extensor cubital del carpo','r'],['b1','Mecanismo extensor: banda terminal','r'],['b2','Banda central','r'],['b3','Capucha dorsal','r']],h)});
+F('d005_1','Ligamentos del carpo, vista dorsal','Ligamentos extrínsecos dorsales (del radio y del cúbito al carpo) y colaterales. Los dorsales contienen la mayor densidad de mecanorreceptores, lo que subraya su papel en el control del carpo (Neumann, cap. 7).',
+ (S)=>{const h=hand(S,{v:'d',arm:true,show:['esc','lun','tri','tpz','tpd','cap','gan','rad','uln','pis']});
+  S.line(h.rad[0],h.rad[1]-22,h.tri[0],h.tri[1],'lg lh','l1');S.line(h.rad[0]+10,h.rad[1]-22,h.cap[0],h.cap[1]+12,'lg','l1');
+  S.line(h.esc[0],h.esc[1]-8,h.tpz[0],h.tpz[1]+8,'lg','l2');S.line(h.tri[0],h.tri[1]-10,h.gan[0],h.gan[1]+8,'lg','l2');S.line(h.lun[0],h.lun[1]-8,h.cap[0],h.cap[1]+8,'lg','l2');
+  S.line(h.uln[0],h.uln[1]-22,h.tri[0]+4,h.tri[1]+6,'lg','l3');S.line(h.rad[0]-14,h.rad[1]-22,h.esc[0]-12,h.esc[1]+4,'lg','l4');
+  S.LB([['l1','Radiocarpiano dorsal','l',h.esc[0],h.esc[1]+30],['l2','Intercarpianos dorsales','l',h.cap[0]-14,h.cap[1]+4],['l3','Colateral cubital','r',h.tri[0]+4,h.tri[1]+4],['l4','Colateral radial','l',h.esc[0]-12,h.esc[1]]],h)});
+F('d005_2','Ligamentos del carpo, vista palmar','Ligamentos extrínsecos palmares: radioescafocapitado y radiosemilunar (largo y corto) por el lado radial, y cubitocarpiano por el cubital, junto con el complejo del fibrocartílago triangular. Son más fuertes que los dorsales (Neumann, cap. 7).',
+ (S)=>{const h=hand(S,{v:'p',arm:true,show:['esc','lun','tri','tpz','tpd','cap','gan','rad','uln','pis']});
+  S.line(h.rad[0],h.rad[1]-24,h.cap[0],h.cap[1]+10,'lg lh','p1');S.line(h.rad[0]+8,h.rad[1]-24,h.lun[0],h.lun[1]+6,'lg','p2');S.line(h.uln[0]-4,h.uln[1]-24,h.tri[0],h.tri[1]+4,'lg','p3');S.line(h.uln[0],h.uln[1]-24,h.cap[0]+6,h.cap[1]+12,'lg','p3');S.rect(h.lun[0]+26,h.uln[1]-34,26,12,'fc','tfcc');h.tfcc=[h.lun[0]+39,h.uln[1]-28];
+  S.LB([['p1','Radioescafocapitado','l'],['p2','Radiosemilunar','l',h.lun[0]-6,h.lun[1]+6],['p3','Cubitocarpiano palmar','r',h.tri[0]-4,h.tri[1]+6],['tfcc','Fibrocartílago triangular (TFCC)','r']],h)});
+F('d006_1','Ligamentos de las carpometacarpianas, vista dorsal','Las articulaciones carpometacarpianas de los dedos están rodeadas por una cápsula común. Los ligamentos dorsales y palmares son engrosamientos de esa cápsula y los dorsales están más desarrollados. Los ligamentos intermetacarpianos unen entre sí las bases del 2.º al 5.º metacarpiano.',
+ (S)=>{const h=hand(S,{v:'d',show:['tpz','tpd','cap','gan','m2','m3','m4','m5','m1']});
+  [2,3,4].forEach(r=>S.line(h['m'+r][0],h['m'+r][1]+44,h['m'+(r+1)][0],h['m'+(r+1)][1]+44,'lg','im'));
+  [2,3,4,5].forEach(r=>S.line(h['m'+r][0],h['m'+r][1]+50,h['m'+r][0],h['m'+r][1]+78,'lg lh','cmc'));
+  S.LB([['cmc','Ligamentos carpometacarpianos dorsales','r',h.m4[0],h.m4[1]+62],['im','Ligamentos intermetacarpianos','l',h.m3[0]-6,h.m3[1]+44],['cap','Hueso grande','l'],['gan','Ganchoso','r']],h)});
+F('d007_1','Cápsula de la metacarpofalángica, corte sagital','La cápsula se inserta en el perímetro del cartílago del metacarpiano y a cierta distancia de él en la falange. Sus fondos de saco dorsal y palmar dan holgura a la gran flexoextensión de la articulación. La placa palmar refuerza la cara anterior.',
+ (S)=>{const f=fin(S,{ox:300,oy:200,plate:true});
+  S.path('M268,174 Q300,140 338,176','lg dsh','fd');S.path('M268,226 Q296,262 342,224','lg dsh','fp');
+  S.LB([['fd','Fondo de saco dorsal','l',290,160],['fp','Fondo de saco palmar','l',296,246],['plmcf','Placa palmar','r',f.plmcf[0],f.plmcf[1]],['pp','Falange proximal','r'],['mc','Metacarpiano','l',200,200]],{fd:[290,160],fp:[296,246],plmcf:f.plmcf,pp:f.pp,mc:[200,200]},)},520,320);
+F('d007_2','Cápsula de la metacarpofalángica, vista frontal','La cabeza convexa del metacarpiano encaja en la base cóncava de la falange. A cada lado, los colaterales radial y cubital cruzan la articulación. El colateral externo (radial) es más largo que el interno (cubital) según la clase.',
+ (S)=>{surf(S,'cond',{cx:260,cy:170});S.line(212,140,222,216,'lg lh','cl1');S.line(308,140,298,216,'lg lh','cl2');
+  S.LB([['head','Cabeza del metacarpiano','l',230,100],['base','Base de la falange proximal','l',224,200],['cl1','Colateral radial (más largo)','l',212,176],['cl2','Colateral cubital','r',308,176]],{});},520,320);
+F('d008_1','Interfalángicas, vista dorsal','En las interfalángicas, la cabeza de la falange es una pequeña polea con dos cóndilos y una garganta, y la base de la falange siguiente tiene dos cavidades separadas por una cresta. Los colaterales tienen porción cordonal y accesoria, y esta se funde con la placa palmar. En la IFP, el ligamento de freno (check-rein) refuerza la placa.',
+ (S)=>{const X=250;S.bone(X,440,X,300,44,'pp');S.bone(X,296,X,196,36,'mp');S.bone(X,192,X,100,30,'dp');
+  [[300,'IFP'],[196,'IFD']].forEach(q=>{[-1,1].forEach(s=>{S.line(X+s*10,q[0]+6,X+s*26,q[0]-22,'lg lh','cord'+q[1]);S.line(X+s*8,q[0]+8,X+s*20,q[0]+22,'lg','acc'+q[1])});S.rect(X-20,q[0]-4,40,8,'fc','plate'+q[1])});
+  S.LB([['cordIFP','Colateral: porción cordonal','l',X-26,278],['accIFP','Colateral: porción accesoria','r',X+20,322],['plateIFP','Placa palmar IFP','r',X+20,300],['pp','Falange proximal','l',X-20,400],['mp','Falange media','l',X-18,250],['dp','Falange distal','r',X+10,130],['plateIFD','Placa palmar IFD','r',X+20,196]],{})},520,470);
+F('d009_1','Ligamentos de la metacarpofalángica: placas palmares y ligamento transverso profundo','Vista palmar de las cuatro MCF. Cada placa palmar es un fibrocartílago grueso que se extiende desde la base de la falange proximal hasta la cabeza del metacarpiano. Tres ligamentos transversos profundos unen las placas y atan entre sí las cabezas de los metacarpianos 2.º a 5.º. Las vainas fibrosas, anteriores a las placas, forman las poleas.',
+ (S)=>{const h=hand(S,{v:'p',skin:false,show:['m2','m3','m4','m5','pp2','pp3','pp4','pp5','mp2','mp3','mp4','mp5','dp2','dp3','dp4','dp5']});
+  [2,3,4,5].forEach(r=>{S.ell(h['mcf'+r][0],h['mcf'+r][1]+6,12,6,'fc','pl'+r);S.line(h['pp'+r][0],h['pp'+r][1]-6,h['pp'+r][0],h['pp'+r][1]+6,'sh','sh'+r)});
+  S.pl([2,3,4,5].map(r=>[h['mcf'+r][0],h['mcf'+r][1]+10]),'tn lh','dtm');
+  S.LB([['dtm','Ligamentos transversos profundos','l',h.mcf3[0],h.mcf3[1]+10],['pl3','Placa palmar','r',h.mcf4[0]+12,h.mcf4[1]+6],['sh3','Vaina fibrosa digital','r',h.pp3[0],h.pp3[1]]],h)});
+F('d011_2','Placas palmares y vaina fibrosa, vista lateral del dedo','Las placas palmares de la MCF, la IFP y la IFD son la base de la vaina fibrosa, que mantiene los flexores cerca del hueso. En la IFP y la IFD limitan la hiperextensión.',
+ (S)=>{const f=fin(S,{ox:300,oy:170,a:15,plate:true,cl:{t:.3},tend:['fdp'],pulleys:['A1','A2','A3','A4','A5']});
+  S.LB([['plmcf','Placa palmar MCF','l',f.plmcf[0],f.plmcf[1]],['plpip','Placa palmar IFP','r',f.plpip[0],f.plpip[1]],['pldip','Placa palmar IFD','r',f.pldip[0],f.pldip[1]],['fdp','Flexor profundo','r',f.fdp[0],f.fdp[1]],['cord','Colateral','l',f.cord[0],f.cord[1]]],f)},520,330);
+F('d012_1','Ligamento transverso del carpo y túnel carpiano','El ligamento transverso cierra como un techo la concavidad palmar del carpo. Se ancla en el pisiforme y el gancho del ganchoso por el lado cubital, y en los tubérculos del escafoides y del trapecio por el radial. Por el túnel pasan el nervio mediano y los nueve tendones flexores extrínsecos. El tendón del flexor radial del carpo circula por un conducto propio.',
+ (S)=>{const h=hand(S,{v:'p',arm:true,show:['esc','lun','tri','pis','tpz','tpd','cap','gan']});
+  S.path('M'+(h.tpz[0]-6)+','+(h.tpz[1]-2)+' Q'+h.cap[0]+','+(h.cap[1]-40)+' '+(h.gan[0]+10)+','+(h.gan[1]+6)+' L'+(h.gan[0]+10)+','+(h.gan[1]+16)+' Q'+h.cap[0]+','+(h.cap[1]-24)+' '+(h.tpz[0]-6)+','+(h.tpz[1]+12)+' Z','tcl','tcl');
+  for(let i=0;i<9;i++)S.circ(h.cap[0]-34+i*8.5,h.cap[1]-6+(i%2)*5,3.4,'tdn','tend');S.circ(h.cap[0]-24,h.cap[1]-20,5.5,'nv2','med');h.tend=[h.cap[0],h.cap[1]-2];h.med=[h.cap[0]-24,h.cap[1]-20];
+  S.LB([['tcl','Ligamento transverso del carpo','l',h.tpd[0],h.tpd[1]-22],['med','Nervio mediano','l'],['tend','Tendones flexores extrínsecos','r'],['pis','Pisiforme','r'],['gan','Gancho del ganchoso','r',h.gan[0]+6,h.gan[1]+10],['tpz','Tubérculo del trapecio','l']],h)});
+F('d015_1','Homúnculo motor','Representación somatotópica en la corteza motora. La mano y la cara ocupan una superficie desproporcionada, lo que explica que una lesión de la mano se acompañe de una pérdida funcional también desproporcionada (Neumann, cap. 8). El homúnculo sensitivo tiene una distribución parecida.',
+ (S)=>{S.path('M60,300 A200,200 0 0 1 460,300 L460,330 L60,330 Z','fb','cx');
+  const seg=[['Pie y pierna',-80,.9],['Tronco',-62,.7],['Hombro',-50,.5],['Brazo',-40,.55],['Mano',-24,1.9],['Cuello',-4,.5],['Cara',10,1.8],['Lengua',34,1]];
+  seg.forEach((q,i)=>{const a=R(180+30+ (i*13.5)),r1=190,r2=190-12-q[2]*28;const x1=260+r1*Math.cos(a),y1=300+r1*Math.sin(a),x2=260+r2*Math.cos(a),y2=300+r2*Math.sin(a);S.line(x1,y1,x2,y2,q[0]=='Mano'?'lh hm':'lh gm','s'+i).setAttribute('style','stroke-width:'+(q[2]*14));const xt=260+(r1+12)*Math.cos(a),yt=300+(r1+12)*Math.sin(a);S.t(xt,yt,q[0],{a:xt<260?'end':'start',cls:q[0]=='Mano'?'b':''})});
+  S.t(260,250,'Corteza motora',{a:'middle',cls:'mu'})},520,330,{});
+F('d016_1','Ligamentos palmares de las carpometacarpianas','Vista palmar de las bases de los metacarpianos. Los ligamentos carpometacarpianos palmares tienen una disposición parecida a la de los dorsales y los intermetacarpianos palmares unen las bases entre sí. La única excepción es la carpometacarpiana del pulgar, en silla de montar, con su ligamento oblicuo anterior.',
+ (S)=>{const h=hand(S,{v:'p',show:['tpz','tpd','cap','gan','m1','m2','m3','m4','m5']});
+  [2,3,4].forEach(r=>S.line(h['m'+r][0],h['m'+r][1]+46,h['m'+(r+1)][0],h['m'+(r+1)][1]+46,'lg','im'));[2,3,4,5].forEach(r=>S.line(h['m'+r][0],h['m'+r][1]+52,h['m'+r][0],h['m'+r][1]+80,'lg lh','cmc'));
+  S.line(h.tpz[0]-2,h.tpz[1]+6,h.m1[0]+16,h.m1[1]+48,'lg','oa');
+  S.LB([['cmc','Carpometacarpianos palmares','r',h.m4[0],h.m4[1]+66],['im','Intermetacarpianos palmares','r',h.m3[0]+8,h.m3[1]+46],['oa','Oblicuo anterior (pulgar)','l'],['m1','1.er metacarpiano','l']],h)});
+F('d018_1','Flexión y extensión de un dedo','Los dedos se mueven en el plano sagital alrededor de un eje mediolateral. En la flexión, los segmentos se curvan hacia la palma. En la extensión, la MCF puede pasar de 0° de forma pasiva hasta unos 30 a 45° (Neumann, cap. 8).',
+ (S)=>{mini(S,180,110,70,80,50,'Flexión');mini(S,180,300,-28,0,0,'Extensión');S.arrow(380,70,380,100,'ar');S.t(392,92,'palmar',{cls:'mu'})},520,420);
+F('d018_2','Abducción y aducción de los dedos','En el plano frontal, el dedo medio es la referencia. La abducción separa los dedos del eje de la mano y la aducción los acerca. Los movimientos laterales del propio dedo medio se llaman desviación radial y cubital.',
+ (S)=>{[[120,'Aducción',[0,0,0,0]],[360,'Abducción',[-16,-5,8,18]]].forEach(g=>{const ox=g[0];S.rect(ox-70,250,140,80,'sk',null,24);[-45,-15,15,45].forEach((dx,i)=>{const a=R(g[2][i]),x0=ox+dx,y0=250;S.bone(x0,y0,x0+Math.sin(a)*170,y0-Math.cos(a)*170,16)});S.line(ox,60,ox,330,'lg dsh');S.t(ox,350,g[1],{a:'middle',cls:'b'})});S.t(10,24,'Vista dorsal. Línea discontinua: eje de la mano',{cls:'mu'})},520,380);
+F('d019_1','Movilidad de las carpometacarpianas, vista palmar','Las carpometacarpianas periféricas (1.ª, 4.ª y 5.ª) son mucho más móviles que las dos centrales. Los metacarpianos 2.º y 3.º forman un pilar fijo y los bordes se pliegan alrededor de él para ahuecar la palma.',
+ (S)=>{const h=hand(S,{v:'p',arm:true});S.arrow(h.m4[0]+36,h.m4[1]+10,h.m4[0]+4,h.m4[1]+30,'ar');S.arrow(h.m5[0]+34,h.m5[1]+14,h.m5[0]+6,h.m5[1]+34,'ar');S.arrow(h.m1[0]-34,h.m1[1]+16,h.m1[0]-8,h.m1[1]+34,'ar');
+  S.rect(h.m2[0]-8,h.m2[1]-6,h.m3[0]-h.m2[0]+16,100,'pillar','pil',10);
+  S.LB([['pil','Pilar fijo (2.º y 3.º)','l',h.m2[0]-8,h.m2[1]+40],['m1','Pulgar','l'],['m4','4.ª y 5.ª: cierran el borde cubital','r']],h)});
+F('d019_2','Puño: posición de los metacarpianos','Las cabezas de los metacarpianos dibujan una línea casi recta con la mano relajada (blanca) y una curva al cerrar el puño (roja). La diferencia entre ambas la aportan sobre todo la 4.ª y la 5.ª carpometacarpiana, que flexionan más (Neumann, cap. 8).',
+ (S)=>{const xs=[110,190,270,350];S.rect(50,180,360,150,'sk',null,40);xs.forEach((x,i)=>S.circ(x,220+[0,-2,0,12][i]*1,24,'fb','k'+i));
+  S.pl([[90,210],[180,205],[270,208],[380,215]],'tn wl','rel');S.pl([[90,205],[180,195],[270,212],[380,245]],'tn lh','fist');
+  S.LB([['rel','Posición relajada','l',90,210],['fist','Tras cerrar el puño','r',380,245]],{});S.t(10,24,'Vista dorsal del puño. Nudillos = cabezas del 2.º al 5.º metacarpiano',{cls:'mu'})},520,360);
+F('d020_1','Arcos de la mano','La concavidad palmar la sostienen tres arcos integrados. El transversal proximal pasa por la fila distal del carpo, es rígido y tiene al hueso grande como clave. El transversal distal pasa por las MCF y sus bordes son móviles. El longitudinal sigue los radios 2.º y 3.º, rígido en su parte proximal y móvil en la distal. Las MCF 2.ª y 3.ª son la clave de los dos últimos.',
+ (S)=>{const h=hand(S,{v:'p',arm:true});
+  S.path('M'+(h.tpz[0]-6)+','+(h.tpz[1]+30)+' Q'+h.cap[0]+','+(h.cap[1]-24)+' '+(h.gan[0]+16)+','+(h.gan[1]+30),'arcl a1','arc1');
+  S.path('M'+h.mcf2[0]+','+h.mcf2[1]+' Q'+h.mcf3[0]+','+(h.mcf3[1]-34)+' '+h.mcf5[0]+','+h.mcf5[1],'arcl a2','arc2');
+  S.path('M'+h.cap[0]+','+(h.cap[1]+8)+' L'+h.mcf3[0]+','+h.mcf3[1]+' L'+h.ipp3[0]+','+h.ipp3[1],'arcl a3','arc3');
+  S.LB([['arc1','Transversal proximal','l',h.tpd[0],h.tpd[1]+20],['arc2','Transversal distal','l',h.mcf2[0],h.mcf2[1]-10],['arc3','Longitudinal (2.º y 3.er radio)','r',h.mp3[0],h.mp3[1]],['cap','Clave: hueso grande','r']],h)});
+F('d021_1','Superficies articulares de la metacarpofalángica','La cabeza del metacarpiano es una porción de elipsoide, convexa en ambos sentidos y más extensa por delante que por detrás. La base de la falange es una cavidad menor y más ancha en sentido frontal que anteroposterior. La congruencia es buena en el plano frontal y débil en el sagital, por eso la articulación es inestable.',
+ (S)=>{surf(S,'cond',{cx:130,cy:170});S.t(130,290,'Plano frontal: congruente',{a:'middle',cls:'b'});
+  S.ell(390,120,60,48,'fb','head2');S.path('M330,150 Q350,230 400,206 Q420,180 410,150','fc','base2');S.t(390,290,'Plano sagital: poco congruente',{a:'middle',cls:'b'});
+  S.LB([['head','Cabeza (convexa)','l',90,100],['base','Base (cóncava)','l',90,200],['head2','Cabeza más extensa por delante','r',440,100],['base2','Base menor','r',410,200]],{});},520,320);
+F('d022_1','Grados de libertad de la metacarpofalángica','La MCF de los dedos es condílea. Permite flexoextensión en el plano sagital, con eje mediolateral, y abducción y aducción en el frontal, con eje anteroposterior. Ambos ejes pasan por la cabeza del metacarpiano.',
+ (S)=>{const f=mini(S,150,110,40,0,0,'Flexoextensión');S.circ(150,110,6,'axc');S.t(160,92,'eje mediolateral',{cls:'hl'});
+  S.rect(300,170,140,70,'sk',null,24);[330,370,410].forEach((x,i)=>S.bone(x,170,x+[-20,0,20][i],70,16));S.circ(370,170,6,'axc');S.t(310,260,'eje anteroposterior (vista dorsal)',{cls:'hl'});S.t(300,290,'Abducción y aducción',{cls:'b'})},520,330);
+F('d023_1','Metacarpofalángica en flexión, vista lateral','La falange proximal rueda y se desliza hacia palmar, impulsada por el flexor profundo de los dedos, que pasa por las poleas A1 y A2. La flexión tensa la cápsula dorsal y la porción cordonal del colateral, mientras la placa palmar se pliega.',
+ (S)=>{const f=fin(S,{ox:260,oy:130,a:60,plate:true,cl:{t:1},tend:['fdp'],pulleys:['A1','A2']});S.arrow(250,225,215,255,'ar');
+  S.LB([['fdp','Flexor profundo','r',f.fdp[0],f.fdp[1]],['A1','Polea A1','l',f.A1[0],f.A1[1]],['A2','Polea A2','r',f.A2[0],f.A2[1]],['cord','Colateral cordonal: tenso','l',f.cord[0],f.cord[1]],['plmcf','Placa palmar','l',f.plmcf[0],f.plmcf[1]]],{})},520,340);
+F('d024_1','Prensión de un cilindro: el flexor superficial y el profundo','Al cerrar la mano sobre un objeto cilíndrico, el flexor superficial flexiona sobre todo la IFP y el flexor profundo llega hasta la IFD. Ambos flexionan todas las articulaciones que cruzan. El extensor de los dedos frena la extensión de la MCF para que los flexores trabajen en las articulaciones distales.',
+ (S)=>{S.circ(300,250,62,'cyl','cil');const f=fin(S,{ox:150,oy:120,a:70,b:80,c:45,tend:['fdp'],bow:true});
+  S.arrow(240,245,200,300,'ar red');S.arrow(250,225,215,290,'ar red2');
+  S.LB([['fdp','Flexor profundo','l',f.fdp[0],f.fdp[1]+20],['cil','Objeto cilíndrico','r']],{cil:[330,230]});S.t(220,310,'Flexor superficial',{cls:'red'});S.t(250,330,'Flexor profundo',{cls:'red'})},520,360);
+F('d025_1','Amplitud de flexión de la MCF en el índice y en el meñique','La amplitud de flexión de la MCF aumenta del índice al meñique. Neumann da unos 90° para el índice y unos 110 a 115° para el quinto dedo, lo que se nota en el diseño en pistola de muchas empuñaduras. Para agarrar o pinzar se usan unos 60 a 70° (posición de cierre).',
+ (S)=>{fin(S,{ox:180,oy:100,a:90,L:[60,0,0]});fin(S,{ox:180,oy:250,a:112,L:[50,0,0]});S.t(300,110,'Índice: unos 90°',{cls:'b'});S.t(300,265,'Meñique: unos 110 a 115°',{cls:'b'})},520,360);
+F('d026_1','Metacarpofalángica en extensión, vista lateral','La extensión activa se produce por la coactivación del extensor de los dedos y de un músculo intrínseco. La falange rueda y se desliza hacia dorsal. A 0° la porción cordonal del colateral está relajada y la placa palmar, desplegada, sostiene la cabeza del metacarpiano. Más allá de 0°, un intrínseco como el lumbrical frena la hiperextensión.',
+ (S)=>{const f=fin(S,{ox:260,oy:130,a:-20,plate:true,cl:{t:0},tend:['ed']});S.arrow(300,70,330,45,'ar');S.arrow(250,225,285,240,'ar');
+  S.LB([['ed','Extensor de los dedos','r',f.ed[0],f.ed[1]],['plmcf','Placa palmar: tensa','l',f.plmcf[0],f.plmcf[1]],['cord','Colateral: relajado','l',f.cord[0],f.cord[1]]],{})},520,340);
+F('d028_1','Metacarpofalángica abierta, vista dorsal','Con la cápsula abierta se aprecia la cabeza del metacarpiano, los colaterales con sus porciones cordonal y accesoria, el tubérculo posterior donde nacen y la placa palmar.',
+ (S)=>{S.bone(260,40,260,190,46,'mc');S.circ(260,196,36,'fb','head');S.bone(260,300,260,430,38,'pp');S.rect(236,228,48,16,'fc','plate');
+  [-1,1].forEach(s=>{S.line(260+s*22,170,260+s*18,244,'lg lh','cord');S.line(260+s*30,188,260+s*20,232,'lg','acc');S.circ(260+s*24,172,5,'fc','tub')});
+  S.LB([['head','Cabeza del metacarpiano','l',230,196],['cord','Colateral: porción cordonal','l',238,206],['acc','Porción accesoria','r',290,214],['plate','Placa palmar','r',280,236],['tub','Tubérculo posterior','r',284,172],['pp','Falange proximal','r',270,380]],{})},520,470);
+F('d028_2','Flexión y extensión de la metacarpofalángica: tensión de las estructuras','A, flexión: se tensan la cápsula dorsal y casi toda la porción cordonal del colateral, y la placa palmar se pliega. B, extensión: la placa palmar se tensa y la porción cordonal se relaja, de ahí el mayor juego articular en extensión.',
+ (S)=>{fin(S,{ox:150,oy:120,a:60,plate:true,cl:{t:1},L:[60,0,0]});fin(S,{ox:400,oy:120,a:-12,plate:true,cl:{t:0},L:[60,0,0]});S.t(10,230,'A. Flexión: colateral tenso',{cls:'b'});S.t(290,230,'B. Extensión: placa tensa',{cls:'b'})},520,250);
+F('d029_1','Abducción y aducción de la MCF: interóseos','La abducción solo es posible con las MCF extendidas. La falange proximal rueda y se desliza hacia radial en la abducción del índice, impulsada por el primer interóseo dorsal, que además estabiliza la articulación mientras el colateral radial se relaja. Amplitud: unos 20° a cada lado del 3.er metacarpiano (Neumann, cap. 8).',
+ (S)=>{const h=hand(S,{v:'d',show:['m2','m3','m4','m5','pp2','pp3','pp4','pp5','mp2','mp3','mp4','mp5','dp2','dp3','dp4','dp5']});
+  S.arrow(h.mp2[0]+4,h.mp2[1]-8,h.mp2[0]+40,h.mp2[1]-20,'ar');S.poly([[h.m2[0]-8,h.m2[1]+60],[h.m2[0]+8,h.m2[1]+60],[h.mcf2[0]+4,h.mcf2[1]+6],[h.mcf2[0]-4,h.mcf2[1]+6]],'fm','di1');S.line(h.m3[0],40,h.m3[0],440,'lg dsh','axm');
+  S.LB([['di1','1.er interóseo dorsal','l'],['axm','Eje de la mano (3.er metacarpiano)','r',h.m3[0],60]],h)});
+F('d031_1','Superficie de una interfalángica: tróclea','La cabeza de la falange proximal es una pequeña polea con una garganta anteroposterior entre dos cóndilos. La base de la falange siguiente tiene una cresta media que encaja en ella. Solo hay un grado de libertad, flexoextensión, alrededor de un eje transversal. La clase describe un eje algo oblicuo, que aumenta del 3.º al 5.º dedo.',
+ (S)=>{surf(S,'troc',{cx:260,cy:170});S.arrow(150,126,370,150,'ar');S.t(140,114,'X',{cls:'b'});S.t(374,148,"X'",{cls:'b'});
+  S.LB([['head','Cabeza: dos cóndilos y garganta','l',220,110],['base','Base: cresta media y dos cavidades','l',220,200]],{})},520,320);
+F('d031_2','Eje de la interfalángica','Esquema dorsal de dos falanges. El eje de rotación atraviesa los cóndilos de la cabeza proximal de forma casi transversal. Su ligera oblicuidad hace que, al flexionar, los dedos converjan hacia la eminencia tenar.',
+ (S)=>{S.bone(180,300,180,170,34,'pp');S.bone(190,160,200,60,28,'mp');S.line(130,170,255,150,'lg lh','eje');S.circ(190,160,5,'fc');S.LB([['eje','Eje de flexoextensión','r',250,152],['pp','Falange proximal','l',170,260],['mp','Falange media','r',205,100]],{})},520,330);
+F('d033_1','Amplitudes de movimiento de los dedos','Rangos que recoge el Neumann (cap. 8). Las barras muestran el intervalo de cada movimiento. Los valores son de referencia y varían entre individuos.',
+ (S)=>{const rows=[['MCF flexión, índice',90,90],['MCF flexión, meñique',110,115],['MCF extensión pasiva',30,45],['Abducción o aducción MCF',20,20],['IFP flexión',100,120],['IFD flexión',70,90],['IFD extensión pasiva',30,30]];
+  S.line(210,36,210,300,'lg');for(let g=0;g<=120;g+=30){S.line(210+g*2,36,210+g*2,300,'lg gr');S.t(210+g*2,318,g+'°',{a:'middle',cls:'mu'})}
+  rows.forEach((r,i)=>{const y=52+i*36;S.t(200,y+13,r[0],{a:'end'});S.rect(210+r[1]*2-(r[1]==r[2]?3:0),y,Math.max(6,(r[2]-r[1])*2),18,'bar','row'+i,3);S.t(210+r[2]*2+8,y+13,(r[1]==r[2]?'≈'+r[1]:r[1]+' a '+r[2])+'°',{cls:'mu'})})},520,340);
+
+/* Esquemas B: músculos y patología de la mano */
+function armBase(S,view,hand_){S.path('M185,16 L335,16 Q330,150 312,296 L208,296 Q190,150 185,16 Z','sk');
+  if(hand_){S.path('M205,296 L315,296 L330,400 Q262,430 196,400 Z','sk');[[222,1],[250,1],[278,1],[306,1]].forEach((q,i)=>S.bone(q[0],400,q[0]+(i-1.5)*6,462,13))}}
+function msc(S,id,cx,cy,rx,ry,rot,cls){return S.ell(cx,cy,rx,ry,cls||'fm',id,rot||0)}
+function tdn(S,id,pts){S.pl(pts,'tn tn2',id)}
+
+F('d038_1','Flexores del antebrazo: plano superficial','Vista anterior del antebrazo derecho. El flexor superficial de los dedos ocupa la región anterior justo por debajo de los tres flexores del carpo y del pronador redondo. Cuatro tendones cruzan la muñeca y, a la altura de la falange proximal, cada uno se divide para dejar pasar al del flexor profundo (Neumann, cap. 8).',
+ (S)=>{armBase(S);msc(S,'fds',270,150,26,88,0);msc(S,'pt',226,60,12,44,-40);msc(S,'fcr',234,140,9,78,-4);msc(S,'pl',258,150,6,76,0);msc(S,'fcu',305,150,10,84,4);
+  [236,252,268,284].forEach((x,i)=>tdn(S,'fds',[[270+(i-1.5)*8,220],[x,296]]));
+  S.LB([['pt','Pronador redondo','l',222,60],['fcr','Flexor radial del carpo','l',232,150],['pl','Palmar largo','l',256,120],['fds','Flexor superficial de los dedos','r',280,160],['fcu','Flexor cubital del carpo','r',308,200]],{})},520,330);
+F('d038_2','Flexores del antebrazo: plano profundo y lumbricales','Plano profundo. El flexor profundo de los dedos es el único flexor de la IFD y se inserta en la base de la falange distal. El flexor largo del pulgar, lateral a él, hace lo mismo en el pulgar. Los lumbricales nacen de los tendones del flexor profundo en la palma.',
+ (S)=>{armBase(S,0,true);msc(S,'fdp',272,150,24,100,0);msc(S,'fpl',230,160,12,88,-3);msc(S,'pq',262,278,48,9,0);
+  [236,258,282,304].forEach((x,i)=>{tdn(S,'fdp',[[272+(i-1.5)*8,240],[x,360],[x+(i-1.5)*3,455]]);msc(S,'lum',x+(i-1.5)*1.6,380,4,14,0)});
+  S.LB([['fdp','Flexor profundo de los dedos','r',280,120],['fpl','Flexor largo del pulgar','l',228,150],['pq','Pronador cuadrado','l',230,278],['lum','Lumbricales (4)','r',304,382]],{})},520,470);
+F('d039_1','Tendones flexores y lumbricales en la palma','En la palma, el tendón del flexor superficial se divide y el del profundo pasa entre sus dos mitades. Los lumbricales, con origen móvil en los tendones del profundo, pasan por delante del ligamento transverso profundo y por fuera de las MCF para acabar en el mecanismo extensor.',
+ (S)=>{const h=hand(S,{v:'p',arm:true});[2,3,4,5].forEach(r=>{S.pl([[h['m'+r][0],h['m'+r][1]+80],[h['mcf'+r][0],h['mcf'+r][1]+8],[h['pp'+r][0],h['pp'+r][1]],[h['dp'+r][0],h['dp'+r][1]]],'tn tn2','fl'+r);S.ell(h['mcf'+r][0]+6,h['mcf'+r][1]+34,4,16,'fm','lu'+r)});
+  S.LB([['fl3','Tendones flexores profundo y superficial','l',h.pp3[0],h.pp3[1]],['lu3','Lumbricales','r',h.mcf3[0]+8,h.mcf3[1]+34]],h)});
+F('d042_1','Músculos intrínsecos de la mano','Cuatro grupos: eminencia tenar (abductor corto, flexor corto y oponente del pulgar), eminencia hipotenar (abductor, flexor y oponente del meñique, y palmar corto), aductor del pulgar con dos cabezas, y lumbricales e interóseos. Los tenares y los dos lumbricales laterales los inerva el mediano. El resto, el cubital.',
+ (S)=>{const h=hand(S,{v:'p',arm:true});S.ell(h.m1[0]+22,h.m1[1]+62,26,44,'fm','ten',-30);S.ell(h.m5[0]-12,h.m5[1]+72,18,44,'fm2','hip',10);S.poly([[h.m3[0]-24,h.m3[1]+84],[h.m2[0]-4,h.m2[1]+60],[h.m1[0]+30,h.m1[1]+50],[h.m1[0]+34,h.m1[1]+80]],'fm3','add');
+  [[2,3],[3,4],[4,5]].forEach((q,i)=>S.rect((h['m'+q[0]][0]+h['m'+q[1]][0])/2-3,h['m'+q[0]][1]+10,6,64,'fm','io'+i,3));
+  S.LB([['ten','Eminencia tenar','l'],['add','Aductor del pulgar','l',h.m2[0]-10,h.m2[1]+90],['hip','Eminencia hipotenar','r'],['io0','Interóseos','r',h.m4[0]-6,h.m4[1]+40]],h)});
+F('d043_1','Extensores del antebrazo','Vista posterior. Los extensores radiales del carpo y el cubital mueven la muñeca. El extensor de los dedos, el del meñique y el del índice llegan a los dedos, y el abductor largo, el extensor corto y el extensor largo del pulgar forman los bordes de la tabaquera anatómica. Todos los inerva el nervio radial.',
+ (S)=>{armBase(S);msc(S,'ecrl',226,100,9,66,-6);msc(S,'ecrb',244,130,8,64,-2);msc(S,'ed',270,150,18,86,0);msc(S,'edm',296,150,6,70,2);msc(S,'ecu',316,160,9,78,4);msc(S,'apl',252,215,11,52,-14);msc(S,'epl',290,222,5,46,6);
+  S.rect(196,278,128,10,'tcl','ret',4);
+  S.LB([['ecrl','Extensor radial largo del carpo','l',226,100],['ecrb','Extensor radial corto del carpo','l',244,150],['apl','Abductor largo del pulgar','l',246,220],['ret','Retináculo extensor','l',200,283],['ed','Extensor de los dedos','r',280,120],['edm','Extensor del meñique','r',298,150],['ecu','Extensor cubital del carpo','r',318,200],['epl','Extensor largo del pulgar','r',292,230]],{})},520,330);
+F('d043_2','Dorso de la mano: tendones extensores y mecanismo extensor','En el dorso, los tendones del extensor de los dedos se conectan con unas láminas finas, las juntura tendinosas. Se continúan con la expansión extensora de cada dedo, que recibe también a los lumbricales y a los interóseos. Los dorsales llenan los espacios entre los metacarpianos.',
+ (S)=>{const h=hand(S,{v:'d',arm:true});[2,3,4,5].forEach(r=>{S.pl([[h['m'+r][0]+(r-3.5)*3,h['m'+r][1]+110],[h['m'+r][0],h['m'+r][1]],[h['pp'+r][0],h['pp'+r][1]],[h['dp'+r][0],h['dp'+r][1]]],'tn tn3','ed'+r)});
+  [[2,3],[3,4],[4,5]].forEach((q,i)=>{const y=h['m'+q[0]][1]+70;S.line(h['m'+q[0]][0],y,h['m'+q[1]][0],y-6,'lg lh','jt'+i);S.ell((h['m'+q[0]][0]+h['m'+q[1]][0])/2,h['m'+q[0]][1]+120,5,26,'fm','di'+i)});S.rect(h.cap[0]-50,h.cap[1]-36,100,10,'tcl','ret',4);
+  S.LB([['ed3','Tendones del extensor de los dedos','l',h.m3[0],h.m3[1]+40],['jt1','Juntura tendinosa','r',h.m3[0]+20,h.m3[1]+66],['di1','Interóseos dorsales','r'],['ret','Retináculo extensor','l',h.cap[0]-40,h.cap[1]-31]],h)});
+F('d045_1','Interóseos: abducción y aducción de los dedos','Los interóseos palmares aducen (acercan los dedos al dedo medio) y los dorsales abducen. El abductor del meñique separa el 5.º dedo. Ambos tipos flexionan también la MCF y extienden las IF a través del mecanismo extensor.',
+ (S)=>{[[-30,'Interóseos palmares: aducción',0],[350,'Interóseos dorsales y abductor del 5.º: abducción',1]].forEach(g=>{const h=hand(S,{v:'d',ox:g[0],skin:false});
+  [2,4,5].forEach(r=>S.arrow(h['pp'+r][0]+(g[2]?(r<3?-24:24):(r<3?18:-18)),h['pp'+r][1],h['pp'+r][0]+(g[2]?(r<3?-2:2):(r<3?-2:2)),h['pp'+r][1],'ar'));
+  if(g[2])S.arrow(h.pp3[0]-22,h.pp3[1]+30,h.pp3[0]-2,h.pp3[1]+30,'ar');S.t(g[0]+160,24,g[1],{a:'middle',cls:'b'})})},760,470);
+F('d054_1','Fractura del cuello del 5.º metacarpiano (radiografía esquemática)','La fractura del cuello del 4.º o del 5.º metacarpiano es la fractura del boxeador. El cuello, inmediato a la cabeza, es una zona frecuente de fractura, sobre todo en el quinto dedo (Neumann, cap. 8). Dibujo esquemático, no una radiografía real.',
+ (S)=>{const h=hand(S,{v:'p',arm:true,skin:false});const q=h.pts[5][1];const x=h.X(q[0]),y=h.Y(q[1]);S.circ(x,y,26,'xcirc','fx');S.line(x-9,y+6,x+9,y-2,'xfx');S.LB([['fx','Fractura del cuello del 5.º metacarpiano','r',x+20,y]],h)},520,470,{xr:true});
+F('d056_1','Fractura del cuello del metacarpiano: aspecto y proyecciones','A, el nudillo aplanado tras la fractura. B, proyección anteroposterior con la línea de fractura. C, proyección lateral, con la angulación del fragmento distal. Esquemas genéricos que sustituyen las fotografías y radiografías de pacientes.',
+ (S)=>{S.rect(10,30,150,230,'sk',null,20);[40,75,110,135].forEach((x,i)=>S.circ(x,100+(i==3?24:0),i==3?10:16,'fb','k'+i));S.t(20,290,'A. Aspecto del dorso: nudillo aplanado',{cls:'b'});
+  S.rect(180,30,150,230,'xrbg');S.line(255,50,255,130,'xl');S.line(255,134,262,226,'xl');S.line(250,128,262,136,'xfx');S.circ(255,134,18,'xcirc','fx');S.t(190,290,'B. Anteroposterior',{cls:'b'});
+  S.rect(350,30,150,230,'xrbg');S.line(390,150,450,142,'xl');S.line(450,142,480,110,'xl');S.circ(450,142,18,'xcirc','fx2');S.t(360,290,'C. Lateral: angulación dorsal',{cls:'b'})},520,310);
+F('d056_2','Interfalángicas en una radiografía de dedos (esquema)','Esquema de una proyección dorsopalmar de tres dedos. En una lesión interfalángica se valoran la congruencia de la articulación y el alineamiento de las falanges. Conviene inmovilizar las IF cerca de la extensión para mantener tensas las placas palmares.',
+ (S)=>{S.rect(0,0,520,360,'xrbg');[[130,0],[250,6],[370,0]].forEach((p,i)=>{const x=p[0];S.line(x,330,x,230,'xl');S.line(x,222,x+(i==1?10:0),130,'xl');S.line(x+(i==1?12:0),122,x+(i==1?26:0),50,'xl');});S.circ(255,226,22,'xcirc','fx');S.t(10,350,'Proyección dorsopalmar, tres dedos',{cls:'xtx'})},520,360);
+F('d057_1','Deformidades de la artritis reumatoide grave','Esquema de las cuatro deformidades más evidentes: luxación palmar de la MCF, desviación cubital de los dedos, cuello de cisne y ojal. En la vista dorsal se aprecia la desviación cubital de los dedos con desviación radial de la muñeca (zigzag).',
+ (S)=>{const h=hand(S,{v:'d',arm:true,skin:false});[2,3,4,5].forEach(r=>S.arrow(h['pp'+r][0]-4,h['pp'+r][1]+8,h['pp'+r][0]+26,h['pp'+r][1]+14,'ar red'));S.arrow(h.cap[0]+10,h.cap[1]+50,h.cap[0]-24,h.cap[1]+66,'ar');
+  S.LB([['pp3','Desviación cubital de los dedos','l',h.pp4[0]+10,h.pp4[1]],['cap','Desviación radial de la muñeca','l',h.cap[0]-14,h.cap[1]+58],['mcf2','Luxación palmar de la MCF','r',h.mcf4[0],h.mcf4[1]],['ipp3','Cuello de cisne (IFP en hiperextensión)','r',h.ipp3[0],h.ipp3[1]],['ipp2','Ojal (IFP en flexión)','r',h.ipp2[0],h.ipp2[1]]],{});
+  S.pl([[h.mcf2[0],h.mcf2[1]],[h.mcf4[0],h.mcf4[1]]],'wl hid','x')},520,470);
+F('d058_1','Luxación palmar de la MCF en la artritis reumatoide','A, en la mano sana la curvatura de los flexores genera una fuerza palmar en cuerda de arco que pasa de la polea A1 a la placa palmar, a los colaterales y al tubérculo del metacarpiano. La tensión pasiva de los colaterales la resiste. B, en la artritis reumatoide esa fuerza puede romper los colaterales debilitados y la falange proximal se luxa de forma progresiva hacia palmar.',
+ (S)=>{const a=fin(S,{ox:150,oy:90,a:50,b:20,c:10,L:[56,36,26],tend:['fdp'],pulleys:['A1','A2'],cl:{t:1}});S.arrow(a.A1[0]-4,a.A1[1]+16,a.A1[0]-20,a.A1[1]+52,'ar red');S.t(8,215,'A. Sana: los colaterales resisten',{cls:'b'});
+  S.line(400,70,420,70,'lg hid');const b=fin(S,{ox:400,oy:90,a:30,L:[56,36,26],tend:['fdp'],pulleys:['A1']});S.circ(b.p1[0]+10,b.p1[1]+22,18,'ghost');S.arrow(b.p1[0]+6,b.p1[1]+10,b.p1[0]-6,b.p1[1]+50,'ar red');S.t(285,215,'B. Colaterales rotos: luxación',{cls:'b'});
+  S.LB([['A1','Polea A1','l',a.A1[0],a.A1[1]]],{})},520,240);
+F('d060_1','Cuello de cisne y ojal','A, cuello de cisne: hiperextensión de la IFP con flexión de la IFD, por intrínsecos contraídos, placa palmar estirada y flexor profundo tenso. B, ojal: se rompen la banda central y el ligamento triangular, las bandas laterales se deslizan hacia palmar del eje de la IFP, que pierde su extensión y se flexiona, mientras la IFD se hiperextiende.',
+ (S)=>{const a=fin(S,{ox:130,oy:80,a:12,b:-28,c:48,L:[56,40,30],plate:true,tend:['fdp']});S.t(10,215,'A. Cuello de cisne',{cls:'b'});S.t(10,232,'IFP hiperextendida, IFD flexionada',{cls:'mu'});
+  const b=fin(S,{ox:400,oy:80,a:15,b:72,c:-24,L:[56,40,30],tend:['ed']});S.t(290,215,'B. Ojal (boutonnière)',{cls:'b'});S.t(290,232,'IFP flexionada, IFD hiperextendida',{cls:'mu'});
+  S.pl([[b.p2[0]-6,b.p2[1]-14],[b.p2[0]+10,b.p2[1]+18]],'tn lh','bl');S.LB([['bl','Bandas laterales deslizadas a palmar','l',b.p2[0],b.p2[1]]],{})},520,250);
+F('d061_1','Poleas flexoras: íntegras y rotas','A, con las poleas íntegras el momento de fuerza del flexor profundo en la IFP es de unos 0,75 cm. Un acortamiento de 1,5 cm del músculo produciría teóricamente unos 114° (2 radianes) de flexión. B, con A2 y A3 rotas el tendón hace cuerda de arco, el brazo de momento se duplica hasta unos 1,5 cm y el mismo acortamiento produce solo unos 57° (Neumann, caso clínico 8.2).',
+ (S)=>{const a=fin(S,{ox:150,oy:80,a:30,b:60,c:20,L:[56,40,30],tend:['fdp'],pulleys:['A2','A3','A4']});S.t(10,225,'A. Íntegras: brazo de momento 0,75 cm',{cls:'b'});
+  const b=fin(S,{ox:400,oy:80,a:30,b:30,c:10,L:[56,40,30],tend:['fdp'],bow:16,pulleys:['A4'],rupt:['A2','A3']});S.t(280,225,'B. Rotas: 1,5 cm, cuerda de arco',{cls:'b'});S.t(430,200,'57°',{cls:'hl'});S.t(176,200,'114°',{cls:'hl'});
+  S.LB([['fdp','Flexor profundo','l',a.fdp[0],a.fdp[1]]],{})},520,250);
+F('d062_1','Sistema de poleas del dedo, vista palmar','Cinco poleas anulares (A1 a A5) y tres cruciformes (C1 a C3) forman la vaina fibrosa. Las mayores, A2 y A4, se anclan a las diáfisis de las falanges proximal y media. Las menores, A1, A3 y A5, se anclan a las placas palmares de la MCF, la IFP y la IFD. Las cruciformes, finas y flexibles, se sitúan donde la vaina se dobla al flexionar.',
+ (S)=>{S.bone(260,420,260,300,40,'pp');S.bone(260,296,260,196,34,'mp');S.bone(260,192,260,110,28,'dp');
+  const P=[['A1',380,'ann'],['A2',340,'ann maj'],['C1',308,'cr'],['A3',298,'ann'],['A4',250,'ann maj'],['C2',218,'cr'],['C3',200,'cr'],['A5',186,'ann']];
+  P.forEach(p=>{S.rect(238,p[1]-5,44,p[2].includes('cr')?8:10,'pu2'+(p[2].includes('maj')?' major':'')+(p[2]=='cr'?' crx':''),p[0],2);S.t(296,p[1]+4,p[0],{cls:'sm'})});
+  S.line(260,300,260,296,'lg');S.LB([['A2','A2 y A4: poleas mayores','l',238,340],['A1','A1, A3 y A5: sobre las placas palmares','l',238,380],['C1','Poleas cruciformes','r',282,308]],{})},520,470);
+
+/* Esquemas C: pulgar y nervios */
+const THB=['esc','tpz','tpd','cap','m1','pp1','dp1','m2'];
+function pose(S,ox,oy,kind,label){S.rect(ox-34,oy-30,68,76,'sk',null,18);[-24,-8,8,24].forEach((dx,i)=>S.bone(ox+dx,oy-28,ox+dx,oy-78+(i==3?12:0),9));
+  const b=[ox-34,oy+28];const T={flex:[ox+14,oy+4],ext:[ox-84,oy+0],add:[ox-36,oy-34],opp:[ox+22,oy-40],abd:[ox-70,oy-30]}[kind];
+  S.bone(b[0],b[1],(b[0]+T[0])/2,(b[1]+T[1])/2+(kind=='opp'?10:0),11);S.bone((b[0]+T[0])/2,(b[1]+T[1])/2+(kind=='opp'?10:0),T[0],T[1],10);
+  if(kind=='opp')S.rect(T[0]-6,T[1]-5,12,10,'nail',null,3,30);S.t(ox,oy+72,label,{a:'middle',cls:'b'})}
+function nerveHand(S,ox,oy,v,zones){ /* colorea dedos según nervio */
+  const h=hand(S,{v:v,ox:ox,oy:oy,skin:true});return h}
+F('d070_1','Huesos del pulgar con inserciones musculares, vista palmar','Columna del pulgar: trapecio, primer metacarpiano y dos falanges. Los puntos rojos son orígenes y los grises inserciones. Los tres músculos tenares nacen en el ligamento transverso del carpo y en el trapecio, y se insertan en la falange proximal (abductor y flexor cortos) o en el metacarpiano (oponente).',
+ (S)=>{const h=hand(S,{v:'p',arm:true,show:THB});[[h.tpz[0],h.tpz[1]+12,'at1','a'],[h.m1[0]+14,h.m1[1]+10,'at2','b'],[h.pp1[0]+4,h.pp1[1]+4,'at2','c'],[h.dp1[0],h.dp1[1]+4,'at2','d']].forEach(q=>dot(S,q[0],q[1],q[2],q[3]));
+  S.LB([['a','Origen de los tenares','l'],['b','Inserción: oponente (metacarpiano)','l'],['c','Inserción: abductor y flexor cortos','l'],['d','Inserción: flexor largo','l']],h)});
+F('d070_2','Huesos del pulgar con inserciones musculares, vista dorsal','Vista dorsal. El abductor largo se inserta en la cara radial y dorsal de la base del metacarpiano, el extensor corto en la base dorsal de la falange proximal y el extensor largo en la de la falange distal.',
+ (S)=>{const h=hand(S,{v:'d',arm:true,show:THB});[[h.m1[0],h.m1[1]+34,'at2','a'],[h.pp1[0],h.pp1[1]+6,'at2','b'],[h.dp1[0],h.dp1[1]+4,'at2','c']].forEach(q=>dot(S,q[0],q[1],q[2],q[3]));
+  S.LB([['a','Abductor largo del pulgar','r'],['b','Extensor corto del pulgar','r'],['c','Extensor largo del pulgar','r']],h)});
+F('d071_1','Ligamentos de la carpometacarpiana del pulgar, vista dorsal','Cápsula laxa reforzada por el ligamento colateral radial, el oblicuo posterior y el intermetacarpiano dorsal. El colateral radial y el oblicuo posterior son los más gruesos y fuertes y están ricos en receptores sensitivos (Neumann, cap. 8, tabla 8.1).',
+ (S)=>{const h=hand(S,{v:'d',show:THB});S.line(h.tpz[0]-4,h.tpz[1]-6,h.m1[0]+2,h.m1[1]+38,'lg lh','rcl');S.line(h.tpz[0]-10,h.tpz[1]+4,h.m1[0]+12,h.m1[1]+40,'lg lh','po');S.line(h.m2[0],h.m2[1]+60,h.m1[0]+6,h.m1[1]+40,'lg','imc');
+  S.LB([['rcl','Colateral radial','r',h.tpz[0]-4,h.tpz[1]-4],['po','Oblicuo posterior','r',h.tpz[0]-8,h.tpz[1]+6],['imc','Intermetacarpiano','l',h.m2[0],h.m2[1]+60]],h)});
+F('d071_2','Ligamentos de la carpometacarpiana del pulgar, vista palmar','El oblicuo anterior, delgado y débil, nace en el tubérculo palmar del trapecio y se inserta en el «pico» palmar de la base del metacarpiano. El colateral cubital une el ligamento transverso del carpo con la base palmar-cubital del metacarpiano.',
+ (S)=>{const h=hand(S,{v:'p',show:THB});S.line(h.tpz[0]+2,h.tpz[1]+12,h.m1[0]+10,h.m1[1]+44,'lg lh','oa');S.line(h.tpd[0],h.tpd[1]+10,h.m1[0]+14,h.m1[1]+46,'lg','uc');S.line(h.m2[0],h.m2[1]+58,h.m1[0]+16,h.m1[1]+44,'lg','imc');
+  S.LB([['oa','Oblicuo anterior','l',h.tpz[0]+2,h.tpz[1]+14],['uc','Colateral cubital','r',h.tpd[0]+4,h.tpd[1]+10],['imc','Intermetacarpiano','r',h.m2[0],h.m2[1]+58]],h)});
+FIGS.d072_1=Object.assign({},FIGS.d071_1,{t:'Ligamentos del pulgar: tensión según la posición, vista dorsal',c:'Los ligamentos dorsales se ponen tensos en oposición, flexión y abducción, y el colateral radial es el principal estabilizador de la articulación en oposición. Pasen al apartado interactivo para ver qué ligamento se tensa en cada movimiento.'});
+FIGS.d072_2=Object.assign({},FIGS.d071_2,{t:'Ligamentos del pulgar: tensión según la posición, vista palmar',c:'En extensión completa («posición de autoestopista») se tensa el oblicuo anterior. El colateral cubital se tensa en abducción y extensión. El intermetacarpiano, en oposición, flexión y abducción.'});
+F('d076_1','Movimientos del pulgar','El pulgar está rotado casi 90° respecto de los dedos. Flexión: la cara palmar cruza la palma en el plano frontal. Extensión: vuelve hacia la posición anatómica. Abducción: se aleja de la palma hacia delante en un plano casi sagital. Aducción: vuelve al plano de la mano. Oposición: el pulpejo contacta con el de otro dedo. Algunos autores añaden anteposición y retroposición.',
+ (S)=>{[[60,'flex','Flexión'],[170,'ext','Extensión'],[280,'add','Aducción'],[390,'opp','Oposición']].forEach(p=>pose(S,p[0],120,p[1],p[2]));
+  S.line(400,230,500,230,'lg');S.line(410,226,470,190,'tn');S.t(505,255,'Abducción (vista lateral)',{cls:'b',a:'end'});S.t(10,24,'Vista palmar, mano derecha',{cls:'mu'})},520,270);
+F('d077_1','Músculos que actúan sobre la columna del pulgar','Los músculos del pulgar nacen en el antebrazo (flexor largo, abductor largo y extensores) o en la mano (tenares, aductor y primer interóseo palmar).',
+ (S)=>{const h=hand(S,{v:'p',arm:true,show:THB});S.pl([[h.m1[0]+30,h.m1[1]+160],[h.m1[0]+10,h.m1[1]+40],[h.pp1[0],h.pp1[1]],[h.dp1[0],h.dp1[1]]],'tn tn2','fpl');S.ell(h.m1[0]+22,h.m1[1]+54,24,36,'fm','tn',-30);S.poly([[h.m3[0]-20,h.m3[1]+80],[h.m2[0],h.m2[1]+66],[h.m1[0]+26,h.m1[1]+56],[h.m1[0]+30,h.m1[1]+84]],'fm3','adp');
+  S.LB([['fpl','Flexor largo del pulgar','l'],['tn','Oponente, flexor y abductor cortos','l',h.m1[0]+14,h.m1[1]+50],['adp','Aductor del pulgar','r',h.m2[0]+4,h.m2[1]+74]],h)});
+function rosette(S,hlN){S.line(60,215,470,215,'lg');S.line(265,24,265,404,'lg');S.t(8,208,'Flexión',{cls:'b'});S.t(430,208,'Extensión',{cls:'b'});S.t(265,18,'Abducción',{a:'middle',cls:'b'});S.t(265,418,'Aducción',{a:'middle',cls:'b'});
+  const M=[['OPP',-1.6,-1.1,'med'],['FPB',-1.9,-0.4,'med'],['APB',-1.0,-1.8,'med'],['FPL',-2.2,0.1,'med'],['ADPo',-1.7,1.5,'uln'],['ADPt',-1.0,1.2,'uln'],['EPL',1.2,1.1,'rad'],['EPB',1.6,-0.7,'rad'],['APL',1.0,-1.5,'rad']];
+  const col={med:'qm',uln:'qu',rad:'qr'};M.forEach(m=>{const x=265+m[1]*80,y=215+m[2]*80;const on=!hlN||hlN==m[3];S.line(265,215,x,y,'tn '+col[m[3]]+(on?'':' fd'),m[3]);S.t(x+(m[1]<0?-4:4),y+(m[2]<0?-4:12),m[0],{a:m[1]<0?'end':'start',cls:on?'b':'mu'})});
+  S.LB([['med','Nervio mediano','l',150,70],['uln','Nervio cubital','l',150,95],['rad','Nervio radial','r',380,70]],{})}
+F('d078_1','Músculos de la CMC del pulgar: acción combinada y potencial de torque','Con la excepción del flexor largo, cada músculo es flexor-abductor, flexor-aductor, extensor-aductor o extensor-abductor. La longitud de cada línea es proporcional al potencial máximo de torque en el original, aquí solo orientativa. Los músculos de cada cuadrante comparten inervación (Neumann, cap. 8, fig. 8.45).',(S)=>rosette(S,null),520,430);
+F('d115_1','Inervación de los cuadrantes de la CMC del pulgar','El nervio mediano es la única fuente de inervación del cuadrante flexión-abducción. Si se lesiona, la abducción sigue siendo posible por el abductor largo, de inervación radial, pero el aductor del pulgar, de inervación cubital, la supera y la CMC tiende a la contractura en aducción. Pulsen un nervio para resaltar sus músculos.',(S)=>rosette(S,'med'),520,430);
+F('d079_1','Superficies en silla de montar de la CMC del pulgar','Cada superficie es convexa en una dimensión y cóncava en la otra. En el trapecio, el diámetro longitudinal es cóncavo de palmar a dorsal y el transversal es convexo. El metacarpiano tiene la forma recíproca. Con la comparación del jinete: el eje longitudinal permite abducción y aducción, el transversal flexión y extensión.',
+ (S)=>{surf(S,'silla',{cx:260,cy:190});S.path('M200,150 Q260,190 320,150','dl','dlong');S.path('M240,100 Q260,200 240,260','dt','dtran');
+  S.LB([['mc1','1.er metacarpiano','l',200,120],['trap','Trapecio','l',200,240],['dlong','Diámetro longitudinal','r',320,152],['dtran','Diámetro transversal','r',250,260]],{})},520,330);
+FIGS.d090_2=Object.assign({},FIGS.d079_1,{t:'Superficies de la CMC: base de la artrocinemática',c:'Al ser el metacarpiano cóncavo en el plano transversal y convexo en el longitudinal, la abducción se produce con el metacarpiano convexo sobre el trapecio cóncavo, y la flexión con el cóncavo sobre el convexo. Esto explica que las reglas de rodar y deslizar cambien de plano.'});
+F('d080_1','Dos superficies en silla de montar superpuestas','Las dos superficies, una sobre otra, permiten dos grados de libertad: flexoextensión y abducción-aducción. Un tercer movimiento, la rotación axial, se añade para la oposición pero no es independiente.',
+ (S)=>{surf(S,'silla',{cx:260,cy:200});S.arrow(120,200,400,200,'ar');S.arrow(260,60,260,330,'ar');S.t(404,204,'Flexión-extensión',{cls:'b'});S.t(266,56,'Abducción-aducción',{cls:'b'})},520,340);
+F('d080_2','Las superficies de la silla separadas','Trapecio (arriba, azul) y base del metacarpiano (abajo, beis) por separado. Se aprecia la forma recíproca: lo que es cóncavo en una es convexo en la otra.',
+ (S)=>{S.path('M110,110 Q260,190 410,110 L390,40 L130,40 Z','fb','mc1');S.path('M110,250 Q260,170 410,250 L390,320 L130,320 Z','fc','trap');S.t(260,30,'Metacarpiano',{a:'middle'});S.t(260,338,'Trapecio',{a:'middle'})},520,350);
+F('d081_1','Superficies de la MCF del pulgar','Articulación condílea. La cabeza del metacarpiano es convexa en ambos sentidos y de mayor diámetro anteroposterior que lateral. La base de la falange es cóncava en los dos sentidos y en su borde anterior se inserta el fibrocartílago glenoideo (placa palmar). En la cara palmar hay dos sesamoideos.',
+ (S)=>{surf(S,'cond',{cx:260,cy:160});S.circ(214,228,6,'fb','ses');S.circ(306,228,6,'fb','ses2');S.LB([['head','Cabeza del 1.er metacarpiano','l',220,100],['base','Base de la falange proximal','l',216,200],['ses','Sesamoideos','r',310,228]],{})},520,330);
+F('d082_1','Los tres movimientos de la MCF del pulgar','Dos grados de libertad (flexión-extensión y abducción-aducción) y un tercer movimiento, la rotación sobre el eje longitudinal, indispensable para la oposición. Neumann señala que en la práctica la MCF del pulgar funciona casi como un gozne con un solo grado de libertad, y que la abducción y la aducción activas son mínimas.',
+ (S)=>{S.bone(260,60,260,160,34,'mc');S.bone(260,180,260,290,28,'pp');S.circ(260,170,5,'fc');S.arrow(190,170,330,170,'ar');S.arrow(260,320,260,300,'ar');S.arrow(310,60,310,20,'ar');S.arrow(330,120,330,230,'ar red');
+  S.LB([['mc','Metacarpiano','l',240,100],['pp','Falange proximal','l',240,240]],{});S.t(196,160,'Flexión-extensión',{cls:'b'});S.t(336,180,'Rotación axial',{cls:'red'})},520,340);
+F('d083_1','Flexión de la MCF y la IF del pulgar','El flexor largo del pulgar (único flexor de la IF) y el flexor corto flexionan la MCF. Desde la extensión completa, la falange proximal flexiona unos 60° a través de la palma hacia el dedo medio, y la IF, unos 70°.',
+ (S)=>{const f=fin(S,{ox:210,oy:90,a:30,b:50,c:0.1,L:[52,40,0.1],plate:true});S.pl([[100,150],[210,130],[f.p2[0]+4,f.p2[1]+22],[f.p3[0]+2,f.p3[1]+14]],'tn tn2','fpl');S.ell(f.p2[0]-20,f.p2[1]-10,8,22,'fm','fpb',50);
+  S.LB([['fpl','Flexor largo del pulgar','l',f.p3[0],f.p3[1]+14],['fpb','Flexor corto del pulgar','r',f.p2[0]-20,f.p2[1]-10]],{})},520,300);
+F('d084_1','Interfalángica del pulgar','Articulación troclear con un solo eje transversal por el centro de curvatura de los cóndilos. Es un único grado de libertad, aunque la flexión se acompaña de una pequeña «pronación» automática de la falange distal.',
+ (S)=>{surf(S,'troc',{cx:260,cy:170});S.arrow(160,120,360,120,'ar');S.t(166,108,'Eje transversal',{cls:'b'});S.LB([['head','Cabeza de la falange proximal','l',220,100],['base','Base de la falange distal','l',220,200]],{})},520,320);
+F('d085_1','Pronación asociada a la flexión de la IF del pulgar','Al flexionarse, la falange distal gira de forma automática hacia la pronación, de modo que el pulpejo se enfrenta al del dedo que se va a oponer. La presentación de la clase, citando a Kapandji, da 5 a 10° (cifra pendiente de verificar en la fuente).',
+ (S)=>{S.rect(80,100,150,80,'nail','n1',30);S.rect(290,100,150,80,'nail','n2',30,-20);S.arrow(250,140,282,134,'ar');S.t(150,210,'Extensión',{a:'middle',cls:'b'});S.t(360,210,'Flexión: giro de 5 a 10°',{a:'middle',cls:'b'});S.t(260,260,'[PENDIENTE: cifra de Kapandji por confirmar]',{a:'middle',cls:'pend'})},520,290);
+F('d086_1','Las tres articulaciones de la columna del pulgar','Cuatro articulaciones: trapezoescafoidea (artrodia), trapeciometacarpiana (silla de montar, dos grados de libertad), metacarpofalángica (condílea, dos grados) e interfalángica (tróclea, un grado).',
+ (S)=>{const h=hand(S,{v:'p',arm:true,show:THB});[['cmc',h.m1[0]-6,h.m1[1]+62,'Trapeciometacarpiana: silla de montar'],['mcf',h.mcf1[0],h.mcf1[1],'Metacarpofalángica: condílea'],['ip',h.ipp1[0],h.ipp1[1],'Interfalángica: tróclea'],['te',h.tpz[0]-6,h.tpz[1]-6,'Trapezoescafoidea: artrodia']].forEach(j=>S.circ(j[1],j[2],7,'axc',j[0]));
+  S.LB([['te','Trapezoescafoidea: artrodia','l'],['cmc','Trapeciometacarpiana: silla (2 GL)','l'],['mcf','Metacarpofalángica: condílea (2 GL)','l'],['ip','Interfalángica: tróclea (1 GL)','l']],{cmc:[h.m1[0]-6,h.m1[1]+62],mcf:h.mcf1,ip:h.ipp1,te:[h.tpz[0]-6,h.tpz[1]-6]})});
+F('d087_1','Artrocinemática de la flexión y la extensión de la CMC','A, flexión: el metacarpiano cóncavo rueda y se desliza en sentido cubital (medial) sobre el trapecio convexo, con rotación medial automática. B, extensión: rueda y se desliza en sentido lateral (radial), con rotación lateral.',
+ (S)=>{[[130,'A. Flexión',1],[390,'B. Extensión',-1]].forEach(g=>{S.circ(g[0],210,56,'fc','tz'+g[2]);S.path('M'+(g[0]-50)+',130 A56,56 0 0 1 '+(g[0]+50)+',130 L'+(g[0]+40)+',40 L'+(g[0]-40)+',40 Z','fb','mc'+g[2]);S.arrow(g[0],20,g[0]+g[2]*55,20,'ar');S.t(g[0],290,g[1],{a:'middle',cls:'b'});S.t(g[0],306,g[2]>0?'medial: rueda y desliza':'lateral: rueda y desliza',{a:'middle',cls:'mu'})})},520,320);
+F('d088_1','Abducción de la CMC del pulgar, vista palmar','La abducción es la separación del primer metacarpiano respecto del segundo, referida al plano frontal teniendo en cuenta la rotación del pulgar. Desde la aducción, el metacarpiano se aleja del segundo.',
+ (S)=>{const h=hand(S,{v:'p',arm:true,show:THB.concat(['m2','m3','m4','m5'])});S.arrow(h.pp1[0]+12,h.pp1[1]+18,h.pp1[0]-26,h.pp1[1]+8,'ar');S.LB([['m2','2.º metacarpiano','r'],['m1','1.er metacarpiano','l']],h)});
+F('d088_2','Abducción máxima de la CMC, vista lateral','La abducción máxima coloca el primer metacarpiano unos 45° por delante del plano de la palma y abre el espacio interdigital en una amplia concavidad útil para asir objetos grandes (Neumann, cap. 8).',
+ (S)=>{S.line(60,250,460,250,'lg');S.bone(120,250,330,250,16,'m2');S.bone(120,250,260,130,16,'m1');S.path('M190,250 A70,70 0 0 0 175,200','ar2','ang');S.t(188,224,'45°',{cls:'hl'});S.t(10,244,'Plano de la palma',{cls:'mu'});S.LB([['m1','1.er metacarpiano','r',260,130],['m2','2.º metacarpiano','r',330,250]],{})},520,300);
+F('d089_2','MCF del pulgar: abducción limitada y lesión del esquiador','La abducción y aducción de la MCF son mínimas, lo que aporta estabilidad longitudinal. Sus colaterales, tensos de forma habitual, son vulnerables a un torque de abducción excesivo.',
+ (S)=>{const h=hand(S,{v:'p',show:THB});S.arrow(h.pp1[0]+30,h.pp1[1]+30,h.pp1[0]-10,h.pp1[1]+4,'ar red');S.line(h.mcf1[0]+8,h.mcf1[1]-2,h.mcf1[0]+14,h.mcf1[1]+30,'lg lh','uc');S.LB([['uc','Colateral cubital','r',h.mcf1[0]+14,h.mcf1[1]+14]],h)});
+F('d090_1','Artrocinemática de la abducción de la CMC','Durante la abducción, el metacarpiano convexo rueda en dirección palmar y se desliza en dirección dorsal sobre el trapecio cóncavo. Es como un jinete que cae hacia delante: el pecho «rueda» hacia delante y las nalgas «deslizan» hacia atrás. La abducción completa estira el ligamento intermetacarpiano, el colateral radial y el aductor del pulgar. El abductor largo produce el rodamiento activo.',
+ (S)=>{S.path('M120,270 Q260,170 400,270 L400,320 L120,320 Z','fc','trap');S.path('M170,230 Q260,160 340,230 L330,120 L180,120 Z','fb','mc');S.arrow(240,120,200,150,'ar');S.arrow(300,250,360,268,'ar red');S.t(150,100,'rueda a palmar',{cls:'b'});S.t(300,300,'desliza a dorsal',{cls:'red'});
+  S.LB([['mc','Metacarpiano (convexo)','l',180,200],['trap','Trapecio (cóncavo)','l',130,290]],{})},520,340);
+F('d092_1','Anteposición y retroposición','La anteposición lleva la columna del pulgar hacia delante en un plano casi sagital, paralelo al de la uña, casi perpendicular al plano de la palma. La retroposición la devuelve hasta el plano de la palma. Algunos autores incluyen este movimiento en la oposición.',
+ (S)=>{S.line(60,250,460,250,'lg');S.bone(160,250,230,120,14,'p1');S.bone(160,250,330,250,14,'p0');S.path('M290,250 A130,130 0 0 0 232,134','ar2','arc');S.arrow(250,130,234,150,'ar');S.t(300,200,'anteposición',{cls:'b'});S.t(300,238,'retroposición',{cls:'mu'});S.t(8,244,'Plano de la palma',{cls:'mu'})},520,300);
+F('d093_1','Oposición del pulgar al meñique','Posición final de la oposición: el pulpejo del pulgar toca el del meñique. El pulgar ha abducido (1) y después flexionado con rotación medial (2). La uña queda orientada en otro plano que en reposo.',
+ (S)=>{pose(S,200,160,'opp','');S.t(210,240,'1. abducción',{cls:'b'});S.t(210,256,'2. flexión con rotación medial',{cls:'b'});S.arrow(120,210,170,190,'ar')},520,290);
+function opCarpus(S,ph){S.path('M130,190 Q170,150 220,160 Q260,150 300,180 L300,300 L130,300 Z','fc','car');S.circ(190,200,30,'fb','trapz');S.bone(190,190,120,70,24,'m1');S.bone(190,190,280,100,18,'m2');
+  S.line(200,170,160,100,'lg lh','po');S.ell(165,120,10,28,'fm','opp',30);
+  if(ph===1){S.arrow(120,80,60,90,'ar');S.t(20,70,'Fase 1: abducción',{cls:'b'})}else{S.arrow(120,70,200,40,'ar red');S.t(150,28,'Fase 2: flexión y rotación medial',{cls:'b'})}
+  S.LB([['m1','Metacarpiano del pulgar','l',130,90],['po','Ligamento oblicuo posterior: tenso','r',205,175],['opp','Oponente del pulgar','l',160,125],['trapz','Trapecio','r',215,215]],{})}
+F('d094_1','Oposición, fase 1: abducción','En la primera fase el metacarpiano del pulgar realiza una abducción, con rodamiento palmar y deslizamiento dorsal. El abductor largo es el músculo que la produce.',(S)=>opCarpus(S,1),520,320);
+F('d095_1','Oposición, fase 2: flexión y rotación medial','En la segunda fase, el metacarpiano abducido flexiona y rota medialmente a través de la palma hacia el meñique. El oponente actúa, el oblicuo posterior se tensa y al final se produce el giro «de tornillo». La oposición completa incorpora 45 a 60° de rotación medial.',(S)=>opCarpus(S,2),520,320);
+F('d096_1','Músculos activos en la oposición','El flexor largo del pulgar y el flexor profundo del meñique participan, y el flexor cubital del carpo estabiliza el pisiforme para que el abductor del meñique tire de un punto fijo. Los tenares y el oponente del meñique son los motores principales.',
+ (S)=>{const h=hand(S,{v:'p',arm:true});S.pl([[h.m1[0]+30,h.m1[1]+170],[h.m1[0]+8,h.m1[1]+40],[h.pp1[0],h.pp1[1]],[h.dp1[0],h.dp1[1]]],'tn tn2','fpl');S.pl([[h.m5[0]-30,h.m5[1]+160],[h.pp5[0],h.pp5[1]],[h.dp5[0],h.dp5[1]]],'tn tn2','fdp5');S.line(h.pis[0]-6,h.pis[1]+50,h.pis[0],h.pis[1],'tn tn2','fcu');
+  S.ell(h.m1[0]+22,h.m1[1]+56,22,34,'fm','ten',-30);S.ell(h.m5[0]-12,h.m5[1]+70,16,40,'fm2','hip',10);
+  S.LB([['fpl','Flexor largo del pulgar','l'],['ten','Músculos tenares','l',h.m1[0]+12,h.m1[1]+62],['fdp5','Flexor profundo del 5.º','r',h.pp5[0]+4,h.pp5[1]],['hip','Hipotenares','r'],['fcu','Flexor cubital del carpo','r',h.pis[0],h.pis[1]+30]],h)});
+F('d097_1','Posición de los tendones respecto de los ejes de la CMC','Corte esquemático a la altura de la articulación. Los músculos situados palmares al eje mediolateral flexionan, y los dorsales extienden. Los situados radiales al eje anteroposterior abducen y los cubitales aducen. Posiciones aproximadas.',
+ (S)=>{S.ell(260,200,170,120,'sk','sec');S.line(60,200,460,200,'lg lh','ax1');S.line(260,60,260,340,'lg lh','ax2');
+  const P=[['APL',210,120],['EPB',240,100],['EPL',320,120],['FPL',160,262],['OPP',190,226],['FPB',210,292],['APB',130,236],['ADP',360,282]];
+  P.forEach(p=>{S.circ(p[1],p[2],8,'fm','t'+p[0]);S.t(p[1]+11,p[2]+4,p[0],{cls:'sm'})});
+  S.t(10,194,'radial',{cls:'mu'});S.t(450,194,'cubital',{cls:'mu'});S.t(268,56,'dorsal',{cls:'mu'});S.t(268,356,'palmar',{cls:'mu'})},520,370);
+F('d097_2','Eje de movimiento de la CMC sobre el esqueleto del pulgar','El eje transversal de la flexoextensión pasa por el trapecio. Las acciones de cada músculo dependen de si su línea de fuerza queda a un lado u otro del eje.',
+ (S)=>{const h=hand(S,{v:'d',arm:true,show:THB,skin:false});S.line(h.tpz[0]-70,h.tpz[1],h.tpz[0]+70,h.tpz[1],'lg lh','eje');S.LB([['eje','Eje de la CMC por el trapecio','l',h.tpz[0]-60,h.tpz[1]],['m1','1.er metacarpiano','r']],h)});
+F('d098_1','Tabaquera anatómica y compartimentos extensores','Los tendones del abductor largo y del extensor corto del pulgar (compartimento I) y el del extensor largo (compartimento III) delimitan la tabaquera anatómica. Los seis compartimentos fibro-óseos se numeran de I a VI. En el I aparece la tenosinovitis de De Quervain (Neumann, cap. 7).',
+ (S)=>{S.ell(260,200,150,70,'fb','bone');S.circ(260,170,5,'fc');const C=[['I','APL y EPB',120,168],['II','ECRL y ECRB',172,150],['III','EPL',215,142],['IV','ED y EI',270,146],['V','EDM',325,150],['VI','ECU',372,166]];
+  C.forEach((c,i)=>{S.ell(c[2]+8,c[3],18,10,'fm','c'+c[0]);S.t(c[2]+8,c[3]-16,c[0],{a:'middle',cls:'b'})});S.rect(100,128,320,8,'tcl','ret',4);
+  S.LB([['cI','Compartimento I: APL y EPB','l',128,168],['cIII','Compartimento III: EPL','l',223,142],['cIV','Compartimento IV: extensor de los dedos e índice','r',278,146],['cVI','Compartimento VI: ECU','r',380,166],['ret','Retináculo extensor','r',410,130]],{})},520,330);
+F('d099_1','Extensores del pulgar y su acción','Cada tendón actúa según su línea de fuerza respecto de los ejes. El extensor largo extiende la IF, la MCF y la CMC y además aduce. El extensor corto extiende la MCF y la CMC. El abductor largo extiende la CMC y, en teoría, también la abduce por su inserción radial-dorsal.',
+ (S)=>{S.bone(260,330,260,230,26,'m1');S.bone(260,226,260,140,20,'pp');S.bone(260,136,260,70,16,'dp');S.circ(260,228,5,'fc');S.circ(260,138,5,'fc');
+  S.pl([[200,420],[236,340],[250,310]],'tn tn2','apl');S.pl([[240,420],[250,330],[256,222],[258,150]],'tn tn2','epb');S.pl([[300,420],[286,330],[270,222],[266,140],[262,74]],'tn tn2','epl');
+  S.LB([['apl','Abductor largo: base del metacarpiano','l',236,340],['epb','Extensor corto: base de la falange proximal','l',254,222],['epl','Extensor largo: base de la falange distal','r',266,110],['m1','1.er metacarpiano','r',272,300]],{})},520,430);
+F('d100_1','Mecanismo extensor del pulgar','Al pulgar llega un mecanismo extensor menos organizado que el de los dedos. Fibras de los dos extensores contribuyen al tendón central, y el abductor corto y el aductor se funden con él, de modo que influyen en la extensión de la IF.',
+ (S)=>{S.bone(130,240,260,240,24,'m1');S.bone(264,240,360,240,20,'pp');S.bone(364,240,430,240,16,'dp');S.pl([[110,330],[260,226],[360,226],[430,226]],'tn tn3','epl');S.pl([[130,340],[240,230],[340,230]],'tn tn3','epb');
+  S.ell(250,276,30,10,'fm','apb',-10);S.ell(300,284,30,10,'fm3','adp',10);S.LB([['epl','Extensor largo: tendón central','r',360,226],['epb','Extensor corto','l',240,230],['apb','Abductor corto: se funde con el mecanismo','l',250,278],['adp','Aductor del pulgar','l',300,286]],{})},520,380);
+F('d101_1','Músculos tenares por capas','A, plano superficial: el abductor corto y el flexor corto forman el relieve de la eminencia tenar. B, plano profundo: el oponente del pulgar, con inserción en toda la cara radial del metacarpiano, y el aductor. Todos los tenares nacen en el ligamento transverso del carpo y en el trapecio.',
+ (S)=>{[[130,'A. Superficial'],[390,'B. Profundo']].forEach((g,i)=>{S.rect(g[0]-90,40,180,200,'sk',null,40);S.bone(g[0]-60,230,g[0]-20,70,16);
+  if(i==0){S.ell(g[0]-30,160,18,52,'fm','apb',-15);S.ell(g[0]-4,170,16,44,'fm2','fpb',-12)}else{S.ell(g[0]-26,150,16,56,'fm','opp',-18);S.poly([[g[0]+2,200],[g[0]+50,120],[g[0]+54,170],[g[0]+30,222]],'fm3','adp')}
+  S.t(g[0],262,g[1],{a:'middle',cls:'b'})});S.LB([['apb','Abductor corto','l',104,160],['fpb','Flexor corto','r',126,172],['opp','Oponente','l',364,150],['adp','Aductor','r',440,170]],{})},520,280);
+F('d102_1','Lumbricales e interóseos: acción sobre la MCF y las IF','Los lumbricales nacen del tendón del flexor profundo y acaban en la banda lateral del mecanismo extensor. Pasan por delante del eje de la MCF y por detrás de los de las IF. Por eso flexionan la MCF y extienden las IF. Los interóseos hacen lo mismo con mayor torque en la MCF, por su mayor sección.',
+ (S)=>{const f=fin(S,{ox:240,oy:140,a:20,L:[90,56,40],tend:['fdp'],plate:true});S.pl([[170,160],[236,152],[300,104],[340,112],[400,128]],'tn tn3','lum');S.ell(260,146,36,8,'fm','io',8);
+  S.LB([['lum','Lumbrical','l',230,152],['io','Interóseo','r',276,150],['fdp','Flexor profundo','r',f.fdp[0],f.fdp[1]]],{})},520,300);
+F('d103_1','Músculos del pulgar: sentido de la tracción','Flechas que indican la dirección de la tracción de los músculos propios del pulgar sobre la columna.',
+ (S)=>{const h=hand(S,{v:'p',arm:true,show:THB});S.arrow(h.m1[0]+20,h.m1[1]+70,h.m1[0]-4,h.m1[1]+30,'ar red','apb');S.arrow(h.m2[0],h.m2[1]+90,h.m1[0]+10,h.m1[1]+54,'ar red','adp');S.arrow(h.m1[0]+30,h.m1[1]+50,h.pp1[0]+6,h.pp1[1]+14,'ar red','fpb');
+  S.LB([['apb','Abductor corto','l'],['adp','Aductor','r',h.m2[0],h.m2[1]+90],['fpb','Flexor corto','l',h.pp1[0]+6,h.pp1[1]+14]],h)});
+F('d104_1','Músculos extrínsecos de la mano','Los extrínsecos nacen en el antebrazo, y a veces desde los epicóndilos del húmero. Los flexores (superficial, profundo y largo del pulgar) están en la cara anterior. Los extensores de los dedos y los del pulgar, en la posterior. Los tres del pulgar situados en la zona radial delimitan la tabaquera anatómica.',
+ (S)=>{[[130,'Cara anterior',['Flexor superficial','Flexor profundo','Flexor largo del pulgar']],[390,'Cara posterior',['Extensor de los dedos','Extensor del índice y del meñique','Abductor largo, extensor corto y largo del pulgar']]].forEach(g=>{S.path('M'+(g[0]-60)+',30 L'+(g[0]+60)+',30 Q'+(g[0]+54)+',150 '+(g[0]+40)+',280 L'+(g[0]-40)+',280 Q'+(g[0]-54)+',150 '+(g[0]-60)+',30 Z','sk');g[2].forEach((m,i)=>{S.ell(g[0]-28+i*28,150,10,80-i*12,'fm',null)});S.t(g[0],310,g[1],{a:'middle',cls:'b'});g[2].forEach((m,i)=>S.t(g[0],330+i*14,m,{a:'middle',cls:'sm'}))})},520,390);
+F('d104_2','Eminencia tenar y aductor del pulgar','Abductor corto, flexor corto (con una cabeza superficial y otra profunda poco definida), oponente y aductor con sus cabezas oblicua y transversa. Todos comparten la inserción en la falange proximal salvo el oponente (metacarpiano).',
+ (S)=>{const h=hand(S,{v:'p',arm:true,show:THB.concat(['m3'])});S.ell(h.m1[0]+30,h.m1[1]+58,18,36,'fm','apb',-30);S.ell(h.m1[0]+14,h.m1[1]+54,14,30,'fm2','fpb',-30);S.ell(h.m1[0]+32,h.m1[1]+72,14,26,'fm','opp',-40);S.poly([[h.m3[0]-16,h.m3[1]+82],[h.m2[0],h.m2[1]+68],[h.m1[0]+34,h.m1[1]+58],[h.m1[0]+34,h.m1[1]+80]],'fm3','adp');
+  S.LB([['apb','Abductor corto','l',h.m1[0]+22,h.m1[1]+48],['fpb','Flexor corto','l',h.m1[0]+8,h.m1[1]+66],['opp','Oponente (profundo)','l',h.m1[0]+30,h.m1[1]+84],['adp','Aductor del pulgar','r',h.m2[0]+4,h.m2[1]+76]],h)});
+function xrPanel(S,x,y,w,h_){S.rect(x,y,w,h_,'xrbg')}
+F('d110_1','Artrosis de la CMC: antes y después','Esquema de dos proyecciones. Antes: la articulación trapeciometacarpiana con pérdida de espacio, osteofitos y subluxación radial del metacarpiano. Después: la misma región tras una artroplastia. Sustituye a las radiografías reales de un paciente.',
+ (S)=>{xrPanel(S,10,10,240,300);xrPanel(S,270,10,240,300);[[130,'Antes'],[390,'Después']].forEach((g,i)=>{S.line(g[0]-30,280,g[0]-30,200,'xl');S.line(g[0]+10,280,g[0]+10,200,'xl');S.ell(g[0]-10,196,32,16,'xo');
+  if(i==0){S.line(g[0]-60,170,g[0]-26,70,'xl');S.circ(g[0]-30,176,6,'xo');S.circ(g[0]-52,160,4,'xo');S.t(g[0]-110,60,'osteofitos',{cls:'xtx'})}else{S.line(g[0]-40,170,g[0]-26,70,'xl');S.rect(g[0]-34,150,12,40,'impl','impl',5);S.t(g[0]-100,60,'implante',{cls:'xtx'})}
+  S.t(g[0],330,g[1],{a:'middle',cls:'b'})})},520,350);
+F('d111_1','Deformidad en zigzag del pulgar','La base del primer metacarpiano se luxa en sentido radial en la CMC (flecha) tras la rotura del oblicuo anterior y del colateral radial. El aductor y los flexores cortos, en espasmo, mantienen el metacarpiano contra la palma y, para sacar el pulgar, la MCF se hiperextiende. La placa palmar estirada cede y los extensores hacen cuerda de arco. La IF queda flexionada por la tensión pasiva del flexor largo.',
+ (S)=>{S.bone(160,340,240,260,22,'mc');S.circ(160,340,22,'fb','trz');S.bone(244,256,300,170,16,'pp');S.bone(304,166,260,100,14,'dp');S.circ(242,258,5,'fc');S.circ(302,168,5,'fc');
+  S.arrow(130,300,98,290,'ar red');S.pl([[200,400],[244,254],[300,150]],'tn tn3','epl');S.pl([[210,380],[270,300],[300,180],[266,106]],'tn tn2','fpl');
+  S.LB([['trz','CMC luxada hacia radial','l',140,330],['epl','Extensor largo (cuerda de arco)','r',300,150],['fpl','Flexor largo: tenso, IF flexionada','r',264,104]],{});S.t(310,282,'MCF en hiperextensión',{cls:'hl'})},520,430);
+F('d112_1','Ecografía de la tenosinovitis de De Quervain: corte transversal (esquema)','Imagen esquemática, no ecografía real. A la altura de la apófisis estiloides radial se ven los tendones del abductor largo y del extensor corto en su compartimento, con líquido peritendinoso y la arteria radial cercana. Es el punto de referencia para la infiltración.',
+ (S)=>{S.rect(0,0,520,300,'xrbg');S.line(40,220,480,220,'xl');S.ell(200,170,24,16,'xo','apl');S.ell(250,168,20,14,'xo','epb');S.ell(220,168,52,26,'xfl','fl');S.circ(130,160,9,'xcirc','art');
+  S.LB([['apl','Abductor largo','l',196,168],['epb','Extensor corto','r',256,168],['fl','Líquido peritendinoso','r',264,184],['art','Arteria radial','l',121,160]],{});S.t(10,290,'Estiloides radial (línea brillante)',{cls:'xtx'})},520,300);
+F('d112_2','Ecografía de la tenosinovitis de De Quervain: corte longitudinal (esquema)','Imagen esquemática. Los tendones tumefactos aparecen engrosados y rodeados de líquido sobre la estiloides radial.',
+ (S)=>{S.rect(0,0,520,260,'xrbg');S.line(30,200,490,200,'xl');S.path('M60,150 Q260,120 470,150 L470,176 Q260,150 60,176 Z','xo','tend');S.path('M130,140 Q260,100 400,140','xfl','fluid');S.LB([['tend','Tendones tumefactos (APL y EPB)','r',380,150],['fluid','Líquido','l',150,134]],{});S.t(10,248,'Estiloides radial',{cls:'xtx'})},520,260);
+F('d113_1','Lesión del esquiador: ligamento colateral cubital de la MCF','Esquema palmar. Una abducción forzada sobre la MCF, por ejemplo al caer sujetando el bastón, daña el ligamento colateral cubital. Se rompe hacia 45° de abducción y es más vulnerable cuando la MCF está flexionada unos 30° (Neumann, cap. 8).',
+ (S)=>{S.bone(200,330,250,200,26,'mc');S.bone(262,186,300,70,20,'pp');S.circ(256,194,6,'fc');S.line(228,190,240,150,'lg lh','uc');S.arrow(340,140,380,170,'ar red');S.path('M300,120 A60,60 0 0 1 340,150','ar2','ang');S.t(346,126,'45°',{cls:'hl'});
+  S.LB([['uc','Colateral cubital (roto)','l',234,172],['mc','1.er metacarpiano','l',216,280],['pp','Falange proximal','r',296,100]],{})},520,360);
+F('d113_2','Avulsión del ligamento colateral cubital (radiografía esquemática)','Esquema de una proyección de la MCF del pulgar con un pequeño fragmento óseo arrancado en la base de la falange proximal, que a veces acompaña a la lesión del colateral cubital.',
+ (S)=>{S.rect(0,0,520,340,'xrbg');S.line(240,320,240,190,'xl');S.line(300,320,300,190,'xl');S.ell(270,182,36,16,'xo');S.line(250,160,230,60,'xl');S.line(290,160,310,60,'xl');S.circ(320,188,6,'xcirc','fx');S.LB([['fx','Fragmento avulsionado','r',326,188]],{})},520,340);
+F('d114_1','Posición de función de la muñeca y la mano','Ortesis de posición de función en una parálisis flácida: muñeca en 20 a 30° de extensión con ligera desviación cubital, MCF a 35 a 45°, IFP e IFD a 15 a 30°, y CMC del pulgar en 35 a 45° de abducción. Mano ligeramente abierta y ahuecada, con los flexores de los dedos a una longitud óptima (Neumann, cap. 8). Pueden variar según el paciente.',
+ (S)=>{const f=fin(S,{ox:300,oy:150,a:40,b:22,c:22,L:[80,50,36]});const a=R(-25);S.bone(300-150*Math.cos(a)*0,150,300-120,150,26,'mc0');S.bone(60,200,160,150,36,'arm');S.circ(160,150,6,'fc');S.path('M120,200 A60,60 0 0 1 150,150','ar2','wa');S.t(96,138,'25°',{cls:'hl'});
+  S.LB([['arm','Antebrazo','l',90,190],['mc0','Metacarpo','l',200,150],['pp','MCF 35 a 45°','r',f.pp[0],f.pp[1]],['mp','IFP 15 a 30°','r',f.mp[0],f.mp[1]]],{});S.t(300,320,'Extensión de la muñeca: 20 a 30°',{cls:'b'})},520,350);
+/* nervios */
+function nvHand(S,ox,oy,v,areas,bar){const h=hand(S,{v:v,ox:ox,oy:oy,skin:true,show:[]});h.pts;
+  areas.forEach(a=>{const r=a[0];a[1].forEach(k=>{const p=h['pp'+r]||h['pp1'];S.ell(h[k][0],h[k][1],12,14,a[2],a[3])})});return h}
+function sens(S,v,ox,oy,spec){const h=hand(S,{v:v,ox:ox,oy:oy,skin:true,arm:false});
+  spec.forEach(s=>{s[0].forEach(id=>{const p=h[id];if(p)S.ell(p[0],p[1],13,16,s[1],s[2])})});return h}
+F('d116_1','Territorios sensitivos de la mano','En la cara palmar, el mediano inerva la piel de las yemas y de la región palmar de los tres dedos radiales y medio, y el cubital el borde cubital, con el meñique entero. En el dorso, el radial se encarga sobre todo de la región del espacio interdigital del pulgar. Esquema orientativo.',
+ (S)=>{const a=sens(S,'p',-40,0,[[['pp1','dp1','pp2','dp2','pp3','dp3','mp2','mp3'],'zm','med'],[['pp5','mp5','dp5','pp4','dp4'],'zu','uln']]);const b=sens(S,'d',170,0,[[['pp1','dp1','m1'],'zr','rad'],[['pp5','mp5','dp5','pp4'],'zu','uln'],[['pp2','pp3','mp2','mp3'],'zm','med']]);S.t(70,30,'Palmar',{cls:'b'});S.t(380,30,'Dorsal',{cls:'b'});
+  S.LB([['med','Mediano','l',a.pp2[0]+20,a.pp2[1]],['uln','Cubital','r',a.pp5[0]+10,a.pp5[1]],['rad','Radial','r',b.m1[0]+8,b.m1[1]]],{})},560,470);
+F('d117_1','Dermatomas de la mano','Las articulaciones de la mano reciben sensibilidad de las raíces que inervan la piel que las cubre: C6 el pulgar y el índice, C7 el dedo medio, y C8 el anular y el meñique (Neumann, cap. 8).',
+ (S)=>{const h=sens(S,'p',60,0,[[['pp1','dp1','pp2','dp2','mp2','mcf2'],'zr','c6'],[['pp3','mp3','dp3'],'zm','c7'],[['pp4','mp4','dp4','pp5','mp5','dp5'],'zu','c8']]);S.LB([['c6','C6: pulgar e índice','l',h.pp2[0],h.pp2[1]],['c7','C7: dedo medio','r',h.mp3[0],h.mp3[1]],['c8','C8: anular y meñique','r',h.mp4[0],h.mp4[1]]],{})},520,470);
+F('d117_2','Territorios de los nervios mediano y cubital, palmar y dorsal','A la izquierda, cara palmar. A la derecha, cara dorsal. La lesión del mediano o del cubital borra la sensibilidad en la parte de piel que cada uno suple de forma exclusiva.',
+ (S)=>{const a=sens(S,'p',-40,0,[[['pp1','dp1','pp2','dp2','pp3','dp3','mp2','mp3'],'zm','med'],[['pp5','mp5','dp5','mp4','dp4'],'zu','uln']]);const b=sens(S,'d',170,0,[[['pp1','dp1','pp2'],'zr','rad'],[['pp5','mp5','dp5','pp4'],'zu','uln'],[['mp2','dp2','mp3','dp3'],'zm','med']]);
+  S.LB([['med','Mediano','l',a.pp2[0]+10,a.pp2[1]],['uln','Cubital','r',a.pp5[0],a.pp5[1]],['rad','Radial','r',b.pp1[0],b.pp1[1]]],{})},560,470);
+function armN(S,nv,mode){const X=260;S.path('M200,16 L320,16 Q330,150 316,296 L204,296 Q190,150 200,16 Z','sk');S.path('M204,296 L316,296 L330,400 Q262,430 196,400 Z','sk');
+  const P={med:{c:'nm',pts:[[236,24],[240,120],[250,200],[258,262],[262,330],[258,372],[250,420]],lab:[[240,70,'Nervio mediano (cordones lateral y medial)'],[258,262,'Rama interósea anterior'],[262,330,'Túnel carpiano: profundo al ligamento transverso'],[254,384,'Rama tenar y lumbricales laterales']]},
+  uln:{c:'nu',pts:[[250,24],[254,120],[236,200],[262,262],[294,330],[300,372],[296,420]],lab:[[254,70,'Nervio cubital'],[236,200,'Epicóndilo medial'],[294,330,'Cruza la muñeca superficial al túnel'],[298,384,'Rama profunda: hipotenares, interóseos, aductor']]},
+  rad:{c:'nr',pts:[[276,24],[282,110],[274,190],[290,262],[300,330],[292,372],[280,420]],lab:[[282,70,'Nervio radial'],[274,190,'Extensores y supinador'],[300,330,'Dorso de la muñeca y de la mano'],[280,400,'Sensibilidad del dorso']]}}[nv];
+  S.pl(P.pts,'tn nn '+P.c,nv);const labs=P.lab.map((l,i)=>[nv,l[2],i%2?'r':'l',l[0],l[1]]);
+  if(mode!='line'){const m={med:[['Pronador redondo','l',226,80],['Flexores del carpo (menos el cubital)','l',224,120],['Flexor superficial','r',266,150],['Flexor profundo (mitad lateral) y flexor largo del pulgar','r',280,196]],uln:[['Flexor cubital del carpo','r',300,100],['Flexor profundo (mitad medial)','r',290,150],['Interóseos y aductor del pulgar','r',280,360]],rad:[['Braquiorradial y extensores radiales','l',222,100],['Extensor de los dedos','l',230,150],['Abductor largo y extensores del pulgar','r',298,210]]}[nv];
+    m.forEach((q,i)=>{S.ell(q[2],q[3],8,26,'fm',nv+'m'+i);labs.push([nv+'m'+i,q[0],q[1],q[2],q[3]])});}
+  S.LB(labs.map(l=>l),{})}
+F('d118_1','Recorrido del nervio mediano en el miembro superior','El mediano inerva el flexor superficial y, mediante el interóseo anterior, la mitad lateral del flexor profundo y el flexor largo del pulgar. Entra en la mano por el túnel carpiano, profundo al ligamento transverso, e inerva los tres músculos tenares y los dos lumbricales laterales. Da la sensibilidad palmar-lateral de la mano (Neumann, cap. 8, apéndice II).',(S)=>armN(S,'med','full'),520,470);
+F('d118_2','Recorrido del nervio mediano: esquema lineal','Versión simplificada: solo el trayecto del nervio y los puntos donde puede comprimirse o lesionarse.',(S)=>armN(S,'med','line'),520,470);
+F('d118_3','Músculos que inerva el nervio mediano','Flexores del carpo (salvo el cubital), flexor superficial, mitad lateral del flexor profundo, flexor largo del pulgar, pronador, tenares y lumbricales 1.º y 2.º.',
+ (S)=>{armBase(S,0,true);[[222,60,'pt'],[236,140,'fcr'],[262,150,'fds'],[268,190,'fdp'],[232,200,'fpl']].forEach(q=>msc(S,'mm',q[0],q[1],9,50,0,'fm'));S.ell(220,372,16,30,'fm','ten',-20);S.LB([['mm','Músculos del antebrazo inervados por el mediano','r',270,150],['ten','Eminencia tenar','l',218,372]],{})},520,470);
+F('d119_1','Síndrome del túnel carpiano: esquema de la palma','Los nueve tendones flexores extrínsecos y el nervio mediano comparten un túnel estrecho y poco extensible. La compresión causa dolor y parestesias en el territorio sensitivo del mediano, a menudo nocturnos, y puede acabar con debilidad y atrofia de la eminencia tenar.',
+ (S)=>{const h=hand(S,{v:'p',arm:true,show:['esc','lun','tri','pis','tpz','tpd','cap','gan']});S.path('M'+(h.tpz[0]-6)+','+(h.tpz[1]-2)+' Q'+h.cap[0]+','+(h.cap[1]-40)+' '+(h.gan[0]+10)+','+(h.gan[1]+6)+' L'+(h.gan[0]+10)+','+(h.gan[1]+16)+' Q'+h.cap[0]+','+(h.cap[1]-24)+' '+(h.tpz[0]-6)+','+(h.tpz[1]+12)+' Z','tcl','tcl');
+  for(let i=0;i<9;i++)S.circ(h.cap[0]-34+i*8.5,h.cap[1]-6+(i%2)*5,3.4,'tdn','tend');S.circ(h.cap[0]-24,h.cap[1]-22,6,'nv2','med');S.ell(h.m1[0]+22,h.m1[1]+58,18,32,'fm','ten',-30);
+  [2,3].forEach(r=>S.ell(h['pp'+r][0],h['pp'+r][1],7,18,'zm',null));S.LB([['med','Nervio mediano comprimido','l'],['tend','Nueve tendones flexores','r'],['ten','Eminencia tenar: atrofia','l',h.m1[0]+22,h.m1[1]+58],['tcl','Ligamento transverso del carpo','r',h.gan[0]+8,h.gan[1]+6]],h)});
+F('d120_1','Recorrido del nervio cubital en el miembro superior','El cubital inerva la mitad medial del flexor profundo, el flexor cubital del carpo, los hipotenares, los dos lumbricales mediales, los interóseos y el aductor del pulgar. Cruza la muñeca superficial al túnel carpiano. Da la sensibilidad del borde cubital de la mano. Su lesión produce mano en garra y reduce la prensión máxima un 38 % (Neumann, cap. 8).',(S)=>armN(S,'uln','full'),520,470);
+F('d120_2','Recorrido del nervio cubital: esquema lineal','Trayecto simplificado, con el codo (epicóndilo medial) y la muñeca como puntos vulnerables.',(S)=>armN(S,'uln','line'),520,470);
+F('d121_1','Recorrido del nervio radial en el miembro superior','El radial inerva los extensores extrínsecos de los dedos y del pulgar (extensor de los dedos, del meñique, del índice, largo y corto del pulgar y abductor largo), que se sitúan en la cara dorsal del antebrazo, y da la sensibilidad del dorso de la muñeca y de la mano, sobre todo en el espacio interdigital del pulgar.',(S)=>armN(S,'rad','full'),520,470);
+F('d121_2','Recorrido del nervio radial: esquema lineal','Trayecto simplificado del nervio radial hasta el dorso de la mano.',(S)=>armN(S,'rad','line'),520,470);
+F('d121_3','Músculos que inerva el nervio radial en el antebrazo','Compartimento extensor del antebrazo: braquiorradial, extensores radiales y cubital del carpo, extensor de los dedos, del meñique y del índice, y los tres músculos extrínsecos del pulgar.',
+ (S)=>{armBase(S);[[226,100,'ecrl'],[246,130,'ecrb'],[270,150,'ed'],[296,150,'edm'],[316,160,'ecu'],[252,215,'apl'],[290,222,'epl']].forEach(q=>msc(S,'mr',q[0],q[1],8,60,0,'fm'));S.LB([['mr','Extensores inervados por el radial','r',280,150]],{})},520,330);
+
+
+/* Aplicación: figuras estáticas con rótulos, laboratorios interactivos, progreso, test, glosario y tarjetas */
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const KEY='biomec-mano-v2';
+let st={done:{},quiz:{}};
+try{const r=localStorage.getItem(KEY); if(r){const o=JSON.parse(r); st={done:o.done||{},quiz:o.quiz||{}}}}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}};
+const fx=n=>String(n).replace('.',',');
+
+/* ---------- figuras estáticas con rótulos ---------- */
+let figN=0;
+/* Una figura puede reunir varias vistas (data-figs). Se cambian con las pestañas o con las flechas del teclado. */
+function drawFig(fe,id,k,n){const sp=FIGS[id];const svg=fe.querySelector('svg');[...svg.childNodes].forEach(x=>svg.removeChild(x));
+  svg.classList.toggle('xr',!!sp.xr); svg.setAttribute('aria-label',sp.t);
+  const S=Ctx(svg,sp.w,sp.h); try{sp.d(S)}catch(e){console.error('Esquema '+id,e)}
+  const cap=fe.querySelector('figcaption'); const ids=[],seen={}; S.labs.forEach(l=>{if(!seen[l[0]]){seen[l[0]]=1;ids.push(l)}});
+  cap.innerHTML='<b>'+fe.dataset.n+(n>1?' ('+(k+1)+' de '+n+')':'')+'. '+sp.t+'.</b> <span class="cp"></span>'; cap.querySelector('.cp').textContent=sp.c;
+  if(ids.length>1){const ch=document.createElement('div');ch.className='chips';ch.setAttribute('aria-label','Resaltar estructura');
+    ids.forEach(l=>{const b=document.createElement('button');b.type='button';b.className='chip';b.textContent=l[1];b.setAttribute('aria-pressed','false');
+      b.addEventListener('click',()=>{const on=b.getAttribute('aria-pressed')!=='true';ch.querySelectorAll('.chip').forEach(x=>x.setAttribute('aria-pressed','false'));b.setAttribute('aria-pressed',on);
+        svg.classList.toggle('hl',on);svg.querySelectorAll('[data-p]').forEach(e=>e.classList.remove('on'));if(on)svg.querySelectorAll('[data-p="'+l[0]+'"]').forEach(e=>e.classList.add('on'))});ch.appendChild(b)});cap.appendChild(ch)}}
+function renderFig(fe){if(fe.dataset.done)return; fe.dataset.done='1';
+  const ids=(fe.dataset.figs||fe.dataset.fig).split(',').filter(i=>FIGS[i]);
+  if(!ids.length){fe.hidden=true;return}
+  if(ids.length>1){const tb=document.createElement('div');tb.className='seg figtabs';tb.setAttribute('role','group');tb.setAttribute('aria-label','Vistas de la figura');
+    let cur=0;const bs=ids.map((id,k)=>{const b=document.createElement('button');b.type='button';b.textContent=FIGS[id].t;b.setAttribute('aria-pressed',k===0);
+      b.addEventListener('click',()=>go(k));tb.appendChild(b);return b});
+    const go=k=>{cur=(k+ids.length)%ids.length;bs.forEach((x,j)=>x.setAttribute('aria-pressed',j===cur));drawFig(fe,ids[cur],cur,ids.length)};
+    tb.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault();go(cur+(e.key==='ArrowRight'?1:-1));bs[cur].focus()}});
+    fe.insertBefore(tb,fe.firstChild)}
+  drawFig(fe,ids[0],0,ids.length)}
+const figEls=$$('figure.sf'); figEls.forEach((f,i)=>{f.dataset.n='Figura '+(i+1);f.querySelector('svg').id='sf-'+(i+1)});
+if('IntersectionObserver' in window){const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){renderFig(e.target);io.unobserve(e.target)}}),{rootMargin:'400px'});figEls.forEach(f=>io.observe(f))}else figEls.forEach(renderFig);
+window.renderAllFigs=()=>figEls.forEach(renderFig);
+
+/* ---------- utilidades de laboratorio ---------- */
+function segB(name,cb){const g=$('[data-seg="'+name+'"]');if(!g)return ()=>null;const bs=[...g.querySelectorAll('button')];bs.forEach(b=>b.addEventListener('click',()=>{bs.forEach(x=>x.setAttribute('aria-pressed',x===b));cb(b.dataset.v)}));return ()=>bs.find(b=>b.getAttribute('aria-pressed')==='true').dataset.v}
+function rngB(id,cb){const r=$('#'+id);if(!r)return ()=>0;const v=$('#'+id+'-v');const f=()=>{v.textContent=fx(+r.value)+r.dataset.u;cb(+r.value)};r.addEventListener('input',f);return f}
+function mk(id,draw){const svg=$('#'+id+'-svg');if(!svg)return null;const vb=svg.getAttribute('viewBox').split(' ').map(Number);const out=$('#'+id+'-out');
+  return ()=>{[...svg.childNodes].forEach(n=>svg.removeChild(n));const S=Ctx(svg,vb[2],vb[3]);draw(S,out)}}
+const K=(t,v)=>'<div><span class="k">'+t+':</span> '+v+'</div>';
+const SRC=t=>'<div class="src">'+t+'</div>';
+const lerp=(a,b,t)=>a+(b-a)*t, clamp=(x,a,b)=>Math.max(a,Math.min(b,x));
+function rotG(S,fn,ang,cx,cy){const n0=S.svg.childNodes.length;fn();const nodes=[...S.svg.childNodes].slice(n0);const g=S.E('g',{transform:'rotate('+ang+' '+cx+' '+cy+')'});nodes.forEach(n=>g.appendChild(n));return g}
+
+/* 16. oposición */
+(function(){const draw=mk('oposicion',(S,out)=>{const t=+$('#op-s').value/100;
+  S.rect(150,90,220,140,'sk',null,24);[[190,40],[235,26],[280,30],[325,52]].forEach(p=>S.bone(p[0],95,p[0],p[1],16));S.t(300,18,'meñique',{cls:'mu'});
+  const piv=[160,215];let tip,rot=0;if(t<=.5){const u=t/.5;tip=[lerp(130,85,u),lerp(120,160,u)]}else{const u=(t-.5)/.5;tip=[lerp(85,295,u),lerp(160,125,u)-Math.sin(Math.PI*u)*30];rot=52*u}
+  S.path('M130,120 L85,160 Q190,190 295,125','arcl dsh');S.bone(piv[0],piv[1],tip[0],tip[1],18);const g=S.E('g',{transform:'translate('+tip[0]+','+tip[1]+') rotate('+rot+')'});S.E('rect',{x:-9,y:-7,width:18,height:14,rx:5,class:'nail'},g);S.circ(piv[0],piv[1],6,'fc');S.t(120,248,'CMC',{cls:'sm'});S.t(20,290,'Vista palmar esquemática.',{cls:'mu'});
+  const p1=t>0&&t<=.5,p2=t>.5;out.innerHTML='<div><b>'+(t==0?'Reposo':p1?'Fase 1: abducción':'Fase 2: flexión con rotación medial')+'</b></div>'+K('Músculo clave',p1?'abductor largo del pulgar (rodamiento activo de la abducción)':p2?'oponente del pulgar, con el oblicuo posterior tenso':'-')+K('Rotación medial acumulada en el dibujo',Math.round(rot)+'°. La oposición completa incorpora 45 a 60°')+(t==1?'<div><span class="pill ok">Posición de cierre de la CMC</span> con giro final «de tornillo».</div>':'')+SRC('Neumann, cap. 8, fig. 8.18.')});
+  rngB('op-s',()=>draw())();draw()})();
+
+</script></body></html>

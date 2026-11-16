@@ -10,5 +10,17 @@
   {
     "archivo": "muneca-corte-transversal.html",
     "titulo": "Muñeca: corte transversal y músculos (diapositiva)"
+  },
+  {
+    "archivo": "mano-abrir-fases.html",
+    "titulo": "Mano: abrir la mano por fases (figura interactiva)"
+  },
+  {
+    "archivo": "mano-cerrar-fases.html",
+    "titulo": "Mano: cerrar la mano por fases (figura interactiva)"
+  },
+  {
+    "archivo": "pulgar-oposicion-fases.html",
+    "titulo": "Pulgar: oposición por fases (figura interactiva)"
   }
 ]
