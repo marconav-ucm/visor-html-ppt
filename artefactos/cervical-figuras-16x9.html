@@ -1,0 +1,1741 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Biomecánica de la columna cervical. Figuras 16:9</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: columna lateral de navegación por apartados + columna de lectura de ~68 caracteres. Figuras con el lenguaje de las diapositivas: hueso beis con contorno pardo, cartílago azul claro, cabeza del radio anaranjada, flechas azules rotuladas y cabeceras de tabla en rojo. */
+:root{
+  --bg:#f6f7f9; --surface:#ffffff; --sunk:#eceef2; --fg:#1b1f27; --muted:#59606d; --line:#d5d9e0;
+  --accent:#b3142d; --accent-ink:#ffffff; --accent-soft:#f7e2e5;
+  --fig:#fffdf8; --bone:#f0dcae; --bone-dk:#e2c88f; --bone-line:#8a6a3a; --cart:#a8d4ec; --radhead:#e57d52;
+  --arrow:#3b86c8; --arrow-ink:#ffffff; --lig:#f4f1ea; --lig-line:#9a9081; --hl:#d0263c; --muscle:#c9483a; --comp:#c27413; --pink:#f6c9c9;
+  --ok:#1f6b45; --ok-soft:#e1f1e7; --bad:#9a2a1c; --bad-soft:#f8e3df;
+  --f-display:"IBM Plex Serif", Georgia, "Times New Roman", serif;
+  --f-body:"IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono:"IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#13161b; --surface:#1b1f26; --sunk:#232832; --fg:#e7e9ee; --muted:#a3a9b5; --line:#343b47;
+  --accent:#ef8a99; --accent-ink:#1b1f26; --accent-soft:#3a2328;
+  --fig:#22262d; --bone:#d9c18e; --bone-dk:#c4a86f; --bone-line:#f0dcae; --cart:#5e9bbd; --radhead:#e57d52;
+  --arrow:#5a9fdb; --arrow-ink:#ffffff; --lig:#3a3f48; --lig-line:#a9a090; --hl:#ff5d6f; --muscle:#d86252; --comp:#efa54a; --pink:#5b3338;
+  --ok:#7fd1a2; --ok-soft:#1d3327; --bad:#f19a88; --bad-soft:#3b221d; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#13161b; --surface:#1b1f26; --sunk:#232832; --fg:#e7e9ee; --muted:#a3a9b5; --line:#343b47;
+  --accent:#ef8a99; --accent-ink:#1b1f26; --accent-soft:#3a2328;
+  --fig:#22262d; --bone:#d9c18e; --bone-dk:#c4a86f; --bone-line:#f0dcae; --cart:#5e9bbd; --radhead:#e57d52;
+  --arrow:#5a9fdb; --arrow-ink:#ffffff; --lig:#3a3f48; --lig-line:#a9a090; --hl:#ff5d6f; --muscle:#d86252; --comp:#efa54a; --pink:#5b3338;
+  --ok:#7fd1a2; --ok-soft:#1d3327; --bad:#f19a88; --bad-soft:#3b221d; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:16px;line-height:1.6}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+a{color:var(--accent)}
+:focus-visible{outline:3px solid var(--arrow);outline-offset:2px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1.2;font-weight:600}
+h2{font-size:1.65rem;margin:0 0 .4rem}
+h3{font-size:1.2rem;margin:1.8rem 0 .5rem}
+p{margin:.6rem 0}
+.topbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--surface);border-bottom:3px solid var(--accent);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:.55rem;
+  display:flex;align-items:center;gap:.75rem}
+.topbar .brand{font-family:var(--f-display);font-weight:600;font-size:1rem;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.topbar .brand small{font-family:var(--f-body);font-weight:400;color:var(--muted);font-size:.8rem;margin-left:.5rem}
+button{font:inherit;color:inherit;cursor:pointer}
+.btn{border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:.4rem .75rem;font-size:.88rem}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+#navToggle{display:none}
+.shell{display:grid;grid-template-columns:260px minmax(0,1fr);max-width:1180px;margin:0 auto;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));gap:2.5rem}
+nav.side{position:sticky;top:calc(env(safe-area-inset-top,0px) + 3.4rem);align-self:start;max-height:calc(100vh - 4rem);overflow:auto;padding-block:1.5rem}
+nav.side ol{list-style:none;margin:0;padding:0;display:grid;gap:.1rem}
+nav.side a{display:flex;gap:.55rem;align-items:baseline;text-decoration:none;color:var(--fg);padding:.35rem .5rem;border-radius:5px;font-size:.92rem}
+nav.side a:hover{background:var(--sunk)}
+nav.side a .n{font-family:var(--f-mono);color:var(--muted);font-size:.78rem;min-width:2.1rem}
+nav.side a .tick{margin-left:auto;color:var(--ok);font-size:.8rem}
+nav.side .grp{font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:1rem .5rem .3rem}
+main{padding-block:1.5rem 4rem;min-width:0}
+.prose{max-width:68ch}
+section.block{padding-block:1.6rem 2rem;border-bottom:1px solid var(--line)}
+.eyebrow{font-family:var(--f-mono);font-size:.78rem;color:var(--accent);letter-spacing:.04em}
+.hero h1{font-size:clamp(1.9rem,4vw,2.7rem);margin:.3rem 0 .6rem}
+.hero .lede{color:var(--muted);max-width:60ch}
+.progress{margin-top:1.2rem;max-width:560px}
+.bar{height:10px;background:var(--sunk);border-radius:5px;overflow:hidden;border:1px solid var(--line)}
+.bar > span{display:block;height:100%;background:var(--accent);width:0;transition:width .3s}
+.progress .row{display:flex;justify-content:space-between;font-size:.85rem;color:var(--muted);margin-top:.35rem;gap:1rem;flex-wrap:wrap}
+.quick{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1rem;align-items:center}
+.quick a{font-size:.88rem;text-decoration:none;border:1px solid var(--line);border-radius:6px;padding:.35rem .7rem;background:var(--surface)}
+.done-row{display:flex;justify-content:flex-end;margin-top:1.2rem}
+.done-btn[aria-pressed="true"]{background:var(--ok-soft);border-color:var(--ok);color:var(--ok)}
+ol.obj{padding-left:1.3rem}
+ol.obj li{margin:.35rem 0}
+.def{font-weight:600}
+.box{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:1rem 1.1rem;margin:1rem 0}
+.box.clin{border-left:4px solid var(--accent)}
+.box h4{margin:0 0 .3rem;font-size:.82rem;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);font-family:var(--f-body)}
+.src{font-size:.82rem;color:var(--muted)}
+.tw{overflow-x:auto;margin:1rem 0;border:1px solid var(--line);border-radius:4px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:.9rem}
+th,td{text-align:left;padding:.5rem .7rem;border-bottom:1px solid var(--line);vertical-align:top}
+thead th{font-weight:600;background:var(--accent);color:var(--accent-ink);font-size:.84rem}
+tbody th{background:var(--sunk);font-weight:600;font-size:.84rem}
+td.num,th.num{text-align:right;font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+tr:last-child td{border-bottom:0}
+caption{caption-side:bottom;text-align:left;padding:.5rem .7rem;font-size:.8rem;color:var(--muted)}
+.lab{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:1.1rem;margin:1.4rem 0}
+.lab .head{display:flex;justify-content:space-between;gap:1rem;align-items:baseline;flex-wrap:wrap}
+.lab .head h3{margin:0}
+.lab .tag{font-family:var(--f-mono);font-size:.75rem;color:var(--muted)}
+.lab-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:1.2rem;margin-top:.8rem;align-items:start}
+.ctrl{display:grid;gap:.85rem;align-content:start}
+.ctrl label{display:grid;gap:.2rem;font-size:.88rem}
+.ctrl label .v{font-family:var(--f-mono);color:var(--accent)}
+input[type=range]{width:100%;accent-color:var(--accent)}
+.out{background:var(--sunk);border-radius:8px;padding:.8rem .9rem;font-size:.9rem;display:grid;gap:.35rem}
+.out .k{color:var(--muted)}
+.meter{height:12px;background:var(--surface);border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.meter span{display:block;height:100%;background:var(--arrow)}
+svg.fig{width:100%;height:auto;max-width:100%;display:block;background:var(--fig);border-radius:8px;border:1px solid var(--line)}
+svg text{font-family:var(--f-body);fill:var(--fg)}
+.pill{display:inline-block;padding:.1rem .55rem;border-radius:99px;font-size:.8rem;font-weight:600}
+.pill.ok{background:var(--ok-soft);color:var(--ok)}
+.pill.bad{background:var(--bad-soft);color:var(--bad)}
+.seg{display:flex;flex-wrap:wrap;gap:.35rem}
+.seg button{border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:.35rem .6rem;font-size:.85rem}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.err{display:grid;gap:.8rem}
+.err > div{border:1px solid var(--line);border-radius:8px;padding:.8rem 1rem;background:var(--surface)}
+.err .wrong{color:var(--bad);font-weight:600}
+.err .right{color:var(--ok);font-weight:600}
+.quiz{display:grid;gap:1rem;counter-reset:q}
+.q{border:1px solid var(--line);border-radius:8px;padding:1rem;background:var(--surface)}
+.q .stem{font-weight:500;margin:0 0 .6rem}
+.q .stem::before{counter-increment:q;content:counter(q) ". ";font-family:var(--f-mono);color:var(--accent)}
+.opts{display:grid;gap:.4rem}
+.opts button{text-align:left;border:1px solid var(--line);background:var(--bg);border-radius:6px;padding:.5rem .7rem;font-size:.92rem}
+.opts button:hover:not(:disabled){border-color:var(--accent)}
+.opts button:disabled{cursor:default}
+.opts button.correct{background:var(--ok-soft);border-color:var(--ok);color:var(--fg)}
+.opts button.wrongsel{background:var(--bad-soft);border-color:var(--bad);color:var(--fg)}
+.expl{margin-top:.6rem;font-size:.9rem;border-top:1px dashed var(--line);padding-top:.6rem}
+.score{display:flex;gap:1rem;align-items:center;flex-wrap:wrap;margin-top:1rem}
+.refs{padding-left:1.4rem;font-size:.92rem}
+.refs li{margin:.5rem 0;overflow-wrap:anywhere}
+#gloss-search{width:100%;max-width:420px;font:inherit;padding:.5rem .7rem;border:1px solid var(--line);border-radius:6px;background:var(--surface);color:var(--fg)}
+dl.gloss{display:grid;gap:.1rem;margin-top:1rem}
+dl.gloss div{padding:.6rem 0;border-bottom:1px solid var(--line)}
+dl.gloss dt{font-weight:600}
+dl.gloss dd{margin:.15rem 0 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:.8rem;margin-top:1rem}
+.card{perspective:900px;height:170px;border:0;background:none;padding:0;text-align:left}
+.card .in{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
+.card[aria-pressed="true"] .in{transform:rotateY(180deg)}
+.card .f,.card .b{position:absolute;inset:0;backface-visibility:hidden;border:1px solid var(--line);border-radius:8px;padding:.9rem;display:flex;flex-direction:column;justify-content:center;font-size:.92rem;overflow:auto}
+.card .f{background:var(--surface);font-weight:500}
+.card .f small{color:var(--muted);font-weight:400;font-size:.75rem;margin-top:.5rem}
+.card .b{background:var(--accent-soft);transform:rotateY(180deg)}
+footer{color:var(--muted);font-size:.82rem;padding-block:2rem}
+.confirm{display:inline-flex;gap:.5rem;align-items:center;font-size:.85rem;flex-wrap:wrap}
+@media (max-width:860px){
+  .shell{grid-template-columns:minmax(0,1fr);gap:0}
+  #navToggle{display:inline-block}
+  nav.side{position:fixed;inset:calc(env(safe-area-inset-top,0px) + 3.2rem) 0 0 0;max-height:none;background:var(--surface);z-index:8;
+    padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));border-top:1px solid var(--line)}
+  .lab-grid{grid-template-columns:minmax(0,1fr)}
+  .topbar .brand small{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+.mus{font-size:.84rem}.mus th[colspan]{background:var(--sunk);text-align:left;font-size:.8rem;letter-spacing:.04em}
+.casos li{margin:.9rem 0}.res{background:var(--sunk);border-radius:6px;padding:.5rem .7rem;margin-top:.4rem}
+.pend{background:var(--accent-soft);border-radius:4px;padding:0 .3rem}.mini{font-size:.88rem;color:var(--muted)}
+.ck{display:flex!important;gap:.4rem;align-items:center}.ctrl ul{margin:.2rem 0;padding-left:1.1rem}
+figure.sf{margin:1.2rem 0;border:1px solid var(--line);border-radius:10px;background:var(--surface);padding:.8rem}
+figure.sf svg{max-height:560px}figcaption{font-size:.88rem;margin-top:.55rem}
+.tagp{display:inline-block;margin-left:.5rem;font-size:.7rem;font-family:var(--f-mono);color:var(--muted);border:1px solid var(--line);border-radius:99px;padding:0 .45rem;white-space:nowrap}
+.chips{display:flex;flex-wrap:wrap;gap:.3rem;margin-top:.55rem}.chip{border:1px solid var(--line);background:var(--surface);border-radius:99px;padding:.15rem .6rem;font-size:.76rem}
+.chip[aria-pressed=true]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+svg.fig .bo{stroke:var(--bone-line);stroke-linecap:round;fill:none}svg.fig .bn{stroke:var(--bone);stroke-linecap:round;fill:none}
+svg.fig .fb{fill:var(--bone);stroke:var(--bone-line);stroke-width:1.6}svg.fig .fc{fill:var(--cart);stroke:var(--bone-line);stroke-width:1.2}
+svg.fig .fm{fill:var(--muscle);fill-opacity:.62;stroke:var(--muscle);stroke-width:1}svg.fig .fm2{fill:var(--comp);fill-opacity:.6;stroke:var(--comp)}svg.fig .fm3{fill:var(--arrow);fill-opacity:.5;stroke:var(--arrow)}
+svg.fig .sk{fill:var(--pink);fill-opacity:.35;stroke:var(--line);stroke-width:1}
+svg.fig text.tx{font-size:11px;fill:var(--fg)}svg.fig text.tx.b{font-weight:600;font-size:12px}svg.fig text.tx.mu{fill:var(--muted)}svg.fig text.tx.sm{font-size:10px;fill:var(--muted)}svg.fig text.tx.hl,svg.fig text.tx.red{fill:var(--hl);font-weight:600}svg.fig text.tx.pend{fill:var(--accent)}svg.fig text.tx.wt{fill:var(--accent-ink);font-size:10px}svg.fig text.xtx{fill:#ddd}
+svg.fig .ld{stroke:var(--muted);stroke-width:1}svg.fig .ldd{fill:var(--accent)}
+svg.fig .lg{stroke:var(--lig-line);stroke-width:2.5;fill:none;stroke-linecap:round}svg.fig .lh{stroke:var(--hl);fill:none}svg.fig .lg.lh{stroke-width:3}svg.fig .lg.dsh,svg.fig .dsh{stroke-dasharray:5 4}svg.fig .lg.gr{stroke:var(--line);stroke-width:1}
+svg.fig .cd{stroke-width:4;stroke:var(--lig-line)}svg.fig .cd.tt{stroke:var(--hl);stroke-width:5}svg.fig .ac{stroke-width:2}svg.fig .tt3{stroke-width:5}
+svg.fig .ar{stroke:var(--arrow);stroke-width:3;stroke-linecap:round;fill:none}svg.fig .ar.red{stroke:var(--hl)}svg.fig .ar.red2{stroke:var(--comp)}svg.fig .ar2{stroke:var(--hl);stroke-width:1.5;fill:none}
+svg.fig .tn{stroke:var(--muscle);stroke-width:3;fill:none;stroke-linejoin:round;stroke-linecap:round}svg.fig .tn.ext{stroke:var(--arrow)}svg.fig .tn.tn3{stroke:var(--comp)}svg.fig .tn.qm{stroke:var(--arrow)}svg.fig .tn.qu{stroke:var(--comp)}svg.fig .tn.qr{stroke:var(--muscle)}
+svg.fig .pl{stroke:var(--cart);stroke-width:5}svg.fig .pl.on2{stroke:var(--hl)}svg.fig .sh{stroke:var(--lig-line);stroke-width:5}
+svg.fig .pu{stroke:var(--fg);stroke-width:5;stroke-linecap:round}svg.fig .pu.cr{stroke-width:3;opacity:.6}svg.fig .pu.bad{stroke:var(--hl);stroke-dasharray:2 3}
+svg.fig .pu2{fill:var(--lig);stroke:var(--lig-line);stroke-width:1.5}svg.fig .pu2.major{fill:var(--accent-soft);stroke:var(--accent)}
+svg.fig .at1{fill:var(--hl);stroke:#fff;stroke-width:1}svg.fig .at2{fill:#8b8f99;stroke:#fff}
+svg.fig .fd,svg.fig .fd0{opacity:.28}
+svg.fig.hl [data-p]{opacity:.2;transition:opacity .15s}svg.fig.hl [data-p].on{opacity:1}svg.fig.hl [data-p].on *{filter:drop-shadow(0 0 3px var(--hl))}
+svg.fig.xr{background:#15171b}svg.fig.xr .bn{stroke:#e8e8e8}svg.fig.xr .bo{stroke:#9aa}svg.fig.xr .fb{fill:#dcdcdc}svg.fig.xr .fc{fill:#bbb}svg.fig.xr .tx{fill:#ddd}
+svg.fig .xrbg{fill:#15171b;stroke:#444}svg.fig .xl{stroke:#e6e6e6;stroke-width:12;stroke-linecap:round;fill:none}svg.fig .xo{fill:#c9c9c9;stroke:#eee}svg.fig .xfl{fill:#555;stroke:#999;fill-opacity:.6}svg.fig .xcirc{fill:none;stroke:#f5c518;stroke-width:3}svg.fig .xfx{stroke:#15171b;stroke-width:3}svg.fig .impl{fill:#8fa6c2;stroke:#eee}
+svg.fig .zm{fill:var(--arrow);fill-opacity:.45}svg.fig .zu{fill:var(--comp);fill-opacity:.5}svg.fig .zr{fill:var(--muscle);fill-opacity:.4}
+svg.fig .nail{fill:var(--surface);stroke:var(--hl);stroke-width:2}svg.fig .axc{fill:var(--surface);stroke:var(--hl);stroke-width:2.5}
+svg.fig .cyl{fill:#b0b6c2;fill-opacity:.5;stroke:#6b7280}svg.fig .tcl{fill:var(--lig);stroke:var(--lig-line)}svg.fig .tdn{fill:var(--comp)}svg.fig .nv2{fill:#f2c94c;stroke:#8a6a1f}
+svg.fig .arcl{fill:none;stroke-width:4;opacity:.85}svg.fig .arcl.a1{stroke:var(--arrow)}svg.fig .arcl.a2{stroke:var(--comp)}svg.fig .arcl.a3{stroke:var(--hl);stroke-dasharray:6 4}
+svg.fig .pillar{fill:none;stroke:var(--accent);stroke-dasharray:5 4;stroke-width:2}
+svg.fig .bar0{fill:var(--sunk)}svg.fig .bar{fill:var(--arrow)}svg.fig .fn{fill:var(--sunk);stroke:var(--line)}svg.fig .fn.on3{fill:var(--accent);stroke:var(--accent)}
+svg.fig .ghost{fill:none;stroke:var(--muted);stroke-dasharray:4 3}svg.fig .hl2{stroke:var(--hl)!important;stroke-width:5}svg.fig .wl{stroke:#fff;stroke-width:3}svg.fig .hid{opacity:0}svg.fig .gr{stroke:var(--line)}
+svg.fig .dl{fill:none;stroke:#7b3fa0;stroke-width:3}svg.fig .dt{fill:none;stroke:#2e9d57;stroke-width:3}svg.fig.xr text{fill:#ddd}svg.fig .gm{stroke:var(--bone-line);stroke-linecap:butt}svg.fig .hm{stroke:var(--hl)}
+.prose figure.sf,.prose .lab,.prose .tw{max-width:none}.prose{max-width:none}.prose > p,.prose > h3,.prose > ol,.prose > ul,.prose > .box,.prose > h2,.prose > .eyebrow{max-width:68ch}
+
+</style><style>
+/* lamina.css · Figuras como lámina impresa: fondo blanco también en tema oscuro, paleta de manual. Se carga después de estilos.css. */
+svg.fig:not(.xr){--fg:#1b1f27;--muted:#4f5663;--line:#d5d9e0;--sunk:#eceef2;--surface:#fff;--accent:#b3142d;--accent-ink:#fff;--hl:#D91A14;--arrow:#2F6DB5;
+  background:#fff;border-color:#d5d9e0}
+.lab svg, figure svg{background:#fff;border-radius:10px}
+svg.fig text{fill:#1b1f27}
+svg.fig text.tx.mu,svg.fig text.tx.sm{fill:#4f5663}
+svg.fig .ov{opacity:0;pointer-events:none}
+svg.fig.hl .ov.on{opacity:1}
+svg.fig.hl [data-p]{opacity:.22;transition:opacity .15s}
+svg.fig.hl [data-p].on{opacity:1}
+svg.fig.hl .ov:not(.on){opacity:0}
+svg.fig .alig.on{filter:drop-shadow(0 0 2.5px #FFD133) drop-shadow(0 0 1.5px #FFD133)}
+svg.fig .alig.on path:nth-child(2){stroke:#E89E7A}
+svg.fig .ldd{fill:#1b1f27}
+svg.fig .ld{stroke:#6b7280}
+svg.fig .cap{font-size:11.5px;fill:#4f5663;font-style:italic}
+svg.fig .ttl{font-size:12px;font-weight:600;fill:#1b1f27}
+svg.fig .val{font-size:12px;font-weight:600;fill:#2F6DB5}
+svg.fig .val.red{fill:#D91A14}
+svg.fig .val.or{fill:#C2620F}
+svg.fig .bar{fill:#2F6DB5}svg.fig .bar.up{fill:#B8A8E6}svg.fig .bar.c12{fill:#E89E7A}svg.fig .bar0{fill:#eef0f3}
+svg.fig .gridl{stroke:#e3e6ea;stroke-width:1}
+svg.fig .refl{stroke:#1b1f27;stroke-width:1.2;stroke-dasharray:5 4;fill:none}
+svg.fig .dim{stroke:#2F6DB5;stroke-width:2;fill:none}
+svg.fig .musc.dimm{opacity:.28}
+svg.fig .tagmini{font-size:10px;fill:#4f5663}
+table.mini{border-collapse:collapse;margin:.5rem 0;font-size:.85rem}table.mini th,table.mini td{border:1px solid var(--line);padding:.2rem .45rem;text-align:center}table.mini th{background:var(--accent);color:var(--accent-ink);font-weight:600}
+.lab-grid{grid-template-columns:minmax(0,1fr)}
+.lab-grid > svg{order:-1}
+.lab-grid .ctrl{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:.6rem 1.2rem;align-items:start}
+.lab-grid .ctrl > *{grid-column:1}
+.lab-grid .ctrl > .out{grid-column:2;grid-row:1 / span 6;margin-top:0}
+@media (max-width:700px){.lab-grid .ctrl{grid-template-columns:minmax(0,1fr)}.lab-grid .ctrl > .out{grid-column:1;grid-row:auto}}
+
+</style><style>
+/* Presentación 16:9: escenario de 1920 x 1080 escalado a la ventana */
+html,body.deck{margin:0;height:100%;background:#2b2f36;overflow:hidden;color:#1b1f27}
+body.deck{font-family:"IBM Plex Sans",Arial,sans-serif}
+.viewport{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
+.stage{position:relative;width:1920px;height:1080px;background:#fff;transform-origin:center center;flex:none;box-shadow:0 10px 40px rgba(0,0,0,.35);overflow:hidden}
+.slide{position:absolute;inset:0;padding:52px 80px 80px;box-sizing:border-box;visibility:hidden;opacity:0;transition:opacity .2s;display:flex;flex-direction:column}
+.slide.on{visibility:visible;opacity:1}
+.slide h1{font-size:48px;line-height:1.1;font-weight:700;margin:0 0 6px;letter-spacing:-.01em;color:#1b1f27;font-family:"IBM Plex Sans",Arial,sans-serif}
+.slide h1::after{content:"";display:block;width:110px;height:5px;background:#b3142d;margin-top:14px;border-radius:3px}
+.slide > figure.sfig{flex:1;min-height:0;margin:18px 0 0;display:flex;flex-direction:column}
+.slide > figure.sfig svg{flex:1 1 0;min-height:0;width:100%;height:100%;max-height:none;border:none;border-radius:0;background:#fff}
+.slide > figure.sfig figcaption{font-size:0;margin:6px 0 0}
+.slide > figure.sfig figcaption > b,.slide > figure.sfig figcaption .cp,.slide > figure.sfig figcaption .tagp{display:none}
+.slide .chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.slide .chip{font-size:19px;padding:6px 14px;border-radius:20px;border:1px solid #c9ced6;background:#fff;color:#1b1f27;cursor:pointer}
+.slide .chip[aria-pressed="true"]{background:#b3142d;border-color:#b3142d;color:#fff}
+.slab{flex:1 1 0;min-height:0;display:flex;gap:36px;margin-top:18px;overflow:hidden}
+.slab > svg{flex:1 1 0;min-width:0;height:100%;width:100%;max-height:none;border:none;border-radius:0;background:#fff}
+.slab .ctrl{width:420px;flex:none;display:flex;flex-direction:column;gap:22px;justify-content:center;font-size:20px}
+.slab .seg{gap:8px}
+.slab .seg button{font-size:19px;padding:9px 14px;border-radius:8px;border:1px solid #c9ced6;background:#fff;color:#1b1f27;cursor:pointer}
+.slab .seg button[aria-pressed="true"]{background:#b3142d;border-color:#b3142d;color:#fff}
+.slab label{display:flex;flex-direction:column;gap:8px;font-size:20px;color:#3a404b}
+.slab label .v{font-weight:600;color:#b3142d}
+.slab input[type=range]{width:100%;height:30px;accent-color:#b3142d}
+.btxt{align-self:flex-start;font-size:18px;padding:8px 14px;border-radius:8px;border:1px dashed #9aa1ad;background:#f7f8fa;color:#3a404b;cursor:pointer}
+.slide > .out{position:absolute;right:540px;top:150px;width:560px;max-height:790px;overflow:auto;background:#fff;border:1px solid #d5d9e0;border-radius:12px;box-shadow:0 12px 40px rgba(0,0,0,.18);padding:22px 26px;font-size:20px;line-height:1.45;display:none;z-index:5}
+.slide > .out.show{display:block}
+.slide > .out .k{color:#4f5663;font-weight:600}
+.slide > .out .src{font-size:16px;color:#59606d;margin-top:10px}
+.slide > .out table.mini{font-size:17px}
+.foot{position:absolute;left:80px;right:80px;bottom:26px;display:flex;justify-content:space-between;font-size:17px;color:#7a818d;pointer-events:none}
+.nav{position:absolute;right:300px;bottom:16px;display:flex;gap:8px;z-index:10}
+.nav button{font-size:22px;min-width:52px;height:44px;border-radius:8px;border:1px solid #c9ced6;background:#fff;color:#1b1f27;cursor:pointer}
+.nav button:focus-visible,.slab button:focus-visible,.chip:focus-visible{outline:3px solid #2F6DB5;outline-offset:2px}
+body.solo .nav,body.solo .foot{display:none}
+body.solo .stage{box-shadow:none}
+body.solo{background:#fff}
+.ixwrap{display:flex;gap:60px;margin-top:30px;flex:1;min-height:0}
+.ixp{width:520px;font-size:24px;line-height:1.5;color:#3a404b;margin:0}
+.ix{columns:2;column-gap:50px;font-size:23px;line-height:1.55;margin:0;padding-left:34px;flex:1}
+.ix a{color:#1b1f27;text-decoration:none;border-bottom:1px solid #d5d9e0}
+.ix a:hover{color:#b3142d}
+.ix code,.ixp code{font-size:18px;color:#b3142d;background:#f7f0f1;padding:1px 6px;border-radius:4px}
+
+</style>
+</head><body class="deck">
+<div class="viewport"><div class="stage" id="stage">
+<section class="slide" id="s0" data-n="0"><h1>Biomecánica de la columna cervical. Figuras</h1><div class="ixwrap"><p class="ixp">Una figura por diapositiva en formato 16:9. Para insertar una sola en PowerPoint, usen la dirección del artefacto terminada en <code>#sN-solo</code> (por ejemplo <code>#s7-solo</code>): se muestra esa figura sin botones de navegación.</p><ol class="ix"><li><a href="#s1">Occipital. Vista inferior</a> <code>#s1</code></li><li><a href="#s2">Atlas (C1). Vista superior</a> <code>#s2</code></li><li><a href="#s3">Atlas (C1). Vista inferior</a> <code>#s3</code></li><li><a href="#s4">Axis (C2). Vista anterior</a> <code>#s4</code></li><li><a href="#s5">Axis (C2). Vista lateral</a> <code>#s5</code></li><li><a href="#s6">Articulación de la cabeza. Corte sagital</a> <code>#s6</code></li><li><a href="#s7">Medios de unión craneocervicales</a> <code>#s7</code></li><li><a href="#s8">Papel del ligamento transverso del atlas</a> <code>#s8</code></li><li><a href="#s9">Cinemática de C0-C1 y C1-C2</a> <code>#s9</code></li><li><a href="#s10">Vértebra cervical típica (C3-C6)</a> <code>#s10</code></li><li><a href="#s11">Articulaciones uncovertebrales y arteria vertebral</a> <code>#s11</code></li><li><a href="#s12">Columna cervical. Lordosis y carillas a 45°</a> <code>#s12</code></li><li><a href="#s13">Flexoextensión, protracción y retracción</a> <code>#s13</code></li><li><a href="#s14">Movimiento por niveles</a> <code>#s14</code></li><li><a href="#s15">Movimiento acoplado</a> <code>#s15</code></li><li><a href="#s16">Artrocinemática y estructuras que limitan el movimiento</a> <code>#s16</code></li><li><a href="#s17">Línea de acción de la musculatura cervical</a> <code>#s17</code></li><li><a href="#s18">Músculos suboccipitales</a> <code>#s18</code></li><li><a href="#s19">Movimientos cervicales y acciones musculares</a> <code>#s19</code></li><li><a href="#s20">Multífidos y músculos cervicales profundos</a> <code>#s20</code></li></ol></div></section><section class="slide sfig-s" id="s1" data-n="1"><h1>Occipital. Vista inferior</h1><figure class="sf sfig" data-fig="c_occ"><svg class="fig" role="img" aria-label="Occipital. Vista inferior"></svg><figcaption></figcaption></figure></section><section class="slide sfig-s" id="s2" data-n="2"><h1>Atlas (C1). Vista superior</h1><figure class="sf sfig" data-fig="c_atlas"><svg class="fig" role="img" aria-label="Atlas (C1). Vista superior"></svg><figcaption></figcaption></figure></section><section class="slide sfig-s" id="s3" data-n="3"><h1>Atlas (C1). Vista inferior</h1><figure class="sf sfig" data-fig="c_atlas_inf"><svg class="fig" role="img" aria-label="Atlas (C1). Vista inferior"></svg><figcaption></figcaption></figure></section><section class="slide sfig-s" id="s4" data-n="4"><h1>Axis (C2). Vista anterior</h1><figure class="sf sfig" data-fig="c_axis_ant"><svg class="fig" role="img" aria-label="Axis (C2). Vista anterior"></svg><figcaption></figcaption></figure></section><section class="slide sfig-s" id="s5" data-n="5"><h1>Axis (C2). Vista lateral</h1><figure class="sf sfig" data-fig="c_axis"><svg class="fig" role="img" aria-label="Axis (C2). Vista lateral"></svg><figcaption></figcaption></figure></section><section class="slide slab-s" id="s6" data-n="6"><h1>Articulación de la cabeza. Corte sagital</h1><div class="slab"><svg aria-label="Corte sagital medio del occipital, el atlas, el axis y C3" class="fig" id="huesos-svg" role="img" viewbox="0 0 620 450"></svg><div class="ctrl"><div aria-label="Estructura ósea" class="seg" data-seg="Estructura" role="group">
+<button aria-pressed="true" data-v="cond" type="button">Cóndilo occipital</button><button aria-pressed="false" data-v="bas" type="button">Parte basilar</button><button aria-pressed="false" data-v="aa" type="button">Arco anterior del atlas</button><button aria-pressed="false" data-v="pa" type="button">Arco posterior del atlas</button><button aria-pressed="false" data-v="dens" type="button">Diente del axis</button><button aria-pressed="false" data-v="cz" type="button">Cuerpo del axis</button><button aria-pressed="false" data-v="sp" type="button">Apófisis espinosa del axis</button>
+</div><button type="button" class="btxt" aria-expanded="false">Mostrar texto</button></div></div><div aria-live="polite" class="out" id="huesos-out"></div></section><section class="slide slab-s" id="s7" data-n="7"><h1>Medios de unión craneocervicales</h1><div class="slab"><svg aria-label="Ligamentos de la unión craneocervical en corte sagital y vista posterior" class="fig" id="lig-svg" role="img" viewbox="0 0 760 460"></svg><div class="ctrl">
+<div aria-label="Ligamento" class="seg" data-seg="Ligamento" role="group">
+<button aria-pressed="true" data-v="cruc" type="button">Cruciforme</button><button aria-pressed="false" data-v="alar" type="button">Alares</button><button aria-pressed="false" data-v="apic" type="button">Vértice del diente</button><button aria-pressed="false" data-v="tect" type="button">Membrana tectoria</button><button aria-pressed="false" data-v="mao" type="button">Membrana atlantooccipital anterior</button><button aria-pressed="false" data-v="mpo" type="button">Membrana atlantooccipital posterior</button><button aria-pressed="false" data-v="lla" type="button">Longitudinal anterior</button><button aria-pressed="false" data-v="flav" type="button">Amarillo</button><button aria-pressed="false" data-v="nuc" type="button">Nucal</button>
+</div>
+<div aria-label="Movimiento" class="seg" data-seg="Movimiento-lig" role="group">
+<button aria-pressed="true" data-v="neu" type="button">Neutro</button><button aria-pressed="false" data-v="flex" type="button">Flexión</button><button aria-pressed="false" data-v="ext" type="button">Extensión</button><button aria-pressed="false" data-v="rot" type="button">Rotación</button><button aria-pressed="false" data-v="inc" type="button">Inclinación</button>
+</div>
+<button type="button" class="btxt" aria-expanded="false">Mostrar texto</button></div></div><div aria-live="polite" class="out" id="lig-out"></div></section><section class="slide slab-s" id="s8" data-n="8"><h1>Papel del ligamento transverso del atlas</h1><div class="slab"><svg aria-label="Atlas, diente del axis y médula en perfil y en vista superior" class="fig" id="trans-svg" role="img" viewbox="0 0 760 420"></svg><div class="ctrl">
+<label>Posición de la cabeza <span class="v" id="tr-s-v"></span><input aria-label="De extensión (valores negativos) a flexión (valores positivos)" data-u=" %" id="tr-s" max="100" min="-100" step="1" type="range" value="0"/></label>
+<div aria-label="Estado del ligamento transverso" class="seg" data-seg="Ligamento transverso" role="group"><button aria-pressed="true" data-v="ok" type="button">Íntegro</button><button aria-pressed="false" data-v="rot" type="button">Lesionado</button></div>
+<button type="button" class="btxt" aria-expanded="false">Mostrar texto</button></div></div><div aria-live="polite" class="out" id="trans-out"></div></section><section class="slide slab-s" id="s9" data-n="9"><h1>Cinemática de C0-C1 y C1-C2</h1><div class="slab"><svg aria-label="Barras con el rango de movimiento por articulación" class="fig" id="cin-svg" role="img" viewbox="0 0 520 320"></svg><div class="ctrl">
+<div aria-label="Movimiento" class="seg" data-seg="Movimiento" role="group"><button aria-pressed="true" data-v="flex" type="button">Flexión</button><button aria-pressed="false" data-v="ext" type="button">Extensión</button><button aria-pressed="false" data-v="rot" type="button">Rotación</button><button aria-pressed="false" data-v="inc" type="button">Inclinación lateral</button></div>
+<div aria-label="Fuente de los datos" class="seg" data-seg="Fuente" role="group"><button aria-pressed="true" data-v="neu" type="button">Neumann (Tabla 9.7)</button><button aria-pressed="false" data-v="pan" type="button">Panjabi 2001</button></div>
+<button type="button" class="btxt" aria-expanded="false">Mostrar texto</button></div></div><div aria-live="polite" class="out" id="cin-out"></div></section><section class="slide sfig-s" id="s10" data-n="10"><h1>Vértebra cervical típica (C3-C6)</h1><figure class="sf sfig" data-fig="c_tip"><svg class="fig" role="img" aria-label="Vértebra cervical típica (C3-C6)"></svg><figcaption></figcaption></figure></section><section class="slide sfig-s" id="s11" data-n="11"><h1>Articulaciones uncovertebrales y arteria vertebral</h1><figure class="sf sfig" data-fig="c_ant"><svg class="fig" role="img" aria-label="Articulaciones uncovertebrales y arteria vertebral"></svg><figcaption></figcaption></figure></section><section class="slide sfig-s" id="s12" data-n="12"><h1>Columna cervical. Lordosis y carillas a 45°</h1><figure class="sf sfig" data-fig="c_col"><svg class="fig" role="img" aria-label="Columna cervical. Lordosis y carillas a 45°"></svg><figcaption></figcaption></figure></section><section class="slide slab-s" id="s13" data-n="13"><h1>Flexoextensión, protracción y retracción</h1><div class="slab"><svg aria-label="Cráneo y columna cervical en perfil con la silueta de la cabeza y el cuello" class="fig" id="mov-svg" role="img" viewbox="0 0 640 480"></svg><div class="ctrl">
+<div aria-label="Modo" class="seg" data-seg="Modo" role="group"><button aria-pressed="true" data-v="fe" type="button">Flexión-extensión</button><button aria-pressed="false" data-v="pr" type="button">Protracción-retracción</button></div>
+<label>Movimiento <span class="v" id="mv-s-v"></span><input aria-label="Flexión o retracción (valores negativos) a extensión o protracción (valores positivos)" data-u=" %" id="mv-s" max="100" min="-100" step="1" type="range" value="0"/></label>
+<button type="button" class="btxt" aria-expanded="false">Mostrar texto</button></div></div><div aria-live="polite" class="out" id="mov-out"></div></section><section class="slide slab-s" id="s14" data-n="14"><h1>Movimiento por niveles</h1><div class="slab"><svg aria-label="Barras con los grados de movimiento de cada nivel cervical" class="fig" id="niv-svg" role="img" viewbox="0 0 660 370"></svg><div class="ctrl">
+<div aria-label="Plano" class="seg" data-seg="Plano" role="group"><button aria-pressed="true" data-v="sag" type="button">Sagital</button><button aria-pressed="false" data-v="rot" type="button">Transversal</button><button aria-pressed="false" data-v="inc" type="button">Frontal</button></div>
+<button type="button" class="btxt" aria-expanded="false">Mostrar texto</button></div></div><div aria-live="polite" class="out" id="niv-out"></div></section><section class="slide slab-s" id="s15" data-n="15"><h1>Movimiento acoplado</h1><div class="slab"><svg aria-label="Cráneo y columna cervical vistos por detrás en inclinación lateral" class="fig" id="aco-svg" role="img" viewbox="0 0 600 460"></svg><div class="ctrl">
+<label>Inclinación lateral <span class="v" id="ac-s-v"></span><input aria-label="Inclinación a la izquierda (valores negativos) o a la derecha (valores positivos)" data-u=" %" id="ac-s" max="100" min="-100" step="1" type="range" value="60"/></label>
+<button type="button" class="btxt" aria-expanded="false">Mostrar texto</button></div></div><div aria-live="polite" class="out" id="aco-out"></div></section><section class="slide slab-s" id="s16" data-n="16"><h1>Artrocinemática y estructuras que limitan el movimiento</h1><div class="slab"><svg aria-label="Artrocinemática de la región cervical alta o baja con los tejidos que limitan el movimiento" class="fig" id="art-svg" role="img" viewbox="0 0 720 440"></svg><div class="ctrl">
+<div aria-label="Movimiento" class="seg" data-seg="Mov-art" role="group"><button aria-pressed="true" data-v="flex" type="button">Flexión</button><button aria-pressed="false" data-v="ext" type="button">Extensión</button><button aria-pressed="false" data-v="rot" type="button">Rotación</button><button aria-pressed="false" data-v="inc" type="button">Inclinación</button></div>
+<div aria-label="Región" class="seg" data-seg="Región-art" role="group"><button aria-pressed="true" data-v="alta" type="button">Región alta (C0-C2)</button><button aria-pressed="false" data-v="baja" type="button">Región baja (C2-C7)</button></div>
+<label>Recorrido <span class="v" id="ar-s-v"></span><input aria-label="Recorrido del movimiento" data-u=" %" id="ar-s" max="100" min="0" step="1" type="range" value="80"/></label>
+<button type="button" class="btxt" aria-expanded="false">Mostrar texto</button></div></div><div aria-live="polite" class="out" id="art-out"></div></section><section class="slide slab-s" id="s17" data-n="17"><h1>Línea de acción de la musculatura cervical</h1><div class="slab"><svg aria-label="Cráneo, columna cervical y músculos del cuello en perfil" class="fig" id="mus-svg" role="img" viewbox="0 0 680 560"></svg><div class="ctrl">
+<div aria-label="Músculo" class="seg" data-seg="Músculo" role="group">
+<button aria-pressed="true" data-v="scm" type="button">Esternocleidomastoideo</button><button aria-pressed="false" data-v="esca" type="button">Escaleno anterior</button><button aria-pressed="false" data-v="escm" type="button">Escaleno medio</button><button aria-pressed="false" data-v="lcol" type="button">Largo del cuello</button><button aria-pressed="false" data-v="lcap" type="button">Largo de la cabeza</button><button aria-pressed="false" data-v="splc" type="button">Esplenio de la cabeza</button><button aria-pressed="false" data-v="ssc" type="button">Semiespinoso de la cabeza</button><button aria-pressed="false" data-v="elev" type="button">Elevador de la escápula</button><button aria-pressed="false" data-v="trap" type="button">Trapecio superior</button>
+</div><button type="button" class="btxt" aria-expanded="false">Mostrar texto</button></div></div><div aria-live="polite" class="out" id="mus-out"></div></section><section class="slide slab-s" id="s18" data-n="18"><h1>Músculos suboccipitales</h1><div class="slab"><svg aria-label="Occipital, atlas y axis vistos por detrás con los músculos suboccipitales" class="fig" id="sub-svg" role="img" viewbox="0 0 640 380"></svg><div class="ctrl">
+<div aria-label="Músculo suboccipital" class="seg" data-seg="Suboccipital" role="group"><button aria-pressed="true" data-v="rcpmaj" type="button">Recto posterior mayor</button><button aria-pressed="false" data-v="rcpmin" type="button">Recto posterior menor</button><button aria-pressed="false" data-v="ocs" type="button">Oblicuo superior</button><button aria-pressed="false" data-v="oci" type="button">Oblicuo inferior</button></div>
+<button type="button" class="btxt" aria-expanded="false">Mostrar texto</button></div></div><div aria-live="polite" class="out" id="sub-out"></div></section><section class="slide slab-s" id="s19" data-n="19"><h1>Movimientos cervicales y acciones musculares</h1><div class="slab"><svg aria-label="Cabeza y cuello en perfil con los músculos que producen el movimiento elegido" class="fig" id="mm-svg" role="img" viewbox="0 0 680 480"></svg><div class="ctrl">
+<div aria-label="Movimiento" class="seg" data-seg="Mov-mm" role="group"><button aria-pressed="true" data-v="flex" type="button">Flexión</button><button aria-pressed="false" data-v="ext" type="button">Extensión</button><button aria-pressed="false" data-v="inc" type="button">Inclinación izquierda</button><button aria-pressed="false" data-v="ril" type="button">Rotación izquierda</button><button aria-pressed="false" data-v="rcl" type="button">Rotación derecha</button></div>
+<div aria-label="Región" class="seg" data-seg="Región-mm" role="group"><button aria-pressed="true" data-v="alta" type="button">Región alta (C0-C2)</button><button aria-pressed="false" data-v="baja" type="button">Región baja (C2-C7)</button></div>
+<button type="button" class="btxt" aria-expanded="false">Mostrar texto</button></div></div><div aria-live="polite" class="out" id="mm-out"></div></section><section class="slide slab-s" id="s20" data-n="20"><h1>Multífidos y músculos cervicales profundos</h1><div class="slab"><svg aria-label="Músculos profundos del cuello en vista posterior, descomposición de su fuerza y corte transversal de C5" class="fig" id="prof-svg" role="img" viewbox="0 0 1000 480"></svg><div class="ctrl">
+<div aria-label="Músculo profundo" class="seg" data-seg="Profundo" role="group"><button aria-pressed="false" data-v="ssc" type="button">Semiespinoso del cuello</button><button aria-pressed="true" data-v="mult" type="button">Multífidos</button><button aria-pressed="false" data-v="rotl" type="button">Rotador largo</button><button aria-pressed="false" data-v="rotb" type="button">Rotador corto</button><button aria-pressed="false" data-v="isp" type="button">Interespinosos</button><button aria-pressed="false" data-v="itr" type="button">Intertransversos</button><button aria-pressed="false" data-v="lcol" type="button">Largo del cuello</button><button aria-pressed="false" data-v="lcap" type="button">Largo de la cabeza</button></div>
+<label>Ángulo de la fibra con la vertical <span class="v" id="pf-a-v"></span><input aria-label="Ángulo de la fibra con la vertical" data-u="°" id="pf-a" max="90" min="0" step="1" type="range" value="20"/></label>
+<button type="button" class="btxt" aria-expanded="false">Mostrar texto</button></div></div><div aria-live="polite" class="out" id="prof-out"></div></section>
+<footer class="foot"><span>Biomecánica del Aparato Locomotor · Universidad Complutense de Madrid</span><span id="num"></span></footer>
+<nav class="nav" aria-label="Navegación entre diapositivas"><button type="button" id="prev" aria-label="Diapositiva anterior">‹</button><button type="button" id="home" aria-label="Índice">Índice</button><button type="button" id="next" aria-label="Diapositiva siguiente">›</button></nav>
+</div></div>
+<script>
+/* Motor de esquemas SVG propios (T012 v2). Todo se dibuja con primitivas, sin imágenes. */
+const NS='http://www.w3.org/2000/svg';
+const R=d=>d*Math.PI/180;
+const FIGS={};
+function Ctx(svg,w,h){
+  svg.setAttribute('viewBox','0 0 '+w+' '+h);
+  const E=(t,a,p,tx)=>{const e=document.createElementNS(NS,t);for(const k in a)if(a[k]!=null)e.setAttribute(k,a[k]);if(tx!=null)e.textContent=tx;(p||svg).appendChild(e);return e};
+  const P=id=>id?E('g',{'data-p':id}):svg;
+  const S={svg,w,h,E,labs:[],c:{}};
+  S.defs=E('defs',{});
+  const m=E('marker',{id:svg.id+'-ah',viewBox:'0 0 10 10',refX:'8',refY:'5',markerWidth:'5',markerHeight:'5',orient:'auto-start-reverse'},S.defs);E('path',{d:'M0,0 L10,5 L0,10 z',fill:'context-stroke'},m);
+  S.bone=(x1,y1,x2,y2,w,id,cls)=>{const p=E('g',id?{'data-p':id}:{});const fd=cls&&cls.includes(' fd');if(fd){p.setAttribute('class','fd');cls=cls.replace(' fd','')}E('line',{x1,y1,x2,y2,'stroke-width':w+3,class:'bo'},p);E('line',{x1,y1,x2,y2,'stroke-width':w,class:cls||'bn'},p);return p};
+  S.ell=(cx,cy,rx,ry,cls,id,rot)=>E('ellipse',{cx,cy,rx,ry,class:cls||'fb',transform:rot?'rotate('+rot+' '+cx+' '+cy+')':null},P(id));
+  S.circ=(cx,cy,r,cls,id)=>E('circle',{cx,cy,r,class:cls||'fb'},P(id));
+  S.rect=(x,y,w,h,cls,id,rx,rot)=>E('rect',{x,y,width:w,height:h,rx:rx==null?4:rx,class:cls||'fb',transform:rot?'rotate('+rot+' '+(x+w/2)+' '+(y+h/2)+')':null},P(id));
+  S.path=(d,cls,id)=>E('path',{d,class:cls||'fb'},P(id));
+  S.poly=(pts,cls,id)=>E('polygon',{points:pts.map(q=>q.join(',')).join(' '),class:cls||'fm'},P(id));
+  S.pl=(pts,cls,id)=>E('polyline',{points:pts.map(q=>q.join(',')).join(' '),class:cls||'tn',fill:'none'},P(id));
+  S.line=(x1,y1,x2,y2,cls,id)=>E('line',{x1,y1,x2,y2,class:cls||'lg'},P(id));
+  S.arrow=(x1,y1,x2,y2,cls,id)=>E('line',{x1,y1,x2,y2,class:cls||'ar','marker-end':'url(#'+svg.id+'-ah)'},P(id));
+  S.t=(x,y,s,o)=>{o=o||{};const e=E('text',{x,y,class:'tx'+(o.cls?' '+o.cls:''),'text-anchor':o.a||'start'},o.id?P(o.id):null);
+    const lines=String(s).split('\n');lines.forEach((l,i)=>E('tspan',{x,dy:i?13:0},e,l));return e};
+  S.wrap=(s,n)=>{const out=[];let cur='';s.split(' ').forEach(w=>{if((cur+' '+w).trim().length>n){out.push(cur);cur=w}else cur=(cur+' '+w).trim()});out.push(cur);return out.join('\n')};
+  S.L=(id,text,x,y,tx,ty)=>{const g=E('g',{'data-p':id});const right=tx>x;
+    E('line',{x1:x,y1:y,x2:right?tx-3:tx+3,y2:ty-3,class:'ld'},g);E('circle',{cx:x,cy:y,r:2.5,class:'ldd'},g);
+    S.t(tx,ty,S.wrap(text,Math.max(8,Math.floor(((right?w-tx:tx)-6)/5.6))),{a:right?'start':'end'});
+    g.appendChild(svg.lastChild);S.labs.push([id,text]);return g};
+  /* rotulado automático por lados con separación mínima. items: [id,texto,lado(l|r),(x,y)] */
+  S.LB=(items,c)=>{const sides={l:[],r:[]};items.forEach(it=>{const pt=it[3]!=null?[it[3],it[4]]:c[it[0]];if(!pt)return;sides[it[2]||'r'].push({it,pt})});
+    for(const k in sides){const a=sides[k].sort((p,q)=>p.pt[1]-q.pt[1]);if(!a.length)continue;
+      const txOf=o=>k==='l'?(o.it[5]||S.leftX||150):(w-(o.it[5]||S.rightX||120));
+      const nl=o=>S.wrap(o.it[1],Math.max(8,Math.floor(((k==='l'?txOf(o):w-txOf(o))-6)/5.6))).split('\n').length;
+      let ys=a.map(o=>o.pt[1]);for(let i=1;i<a.length;i++){const g=nl(a[i-1])*12+8;ys[i]=Math.max(ys[i],ys[i-1]+g)}
+      const last=a.length-1;if(ys[last]>h-10)ys[last]=h-10;for(let i=last-1;i>=0;i--){const g=nl(a[i])*12+8;ys[i]=Math.min(ys[i],ys[i+1]-g)}
+      a.forEach((o,i)=>S.L(o.it[0],o.it[1],o.pt[0],o.pt[1],txOf(o),Math.max(12,ys[i])+4))}};
+  return S}
+
+
+</script><script>
+/* neumann_svg.js · Dibujo anatómico propio con acabado de manual ilustrado. Sin dependencias. */
+(function (root) {
+  const NS = 'http://www.w3.org/2000/svg';
+  const C = {
+    bone: '#F3E3BF', boneSh: '#C9A970', boneLn: '#5E4A2E', cart: '#BFD9E8',
+    musc: '#B8473B', muscSh: '#7E2A22', muscLn: '#5E1E18', fiber: '#E9A090',
+    tend: '#FBF7EC', tendLn: '#8C7B5B', lig: '#E6ECF1', ligLn: '#5F7180',
+    skin: '#F7E0D0', skinLn: '#C79C84', tense: '#D91A14', lax: '#8EA3B5',
+    focus: '#E89E7A', hl: '#FFD133', move: '#B8A8E6', force: '#2F6DB5', arm: '#1E1E1E',
+    nerve: '#E7C02F', ink: '#262626',
+  };
+  let uid = 0;
+  const el = (tag, attrs, parent) => {
+    const e = document.createElementNS(NS, tag);
+    for (const k in attrs) if (attrs[k] != null) e.setAttribute(k, attrs[k]);
+    if (parent) parent.appendChild(e);
+    return e;
+  };
+  const f = (n) => Math.round(n * 10) / 10;
+
+  function smooth(pts, closed) {
+    const n = pts.length, P = (i) => pts[closed ? (i + n) % n : Math.max(0, Math.min(n - 1, i))];
+    let d = 'M' + f(pts[0][0]) + ',' + f(pts[0][1]);
+    const last = closed ? n : n - 1;
+    for (let i = 0; i < last; i++) {
+      const p0 = P(i - 1), p1 = P(i), p2 = P(i + 1), p3 = P(i + 2);
+      const c1 = [p1[0] + (p2[0] - p0[0]) / 6, p1[1] + (p2[1] - p0[1]) / 6];
+      const c2 = [p2[0] - (p3[0] - p1[0]) / 6, p2[1] - (p3[1] - p1[1]) / 6];
+      d += 'C' + f(c1[0]) + ',' + f(c1[1]) + ' ' + f(c2[0]) + ',' + f(c2[1]) + ' ' + f(p2[0]) + ',' + f(p2[1]);
+    }
+    return d + (closed ? 'Z' : '');
+  }
+
+  /* perfiles: [t a lo largo, semiancho relativo]. Cabeza distal convexa y base proximal cóncava. */
+  const PROFILES = {
+    phalanx: [[0, 1], [0.12, 0.92], [0.3, 0.64], [0.7, 0.6], [0.88, 0.78], [1, 0.8]],
+    distal: [[0, 0.95], [0.15, 0.82], [0.45, 0.52], [0.8, 0.5], [0.95, 0.72], [1, 0.62]],
+    metacarpal: [[0, 0.95], [0.12, 0.9], [0.32, 0.6], [0.72, 0.58], [0.9, 0.9], [1, 0.95]],
+    long: [[0, 1], [0.14, 0.8], [0.35, 0.56], [0.7, 0.58], [0.88, 0.85], [1, 0.95]],
+  };
+
+  function boneOutline(L, w, type) {
+    const prof = PROFILES[type] || PROFILES.long, hw = w / 2;
+    const head = prof[prof.length - 1][1] * hw, base = prof[0][1] * hw;
+    const x0 = -base * 0.35, x1 = L + head * 0.55;
+    const X = (t) => x0 + (x1 - head - x0) * t;
+    const top = prof.map(([t, r]) => [X(t), -r * hw]);
+    const bot = prof.map(([t, r]) => [X(t), r * hw]).reverse();
+    const cap = [];
+    for (let i = 1; i < 8; i++) { const a = -Math.PI / 2 + (i / 8) * Math.PI; cap.push([x1 - head + Math.cos(a) * head, Math.sin(a) * head]); }
+    const notch = [[x0 + base * 0.12, base * 0.5], [x0 + base * 0.2, 0], [x0 + base * 0.12, -base * 0.5]];
+    return { pts: [...top, ...cap, ...bot, ...notch], head, base, x0, x1 };
+  }
+
+  function on(svg) {
+    if (svg.__nm && svg.__nm.defs.isConnected) return svg.__nm;
+    const defs = el('defs', {}, null);
+    svg.insertBefore(defs, svg.firstChild);
+    const id = 'nm' + (++uid);
+    const blur = el('filter', { id: id + '-soft', x: '-20%', y: '-20%', width: '140%', height: '140%' }, defs);
+    el('feGaussianBlur', { stdDeviation: '2.2' }, blur);
+    const N = { svg, defs, id, C, n: 0 };
+    const clip = (d) => { const cid = id + '-c' + (++N.n); const cp = el('clipPath', { id: cid }, defs); el('path', { d }, cp); return 'url(#' + cid + ')'; };
+    const frame = (x1, y1, x2, y2) => { const L = Math.hypot(x2 - x1, y2 - y1), a = Math.atan2(y2 - y1, x2 - x1); return { L, a, tf: 'translate(' + f(x1) + ' ' + f(y1) + ') rotate(' + f(a * 180 / Math.PI) + ')' }; };
+    const shadeSide = (a) => (Math.cos(a) >= 0 ? 1 : -1);
+
+    N.bone = (x1, y1, x2, y2, w, o = {}) => {
+      const fr = frame(x1, y1, x2, y2), ol = boneOutline(fr.L, w, o.type || 'long');
+      const d = smooth(ol.pts, true), s = shadeSide(fr.a), hw = w / 2;
+      const g = el('g', { transform: fr.tf, class: 'nm-bone' + (o.cls ? ' ' + o.cls : ''), 'data-p': o.id }, o.parent || svg);
+      el('path', { d, fill: o.focus ? C.focus : C.bone }, g);
+      const sh = el('g', { 'clip-path': clip(d) }, g);
+      el('path', { d: 'M' + f(ol.x0 - 4) + ',' + f(s * hw * 0.25) + 'L' + f(ol.x1 + 4) + ',' + f(s * hw * 0.25) + 'L' + f(ol.x1 + 4) + ',' + f(s * hw * 1.6) + 'L' + f(ol.x0 - 4) + ',' + f(s * hw * 1.6) + 'Z', fill: C.boneSh, opacity: 0.75, filter: 'url(#' + id + '-soft)' }, sh);
+      el('path', { d: 'M' + f(ol.x0 + hw * 0.6) + ',' + f(-s * hw * 0.38) + 'L' + f(ol.x1 - ol.head * 0.9) + ',' + f(-s * hw * 0.3), stroke: '#fff', 'stroke-width': Math.max(0.8, hw * 0.16), 'stroke-linecap': 'round', opacity: 0.7, filter: 'url(#' + id + '-soft)' }, sh);
+      const hc = ol.x1 - ol.head, arc = [];
+      for (let i = 0; i <= 10; i++) { const a = -1.15 + (i / 10) * 2.3; arc.push([hc + Math.cos(a) * (ol.head - 0.9), Math.sin(a) * (ol.head - 0.9)]); }
+      if (o.type !== 'distal') el('path', { d: smooth(arc, false), fill: 'none', stroke: C.cart, 'stroke-width': Math.max(1.2, w * 0.09), 'stroke-linecap': 'round' }, g);
+      el('path', { d, fill: 'none', stroke: C.boneLn, 'stroke-width': o.lw || 1.1, 'stroke-linejoin': 'round' }, g);
+      return g;
+    };
+
+    N.muscle = (pts, w, o = {}) => {
+      const seg = resample(pts, 40), n = seg.length, ten = o.tendon || [0.12, 0.18];
+      const half = (i) => { const t = i / (n - 1); if (t < ten[0] || t > 1 - ten[1]) return w * 0.07; const u = (t - ten[0]) / (1 - ten[0] - ten[1]); return w * 0.07 + (w / 2) * Math.pow(Math.sin(Math.PI * u), 0.75); };
+      const nrm = (i) => { const q = seg[Math.min(n - 1, i + 1)], r = seg[Math.max(0, i - 1)]; const dx = q[0] - r[0], dy = q[1] - r[1], m = Math.hypot(dx, dy) || 1; return [-dy / m, dx / m]; };
+      const L = [], R = [];
+      seg.forEach((p, i) => { const [nx, ny] = nrm(i), h = half(i); L.push([p[0] + nx * h, p[1] + ny * h]); R.push([p[0] - nx * h, p[1] - ny * h]); });
+      const d = smooth([...L, ...R.slice().reverse()], true);
+      const g = el('g', { class: 'nm-muscle' + (o.cls ? ' ' + o.cls : ''), 'data-p': o.id }, o.parent || svg);
+      el('path', { d, fill: o.focus ? C.focus : C.musc }, g);
+      const inner = el('g', { 'clip-path': clip(d) }, g);
+      el('path', { d: smooth(R, false), fill: 'none', stroke: C.muscSh, 'stroke-width': w * 0.45, opacity: 0.55, filter: 'url(#' + id + '-soft)' }, inner);
+      for (let k = -3; k <= 3; k++) {
+        const line = seg.map((p, i) => { const [nx, ny] = nrm(i); return [p[0] + nx * half(i) * k / 3.6, p[1] + ny * half(i) * k / 3.6]; });
+        el('path', { d: smooth(line, false), fill: 'none', stroke: C.fiber, 'stroke-width': 0.6, opacity: 0.6 }, inner);
+      }
+      const ends = [seg.slice(0, Math.ceil(n * ten[0]) + 2), seg.slice(Math.floor(n * (1 - ten[1])) - 1)];
+      ends.forEach((e) => { if (e.length > 1) el('path', { d: smooth(e, false), fill: 'none', stroke: C.tend, 'stroke-width': w * 0.14, 'stroke-linecap': 'round', opacity: 0.95 }, inner); });
+      el('path', { d, fill: 'none', stroke: C.muscLn, 'stroke-width': 1, 'stroke-linejoin': 'round' }, g);
+      return g;
+    };
+
+    N.tendon = (pts, w = 4, o = {}) => {
+      const d = smooth(pts, false), g = el('g', { class: 'nm-tendon' + (o.cls ? ' ' + o.cls : ''), 'data-p': o.id, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, o.parent || svg);
+      el('path', { d, stroke: o.state === 'tense' ? C.tense : C.tendLn, 'stroke-width': w + 2 }, g);
+      el('path', { d, stroke: o.focus ? C.focus : C.tend, 'stroke-width': w }, g);
+      el('path', { d, stroke: '#fff', 'stroke-width': Math.max(0.6, w * 0.22), opacity: 0.9, transform: 'translate(-0.4 -0.6)' }, g);
+      return g;
+    };
+
+    N.ligament = (a, b, w = 6, o = {}) => {
+      const fr = frame(a[0], a[1], b[0], b[1]), g = el('g', { transform: fr.tf, class: 'nm-lig' + (o.cls ? ' ' + o.cls : ''), 'data-p': o.id }, o.parent || svg);
+      const lax = o.state === 'lax', wav = (x) => (lax ? Math.sin((x / fr.L) * Math.PI * 4) * w * 0.35 : 0), hw = w / 2;
+      const top = [], bot = [];
+      for (let i = 0; i <= 16; i++) { const x = (fr.L * i) / 16; top.push([x, -hw + wav(x)]); bot.push([x, hw + wav(x)]); }
+      const d = smooth([...top, ...bot.slice().reverse()], true);
+      el('path', { d, fill: o.state === 'tense' ? '#F6D2CC' : C.lig }, g);
+      for (const k of [-0.45, 0, 0.45]) el('path', { d: smooth(top.map(([x, y]) => [x, y + hw + k * hw]), false), fill: 'none', stroke: C.ligLn, 'stroke-width': 0.5, opacity: 0.55 }, g);
+      el('path', { d, fill: 'none', stroke: o.state === 'tense' ? C.tense : lax ? C.lax : C.ligLn, 'stroke-width': o.state === 'tense' ? 1.6 : 1 }, g);
+      return g;
+    };
+
+    N.skin = (pts, o = {}) => el('path', { d: smooth(pts, true), fill: C.skin, stroke: C.skinLn, 'stroke-width': 1, opacity: o.opacity || 0.55, class: 'nm-skin', 'data-p': o.id }, o.parent || svg);
+
+    N.axis = (x, y, o = {}) => { const g = el('g', { class: 'nm-axis', 'data-p': o.id }, o.parent || svg); el('circle', { cx: x, cy: y, r: o.r || 4.6, fill: '#fff', stroke: C.ink, 'stroke-width': 1.4 }, g); el('circle', { cx: x, cy: y, r: 1.6, fill: C.ink }, g); return g; };
+
+    N.force = (x1, y1, x2, y2, o = {}) => {
+      const fr = frame(x1, y1, x2, y2), w = o.w || 5, hl = Math.min(fr.L * 0.45, w * 2.8), hw = w * 1.4;
+      const g = el('g', { transform: fr.tf, class: 'nm-force', 'data-p': o.id }, o.parent || svg);
+      el('path', { d: 'M0,' + f(-w / 2) + 'L' + f(fr.L - hl) + ',' + f(-w / 2) + 'L' + f(fr.L - hl) + ',' + f(-hw) + 'L' + f(fr.L) + ',0L' + f(fr.L - hl) + ',' + f(hw) + 'L' + f(fr.L - hl) + ',' + f(w / 2) + 'L0,' + f(w / 2) + 'Z', fill: o.color || C.force, stroke: C.ink, 'stroke-width': 0.9, 'stroke-linejoin': 'round' }, g);
+      return g;
+    };
+
+    N.arm = (axis, a, b, o = {}) => {
+      let dx = b[0] - a[0], dy = b[1] - a[1]; const m = Math.hypot(dx, dy) || 1; dx /= m; dy /= m;
+      const t = (axis[0] - a[0]) * dx + (axis[1] - a[1]) * dy, foot = [a[0] + dx * t, a[1] + dy * t];
+      const g = el('g', { class: 'nm-arm', 'data-p': o.id }, o.parent || svg);
+      el('line', { x1: a[0] - dx * 30, y1: a[1] - dy * 30, x2: b[0] + dx * 30, y2: b[1] + dy * 30, stroke: C.ink, 'stroke-width': 0.8, 'stroke-dasharray': '3 3', opacity: 0.7 }, g);
+      el('line', { x1: axis[0], y1: axis[1], x2: foot[0], y2: foot[1], stroke: C.arm, 'stroke-width': 2.2, 'stroke-linecap': 'round' }, g);
+      const s = 5, px = foot[0] - axis[0], py = foot[1] - axis[1], pm = Math.hypot(px, py) || 1;
+      el('path', { d: 'M' + f(foot[0] - (px / pm) * s + dx * s) + ',' + f(foot[1] - (py / pm) * s + dy * s) + 'L' + f(foot[0] + dx * s) + ',' + f(foot[1] + dy * s) + 'L' + f(foot[0]) + ',' + f(foot[1]), fill: 'none', stroke: C.ink, 'stroke-width': 0.8 }, g);
+      return { g, foot, length: Math.hypot(px, py) };
+    };
+
+    N.motion = (cx, cy, r, a0, a1, o = {}) => {
+      const pts = []; for (let i = 0; i <= 20; i++) { const a = (a0 + (a1 - a0) * (i / 20)) * Math.PI / 180; pts.push([cx + Math.cos(a) * r, cy + Math.sin(a) * r]); }
+      const g = el('g', { class: 'nm-motion', 'data-p': o.id, fill: 'none', 'stroke-linecap': 'round' }, o.parent || svg);
+      el('path', { d: smooth(pts, false), stroke: C.ink, 'stroke-width': (o.w || 6) + 2 }, g);
+      el('path', { d: smooth(pts, false), stroke: o.color || C.move, 'stroke-width': o.w || 6 }, g);
+      const e = pts[20], p = pts[18], a = Math.atan2(e[1] - p[1], e[0] - p[0]), h = (o.w || 6) * 1.9;
+      el('path', { d: 'M' + f(e[0] + Math.cos(a) * h) + ',' + f(e[1] + Math.sin(a) * h) + 'L' + f(e[0] + Math.cos(a + 2.2) * h) + ',' + f(e[1] + Math.sin(a + 2.2) * h) + 'L' + f(e[0] + Math.cos(a - 2.2) * h) + ',' + f(e[1] + Math.sin(a - 2.2) * h) + 'Z', fill: o.color || C.move, stroke: C.ink, 'stroke-width': 1 }, g);
+      return g;
+    };
+
+    N.halo = (node, o = {}) => { const c = node.cloneNode(true); c.setAttribute('class', 'nm-halo'); c.removeAttribute('data-p'); c.querySelectorAll('*').forEach((e) => { e.setAttribute('stroke', C.hl); e.setAttribute('stroke-width', (+(e.getAttribute('stroke-width') || 1)) + (o.w || 7)); e.setAttribute('fill', C.hl); e.setAttribute('opacity', 0.55); e.removeAttribute('filter'); }); node.parentNode.insertBefore(c, node); return c; };
+
+    svg.__nm = N;
+    return N;
+  }
+
+  function resample(pts, n) {
+    const L = [0]; for (let i = 1; i < pts.length; i++) L.push(L[i - 1] + Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]));
+    const out = []; for (let k = 0; k < n; k++) { const s = (L[L.length - 1] * k) / (n - 1); let i = 1; while (i < L.length - 1 && L[i] < s) i++; const t = (s - L[i - 1]) / ((L[i] - L[i - 1]) || 1); out.push([pts[i - 1][0] + (pts[i][0] - pts[i - 1][0]) * t, pts[i - 1][1] + (pts[i][1] - pts[i - 1][1]) * t]); }
+    return out;
+  }
+
+  function guess(id) {
+    const s = String(id || '');
+    if (/^dp/.test(s)) return 'distal';
+    if (/^(pp|mp|ph)/.test(s)) return 'phalanx';
+    if (/^(mc|m\d|mt)/.test(s)) return 'metacarpal';
+    return 'long';
+  }
+
+  /* Sustituye S.bone(x1,y1,x2,y2,w,id,cls) de un motor tipo Ctx. Conserva data-p, fd y clases de resaltado. */
+  function patch(S, o = {}) {
+    const N = on(S.svg);
+    S.nm = N;
+    S.bone = (x1, y1, x2, y2, w, id, cls) => {
+      const extra = (cls || '').replace(/\bbn\b/, '').trim();
+      return N.bone(x1, y1, x2, y2, w * (o.scale || 1.25), { id, type: o.type ? o.type(id, w) : guess(id), cls: extra, focus: /\b(hl2|on|focus)\b/.test(extra) });
+    };
+    return S;
+  }
+
+  root.NeumannSVG = { on, patch, smooth, guess, colors: C };
+})(typeof window !== 'undefined' ? window : globalThis);
+
+</script><script>
+/* anat_core.js · Primitivas de dibujo anatómico propio para la columna cervical.
+   Hueso con volumen por iluminación SVG (relieve y contorno automáticos sobre la unión de formas),
+   carillas articulares azules, superficies de corte con trabéculas, ligamentos en banda y médula. */
+const AN = (function () {
+  const NS = 'http://www.w3.org/2000/svg';
+  const C = {
+    bone: '#F3E6C8', boneBk: '#E4D2AC', boneLn: '#5E4A2E', facet: '#A7C0E4', facetLn: '#46679A',
+    cut: '#EFDCB4', cutLn: '#A88A55', disc: '#D5E3EC', discLn: '#7E95A8', cord: '#F1E4DA', dura: '#A98C78',
+    lig: '#E9EEF2', ligLn: '#5F7180', tense: '#D91A14', lax: '#8EA3B5', focus: '#E89E7A', hl: '#FFD133',
+    art: '#C8402F', nerve: '#E9C440', skin: '#F7E0D0', skinLn: '#C79C84', ink: '#262626', force: '#2F6DB5', move: '#B8A8E6'
+  };
+  const sm = (p, c) => NeumannSVG.smooth(p, c);
+  const el = (t, a, p) => { const e = document.createElementNS(NS, t); for (const k in a) if (a[k] != null) e.setAttribute(k, a[k]); if (p) p.appendChild(e); return e; };
+  let K = 0;
+
+  function vol(defs, id, blur, scale, line, az, el2, lw) {
+    const f = el('filter', { id, x: '-10%', y: '-10%', width: '120%', height: '120%', 'color-interpolation-filters': 'sRGB' }, defs);
+    el('feGaussianBlur', { in: 'SourceAlpha', stdDeviation: blur, result: 'b' }, f);
+    const d = el('feDiffuseLighting', { in: 'b', surfaceScale: scale, diffuseConstant: 1.18, 'lighting-color': '#fff', result: 'd' }, f);
+    el('feDistantLight', { azimuth: az, elevation: el2 }, d);
+    el('feComposite', { in: 'SourceGraphic', in2: 'd', operator: 'arithmetic', k1: 1, k2: 0, k3: 0, k4: 0, result: 'lit' }, f);
+    const s = el('feSpecularLighting', { in: 'b', surfaceScale: scale, specularConstant: 0.3, specularExponent: 24, 'lighting-color': '#fff', result: 's' }, f);
+    el('feDistantLight', { azimuth: az, elevation: el2 }, s);
+    el('feComposite', { in: 's', in2: 'SourceAlpha', operator: 'in', result: 's2' }, f);
+    el('feComposite', { in: 'lit', in2: 's2', operator: 'arithmetic', k1: 0, k2: 1, k3: 1, k4: 0, result: 'o' }, f);
+    el('feComposite', { in: 'o', in2: 'SourceAlpha', operator: 'in', result: 'o2' }, f);
+    if (line) {
+      el('feMorphology', { in: 'SourceAlpha', operator: 'dilate', radius: lw || 0.9, result: 'dl' }, f);
+      el('feComposite', { in: 'dl', in2: 'SourceAlpha', operator: 'out', result: 'ring' }, f);
+      el('feFlood', { 'flood-color': line, result: 'fl' }, f);
+      el('feComposite', { in: 'fl', in2: 'ring', operator: 'in', result: 'ln' }, f);
+      const m = el('feMerge', {}, f); el('feMergeNode', { in: 'o2' }, m); el('feMergeNode', { in: 'ln' }, m);
+    }
+  }
+
+  function init(svg) {
+    if (svg.__an && svg.__an.defs.isConnected) return svg.__an;
+    NeumannSVG.on(svg);
+    const pre = (svg.id || 'an') + '-' + (++K) + '-';
+    const defs = el('defs', {}, null); svg.insertBefore(defs, svg.firstChild);
+    vol(defs, pre + 'v', 4.6, 3.4, C.boneLn, 225, 58, 0.85);
+    vol(defs, pre + 'vs', 2.4, 2.6, C.boneLn, 225, 58, 0.75);
+    vol(defs, pre + 'vf', 2.6, 3, C.facetLn, 45, 52, 0.7);
+    vol(defs, pre + 'vm', 3, 3.5, '#5E1E18', 225, 50, 0.8);
+    const sf = el('filter', { id: pre + 'soft', x: '-30%', y: '-30%', width: '160%', height: '160%' }, defs); el('feGaussianBlur', { stdDeviation: 2.4 }, sf);
+    const sf2 = el('filter', { id: pre + 'soft6', x: '-30%', y: '-30%', width: '160%', height: '160%' }, defs); el('feGaussianBlur', { stdDeviation: 6 }, sf2);
+    /* trabéculas para superficies de corte */
+    const pt = el('pattern', { id: pre + 'tb', width: 14, height: 14, patternUnits: 'userSpaceOnUse' }, defs);
+    el('rect', { width: 14, height: 14, fill: C.cut }, pt);
+    [[3, 3, 2.2, 1.4], [10, 4, 1.6, 2.2], [6, 10, 2.4, 1.6], [12, 12, 1.4, 1.2], [1, 9, 1.2, 1.8]].forEach(([x, y, a, b]) => el('ellipse', { cx: x, cy: y, rx: a, ry: b, fill: 'none', stroke: '#C9A66C', 'stroke-width': 0.7, opacity: 0.8 }, pt));
+    /* disco y médula */
+    const lg = el('linearGradient', { id: pre + 'dg', x1: 0, y1: 0, x2: 1, y2: 0 }, defs);
+    el('stop', { offset: 0, 'stop-color': '#E6EFF5' }, lg); el('stop', { offset: 0.5, 'stop-color': '#CFE0EB' }, lg); el('stop', { offset: 1, 'stop-color': '#B9CEDD' }, lg);
+    const cg = el('linearGradient', { id: pre + 'cg', x1: 0, y1: 0, x2: 1, y2: 0 }, defs);
+    el('stop', { offset: 0, 'stop-color': '#E2CFC2' }, cg); el('stop', { offset: 0.45, 'stop-color': '#F8EEE6' }, cg); el('stop', { offset: 1, 'stop-color': '#D8C1B1' }, cg);
+    const hg = el('radialGradient', { id: pre + 'hole', cx: 0.4, cy: 0.35, r: 0.7 }, defs);
+    el('stop', { offset: 0, 'stop-color': '#4A3C2A' }, hg); el('stop', { offset: 1, 'stop-color': '#8C7656' }, hg);
+    svg.__an = { defs, pre, svg, n: 0 };
+    return svg.__an;
+  }
+
+  function shp(s, a, p) {
+    if (typeof s === 'string') return el('path', Object.assign({ d: s }, a), p);
+    if (s.e) return el('ellipse', Object.assign({ cx: s.e[0], cy: s.e[1], rx: s.e[2], ry: s.e[3], transform: s.e[4] ? `rotate(${s.e[4]} ${s.e[0]} ${s.e[1]})` : null }, a), p);
+    if (s.o) return el('path', Object.assign({ d: sm(s.o, false) }, a), p);
+    return el('path', Object.assign({ d: sm(s, true) }, a), p);
+  }
+  const G = (p, a) => el('g', a || {}, p);
+  const norm = x => (x.e || x.o || typeof x === 'string' || (Array.isArray(x) && typeof x[0][0] === 'number')) ? [x] : x;
+
+  /* hueso: unión de formas con volumen y contorno de silueta. o.holes recorta agujeros con bisel. */
+  function bone(A, p, shapes, o = {}) {
+    const g = el('g', { filter: `url(#${A.pre}${o.small ? 'vs' : 'v'})`, class: 'abone' + (o.cls ? ' ' + o.cls : '') }, p);
+    let inner = g;
+    if (o.holes && o.holes.length) {
+      const mid = A.pre + 'm' + (++A.n);
+      const m = el('mask', { id: mid, maskUnits: 'userSpaceOnUse', x: -3000, y: -3000, width: 7000, height: 7000 }, A.defs);
+      el('rect', { x: -3000, y: -3000, width: 7000, height: 7000, fill: '#fff' }, m);
+      o.holes.forEach(h => shp(h, { fill: '#000' }, m));
+      inner = el('g', { mask: `url(#${mid})` }, g);
+    }
+    norm(shapes).forEach(s => shp(s, { fill: o.fill || (o.back ? C.boneBk : C.bone), class: 'bf' }, inner));
+    return g;
+  }
+  const facet = (A, p, shapes, o = {}) => { const g = el('g', { filter: `url(#${A.pre}vf)`, class: 'afacet' }, p); norm(shapes).forEach(s => shp(s, { fill: o.fill || C.facet }, g)); return g; };
+  /* superficie de corte sagital: trabéculas y cortical */
+  const cut = (A, p, s, o = {}) => { const g = G(p, { class: 'acut' }); shp(s, { fill: `url(#${A.pre}tb)` }, g); shp(s, { fill: 'none', stroke: '#D9BE8A', 'stroke-width': 3.2, 'stroke-linejoin': 'round' }, g); shp(s, { fill: 'none', stroke: C.boneLn, 'stroke-width': 0.9, 'stroke-linejoin': 'round' }, g); return g; };
+  const line = (p, pts, o = {}) => el('path', { d: sm(pts, !!o.closed), fill: 'none', stroke: o.c || C.boneLn, 'stroke-width': o.w || 0.8, opacity: o.op == null ? 0.55 : o.op, 'stroke-linecap': 'round', 'stroke-dasharray': o.dash }, p);
+  const shade = (A, p, pts, w, op) => el('path', { d: sm(pts, false), fill: 'none', stroke: '#6B5536', 'stroke-width': w || 4, opacity: op || 0.35, filter: `url(#${A.pre}soft)`, 'stroke-linecap': 'round' }, p);
+  const hole = (A, p, s) => shp(s, { fill: `url(#${A.pre}hole)` }, p);
+  const disc = (A, p, s) => { const g = G(p, { class: 'adisc' }); shp(s, { fill: `url(#${A.pre}dg)`, stroke: C.discLn, 'stroke-width': 0.8 }, g); return g; };
+  /* banda de ligamento a lo largo de una línea */
+  function band(A, p, pts, w, o = {}) {
+    const g = el('g', { class: 'alig', 'data-p': o.id }, p);
+    const st = o.state, col = st === 'tense' ? C.tense : st === 'lax' ? C.lax : C.ligLn;
+    const d = sm(pts, false);
+    el('path', { d, fill: 'none', stroke: col, 'stroke-width': w + 1.8, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'stroke-dasharray': o.dash }, g);
+    el('path', { d, fill: 'none', stroke: o.fill || (st === 'tense' ? '#F7D6D0' : C.lig), 'stroke-width': w, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'stroke-dasharray': o.dash }, g);
+    if (w > 4) for (const k of [-0.28, 0.28]) el('path', { d, fill: 'none', stroke: col, 'stroke-width': 0.45, opacity: 0.5, transform: `translate(${k * w * 0.6} ${-k * w * 0.4})` }, g);
+    return g;
+  }
+  const cord = (A, p, s) => { const g = G(p, { class: 'acord' }); shp(s, { fill: `url(#${A.pre}cg)`, stroke: C.dura, 'stroke-width': 1 }, g); return g; };
+  /* superposición de resaltado para una parte de un hueso */
+  const ov = (p, id, shapes) => { const g = el('g', { class: 'ov', 'data-p': id }, p); norm(shapes).forEach(s => shp(s, { fill: C.focus, 'fill-opacity': 0.55, stroke: C.hl, 'stroke-width': 3, 'stroke-linejoin': 'round' }, g)); return g; };
+  const skin = (p, pts, o = {}) => el('path', { d: sm(pts, o.open ? false : true), fill: o.open ? 'none' : C.skin, 'fill-opacity': o.op == null ? 0.5 : o.op, stroke: C.skinLn, 'stroke-width': o.w || 1.2, class: 'askin' }, p);
+  const tf = (x, y, r, s) => `translate(${x} ${y})` + (r ? ` rotate(${r})` : '') + (s && s !== 1 ? ` scale(${s})` : '');
+  /* rotación de un punto */
+  const rot = (pt, c, deg) => { const a = deg * Math.PI / 180, dx = pt[0] - c[0], dy = pt[1] - c[1]; return [c[0] + dx * Math.cos(a) - dy * Math.sin(a), c[1] + dx * Math.sin(a) + dy * Math.cos(a)]; };
+  const mirror = pts => pts.map(([x, y]) => [-x, y]).reverse();
+  const symm = half => half.concat(mirror(half.filter(q => q[0] !== 0)));
+  return { C, el, G, init, bone, facet, cut, line, shade, hole, disc, band, cord, ov, skin, tf, rot, mirror, symm, sm, shp, norm };
+})();
+
+</script><script>
+/* anat_shapes.js · Huesos y regiones de la unión craneocervical dibujados a mano (dibujo propio).
+   Cada función dibuja en coordenadas locales y devuelve puntos de anclaje para los rótulos. */
+const SH = (function () {
+  const { C, G, bone, facet, cut, line, shade, hole, disc, band, cord, ov, el, sm, mirror, tf } = AN;
+  const sym = AN.symm; /* medio contorno x>=0 de arriba abajo -> contorno cerrado */
+
+  /* ---------- Corte sagital medio de C0 a C4 (anterior a la izquierda), marco 380 x 440 ---------- */
+  function sagittal(A, p, o = {}) {
+    const top = G(p), c01 = G(top, { transform: o.c01 || null }), low = G(top);
+    const k = {};
+    /* fondo: partes laterales no cortadas */
+    bone(A, low, [[[212, 246], [240, 240], [258, 250], [264, 276], [250, 294], [226, 298], [214, 288]],
+      [[214, 320], [250, 318], [264, 338], [252, 362], [222, 366]], [[214, 386], [250, 384], [264, 404], [252, 428], [222, 432]]], { back: true });
+    bone(A, c01, [[[170, 150], [205, 148], [244, 158], [276, 170], [286, 186], [262, 192], [236, 190], [204, 186], [180, 178]]], { back: true });
+    bone(A, c01, [[[176, 210], [198, 205], [222, 207], [248, 204], [258, 214], [252, 232], [226, 236], [198, 236], [178, 230]],
+      [[248, 212], [290, 210], [292, 222], [250, 226]]], { back: true });
+    facet(A, c01, [[[180, 209], [200, 205], [222, 207], [246, 204], [246, 209], [222, 212], [200, 210]]]);
+    bone(A, c01, [{ e: [214, 192, 26, 11, -4] }], { back: true, small: true });
+    k.cond = [214, 196]; k.lm = [236, 222];
+    /* discos */
+    disc(A, low, [[154, 306], [214, 308], [218, 314], [214, 320], [156, 320], [150, 314]]);
+    disc(A, low, [[154, 376], [214, 376], [218, 381], [214, 386], [156, 386], [150, 381]]);
+    /* médula y bulbo */
+    cord(A, top, [[216, 104], [214, 150], [219, 190], [224, 230], [227, 300], [229, 440], [253, 440], [251, 300], [249, 230], [246, 190], [248, 150], [246, 104], [231, 96]]);
+    /* cortes medios */
+    const clv = [[86, 62], [104, 48], [128, 76], [156, 112], [180, 150], [190, 168], [186, 178], [174, 180], [160, 172], [134, 142], [106, 104], [88, 80]];
+    const squ = [[268, 178], [294, 168], [316, 150], [330, 124], [337, 94], [338, 62], [350, 60], [352, 98], [362, 116], [352, 128], [344, 150], [328, 174], [304, 190], [278, 194]];
+    cut(A, c01, clv); cut(A, c01, squ);
+    const aa = { e: [148, 212, 11, 18] }, pa = [[282, 210], [300, 204], [322, 206], [334, 214], [322, 222], [300, 222], [284, 218]];
+    cut(A, c01, aa); cut(A, c01, pa);
+    facet(A, c01, [[[157, 202], [161, 212], [157, 224], [154, 212]]]);
+    const dens = [[180, 186], [192, 192], [197, 210], [198, 232], [204, 240], [214, 246], [217, 264], [217, 298], [210, 305], [160, 305], [150, 312], [149, 298], [153, 262], [157, 246], [163, 236], [164, 214], [167, 196]];
+    cut(A, low, dens);
+    facet(A, low, [[[164, 200], [168, 202], [168, 228], [164, 230]]]);
+    const sp2 = [[262, 252], [286, 244], [316, 246], [342, 254], [358, 264], [348, 274], [356, 288], [334, 294], [302, 288], [278, 282], [262, 272]];
+    cut(A, low, sp2);
+    const c3 = [[156, 322], [212, 322], [217, 330], [217, 368], [211, 374], [160, 374], [153, 368], [152, 330]];
+    cut(A, low, c3);
+    const sp3 = [[268, 330], [314, 328], [340, 338], [336, 352], [308, 356], [274, 350]];
+    cut(A, low, sp3);
+    cut(A, low, [[156, 388], [212, 388], [217, 396], [217, 440], [152, 440], [152, 396]]);
+    cut(A, low, [[270, 398], [312, 396], [336, 406], [332, 420], [306, 424], [274, 418]]);
+    k.bas = [128, 100]; k.squ = [352, 80]; k.aa = [140, 212]; k.pa = [314, 214]; k.dens = [181, 200]; k.cz = [184, 280]; k.sp = [334, 270]; k.c3 = [184, 350]; k.cord = [236, 330]; k.fm = [226, 178];
+    k.eop = [362, 116]; k.basion = [182, 176]; k.opis = [272, 186];
+    /* resaltados */
+    ov(c01, 'cond', { e: [214, 192, 26, 11, -4] }); ov(c01, 'bas', clv); ov(c01, 'aa', aa); ov(c01, 'pa', pa); ov(low, 'dens', [[180, 186], [192, 192], [197, 210], [198, 236], [163, 236], [164, 214], [167, 196]]); ov(low, 'cz', [[163, 238], [204, 240], [214, 246], [217, 264], [217, 298], [210, 305], [160, 305], [150, 312], [149, 298], [153, 262], [157, 246]]); ov(low, 'sp', sp2);
+    if (o.ligs !== false) ligs(A, p, top, c01, low, o, k);
+    return k;
+  }
+  /* ligamentos del corte sagital. o.lig = estados {id:'tense'|'lax'} */
+  function ligs(A, p, top, c01, low, o, k) {
+    const s = o.lig || {}, L = G(top), Lc = G(c01), torn = o.torn;
+    band(A, low, [[150, 232], [152, 250], [149, 290], [148, 320], [149, 374], [148, 440]], 3.5, { id: 'lla', state: s.lla });
+    band(A, Lc, [[150, 194], [160, 184], [172, 177]], 4, { id: 'mao', state: s.mao });
+    band(A, Lc, [[300, 203], [288, 194], [274, 189]], 4, { id: 'mpo', state: s.mpo });
+    band(A, low, [[298, 224], [290, 236], [282, 246]], 4, { id: 'flav', state: s.flav, fill: '#F3E3A8' });
+    band(A, low, [[278, 284], [274, 304], [272, 328]], 4, { id: 'flav', state: s.flav, fill: '#F3E3A8' });
+    band(A, low, [[274, 352], [274, 374], [274, 398]], 4, { id: 'flav', state: s.flav, fill: '#F3E3A8' });
+    band(A, Lc, [[362, 120], [352, 160], [336, 196], [334, 214]], 3, { id: 'nuc', state: s.nuc });
+    band(A, low, [[336, 214], [356, 250], [356, 284], [340, 344], [334, 414]], 3, { id: 'nuc', state: s.nuc });
+    /* tectoria y longitudinal posterior */
+    band(A, top, o.tectPts || [[128, 94], [150, 128], [186, 168], [207, 194], [212, 226], [220, 252], [221, 300], [221, 372], [221, 440]], 3.5, { id: 'tect', state: s.tect });
+    /* cruciforme: transverso en sección y fascículos longitudinales */
+    const tr = o.trPos || [203, 206];
+    if (!torn) {
+      band(A, top, o.crucSup || [[tr[0], tr[1] - 8], [198, 186], [186, 172]], 3, { id: 'cruc', state: s.cruc });
+      band(A, low, [[tr[0] + 1, tr[1] + 8], [208, 232], [214, 250]], 3, { id: 'cruc', state: s.cruc });
+      const g = el('g', { 'data-p': 'cruc', class: 'alig' }, Lc);
+      el('ellipse', { cx: 203, cy: 206, rx: 6, ry: 10, fill: s.cruc === 'tense' ? '#F7D6D0' : C.lig, stroke: s.cruc === 'tense' ? C.tense : C.ligLn, 'stroke-width': 1.2 }, g);
+      el('ellipse', { cx: 200, cy: 206, rx: 1.6, ry: 7, fill: C.facet }, g);
+    } else {
+      const g = el('g', { 'data-p': 'cruc', class: 'alig' }, Lc);
+      el('path', { d: 'M199,198 l4,-3 l3,4 l3,-3 M199,214 l4,3 l3,-4 l3,3', fill: 'none', stroke: C.tense, 'stroke-width': 1.6 }, g);
+    }
+    band(A, low, [[180, 188], [181, 182], [182, 177]], 3, { id: 'apic', state: s.apic });
+  }
+
+  /* ---------- Vista posterior de la unión craneocervical abierta (alares, cruciforme), marco 240 x 250 ---------- */
+  function coronal(A, p, o = {}) {
+    const g = G(p), s = o.lig || {}, ra = o.occRot || 0, gO = G(g, { transform: `rotate(${ra} 120 98)` });
+    const R = q => AN.rot(q, [120, 98], ra);
+    bone(A, gO, [sym([[0, 58], [22, 56], [44, 64], [66, 74], [92, 74], [112, 64], [120, 44], [114, 22], [92, 10], [50, 4], [0, 2]]).map(([x, y]) => [x + 120, y])]);
+    bone(A, gO, [{ e: [80, 86, 22, 12, 10] }, { e: [160, 86, 22, 12, -10] }], { small: true });
+    bone(A, g, [[[56, 102], [100, 100], [104, 120], [98, 140], [60, 142], [52, 124]], [[20, 112], [56, 108], [58, 126], [22, 128]],
+      [[140, 100], [184, 102], [188, 124], [180, 142], [142, 140], [136, 120]], [[184, 108], [220, 112], [218, 128], [182, 126]]]);
+    hole(A, g, { e: [36, 119, 6, 5] }); hole(A, g, { e: [204, 119, 6, 5] });
+    bone(A, g, [[[110, 70], [120, 62], [130, 70], [134, 100], [132, 150], [108, 150], [106, 100]],
+      [[72, 150], [108, 146], [132, 146], [168, 150], [170, 166], [156, 172], [158, 230], [82, 230], [84, 172], [70, 166]]]);
+    facet(A, g, [[[62, 143], [100, 141], [104, 148], [66, 152]], [[140, 141], [178, 143], [174, 152], [136, 148]]]);
+    const k = { occ: [120, 40], cond: [80, 86], lm: [60, 124], dens: [120, 100], c2: [120, 200], tp: [30, 120] };
+    band(A, g, [[112, 80], R([100, 84]), R([90, 88])], 6, { id: 'alar', state: s.alar && s.alar.l });
+    band(A, g, [[128, 80], R([140, 84]), R([150, 88])], 6, { id: 'alar', state: s.alar && s.alar.r });
+    if (!o.noApic) band(A, g, [[120, 66], R([120, 54])], 3, { id: 'apic', state: s.apic });
+    if (!o.torn && !o.noCruc) {
+      band(A, g, [[120, 116], [120, 92], [120, 66]], 4, { id: 'cruc', state: s.cruc });
+      band(A, g, [[120, 132], [120, 170]], 4, { id: 'cruc', state: s.cruc });
+      band(A, g, [[98, 122], [110, 125], [130, 125], [142, 122]], 8, { id: 'cruc', state: s.cruc });
+    }
+    k.R = R; k.alar = [96, 85]; k.tr = [136, 124]; k.apic = [120, 58];
+    return k;
+  }
+
+  /* ---------- Atlas, vista superior (anterior arriba), centro en el agujero vertebral ---------- */
+  const ATL = {
+    out: sym([[0, -117], [12, -114], [26, -106], [42, -94], [60, -84], [78, -80], [96, -72], [112, -62], [132, -58], [150, -50], [159, -36], [157, -19], [147, -9], [128, -5], [113, 3], [105, 18], [97, 36], [85, 58], [69, 80], [49, 98], [27, 110], [10, 115], [0, 121]]),
+    inn: sym([[0, -83], [18, -81], [32, -75], [44, -65], [49, -49], [44, -32], [48, -16], [54, 2], [52, 24], [44, 48], [30, 68], [14, 80], [0, 84]]),
+    tf: { e: [136, -30, 10, 11] },
+    fac: [[60, -64], [76, -72], [92, -64], [100, -44], [98, -24], [100, -4], [94, 10], [80, 14], [68, 6], [64, -10], [68, -26], [62, -40], [58, -54]],
+    facI: [[64, -60], [82, -66], [98, -52], [102, -24], [100, 4], [92, 20], [76, 20], [66, 4], [62, -22], [60, -44]]
+  };
+  function atlasSup(A, p, o = {}) {
+    const g = G(p);
+    bone(A, g, [ATL.out], { holes: [ATL.inn, ATL.tf, { e: [-136, -30, 10, 11] }] });
+    hole(A, g, { e: [136, -28, 7, 8] }); hole(A, g, { e: [-136, -28, 7, 8] });
+    shade(A, g, [[98, 34], [88, 54], [74, 70]], 9, 0.28); shade(A, g, [[-98, 34], [-88, 54], [-74, 70]], 9, 0.28);
+    facet(A, g, [ATL.fac, mirror(ATL.fac)]);
+    facet(A, g, [{ e: [0, -82, 15, 4.5] }]);
+    line(g, [[56, -20], [62, -36]], { op: 0.4 }); line(g, [[-56, -20], [-62, -36]], { op: 0.4 });
+    const k = { aa: [0, -98], at: [0, -112], fov: [0, -82], fac: [80, -24], facL: [-80, -24], lm: [100, 0], tp: [152, -30], tpL: [-152, -30], tf: [133, -26], pa: [70, 82], pt: [0, 122], sulc: [-90, 50], fv: [0, 30], tub: [56, -30] };
+    ov(g, 'aa', [[0, -112], [30, -102], [46, -90], [40, -74], [20, -78], [0, -80], [-20, -78], [-40, -74], [-46, -90], [-30, -102]]);
+    ov(g, 'lm', [[60, -60], [92, -64], [104, -40], [104, 20], [80, 30], [56, 20], [58, -16]]);
+    ov(g, 'pa', [[98, 38], [90, 56], [76, 76], [58, 94], [36, 108], [14, 116], [0, 124], [0, 86], [14, 82], [32, 70], [46, 52], [54, 28]]);
+    ov(g, 'tp', [[104, -60], [140, -52], [156, -40], [160, -22], [152, -6], [134, 2], [110, 2]]);
+    return k;
+  }
+  /* atlas visto por debajo: carillas inferiores planas */
+  function atlasInf(A, p) {
+    const g = G(p);
+    bone(A, g, [ATL.out], { holes: [ATL.inn, ATL.tf, { e: [-136, -30, 10, 11] }] });
+    hole(A, g, { e: [136, -28, 7, 8] }); hole(A, g, { e: [-136, -28, 7, 8] });
+    facet(A, g, [ATL.facI, mirror(ATL.facI)]);
+    return { fac: [84, -20], tp: [152, -30], pa: [70, 82], aa: [0, -98] };
+  }
+
+  return { sagittal, coronal, atlasSup, atlasInf, ATL, sym };
+})();
+
+</script><script>
+/* anat_shapes2.js · Axis, occipital, vértebra cervical típica en tres vistas, cráneo lateral y columna articulada. Dibujo propio. */
+(function () {
+  const { C, G, bone, facet, cut, line, shade, hole, disc, band, ov, el, sm, mirror, symm, tf, rot } = AN;
+
+  /* ---------- Axis lateral (anterior a la izquierda), origen en el centro del cuerpo ---------- */
+  function axisLat(A, p, o = {}) {
+    const g = G(p);
+    const body = [[-22, -20], [20, -22], [23, 0], [23, 22], [15, 28], [-12, 29], [-27, 35], [-27, 22], [-24, 0]];
+    const dens = [[-19, -18], [-17, -50], [-13, -66], [-4, -73], [5, -69], [9, -56], [9, -18]];
+    const sap = [[-14, -22], [22, -30], [38, -28], [40, -18], [30, -8], [4, -8], [-14, -12]];
+    const iap = [[20, -12], [40, -14], [52, -2], [58, 14], [58, 30], [52, 38], [38, 26], [24, 14]];
+    const sp = [[34, -16], [64, -18], [92, -12], [114, -2], [124, 10], [114, 15], [123, 25], [110, 33], [86, 28], [62, 26], [44, 26], [36, 10]];
+    bone(A, g, [sp]);
+    bone(A, g, [body, dens, iap, sap]);
+    bone(A, g, [{ e: [10, 4, 11, 7, -10] }], { small: true });
+    facet(A, g, [[[-14, -23], [22, -31], [38, -29], [33, -25], [-8, -20]]]);
+    facet(A, g, [[[-19, -60], [-15, -66], [-13, -50], [-14, -36], [-18, -38]], [[38, 26], [52, 38], [56, 34], [40, 23]]]);
+    facet(A, g, [[[7, -52], [10, -50], [10, -38], [7, -36]]]);
+    line(g, [[-24, -14], [-10, -12]], { op: 0.35 }); line(g, [[23, -6], [40, 0]], { op: 0.3 });
+    ov(g, 'dens', dens); ov(g, 'cz', body); ov(g, 'sap', sap); ov(g, 'iap', iap); ov(g, 'sp', sp);
+    return { dens: [-4, -68], fant: [-17, -50], fpost: [9, -44], cz: [-24, 10], sap: [30, -28], iap: [54, 34], sp: [118, 4], tp: [14, 4] };
+  }
+
+  /* ---------- Axis anterior, origen en el centro del cuerpo ---------- */
+  function axisAnt(A, p) {
+    const g = G(p);
+    const body = [[-27, -10], [27, -10], [30, 18], [25, 42], [0, 52], [-25, 42], [-30, 18]];
+    const dens = [[-14, -6], [-12, -36], [-16, -60], [-12, -80], [0, -88], [12, -80], [16, -60], [12, -36], [14, -6]];
+    const sh = [[12, -12], [40, -22], [70, -18], [84, -6], [80, 8], [52, 10], [22, 8]];
+    const tp = [[64, 2], [88, 8], [96, 18], [86, 26], [70, 20]];
+    const iap = [[30, 24], [54, 26], [60, 42], [48, 50], [32, 42]];
+    bone(A, g, [iap, mirror(iap)], { back: true });
+    bone(A, g, [body, dens, sh, mirror(sh), tp, mirror(tp)]);
+    hole(A, g, { e: [80, 15, 5, 4] }); hole(A, g, { e: [-80, 15, 5, 4] });
+    facet(A, g, [{ e: [0, -60, 10, 16] }]);
+    const sf = [[18, -12], [40, -21], [68, -17], [82, -7], [62, -4], [30, -4]];
+    facet(A, g, [sf, mirror(sf)]);
+    line(g, [[-26, 0], [26, 0]], { op: 0.25 });
+    ov(g, 'dens', dens); ov(g, 'cz', body); ov(g, 'sap', [sh, mirror(sh)]); ov(g, 'tp', [tp, mirror(tp)]);
+    return { apex: [0, -88], dens: [-14, -44], fant: [0, -62], sap: [60, -16], sapL: [-60, -16], tp: [92, 16], cz: [0, 30], iap: [-48, 46] };
+  }
+
+  /* ---------- Base del cráneo, vista inferior (anterior arriba), origen en el centro del foramen magno ---------- */
+  function occInf(A, p) {
+    const g = G(p);
+    const out = symm([[0, -126], [13, -125], [20, -100], [26, -72], [40, -58], [58, -50], [74, -48], [96, -36], [126, -16], [148, 16], [158, 56], [150, 98], [124, 134], [86, 158], [44, 170], [0, 174]]);
+    const fm = symm([[0, -48], [16, -47], [28, -38], [34, -16], [34, 12], [28, 36], [16, 50], [0, 54]]);
+    bone(A, g, [out], { holes: [fm] });
+    shade(A, g, [[-60, -40], [-90, -26], [-120, -6]], 10, 0.22); shade(A, g, [[60, -40], [90, -26], [120, -6]], 10, 0.22);
+    const cd = [{ e: [-31, -20, 13, 30, 24] }, { e: [31, -20, 13, 30, -24] }];
+    bone(A, g, cd, { small: true });
+    facet(A, g, [{ e: [-31, -20, 9, 25, 24] }, { e: [31, -20, 9, 25, -24] }]);
+    hole(A, g, { e: [-50, -34, 5, 4] }); hole(A, g, { e: [50, -34, 5, 4] });
+    line(g, [[-6, -120], [-10, -80], [-14, -52]], { op: 0.3 }); line(g, [[6, -120], [10, -80], [14, -52]], { op: 0.3 });
+    line(g, [[-128, 84], [-80, 96], [-34, 102], [-6, 108]], { op: 0.6, w: 1.1 }); line(g, [[128, 84], [80, 96], [34, 102], [6, 108]], { op: 0.6, w: 1.1 });
+    line(g, [[-136, 118], [-90, 136], [-44, 146], [-8, 154]], { op: 0.6, w: 1.1 }); line(g, [[136, 118], [90, 136], [44, 146], [8, 154]], { op: 0.6, w: 1.1 });
+    line(g, [[0, 56], [0, 152]], { op: 0.5, w: 1.3 });
+    bone(A, g, [{ e: [0, 160, 10, 8] }], { small: true });
+    ov(g, 'cond', cd); ov(g, 'bas', [[[0, -126], [13, -125], [20, -100], [26, -72], [22, -54], [0, -50], [-22, -54], [-26, -72], [-20, -100], [-13, -125]]]);
+    ov(g, 'epo', { e: [0, 160, 10, 8] }); ov(g, 'nuc', [{ o: [[34, 102], [80, 96], [128, 84]] }, { o: [[44, 146], [90, 136], [136, 118]] }]); ov(g, 'sq', [[[40, 66], [120, 50], [150, 90], [110, 140], [40, 160]]]);
+    return { fm: [0, 0], cond: [-31, -20], condR: [31, -20], bas: [0, -96], epo: [0, 160], nuc: [84, 96], nucS: [96, 138], sq: [110, 60], hyp: [-50, -34] };
+  }
+
+  /* ---------- Vértebra cervical típica (C4), vista superior, anterior arriba ---------- */
+  const VS = {
+    out: symm([[0, -97], [24, -97], [38, -93], [45, -85], [52, -80], [66, -84], [82, -82], [93, -75], [96, -65], [89, -59], [83, -60], [90, -52], [91, -44], [83, -39], [72, -41], [72, -32], [75, -20], [70, -6], [58, 4], [46, 21], [30, 38], [17, 51], [15, 62], [21, 75], [18, 83], [9, 82], [3, 73], [0, 70]]),
+    can: symm([[0, -50], [22, -50], [34, -44], [40, -30], [38, -12], [30, 8], [16, 26], [0, 36]]),
+    tf: { e: [64, -65, 8, 7] }
+  };
+  function vertSup(A, p, o = {}) {
+    const g = G(p);
+    bone(A, g, [VS.out], { holes: [VS.can, VS.tf, { e: [-64, -65, 8, 7] }] });
+    hole(A, g, { e: [64, -64, 5.5, 5] }); hole(A, g, { e: [-64, -64, 5.5, 5] });
+    /* placa terminal cóncava y apófisis unciformes */
+    el('ellipse', { cx: 0, cy: -74, rx: 30, ry: 16, fill: '#D9C49C', opacity: 0.45, filter: `url(#${A.pre}soft)` }, g);
+    line(g, [[-38, -55], [0, -52], [38, -55]], { op: 0.45 });
+    const un = [[36, -88], [44, -84], [47, -70], [43, -58], [37, -63], [38, -76]];
+    bone(A, g, [un, mirror(un)], { small: true });
+    const sf = [[48, -36], [64, -38], [71, -28], [69, -14], [59, -8], [48, -14], [44, -26]];
+    facet(A, g, [sf, mirror(sf)]);
+    line(g, [[40, -58], [46, -44]], { op: 0.4 }); line(g, [[-40, -58], [-46, -44]], { op: 0.4 });
+    shade(A, g, [[84, -60], [90, -55]], 5, 0.5); shade(A, g, [[-84, -60], [-90, -55]], 5, 0.5);
+    ov(g, 'cz', [[[0, -97], [24, -97], [38, -93], [45, -85], [44, -60], [36, -52], [0, -50], [-36, -52], [-44, -60], [-45, -85], [-38, -93], [-24, -97]]]);
+    ov(g, 'unc', [un, mirror(un)]); ov(g, 'ped', [[[34, -50], [46, -52], [48, -40], [40, -32]]]);
+    ov(g, 'tp', [[[52, -80], [66, -84], [82, -82], [93, -75], [96, -65], [89, -59], [83, -60], [90, -52], [91, -44], [83, -39], [72, -41], [56, -46], [48, -60]]]);
+    ov(g, 'lam', [[[58, 4], [46, 21], [30, 38], [17, 51], [8, 50], [16, 26], [30, 8], [40, -6]]]); ov(g, 'sp', [[[17, 51], [15, 62], [21, 75], [18, 83], [9, 82], [3, 73], [0, 70], [-3, 73], [-9, 82], [-18, 83], [-21, 75], [-15, 62], [-17, 51], [0, 48]]]);
+    ov(g, 'sf', [sf]); ov(g, 'can', VS.can);
+    return { cz: [0, -80], unc: [44, -76], ped: [42, -44], tp: [94, -64], tant: [86, -80], tpost: [89, -46], tf: [64, -65], sf: [64, -24], lam: [36, 24], sp: [18, 80], can: [0, 0] };
+  }
+
+  /* ---------- Vértebra típica en vista anterior, origen en el centro del cuerpo ---------- */
+  const VA = symm([[0, -15], [22, -16], [29, -20], [33, -25], [37, -19], [38, -8], [47, -10], [60, -14], [71, -11], [74, -3], [66, 2], [55, 1], [44, 5], [34, 11], [31, 16], [20, 18], [0, 21]]);
+  function vertAnt(A, p, o = {}) {
+    const g = G(p);
+    bone(A, g, [VA]);
+    line(g, [[-30, 10], [-20, 2], [0, 0], [20, 2], [30, 10]], { op: 0.18 });
+    return { cz: [0, 4], unc: [33, -22], tp: [68, -6], tant: [70, -9] };
+  }
+
+  /* ---------- Vértebras en vista lateral (anterior a la izquierda), origen en el centro del cuerpo ---------- */
+  function spinous(L) {
+    if (L === 7) return [[48, -6], [70, -2], [96, 8], [118, 18], [128, 24], [126, 34], [114, 34], [92, 26], [70, 20], [52, 14]];
+    if (L === 6) return [[48, -6], [68, -2], [90, 6], [106, 12], [110, 20], [102, 24], [84, 22], [66, 18], [52, 14]];
+    if (L >= 8) return [[48, -6], [70, 2], [92, 16], [110, 32], [116, 44], [106, 46], [88, 34], [66, 22], [52, 14]];
+    return [[48, -6], [66, -2], [84, 4], [96, 8], [99, 13], [92, 15], [99, 21], [90, 23], [72, 18], [52, 14]];
+  }
+  function vertLat(A, p, L, o = {}) {
+    const g = G(p), big = L >= 7 ? 1.08 : 1;
+    const body = [[-22, -15], [18, -16], [22, -12], [22, 13], [16, 16], [-15, 16], [-25, 20], [-25, 12], [-23, -10]].map(([x, y]) => [x * big, y]);
+    const ped = [[16, -10], [32, -12], [34, 4], [18, 6]];
+    const pil = [[27, -26], [33, -28], [52, -8], [55, -3], [55, 24], [50, 28], [30, 8], [25, 2], [25, -20]];
+    const sp = spinous(L);
+    bone(A, g, [sp, pil, ped], { cls: 'post' });
+    bone(A, g, [body]);
+    const tp = L >= 8 ? [[6, -6], [20, -9], [34, -6], [36, 4], [22, 6], [8, 4]] : [[2, -4], [10, -10], [18, -6], [22, -8], [30, -7], [33, 3], [25, 8], [16, 4], [8, 8], [0, 4]];
+    bone(A, g, [tp], { small: true });
+    facet(A, g, [[[28, -26], [33, -28], [53, -7], [52, -5], [30, -24]]]);
+    return { cz: [-6, 0], pil: [44, 4], sp: [sp[4][0], sp[4][1]], tp: [16, -2], sf: [42, -16], if: [44, 18], ant: [-25, 0], post: [22, 0], top: [0, -16], bot: [0, 16] };
+  }
+  /* atlas lateral, origen en el centro de la masa lateral */
+  function atlasLat(A, p, o = {}) {
+    const g = G(p);
+    const aa = { e: [-31, 2, 8, 11] };
+    const lm = [[-26, -4], [-14, -10], [-4, -6], [8, -6], [18, -12], [22, 0], [18, 10], [-12, 10], [-26, 8]];
+    const pa = [[16, -4], [44, -2], [60, 0], [67, 6], [59, 11], [40, 8], [16, 6]];
+    bone(A, g, [aa, lm, pa]);
+    bone(A, g, [{ e: [2, 0, 13, 8] }], { small: true });
+    facet(A, g, [[[-14, -10], [-4, -6], [8, -6], [18, -12], [16, -8], [4, -3], [-6, -3], [-13, -7]]]);
+    return { aa: [-36, 2], lm: [-6, 6], pa: [52, 6], tp: [6, 0], top: [2, -8], bot: [2, 10], pt: [66, 6] };
+  }
+  /* axis lateral reducido para la columna, origen en el centro del cuerpo */
+  function axisLatC(A, p) { return axisLat(A, p); }
+
+  /* ---------- Cráneo lateral (anterior a la izquierda), origen en el cóndilo occipital; unidades = mm x s ---------- */
+  function skullLat(A, p, o = {}) {
+    const s = o.s || 1, g = G(p, { transform: `scale(${s})` });
+    const cr = [[-102, -55], [-101, -80], [-88, -110], [-58, -132], [-16, -141], [26, -131], [56, -111], [72, -82], [72, -56], [62, -36], [50, -18], [38, -6], [26, 0], [18, 8], [12, 6], [8, -4], [-6, -6], [-24, -6], [-50, -2], [-60, 14], [-74, 24], [-90, 28], [-96, 22], [-98, 8], [-106, -10], [-111, -22], [-106, -38]];
+    const md = [[-10, -8], [-4, -8], [-2, 8], [-4, 34], [-12, 46], [-40, 56], [-72, 64], [-90, 62], [-96, 50], [-94, 32], [-74, 28], [-50, 24], [-26, 20], [-18, 8], [-20, -6], [-26, -14], [-22, -18], [-16, -6]];
+    bone(A, g, [cr], { holes: [{ e: [-80, -34, 15, 14] }, [[-106, -12], [-100, -20], [-94, -10], [-98, 4], [-104, 2]], { e: [6, -16, 4, 4] }] });
+    hole(A, g, { e: [-80, -33, 13, 12] }); hole(A, g, [[-105, -12], [-100, -19], [-95, -10], [-98, 3], [-103, 1]]); hole(A, g, { e: [6, -16, 3, 3] });
+    if (!o.noMand) bone(A, g, [md], { small: true });
+    line(g, [[-64, -8], [-40, -14], [-6, -12]], { op: 0.5, w: 1.1 });
+    if (!o.noMand) { line(g, [[-92, 29], [-74, 27], [-52, 22]], { op: 0.55, w: 1 }); for (let i = 0; i < 6; i++) line(g, [[-90 + i * 7, 22], [-90 + i * 7, 33]], { op: 0.3 }); }
+    line(g, [[-60, -126], [-30, -104], [0, -96]], { op: 0.18 }); line(g, [[20, -128], [30, -90], [40, -60]], { op: 0.18 });
+    line(g, [[60, -36], [44, -30], [24, -26]], { op: 0.45 });
+    bone(A, g, [{ e: [3, 1, 8, 4] }], { small: true });
+    facet(A, g, [{ o: [[-5, 2], [3, 5], [11, 2]] }]);
+    return { cond: [3 * s, 3 * s], mast: [16 * s, 6 * s], eop: [62 * s, -36 * s], nuc: [50 * s, -28 * s], bas: [-6 * s, -2 * s], eam: [6 * s, -16 * s], chin: [-90 * s, 62 * s], occ: [70 * s, -60 * s] };
+  }
+
+  /* ---------- Columna cervical lateral articulada con cráneo ----------
+     ang: ángulos intersegmentarios en grados (extensión positiva) para C0-1, C1-2, C2-3 ... C7-T1.
+     Devuelve posiciones globales para músculos y rótulos. */
+  const LEV = ['C0', 'C1', 'C2', 'C3', 'C4', 'C5', 'C6', 'C7', 'T1', 'T2', 'T3'];
+  const HGT = { T3: 40, T2: 40, T1: 38, C7: 36, C6: 34, C5: 34, C4: 34, C3: 49, C2: 36 };
+  function column(A, p, o = {}) {
+    const ang = o.ang || {}, base = o.base || [0, 0], baseA = o.baseA == null ? -24 : o.baseA, s = o.s || 1;
+    const root = G(p, { transform: `translate(${base[0]} ${base[1]}) scale(${s})` });
+    const pos = {}; let cur = [0, 0], a = baseA;
+    const order = ['T3', 'T2', 'T1', 'C7', 'C6', 'C5', 'C4', 'C3', 'C2'];
+    const back = G(root), mid = G(root), front = G(root);
+    const out = { lv: {}, s, base };
+    const glob = (lv, q) => { const P = pos[lv]; const r = rot(q, [0, 0], P.a); return [base[0] + (P.x + r[0]) * s, base[1] + (P.y + r[1]) * s]; };
+    out.g = glob;
+    for (let i = 0; i < order.length; i++) {
+      const lv = order[i];
+      pos[lv] = { x: cur[0], y: cur[1], a };
+      const up = HGT[lv];
+      const nx = cur[0] + Math.sin(a * Math.PI / 180) * up, ny = cur[1] - Math.cos(a * Math.PI / 180) * up;
+      const key = (lv === 'C2' ? 'C1-C2' : order[i + 1] + '-' + lv);
+      cur = [nx, ny]; a = a + (ang[order[i + 1] ? order[i + 1] + '-' + lv : 'x'] || 0);
+    }
+    /* C1 encima de C2 y C0 encima de C1 */
+    const P2 = pos.C2, a1 = P2.a + (ang['C1-C2'] || 0);
+    const c1 = rot([0, -35], [0, 0], P2.a); pos.C1 = { x: P2.x + c1[0], y: P2.y + c1[1], a: a1 };
+    const a0 = a1 + (ang['C0-C1'] || 0); const c0 = rot([0, -16], [0, 0], a1); pos.C0 = { x: pos.C1.x + c0[0], y: pos.C1.y + c0[1], a: a0 };
+    out.pos = pos;
+    /* discos */
+    order.forEach((lv, i) => {
+      if (lv === 'C2') return; const P = pos[lv], Q = pos[order[i + 1]];
+      const top = rot([0, -16], [0, 0], P.a), bot = rot([0, 17], [0, 0], Q.a);
+      const a1 = [P.x + rot([-24, -16], [0, 0], P.a)[0], P.y + rot([-24, -16], [0, 0], P.a)[1]], a2 = [P.x + rot([22, -16], [0, 0], P.a)[0], P.y + rot([22, -16], [0, 0], P.a)[1]];
+      const b2 = [Q.x + rot([22, 16], [0, 0], Q.a)[0], Q.y + rot([22, 16], [0, 0], Q.a)[1]], b1 = [Q.x + rot([-24, 17], [0, 0], Q.a)[0], Q.y + rot([-24, 17], [0, 0], Q.a)[1]];
+      disc(A, mid, [a1, a2, b2, b1]);
+    });
+    order.forEach(lv => {
+      const P = pos[lv], gg = G(lv === 'C2' ? front : mid, { transform: `translate(${P.x} ${P.y}) rotate(${P.a})`, 'data-p': o.tag ? 'v' + lv : null });
+      out.lv[lv] = lv === 'C2' ? axisLat(A, gg) : vertLat(A, gg, lv[0] === 'T' ? 7 + +lv[1] : +lv[1]);
+    });
+    const g1 = G(front, { transform: `translate(${pos.C1.x} ${pos.C1.y}) rotate(${pos.C1.a})` });
+    out.lv.C1 = atlasLat(A, g1);
+    if (o.skull !== false) {
+      const g0 = G(back, { transform: `translate(${pos.C0.x} ${pos.C0.y}) rotate(${pos.C0.a})`, class: 'skull' });
+      out.lv.C0 = skullLat(A, g0, Object.assign({ s: 2.6 }, o.skullOpt || {}));
+    }
+    return out;
+  }
+
+  /* tórax superior en perfil a partir de la columna: 1.ª y 2.ª costilla, manubrio, clavícula y ángulo superior de la escápula */
+  function thorax(A, p, o) {
+    const g = G(p), T = (lv, q) => o.g(lv, q);
+    const r1 = [T('T1', [36, 0]), T('T1', [10, 26]), T('T1', [-60, 44]), T('T1', [-130, 50]), T('T2', [-178, 48])];
+    const r2 = [T('T2', [36, 0]), T('T2', [10, 30]), T('T2', [-70, 52]), T('T2', [-140, 64]), T('T3', [-186, 66])];
+    [r2, r1].forEach(r => { el('path', { d: sm(r, false), fill: 'none', stroke: C.boneLn, 'stroke-width': 9.5 * o.s, 'stroke-linecap': 'round' }, g); el('path', { d: sm(r, false), fill: 'none', stroke: C.bone, 'stroke-width': 7.6 * o.s, 'stroke-linecap': 'round' }, g); });
+    const man = [T('T2', [-196, 24]), T('T2', [-172, 18]), T('T2', [-168, 60]), T('T3', [-178, 90]), T('T3', [-198, 92]), T('T2', [-200, 60])];
+    bone(A, g, [man], { small: true });
+    const sc = [T('T2', [60, -14]), T('T2', [92, -8]), T('T3', [110, 60]), T('T3', [100, 140]), T('T3', [60, 140]), T('T3', [46, 60])];
+    bone(A, g, [sc], { back: true });
+    const cl = [T('T1', [-190, -16]), T('T1', [-120, -34]), T('T1', [-40, -52]), T('T1', [30, -60]), T('T1', [40, -46]), T('T1', [-40, -38]), T('T1', [-120, -18]), T('T1', [-186, 2])];
+    bone(A, g, [cl], { small: true });
+    return { rib1: T('T1', [-62, 42]), rib1p: T('T1', [-44, 38]), rib2: T('T2', [-40, 46]), man: T('T2', [-186, 30]), clav: T('T1', [-150, -20]), clavL: T('T1', [20, -50]), scap: T('T2', [72, -10]) };
+  }
+
+  /* ---------- Vista posterior de una vértebra cervical (lámina, apófisis espinosa, pilares y transversas) ---------- */
+  function vertPost(A, p, L, o = {}) {
+    const g = G(p), sx = o.sx || 0;
+    const lam = symm([[0, -10], [14, -12], [24, -16], [34, -18], [42, -12], [54, -10], [60, -4], [52, 3], [42, 3], [38, 12], [26, 14], [14, 10], [0, 12]]);
+    bone(A, g, [lam]);
+    const tip = L === 7 ? 34 : 26, bif = L >= 3 && L <= 5;
+    const sp = bif ? [[-8, 8], [8, 8], [9 + sx, tip - 4], [5 + sx, tip + 2], [sx, tip - 3], [-5 + sx, tip + 2], [-9 + sx, tip - 4]] : [[-8, 8], [8, 8], [8 + sx, tip], [sx, tip + 6], [-8 + sx, tip]];
+    bone(A, g, [sp], { small: true });
+    line(g, [[22, -14], [40, -14]], { op: 0.35 }); line(g, [[-22, -14], [-40, -14]], { op: 0.35 });
+    return { sp: [sx, tip + 2], pil: [32, -2], tp: [58, -6] };
+  }
+
+  Object.assign(SH, { thorax, axisLat, axisAnt, occInf, vertSup, vertAnt, vertLat, atlasLat, skullLat, column, vertPost, VS, VA, LEV });
+})();
+
+</script>
+<script>
+/* Aplicación: figuras estáticas con rótulos, laboratorios interactivos, progreso, test, glosario y tarjetas */
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const KEY='biomec-cervical-v1';
+let st={done:{},quiz:{}};
+try{const r=localStorage.getItem(KEY); if(r){const o=JSON.parse(r); st={done:o.done||{},quiz:o.quiz||{}}}}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}};
+const fx=n=>String(n).replace('.',',');
+
+/* ---------- figuras estáticas con rótulos ---------- */
+let figN=0;
+function renderFig(fe){const id=fe.dataset.fig, sp=FIGS[id]; if(!sp){fe.innerHTML='<p class="pend">[Falta el esquema '+id+']</p>';return}
+  if(fe.dataset.done)return; fe.dataset.done='1';
+  const svg=fe.querySelector('svg'); svg.classList.toggle('xr',!!sp.xr); svg.setAttribute('aria-label',sp.t);
+  const S=Ctx(svg,sp.w,sp.h); try{sp.d(S)}catch(e){console.error('Esquema '+id,e)}
+  const cap=fe.querySelector('figcaption'); const ids=[],seen={}; S.labs.forEach(l=>{if(!seen[l[0]]){seen[l[0]]=1;ids.push(l)}});
+  cap.innerHTML='<b>'+fe.dataset.n+'. '+sp.t+'.</b> <span class="cp"></span><span class="tagp">Esquema propio</span>'; cap.querySelector('.cp').textContent=sp.c;
+  if(ids.length>1){const ch=document.createElement('div');ch.className='chips';ch.setAttribute('aria-label','Resaltar estructura');
+    ids.forEach(l=>{const b=document.createElement('button');b.type='button';b.className='chip';b.textContent=l[1];b.setAttribute('aria-pressed','false');
+      b.addEventListener('click',()=>{const on=b.getAttribute('aria-pressed')!=='true';ch.querySelectorAll('.chip').forEach(x=>x.setAttribute('aria-pressed','false'));b.setAttribute('aria-pressed',on);
+        svg.classList.toggle('hl',on);svg.querySelectorAll('[data-p]').forEach(e=>e.classList.remove('on'));if(on)svg.querySelectorAll('[data-p="'+l[0]+'"]').forEach(e=>e.classList.add('on'))});ch.appendChild(b)});cap.appendChild(ch)}}
+const figEls=$$('figure.sf'); figEls.forEach((f,i)=>{f.dataset.n='Figura '+(i+1);f.querySelector('svg').id='sf-'+(i+1)});
+if('IntersectionObserver' in window){const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){renderFig(e.target);io.unobserve(e.target)}}),{rootMargin:'400px'});figEls.forEach(f=>io.observe(f))}else figEls.forEach(renderFig);
+window.renderAllFigs=()=>figEls.forEach(renderFig);
+
+/* ---------- utilidades de laboratorio ---------- */
+function segB(name,cb){const g=$('[data-seg="'+name+'"]');if(!g)return ()=>null;const bs=[...g.querySelectorAll('button')];bs.forEach(b=>b.addEventListener('click',()=>{bs.forEach(x=>x.setAttribute('aria-pressed',x===b));cb(b.dataset.v)}));return ()=>bs.find(b=>b.getAttribute('aria-pressed')==='true').dataset.v}
+function rngB(id,cb){const r=$('#'+id);if(!r)return ()=>0;const v=$('#'+id+'-v');const f=()=>{v.textContent=fx(+r.value)+r.dataset.u;cb(+r.value)};r.addEventListener('input',f);return f}
+function mk(id,draw){const svg=$('#'+id+'-svg');if(!svg)return null;const vb=svg.getAttribute('viewBox').split(' ').map(Number);const out=$('#'+id+'-out');
+  return ()=>{[...svg.childNodes].forEach(n=>svg.removeChild(n));const S=Ctx(svg,vb[2],vb[3]);draw(S,out)}}
+const K=(t,v)=>'<div><span class="k">'+t+':</span> '+v+'</div>';
+const SRC=t=>'<div class="src">'+t+'</div>';
+
+</script><script>
+/* Figuras estáticas con rótulos, dibujo propio con acabado de manual. Anterior arriba en vistas superior e inferior, anterior a la izquierda en perfil. */
+const F = (id, t, c, d, w, h, o) => { FIGS[id] = Object.assign({ t, c, d, w: w || 720, h: h || 400 }, o || {}); };
+const PT = (T, q) => [T[0] + q[0] * T[2], T[1] + q[1] * T[2]];
+const cap = (S, x, y, s) => S.t(x, y, s, { cls: 'mu' });
+
+F('c_occ', 'Occipital, vista inferior',
+  'Hueso occipital visto desde abajo, con la parte basilar hacia delante. Los cóndilos convexos (azul) flanquean el foramen magno y articulan con el atlas. Pulsen un rótulo para resaltar la estructura.',
+  (S) => { const A = AN.init(S.svg), T = [360, 196, 1.02]; const k = SH.occInf(A, AN.G(S.svg, { transform: AN.tf(T[0], T[1], 0, T[2]) }));
+    S.leftX = 170; S.rightX = 170;
+    S.LB([['bas', 'Parte basilar', 'l', ...PT(T, k.bas)], ['cond', 'Cóndilo occipital (superficie articular convexa)', 'l', ...PT(T, k.cond)], ['hyp', 'Conducto del hipogloso', 'l', ...PT(T, k.hyp)],
+      ['fm', 'Foramen magno', 'r', ...PT(T, [20, 10])], ['sq', 'Escama del occipital', 'r', ...PT(T, k.sq)], ['nuc', 'Línea nucal inferior', 'r', ...PT(T, k.nuc)], ['nucS', 'Línea nucal superior', 'r', ...PT(T, k.nucS)], ['epo', 'Protuberancia occipital externa', 'l', ...PT(T, k.epo)]]);
+    cap(S, 12, 22, 'Vista inferior. Anterior arriba.'); }, 720, 400);
+
+F('c_atlas', 'Atlas (C1), vista superior',
+  'Anillo sin cuerpo vertebral. Las masas laterales llevan las carillas superiores cóncavas en forma de riñón (azul), el arco anterior la fóvea del diente y las apófisis transversas el foramen transverso. Por el surco del arco posterior pasa la arteria vertebral.',
+  (S) => { const A = AN.init(S.svg), T = [360, 180, 1.18]; const k = SH.atlasSup(A, AN.G(S.svg, { transform: AN.tf(T[0], T[1], 0, T[2]) }));
+    S.leftX = 150; S.rightX = 150;
+    S.LB([['at', 'Tubérculo anterior', 'l', ...PT(T, k.at)], ['aa', 'Arco anterior', 'l', ...PT(T, [-30, -100])], ['fov', 'Fóvea del diente', 'l', ...PT(T, [-8, -82])], ['fac', 'Carilla articular superior, cóncava', 'l', ...PT(T, k.facL)], ['tp', 'Apófisis transversa', 'l', ...PT(T, k.tpL)], ['sulc', 'Surco de la arteria vertebral', 'l', ...PT(T, k.sulc)],
+      ['lm', 'Masa lateral', 'r', ...PT(T, [100, -50])], ['tf', 'Foramen transverso', 'r', ...PT(T, k.tf)], ['tub', 'Tubérculo del ligamento transverso', 'r', ...PT(T, [46, -32])], ['fv', 'Foramen vertebral', 'r', ...PT(T, [30, 40])], ['pa', 'Arco posterior', 'r', ...PT(T, k.pa)], ['pt', 'Tubérculo posterior', 'r', ...PT(T, k.pt)]]);
+    cap(S, 12, 22, 'Vista superior. Anterior arriba.'); }, 720, 360);
+
+F('c_atlas_inf', 'Atlas (C1), vista inferior',
+  'Las carillas inferiores del atlas son planas o ligeramente cóncavas y articulan con las superiores del axis en las articulaciones atlantoaxoideas laterales.',
+  (S) => { const A = AN.init(S.svg), T = [330, 165, 1]; const k = SH.atlasInf(A, AN.G(S.svg, { transform: AN.tf(T[0], T[1], 0, T[2]) }));
+    S.leftX = 140; S.rightX = 170;
+    S.LB([['aa', 'Arco anterior', 'l', ...PT(T, [-30, -98])], ['tp', 'Apófisis transversa', 'l', ...PT(T, [-152, -30])], ['fac', 'Carilla articular inferior, plana', 'r', ...PT(T, k.fac)], ['pa', 'Arco posterior', 'r', ...PT(T, k.pa)]]);
+    cap(S, 12, 22, 'Vista inferior. Anterior arriba.'); }, 720, 320);
+
+F('c_axis_ant', 'Axis (C2), vista anterior',
+  'El diente se eleva desde el cuerpo con su carilla articular anterior (azul). A cada lado, las carillas superiores son amplias, casi horizontales y ligeramente convexas, un diseño que favorece la rotación.',
+  (S) => { const A = AN.init(S.svg), T = [360, 230, 1.85]; const k = SH.axisAnt(A, AN.G(S.svg, { transform: AN.tf(T[0], T[1], 0, T[2]) }));
+    S.leftX = 170; S.rightX = 170;
+    S.LB([['dens', 'Vértice del diente', 'l', ...PT(T, k.apex)], ['fant', 'Carilla articular anterior del diente', 'l', ...PT(T, [-8, -60])], ['sap', 'Carilla articular superior', 'l', ...PT(T, k.sapL)], ['cz', 'Cuerpo vertebral', 'l', ...PT(T, [-20, 30])],
+      ['dn', 'Diente (apófisis odontoides)', 'r', ...PT(T, [12, -40])], ['tp', 'Apófisis transversa', 'r', ...PT(T, k.tp)], ['iap', 'Apófisis articular inferior', 'r', ...PT(T, [48, 46])]]);
+    cap(S, 12, 22, 'Vista anterior.'); }, 720, 360);
+
+F('c_axis', 'Axis (C2), vista lateral',
+  'Cuerpo alto con el diente, que lleva una carilla anterior para el arco del atlas y otra posterior para el ligamento transverso. La apófisis espinosa es grande y bífida. Anterior a la izquierda.',
+  (S) => { const A = AN.init(S.svg), T = [300, 205, 2]; const k = SH.axisLat(A, AN.G(S.svg, { transform: AN.tf(T[0], T[1], 0, T[2]) }));
+    S.leftX = 170; S.rightX = 120;
+    S.LB([['dens', 'Diente', 'l', ...PT(T, k.dens)], ['fant', 'Carilla anterior del diente', 'l', ...PT(T, k.fant)], ['cz', 'Cuerpo del axis', 'l', ...PT(T, k.cz)], ['tp', 'Apófisis transversa', 'l', ...PT(T, [8, 6])],
+      ['fpost', 'Carilla posterior del diente', 'r', ...PT(T, k.fpost)], ['sap', 'Carilla articular superior', 'r', ...PT(T, k.sap)], ['sp', 'Apófisis espinosa bífida', 'r', ...PT(T, k.sp)], ['iap', 'Carilla articular inferior', 'r', ...PT(T, k.iap)]]);
+    cap(S, 12, 22, 'Perfil. Anterior a la izquierda.'); }, 720, 330);
+
+F('c_tip', 'Vértebra cervical típica (C3 a C6), vista superior',
+  'Cuerpo pequeño, más ancho que profundo, con las apófisis unciformes elevadas en sus bordes laterales. Pedículos cortos, láminas finas, conducto vertebral triangular y amplio, transversas con foramen y dos tubérculos, y espinosa corta y bífida.',
+  (S) => { const A = AN.init(S.svg), T = [360, 205, 1.75]; const k = SH.vertSup(A, AN.G(S.svg, { transform: AN.tf(T[0], T[1], 0, T[2]) }));
+    S.leftX = 160; S.rightX = 160;
+    S.LB([['cz', 'Cuerpo vertebral', 'l', ...PT(T, [-14, -80])], ['unc', 'Apófisis unciforme', 'l', ...PT(T, [-44, -76])], ['tf', 'Foramen transverso', 'l', ...PT(T, [-64, -65])], ['ped', 'Pedículo', 'l', ...PT(T, [-42, -44])], ['sf', 'Carilla articular superior', 'l', ...PT(T, [-60, -24])], ['lam', 'Lámina', 'l', ...PT(T, [-36, 24])],
+      ['tant', 'Tubérculo anterior', 'r', ...PT(T, k.tant)], ['tpost', 'Tubérculo posterior', 'r', ...PT(T, k.tpost)], ['can', 'Conducto vertebral triangular', 'r', ...PT(T, [20, -8])], ['sp', 'Apófisis espinosa bífida', 'r', ...PT(T, k.sp)]]);
+    cap(S, 12, 22, 'Vista superior. Anterior arriba.'); }, 720, 380);
+
+F('c_ant', 'Articulaciones uncovertebrales y arteria vertebral, vista anterior',
+  'Entre C3 y C6, cada apófisis unciforme se aloja en el bisel inferolateral del cuerpo de encima y forma una articulación uncovertebral a cada lado del disco. La arteria vertebral sube por los forámenes transversos, por delante de la raíz del nervio espinal.',
+  (S) => { const A = AN.init(S.svg), sc = 1.7, x0 = 360, ys = [86, 150, 214, 278];
+    const back = AN.G(S.svg), mid = AN.G(S.svg), front = AN.G(S.svg);
+    /* raíces y arterias por detrás de las transversas: primero las raíces, que quedan detrás de la arteria */
+    [-1, 1].forEach(sd => ys.slice(0, 3).forEach(y => { AN.el('path', { d: AN.sm([[x0 + sd * 30 * sc, y + 26], [x0 + sd * 62 * sc, y + 34], [x0 + sd * 96 * sc, y + 50]], false), fill: 'none', stroke: '#8A6A1F', 'stroke-width': 8.5, 'stroke-linecap': 'round' }, back);
+        AN.el('path', { d: AN.sm([[x0 + sd * 30 * sc, y + 26], [x0 + sd * 62 * sc, y + 34], [x0 + sd * 96 * sc, y + 50]], false), fill: 'none', stroke: '#E9C440', 'stroke-width': 6, 'stroke-linecap': 'round' }, back); }));
+    [-1, 1].forEach(sd => { AN.el('path', { d: AN.sm([[x0 + sd * 62 * sc, 30], [x0 + sd * 60 * sc, 120], [x0 + sd * 59 * sc, 200], [x0 + sd * 60 * sc, 330]], false), fill: 'none', stroke: '#7E1D14', 'stroke-width': 13, 'stroke-linecap': 'round' }, back);
+      AN.el('path', { d: AN.sm([[x0 + sd * 62 * sc, 30], [x0 + sd * 60 * sc, 120], [x0 + sd * 59 * sc, 200], [x0 + sd * 60 * sc, 330]], false), fill: 'none', stroke: '#C8402F', 'stroke-width': 10, 'stroke-linecap': 'round' }, back);
+      AN.el('path', { d: AN.sm([[x0 + sd * 61 * sc - 2 * sd, 30], [x0 + sd * 59 * sc - 2 * sd, 200], [x0 + sd * 59 * sc - 2 * sd, 330]], false), fill: 'none', stroke: '#F09A8A', 'stroke-width': 2.5, opacity: .7 }, back);
+    });
+    ys.forEach((y, i) => { const g = AN.G(mid, { transform: AN.tf(x0, y, 0, sc) }); SH.vertAnt(A, g); if (i < 3) AN.disc(A, AN.G(mid, { transform: AN.tf(x0, y, 0, sc) }), [[-28, 20], [0, 22], [28, 19], [30, 34], [0, 37], [-30, 34]]); });
+    [-1, 1].forEach(sd => ys.slice(0, 3).forEach(y => { AN.el('ellipse', { cx: x0 + sd * 34 * sc, cy: y + 31, rx: 5, ry: 7, fill: '#A7C0E4', stroke: '#46679A', 'stroke-width': .9 }, front); }));
+    ys.forEach((y, i) => S.t(x0 - 134, y - 12, 'C' + (3 + i), { cls: 'b', a: 'end' }));
+    S.leftX = 150; S.rightX = 150;
+    S.LB([['unc', 'Articulación uncovertebral', 'l', x0 - 34 * sc, ys[1] + 31], ['disc', 'Disco intervertebral', 'l', x0 - 12, ys[0] + 46], ['cz', 'Cuerpo vertebral', 'l', x0 - 20, ys[2] + 4], ['un2', 'Apófisis unciforme', 'l', x0 - 33 * sc, ys[3] - 22],
+      ['va', 'Arteria vertebral', 'r', x0 + 60 * sc, ys[2] + 40], ['nr', 'Raíz del nervio espinal', 'r', x0 + 90 * sc, ys[0] + 47], ['tp', 'Apófisis transversa', 'r', x0 + 70 * sc, ys[3] - 6]]);
+    cap(S, 12, 22, 'Vista anterior de C3 a C6. Esquema sin escala.'); }, 720, 350);
+
+F('c_col', 'Columna cervical en perfil: lordosis y carillas a 45°',
+  'En posición anatómica la región cervical forma una lordosis. Las carillas de las articulaciones cigoapofisarias de C2 a C7 se orientan como tejas, a unos 45° entre el plano horizontal y el frontal. C7, la vértebra prominente, tiene la espinosa más larga y palpable.',
+  (S) => { const A = AN.init(S.svg); const N = { 'T2-T3': -4, 'T1-T2': -4, 'C7-T1': 3, 'C6-C7': 3, 'C5-C6': 3, 'C4-C5': 3, 'C3-C4': 3, 'C2-C3': 3, 'C1-C2': 4, 'C0-C1': 4 };
+    const o = SH.column(A, S.svg, { base: [330, 470], s: 1, baseA: -18, ang: N, skull: false });
+    /* plano de la carilla C4-C5 */
+    const a = o.g('C5', [28, -26]), b = o.g('C5', [53, -7]);
+    const dx = b[0] - a[0], dy = b[1] - a[1], m = Math.hypot(dx, dy);
+    S.E('line', { x1: a[0] - dx / m * 40, y1: a[1] - dy / m * 40, x2: b[0] + dx / m * 50, y2: b[1] + dy / m * 50, class: 'refl' });
+    const hz = o.g('C5', [0, 0]);
+    S.t(b[0] + dx / m * 54, b[1] + dy / m * 54 + 4, 'plano de la carilla, unos 45°', { cls: 'sm' });
+    const levels = ['C1', 'C2', 'C3', 'C4', 'C5', 'C6', 'C7', 'T1'];
+    levels.forEach(lv => { const q = lv === 'C1' ? o.g('C1', [-44, 4]) : o.g(lv, [-34, 4]); S.t(q[0], q[1], lv, { cls: 'b', a: 'end' }); });
+    S.leftX = 120; S.rightX = 150;
+    S.LB([['sf', 'Carilla articular (cigoapofisaria)', 'r', ...o.g('C4', [42, -16])], ['sp7', 'C7, vértebra prominente', 'r', ...o.g('C7', [120, 28])], ['disc', 'Disco intervertebral', 'l', ...o.g('C5', [-14, 18])],
+      ['dens', 'Diente del axis', 'l', ...o.g('C2', [-4, -66])], ['tp', 'Tubérculos de la transversa', 'r', ...o.g('C3', [20, -6])], ['spb', 'Espinosa bífida', 'r', ...o.g('C4', [96, 16])]]);
+    cap(S, 12, 22, 'Perfil. Anterior a la izquierda. Ángulos del dibujo cualitativos.'); }, 720, 500);
+
+</script><script>
+/* Figuras interactivas. Dibujo propio con acabado de manual. Perfil: anterior a la izquierda. */
+const LL = (S) => AN.init(S.svg);
+function hl(S, sel) { S.svg.classList.toggle('hl', !!sel); if (sel) S.svg.querySelectorAll('[data-p="' + sel + '"]').forEach(e => e.classList.add('on')); }
+const NEUTRO = { 'T2-T3': -4, 'T1-T2': -4, 'C7-T1': 3, 'C6-C7': 3, 'C5-C6': 3, 'C4-C5': 3, 'C3-C4': 3, 'C2-C3': 3, 'C1-C2': 4, 'C0-C1': 4 };
+const SEG = ['C0-C1', 'C1-C2', 'C2-C3', 'C3-C4', 'C4-C5', 'C5-C6', 'C6-C7', 'C7-T1'];
+/* datos por nivel del material de clase (diapositivas 39 a 45, «Datos de Anatomy Standard»), en grados */
+const LVDATA = {
+  sag: [12, 15, 11.3, 17.6, 22.1, 22.1, 17.1, 9.8],
+  rot: [2.5, 38, 6, 9.6, 10.3, 9.2, 5.8, 3.6],
+  inc: [3, 4, 6, 7.4, 8.4, 8.2, 7.2, 4.8]
+};
+const INF = {
+  cond: ['Cóndilo occipital', 'Convexo. Encaja en la carilla superior cóncava del atlas y permite sobre todo flexión y extensión (Neumann, cap. 9). Está a los lados del foramen magno, por eso en el corte medio se ve al fondo.'],
+  bas: ['Parte basilar del occipital (clivus)', 'Queda delante del borde anterior del foramen magno. Ahí se insertan la membrana tectoria, el ligamento del vértice del diente, el fascículo longitudinal superior del cruciforme y el largo de la cabeza.'],
+  aa: ['Arco anterior del atlas', 'Arco corto con el tubérculo anterior por delante y la fóvea del diente por detrás, que articula con la carilla anterior del diente.'],
+  pa: ['Arco posterior del atlas', 'Forma casi la mitad del anillo y lleva el tubérculo posterior, donde se origina el recto posterior menor. La arteria vertebral cruza por encima de él antes de entrar en el foramen magno.'],
+  dens: ['Diente del axis', 'Eje vertical y rígido para la rotación del atlas con la cabeza. Su vértice recibe los alares y el ligamento del vértice, y su cara posterior articula con el ligamento transverso.'],
+  cz: ['Cuerpo del axis', 'Alto y grande. En parte procede del cuerpo del atlas y del disco intermedio, según Neumann, cap. 9. Por detrás se insertan la membrana tectoria y el fascículo longitudinal inferior del cruciforme.'],
+  sp: ['Apófisis espinosa del axis', 'Ancha y bífida. Es palpable y da origen al recto posterior mayor y al oblicuo inferior de la cabeza, y recibe el semiespinoso del cuello.']
+};
+
+/* 1. huesos en corte sagital */
+(function () { let sel = 'cond'; const draw = mk('huesos', (S, out) => { const A = LL(S);
+  const k = SH.sagittal(A, AN.G(S.svg, { transform: 'translate(110 0)' }), { ligs: false });
+  const P = q => [q[0] + 110, q[1]]; S.leftX = 160; S.rightX = 120;
+  S.LB([['bas', 'Parte basilar', 'l', ...P(k.bas)], ['aa', 'Arco anterior del atlas', 'l', ...P(k.aa)], ['cz', 'Cuerpo del axis', 'l', ...P([160, 280])],
+    ['cond', 'Cóndilo occipital', 'r', ...P([236, 190])], ['dens', 'Diente', 'r', ...P([186, 214])], ['pa', 'Arco posterior del atlas', 'r', ...P(k.pa)], ['sp', 'Espinosa del axis', 'r', ...P([334, 270])]]);
+  S.t(372, 110, 'médula', { cls: 'sm' }); S.t(12, 22, 'Corte sagital medio. Anterior a la izquierda.', { cls: 'mu' });
+  hl(S, sel); const i = INF[sel]; out.innerHTML = K('Estructura', i[0]) + '<div>' + i[1] + '</div>'; });
+  segB('Estructura', v => { sel = v; draw() }); draw() })();
+
+/* 2. ligamentos y qué los tensa */
+const LIG = {
+  cruc: ['Ligamento cruciforme', 'Fascículo transverso: cara interna de las masas laterales del atlas, por detrás del diente. Fascículos longitudinales: borde anterior del foramen magno y cara posterior del cuerpo del axis.', 'Se tensa en la flexión (material de clase). El transverso es el principal estabilizador horizontal de C1-C2 y limita la rotación (Neumann, cap. 9, y material de clase).'],
+  alar: ['Ligamentos alares', 'Del lado superior y posterolateral del diente a la cara medial de cada cóndilo occipital. Unos 1 cm de longitud.', 'Frenan la rotación. Están flojos en posición anatómica y se tensan sobre todo en el lado contrario al giro. Probablemente limitan también los extremos de los demás movimientos de C0-C1 (Neumann, cap. 9).'],
+  apic: ['Ligamento del vértice del diente', 'Línea media. Del vértice del diente al borde anterior del foramen magno.', 'Ni el material de clase ni el capítulo 9 de Neumann le atribuyen una función de freno concreta.'],
+  tect: ['Membrana tectoria', 'Prolongación craneal del ligamento longitudinal posterior. Del borde anterior del foramen magno (parte basilar) a la cara posterior del axis, por detrás del cruciforme.', 'Material de clase: limita la flexión. Neumann indica poca información publicada y probable estabilidad multidireccional.'],
+  mao: ['Membrana atlantooccipital anterior', 'Entre el arco anterior del atlas y el borde anterior del foramen magno. Se fusiona con la cápsula de C0-C1.', 'Limita la extensión (material de clase).'],
+  mpo: ['Membrana atlantooccipital posterior', 'Entre el arco posterior del atlas y el borde posterior del foramen magno. La arteria vertebral la atraviesa.', 'Limita la flexión de C0-C1 (material de clase, que la llama también puente miodural).'],
+  lla: ['Ligamento longitudinal anterior y membrana atlantoaxoidea anterior', 'Cara anterior de los cuerpos vertebrales. Entre el arco anterior del atlas y el axis se continúa como membrana atlantoaxoidea anterior.', 'Se tensa en la extensión y ayuda a limitar la lordosis (Neumann, cap. 9).'],
+  flav: ['Ligamento amarillo', 'Entre las láminas de vértebras vecinas, por detrás de la médula. Rico en elastina.', 'Limita la flexión (material de clase y Neumann, cap. 9).'],
+  nuc: ['Ligamento nucal', 'Prolongación craneal de los supraespinosos, de las espinosas cervicales a la protuberancia occipital externa. Inserta trapecio y esplenios.', 'Limita la flexión y su tensión pasiva da un pequeño apoyo en extensión a la cabeza y el cuello (Neumann, cap. 9).']
+};
+const TENS = { neu: [], flex: ['cruc', 'tect', 'mpo', 'flav', 'nuc'], ext: ['mao', 'lla'], rot: ['cruc', 'alar'], inc: ['alar'] };
+const TTXT = { neu: 'En posición neutra ningún ligamento está en tensión marcada. Los alares están flojos.',
+  flex: 'Flexión. Se tensan la membrana tectoria, la atlantooccipital posterior y el transverso del cruciforme en C0-C2, y en C2-C7 el ligamento nucal, los interespinosos, el amarillo, la parte posterior del anillo y el longitudinal posterior (material de clase).',
+  ext: 'Extensión. Se tensan la membrana atlantooccipital anterior, el ligamento atlantooccipital anterior, el de Barkow y la membrana atlantoaxoidea anterior, y en C2-C7 el longitudinal anterior y la parte anterior del anillo. Las carillas articulares y las vísceras del cuello también frenan (material de clase).',
+  rot: 'Rotación a la derecha. Se tensa sobre todo el alar del lado contrario al giro, más el transverso, el atlantoaxoideo accesorio y el atlantodentario anterior (material de clase y Neumann). En el dibujo, el alar izquierdo en rojo.',
+  inc: 'Inclinación lateral. En C0-C1 limitan los ligamentos atlantooccipitales laterales y el occipital transverso, que no se dibujan. Neumann añade que los alares probablemente frenan los extremos de todos los movimientos de C0-C1.' };
+(function () { let sel = 'cruc', mov = 'neu'; const draw = mk('lig', (S, out) => { const A = LL(S);
+  const st = {}; TENS[mov].forEach(i => st[i] = 'tense');
+  const k = SH.sagittal(A, AN.G(S.svg, { transform: 'translate(0 8)' }), { lig: st });
+  const alar = mov === 'rot' ? { l: 'tense' } : mov === 'inc' ? { l: 'tense', r: 'tense' } : {};
+  SH.coronal(A, AN.G(S.svg, { transform: 'translate(430 70) scale(1.25)' }), { lig: Object.assign({}, st, { alar }) });
+  S.t(12, 22, 'Corte sagital medio', { cls: 'mu' }); S.t(430, 50, 'Vista posterior, con arco posterior y tectoria retirados', { cls: 'mu' });
+  if (mov === 'rot') { const N = NeumannSVG.on(S.svg); N.motion(580, 340, 40, 200, 340, { w: 5 }); S.t(560, 400, 'rotación a la derecha', { cls: 'sm' }); }
+  hl(S, sel); const i = LIG[sel];
+  out.innerHTML = K('Ligamento', i[0]) + K('Inserciones', i[1]) + K('Función', i[2]) + '<div class="src" style="margin-top:.4rem">' + TTXT[mov] + '</div>'; });
+  segB('Ligamento', v => { sel = v; draw() }); segB('Movimiento-lig', v => { mov = v; draw() }); draw() })();
+
+/* 3. ligamento transverso: perfil y vista superior */
+(function () { let st = 'ok', s = 0; const draw = mk('trans', (S, out) => { const A = LL(S);
+  const t = Math.abs(s) / 100, fl = s > 0, torn = st !== 'ok';
+  const ang = fl ? -10 * t : 20 * t, dx = fl ? (torn ? -26 : -2) * t : 0;
+  const g = AN.G(S.svg, { transform: 'translate(-30 -40) scale(0.98)' });
+  SH.sagittal(A, g, { c01: `translate(${dx} 0) rotate(${ang} 190 236)`, ligs: false });
+  /* transverso en el perfil */
+  const gc = AN.G(g, { transform: `translate(${dx} 0) rotate(${ang} 190 236)` });
+  if (!torn) { AN.el('ellipse', { cx: 203, cy: 206, rx: 6, ry: 10, fill: '#E9EEF2', stroke: fl && t > .2 ? '#D91A14' : '#5F7180', 'stroke-width': 1.4 }, gc); }
+  else AN.el('path', { d: 'M197,198 l4,-3 l3,4 l3,-3 M197,214 l4,3 l3,-4 l3,3', fill: 'none', stroke: '#D91A14', 'stroke-width': 1.8 }, gc);
+  /* intervalo atlas-diente */
+  const ax = AN.rot([159 + dx, 214], [190, 236], ang);
+  S.E('line', { x1: ax[0] * .98 - 30, y1: ax[1] * .98 - 40, x2: 164 * .98 - 30, y2: 214 * .98 - 40, stroke: '#2F6DB5', 'stroke-width': 2.4 });
+  S.t(60, 140, 'intervalo\natlas-diente', { cls: 'sm' });
+  S.E('line', { x1: 102, y1: 160, x2: (ax[0] * .98 - 30 + 130) / 2, y2: 168, class: 'ld' });
+  /* vista superior con diente y médula */
+  const T = [575, 200, 0.95], d = dx * 2.3;
+  const gs = AN.G(S.svg, { transform: AN.tf(T[0], T[1], 0, T[2]) });
+  const ga = AN.G(gs, { transform: `translate(0 ${d})` });
+  SH.atlasSup(A, ga);
+  AN.bone(A, gs, [{ e: [0, -54, 24, 22] }], { small: true });
+  AN.facet(A, gs, [{ e: [0, -74, 12, 3.5] }]);
+  if (!torn) AN.band(A, ga, [[-46, -34], [-24, -30], [0, -26], [24, -30], [46, -34]], 7, { state: fl && t > .2 ? 'tense' : null });
+  else { AN.band(A, ga, [[-46, -34], [-22, -30]], 7, { state: 'lax' }); AN.band(A, ga, [[22, -30], [46, -34]], 7, { state: 'lax' }); }
+  const space = (84 + d) - (-32), cordH = Math.min(40, Math.max(14, space - 34)), cy = Math.min(22 + d, (84 + d) - cordH / 2 - 6);
+  const squeezed = cordH < 36;
+  const cyF = Math.max(cy, -32 + cordH / 2 + 4);
+  AN.el('ellipse', { cx: 0, cy: cyF, rx: 28 + (40 - cordH) * .3, ry: cordH / 2, fill: squeezed ? '#F6D2CC' : '#F6EDD3', stroke: squeezed ? '#D91A14' : '#B59C70', 'stroke-width': squeezed ? 2 : 1 }, gs);
+  S.t(T[0] - 150, 38, 'Vista superior de C1 con el diente', { cls: 'mu' });
+  S.t(T[0] + 40, T[1] + (cyF + 24) * T[2], 'médula', { cls: 'sm' });
+  S.t(12, 22, 'Perfil, anterior a la izquierda. Esquema cualitativo.', { cls: 'mu' });
+  const pos = s === 0 ? 'posición neutra' : fl ? 'flexión' : 'extensión';
+  let txt; if (!torn) txt = fl ? 'El ligamento transverso se tensa y sujeta el diente contra el arco anterior. El atlas se inclina con el cráneo casi sin deslizar sobre el diente, y el intervalo atlas-diente apenas cambia.' : 'En extensión el arco anterior del atlas contacta con el diente, que frena el movimiento (Neumann, cap. 9).';
+  else if (fl && t > .5) txt = 'Sin el freno del ligamento, el atlas desliza hacia delante respecto al axis. Aumenta el intervalo atlas-diente y el arco posterior se acerca al diente, de modo que el espacio para la médula se reduce y aparece el riesgo de lesión medular (Neumann, cap. 9).';
+  else txt = 'Con el ligamento lesionado, la flexión desplaza el atlas hacia delante respecto al diente. Lleven el deslizador hacia la flexión para ver el efecto sobre la médula.';
+  out.innerHTML = K('Posición', pos) + K('Ligamento transverso', torn ? 'lesionado' : 'íntegro') + K('Médula', squeezed ? '<b style="color:var(--hl)">comprometida</b>' : 'con espacio') + '<div>' + txt + '</div>' + SRC('Esquema cualitativo, sin milímetros.'); });
+  rngB('tr-s', v => { s = v; draw() })(); segB('Ligamento transverso', v => { st = v; draw() }); draw() })();
+
+/* 4. cinemática por articulación (Neumann y Panjabi) */
+(function () { let mv = 'flex', src = 'neu';
+  const N = { flex: [[5, '5°'], [5, '5°'], [37.5, '35-40°']], ext: [[10, '10°'], [10, '10°'], [57.5, '55-60°']], rot: [[0, 'insignificante'], [37.5, '35-40°'], [32.5, '30-35°']], inc: [[5, 'unos 5°'], [0, 'insignificante'], [32.5, '30-35°']] };
+  const P = { flex: [[7.2, '7,2 ± 2,5°'], [12.3, '12,3 ± 2,0°'], [3.5, '3,5 ± 1,3°']], ext: [[20.2, '20,2 ± 4,6°'], [12.1, '12,1 ± 6,5°'], [2.7, '2,7 ± 1,0°']], rot: [[9.9, '9,9 ± 3,0°'], [56.7, '56,7 ± 4,8°'], [3.3, '3,3 ± 0,8°']], inc: [[9.1, '9,1 ± 1,5°'], [6.5, '6,5 ± 2,3°'], [9.6, '9,6 ± 1,8°']] };
+  const LIM = { flex: 'Flexión: membrana tectoria y fascículos longitudinales del cruciforme (material de clase). En C1-C2, contacto del ligamento transverso con el diente (Neumann).',
+    ext: 'Extensión: en C1-C2, contacto del arco anterior del atlas con el diente (Neumann) y ligamento de Barkow (material de clase).',
+    rot: 'Rotación: alares, sobre todo el contralateral al giro (Neumann), y ligamento atlantoaxoideo accesorio (material de clase).',
+    inc: 'Inclinación: ocurre sobre todo en C2-C7. En C0-C1 limitan cápsulas, alares y ligamento occipital transverso (material de clase y Neumann).' };
+  const draw = mk('cin', (S, out) => { const rows = src === 'neu' ? ['C0-C1', 'C1-C2', 'C2-C7'] : ['C0-C1', 'C1-C2', 'C2-C3']; const D = (src === 'neu' ? N : P)[mv];
+    const pan = src === 'pan' && (mv === 'rot' || mv === 'inc'); const sc = 380 / 60;
+    S.t(20, 24, (mv === 'rot' || mv === 'inc') ? 'Grados hacia un lado' : 'Grados', { cls: 'mu' });
+    [0, 10, 20, 30, 40, 50, 60].forEach(v => { S.E('line', { x1: 90 + v * sc, y1: 48, x2: 90 + v * sc, y2: 290, class: 'gridl' }); S.t(90 + v * sc, 306, v, { cls: 'sm', a: 'middle' }); });
+    D.forEach((d, i) => { let v = d[0] / (pan ? 2 : 1); const y = 60 + i * 80; S.t(20, y + 22, rows[i], { cls: 'b' }); S.rect(90, y, 380, 34, 'bar0', null, 4);
+      if (v > 0) S.rect(90, y, Math.min(380, v * sc), 34, 'bar' + (i < 2 ? ' c12' : ''), null, 4);
+      S.t(96, y + 52, pan ? fx(Math.round(v * 100) / 100) + '° por lado (suma de ambos: ' + d[1] + ')' : d[1], { cls: 'sm' }) });
+    out.innerHTML = K('Movimiento', { flex: 'flexión', ext: 'extensión', rot: 'rotación axial', inc: 'inclinación lateral' }[mv]) + K('Fuente', src === 'neu' ? 'Neumann, Tabla 9.7 (punto medio del rango)' : 'Panjabi 2001, estudio in vitro, media ± DE') + '<div>' + LIM[mv] + '</div>' + SRC(src === 'neu' ? 'En el total craneocervical, 120-130° de flexoextensión y 65-75° de rotación por lado.' : 'En esta fuente, C2-C3 es un solo nivel y no equivale a todo C2-C7.') });
+  segB('Movimiento', v => { mv = v; draw() }); segB('Fuente', v => { src = v; draw() }); draw() })();
+
+/* 5. movimiento por nivel (material de clase) */
+(function () { let pl = 'sag'; const NM = { sag: 'Flexoextensión (plano sagital)', rot: 'Rotación axial (plano transversal)', inc: 'Inclinación lateral (plano frontal)' };
+  const draw = mk('niv', (S, out) => { const D = LVDATA[pl], mx = pl === 'rot' ? 40 : pl === 'sag' ? 25 : 10, sc = 400 / mx;
+    const tot = D.reduce((a, b) => a + b, 0), r0 = D[0] / tot * 100, r1 = D[1] / tot * 100, r2 = 100 - r0 - r1;
+    const step = pl === 'rot' ? 10 : 5;
+    for (let v = 0; v <= mx; v += step) { S.E('line', { x1: 110 + v * sc, y1: 40, x2: 110 + v * sc, y2: 340, class: 'gridl' }); S.t(110 + v * sc, 356, v, { cls: 'sm', a: 'middle' }); }
+    SEG.forEach((n, i) => { const y = 44 + i * 37; S.t(98, y + 18, n, { cls: 'b', a: 'end' }); S.rect(110, y, 400, 26, 'bar0', null, 3);
+      S.rect(110, y, D[i] * sc, 26, 'bar' + (i === 0 ? ' up' : i === 1 ? ' c12' : ''), null, 3); S.t(116 + D[i] * sc, y + 18, fx(D[i]) + '°', { cls: 'sm' }); });
+    S.t(110, 26, 'Grados por nivel', { cls: 'mu' });
+    const bx = 560; [[r0, 'C0-C1', 'up'], [r1, 'C1-C2', 'c12'], [r2, 'C2-T1', '']].forEach((r, i) => { S.rect(bx, 60 + i * 60, 18, 18, 'bar ' + r[2], null, 3); S.t(bx + 26, 74 + i * 60, r[1], { cls: 'b' }); S.t(bx + 26, 92 + i * 60, fx(Math.round(r[0])) + ' % del total', { cls: 'sm' }); });
+    const mxI = D.indexOf(Math.max(...D.slice(2))) ;
+    out.innerHTML = K('Plano', NM[pl]) + K('Suma de los niveles', fx(Math.round(tot * 10) / 10) + '°') + K('Reparto (calculado de las barras)', 'C0-C1 ' + fx(Math.round(r0)) + ' %, C1-C2 ' + fx(Math.round(r1)) + ' %, C2-T1 ' + fx(Math.round(r2)) + ' %') +
+      '<div>' + (pl === 'sag' ? 'El mayor recorrido de C2-C7 está en C4-C5 y C5-C6. Neumann da unos 15° de media por nivel entre C2-C3 y C7-T1 y sitúa el máximo en C4-C5 o C5-C6, lo que podría explicar la mayor frecuencia de espondilosis y de fracturas por hiperflexión en esos niveles.' : pl === 'rot' ? 'C1-C2 concentra casi la mitad de la rotación. Neumann da 35-40° por lado en el atlantoaxoideo y 30-35° en C2-C7, con más rotación en los segmentos craneales.' : 'La inclinación se reparte por C2-C7. Neumann describe unos 5° en C0-C1 y un movimiento insignificante en C1-C2.') + '</div>' +
+      SRC('Datos de Anatomy Standard recogidos en la presentación de clase (diapositivas 39 a 45). Los porcentajes se calculan aquí a partir de las barras.') });
+  segB('Plano', v => { pl = v; draw() }); draw() })();
+
+/* 6. cabeza y cuello en perfil: flexoextensión y protracción-retracción */
+function headNeck(S, ang, o = {}) {
+  const A = LL(S), skinG = AN.G(S.svg);
+  const col = SH.column(A, AN.G(S.svg), { base: o.base || [330, 520], s: o.s || .62, baseA: -18, ang });
+  /* piel de cabeza y cuello */
+  const C0 = (q) => col.g('C0', [q[0] * 2.6, q[1] * 2.6]);
+  const head = [[-104, -62], [-110, -44], [-112, -34], [-124, -16], [-114, -6], [-108, 4], [-102, 14], [-108, 22], [-104, 32], [-100, 46], [-104, 60], [-96, 74], [-74, 78], [-46, 72]].map(C0);
+  const back = [[70, -12], [84, -44], [84, -92], [60, -130], [14, -154], [-40, -152], [-82, -130], [-104, -96]].map(C0);
+  const ant = ['C3', 'C4', 'C5', 'C6', 'C7', 'T1'].map(lv => col.g(lv, [-130, 10]));
+  const post = ['T1', 'C7', 'C6', 'C5', 'C4', 'C3'].map(lv => col.g(lv, [lv === 'C7' || lv === 'T1' ? 120 : 106, lv === 'T1' ? 30 : 20]));
+  const pts = [...head, ...ant, col.g('T2', [-150, 60]), col.g('T2', [140, 40]), ...post, ...back];
+  AN.skin(skinG, pts, { op: .32 });
+  const ear = C0([6, -16]); AN.el('ellipse', { cx: ear[0], cy: ear[1], rx: 9 * 2.6 * col.s, ry: 15 * 2.6 * col.s, fill: '#F2CDB8', 'fill-opacity': .45, stroke: '#C79C84', transform: `rotate(${col.pos.C0.a} ${ear[0]} ${ear[1]})` }, skinG);
+  return col;
+}
+(function () { let mode = 'fe', s = 0; const draw = mk('mov', (S, out) => {
+  const t = s / 100, ang = Object.assign({}, NEUTRO); const w = LVDATA.sag, tw = w.reduce((a, b) => a + b, 0);
+  let txt, lab;
+  if (mode === 'fe') { const tot = t < 0 ? 47.5 : 77.5; SEG.forEach((n, i) => ang[n] = NEUTRO[n] + t * tot * w[i] / tw);
+    lab = t === 0 ? 'Posición anatómica' : t < 0 ? 'Flexión ' + fx(Math.round(-t * 47.5)) + '°' : 'Extensión ' + fx(Math.round(t * 77.5)) + '°';
+    txt = t < 0 ? 'En flexión, las carillas inferiores de cada vértebra se deslizan hacia arriba y adelante sobre las de debajo. Se separan láminas y espinosas, se tensan el ligamento nucal, los interespinosos y la cápsula, y se comprime la parte anterior del anillo. El foramen intervertebral se agranda (Neumann, cap. 9).' : t > 0 ? 'En extensión, las carillas inferiores se deslizan hacia abajo y atrás y la carga se concentra en la parte inferior de las articulaciones cigoapofisarias. Se tensa el ligamento longitudinal anterior y el foramen intervertebral se reduce (Neumann, cap. 9).' : 'Desde la lordosis de reposo, la región craneocervical tiene unos 45-50° de flexión y 75-80° de extensión (Neumann, Tabla 9.7).';
+  } else { const up = ['C0-C1', 'C1-C2'], lowS = SEG.slice(2);
+    /* lo que se flexiona abajo se extiende arriba, y al revés: la cabeza conserva su orientación y la mirada sigue horizontal */
+    const th = ['T1-T2', 'T2-T3'];
+    if (t > 0) { th.forEach(n => ang[n] = NEUTRO[n] - t * 8); lowS.forEach(n => ang[n] = NEUTRO[n] - t * 32 / 6); ang['C0-C1'] = NEUTRO['C0-C1'] + t * 24; ang['C1-C2'] = NEUTRO['C1-C2'] + t * 24; }
+    else { th.forEach(n => ang[n] = NEUTRO[n] - t * 3); lowS.forEach(n => ang[n] = NEUTRO[n] - t * 14 / 6); ang['C0-C1'] = NEUTRO['C0-C1'] + t * 10; ang['C1-C2'] = NEUTRO['C1-C2'] + t * 10; }
+    lab = t === 0 ? 'Posición de reposo' : t > 0 ? 'Protracción ' + fx(Math.round(t * 623) / 100) + ' cm' : 'Retracción ' + fx(Math.round(-t * 334) / 100) + ' cm';
+    txt = t > 0 ? 'En la protracción la columna cervical media e inferior se flexiona y la región craneocervical superior se extiende lo mismo, de modo que la cabeza se adelanta sin inclinarse y la mirada sigue horizontal. Es la «postura de cabeza adelantada».' : t < 0 ? 'En la retracción la columna cervical media e inferior se extiende o endereza y la región craneocervical superior se flexiona lo mismo, así que la mirada sigue horizontal: es la posición de «barbilla adentro».' : 'Desde la posición de reposo, la protracción completa supera a la retracción completa en un 80 % aproximadamente: 6,23 cm frente a 3,34 cm en el adulto (Neumann, cap. 9).';
+  }
+  const col = headNeck(S, ang, { base: [340, 468], s: .5 });
+  /* línea de referencia vertical por el meato y la neutra */
+  const ear = col.g('C0', [6 * 2.6, -16 * 2.6]);
+  if (mode === 'pr') { const tmp = AN.G(S.svg), c0 = SH.column(LL(S), tmp, { base: [340, 468], s: .5, baseA: -18, ang: NEUTRO }), ref = c0.g('C0', [6 * 2.6, -16 * 2.6])[0]; tmp.remove(); S.E('line', { x1: ref, y1: 40, x2: ref, y2: 300, class: 'refl' }); S.E('line', { x1: ear[0], y1: 40, x2: ear[0], y2: 300, stroke: '#2F6DB5', 'stroke-width': 1.6 });
+    if (Math.abs(ear[0] - ref) > 6) S.arrow(ref, 60, ear[0], 60, 'ar'); S.t(ref - 4, 34, 'reposo', { cls: 'sm', a: 'end' }); }
+  /* línea de la mirada desde la órbita */
+  const eye = col.g('C0', [-80 * 2.6, -33 * 2.6]), ga = col.pos.C0.a * Math.PI / 180, gx = -Math.cos(ga), gy = -Math.sin(ga);
+  S.E('line', { x1: eye[0], y1: eye[1], x2: eye[0] + gx * 110, y2: eye[1] + gy * 110, stroke: '#2F6DB5', 'stroke-width': 1.6, 'stroke-dasharray': '6 4', 'marker-end': 'url(#' + S.svg.id + '-ah)' });
+  S.t(eye[0] - 24, eye[1] - 10, Math.abs(col.pos.C0.a) < 1.5 ? 'mirada horizontal' : 'línea de la mirada', { cls: 'sm', a: 'end' });
+  S.t(20, 28, lab, { cls: 'ttl' }); S.t(20, 468, 'Perfil. Anterior a la izquierda. Ángulos del dibujo cualitativos.', { cls: 'sm' });
+  out.innerHTML = K('Posición', lab) + '<div>' + txt + '</div>' + SRC(mode === 'fe' ? 'El reparto por niveles del dibujo sigue las barras de la figura anterior. Los totales son los de Neumann. Es un modelo para visualizar, no una medición.' : 'Los centímetros son los de Neumann (cap. 9). Los ángulos por nivel del dibujo son cualitativos.'); });
+  window.__movInit = () => { s = 0; const r = document.getElementById('mv-s'); if (r) { r.value = 0; r.dispatchEvent(new Event('input')) } };
+  rngB('mv-s', v => { s = v; draw() })(); segB('Modo', v => { mode = v; draw() }); draw() })();
+
+/* 7. movimiento acoplado: vista posterior */
+(function () { let s = 60; const draw = mk('aco', (S, out) => { const A = LL(S), t = s / 100;
+  const W = LVDATA.inc, tw = W.reduce((a, b) => a + b, 0), TOT = 38;
+  const lv = ['T1', 'C7', 'C6', 'C5', 'C4', 'C3', 'C2', 'C1', 'C0'], H = 40;
+  let cur = [300, 430], a = 0; const P = {};
+  lv.forEach((L, i) => { P[L] = { x: cur[0], y: cur[1], a }; const segi = 7 - i; const up = L === 'C2' ? 44 : L === 'C1' ? 34 : H;
+    cur = [cur[0] + Math.sin(a * Math.PI / 180) * up, cur[1] - Math.cos(a * Math.PI / 180) * up]; if (segi >= 0) a += t * TOT * W[segi] / tw; });
+  const rotK = L => L === 'C1' ? -1 : L === 'C0' ? 0 : L === 'T1' ? 0 : 1;
+  /* cráneo posterior */
+  const c0 = P.C0, gk = AN.G(S.svg, { transform: `translate(${c0.x} ${c0.y}) rotate(${c0.a})` });
+  AN.bone(A, gk, [AN.symm([[0, -190], [56, -186], [100, -160], [124, -116], [130, -66], [122, -24], [104, 4], [94, 12], [88, 34], [78, 24], [56, 12], [26, 8], [0, 10]])]);
+  AN.line(gk, [[-80, -40], [-40, -48], [0, -52], [40, -48], [80, -40]], { op: .45 }); AN.bone(A, gk, [{ e: [0, -52, 8, 6] }], { small: true });
+  ['T1', 'C7', 'C6', 'C5', 'C4', 'C3'].forEach(L => { const p = P[L], g = AN.G(S.svg, { transform: `translate(${p.x} ${p.y}) rotate(${p.a}) scale(1.25)` });
+    SH.vertPost(A, g, L === 'T1' ? 7 : +L[1], { sx: -t * 10 * rotK(L) }); });
+  /* C2 y C1 */
+  const p2 = P.C2, g2 = AN.G(S.svg, { transform: `translate(${p2.x} ${p2.y}) rotate(${p2.a}) scale(1.25)` });
+  AN.bone(A, g2, [AN.symm([[0, -14], [16, -16], [30, -20], [46, -18], [56, -12], [54, -2], [42, 4], [28, 12], [16, 16]]), [[-14, 14], [14, 14], [16 - t * 10, 34], [8 - t * 10, 40], [-t * 10, 34], [-8 - t * 10, 40], [-16 - t * 10, 34]]]);
+  const p1 = P.C1, g1 = AN.G(S.svg, { transform: `translate(${p1.x} ${p1.y}) rotate(${p1.a}) scale(1.25)` });
+  AN.bone(A, g1, [AN.symm([[0, -6], [20, -8], [34, -12], [44, -16], [60, -14], [78, -10], [82, -2], [72, 4], [56, 4], [44, 10], [30, 6], [16, 4], [0, 8]]).map(([x, y]) => [x + (Math.abs(x) < 20 ? t * 8 : 0), y])]);
+  /* flechas de rotación acoplada */
+  const N = NeumannSVG.on(S.svg);
+  if (t !== 0) { const sg = Math.sign(t);
+    const lowP = P.C4; N.motion(lowP.x + 110, lowP.y - 10, 22, sg > 0 ? 120 : 60, sg > 0 ? 300 : -120, { w: 4, color: '#2F6DB5' });
+    S.t(lowP.x + 140, lowP.y - 4, 'C2-C7: rotación\nhomolateral', { cls: 'sm' });
+    N.motion(p1.x - 120, p1.y, 20, sg > 0 ? 60 : 120, sg > 0 ? -120 : 300, { w: 4, color: '#E89E7A' });
+    S.t(p1.x - 250, p1.y - 4, 'C1-C2: rotación\ncontralateral', { cls: 'sm' });
+    N.motion(300, 120, 140, sg > 0 ? -60 : -120, sg > 0 ? -30 : -150, { w: 6 }); }
+  S.t(12, 22, 'Vista posterior. Esquema cualitativo.', { cls: 'mu' }); S.t(20, 450, 'izquierda', { cls: 'sm' }); S.t(580, 450, 'derecha', { cls: 'sm', a: 'end' });
+  const side = t > 0 ? 'derecha' : 'izquierda', opp = t > 0 ? 'izquierda' : 'derecha';
+  out.innerHTML = K('Inclinación', t === 0 ? 'neutra' : 'hacia la ' + side) + (t === 0 ? '<div>Muevan el deslizador para inclinar la cabeza y el cuello.</div>' :
+    K('C2-C7', 'rotación acoplada hacia la ' + side + ' (homolateral). Las espinosas se desplazan hacia la ' + opp + ', el lado convexo.') + K('C0-C2', 'rotación acoplada hacia la ' + opp + ' (contralateral), sobre todo en C1-C2.')) +
+    '<div>La orientación de las carillas a unos 45° obliga a que inclinación y rotación vayan juntas en la región media e inferior. Es el patrón de acoplamiento más aceptado y menos discutido de toda la columna (Neumann, cap. 9). En la región superior el acoplamiento es contralateral: en el estudio in vivo de Ishii y cols. la rotación acoplada de C1-C2 llegó a 17,1° en sentido opuesto a la inclinación.</div>' +
+    SRC('Ishii T y cols. Spine. 2006;31(2):155-60. Ángulos del dibujo cualitativos.'); });
+  rngB('ac-s', v => { s = v; draw() })(); draw() })();
+
+/* 8. músculos del cuello en perfil: líneas de acción respecto a los ejes */
+const MUS = {
+  scm: ['Esternocleidomastoideo', 'XXX', 'X', 'XXX', 'XXX (CL)', 'Dos cabezas, esternal y clavicular, hasta la apófisis mastoides y la mitad lateral de la línea nucal superior. Unilateral: inclinador dominante y rotador contralateral. Bilateral: por debajo de C3 pasa muy por delante de los ejes y flexiona la columna media e inferior. Por encima de C3 pasa justo por detrás y extiende un poco la región superior. Esa combinación favorece la cabeza adelantada (Neumann, cap. 10).'],
+  esca: ['Escaleno anterior', 'X', '-', 'XXX', 'X (IL)', 'De los tubérculos anteriores de las transversas de C3 a C6 a la primera costilla. Tiene el mayor brazo de momento de inclinación de los escalenos. Su capacidad de rotación es escasa porque su línea de fuerza casi corta el eje vertical. Con el cuello fijo eleva las costillas en la inspiración (Neumann, cap. 10).'],
+  escm: ['Escaleno medio', '-', '-', 'XX', 'X (IL)', 'De los tubérculos posteriores de las transversas cervicales a la primera costilla. Entre el anterior y el medio pasa el plexo braquial. Los escalenos actúan como tirantes que dan estabilidad vertical a la columna media e inferior (Neumann, cap. 10).'],
+  lcol: ['Largo del cuello', 'XX', '-', 'X', '-', 'Pegado a la cara anterior de los cuerpos, del atlas a T3. Funciona como un ligamento longitudinal anterior activo. Sus fibras anteriores flexionan y reducen la lordosis y las laterales estabilizan con los escalenos (Neumann, cap. 10).'],
+  lcap: ['Largo de la cabeza', 'XX', '-', 'X', '-', 'De los tubérculos anteriores de C3 a C6 a la parte basilar del occipital. Flexiona y estabiliza la región craneocervical superior. La inclinación es una acción secundaria (Neumann, cap. 10).'],
+  splc: ['Esplenio de la cabeza', '-', 'XXX', 'XX', 'XXX (IL)', 'Del ligamento nucal y las espinosas de C7 a T3 hasta la mastoides y la línea nucal superior, por debajo del esternocleidomastoideo. Unilateral: inclinación y rotación homolateral, y es el rotador dominante del par. Bilateral: extiende la región craneocervical superior (Neumann, cap. 10).'],
+  ssc: ['Semiespinoso de la cabeza', '-', 'XXX', 'XX', 'X (CL)', 'De las transversas de C7 a T7 al occipital, entre las líneas nucales. Con el semiespinoso del cuello produce entre el 35 y el 40 % del momento extensor craneocervical, por su tamaño, su brazo de momento y su dirección casi vertical (Neumann, cap. 10).'],
+  elev: ['Elevador de la escápula', '-', 'XX', 'XX', 'XX (IL)', 'De las transversas de C1 a C4 al ángulo superior de la escápula. Con la escápula fija actúa sobre la columna cervical.'],
+  trap: ['Trapecio, porción superior', '-', 'XX', 'XX', 'XX (CL)', 'De la protuberancia occipital externa, la línea nucal superior y el ligamento nucal al tercio lateral de la clavícula.']
+};
+/* trayectorias musculares en perfil a partir de la columna articulada y el tórax */
+function musPaths(col, th) {
+  const C0 = q => col.g('C0', [q[0] * 2.6, q[1] * 2.6]), V = (lv, q) => col.g(lv, q), sp = lv => col.g(lv, col.lv[lv].sp);
+  const at = lv => V(lv, [6, -4]), pt = lv => V(lv, [28, -2]);
+  const M = {
+    scm: [[C0([16, 6]), V('C3', [-40, 0]), V('C6', [-110, 0]), th.man], [C0([20, 2]), V('C4', [-50, 6]), V('C7', [-120, 0]), th.clav]],
+    esca: [[at('C3'), V('C5', [-6, 14]), th.rib1], [at('C4'), th.rib1], [at('C5'), th.rib1], [at('C6'), th.rib1]],
+    escm: [[pt('C2'), V('C5', [2, 14]), th.rib1p], [pt('C4'), th.rib1p], [pt('C6'), th.rib1p]],
+    lcol: [[V('C1', [-30, 6]), V('C2', [-28, 10]), V('C4', [-28, 0]), V('C6', [-28, 0]), V('T1', [-30, 0]), V('T3', [-30, 0])]],
+    lcap: [[C0([-8, 2]), V('C1', [-30, 12]), V('C2', [-30, 16]), V('C4', [-30, -2]), V('C6', [-26, -6])]],
+    splc: [[C0([22, -6]), V('C3', [96, 0]), V('C6', [110, 6]), sp('T1'), sp('T3')]],
+    splcv: [[V('C1', [6, 0]), V('C3', [44, 0]), V('C6', [96, 14]), sp('T3')]],
+    ssc: [[C0([52, -20]), V('C2', [92, -10]), V('C5', [84, 0]), V('C7', [70, 4]), V('T2', [40, -4])]],
+    sscv: [[sp('C2'), V('C4', [74, 8]), V('C6', [62, 6]), V('T2', [34, 0])]],
+    elev: [[V('C1', [6, 0]), V('C3', [40, 10]), V('C6', [80, 30]), th.scap], [pt('C3'), th.scap]],
+    trap: [[C0([62, -34]), V('C3', [122, 0]), V('C6', [134, 10]), sp('C7'), th.clavL]],
+    rca: [[C0([-6, 4]), V('C1', [-22, -6])]],
+    rcl: [[C0([8, 6]), V('C1', [4, -4])]],
+    rcpmaj: [[C0([38, -8]), sp('C2')]],
+    rcpmin: [[C0([30, -10]), V('C1', [64, 4])]],
+    ocs: [[C0([36, -16]), V('C1', [4, -2])]],
+    oci: [[V('C1', [6, 2]), sp('C2')]]
+  };
+  const W = { scm: 20, esca: 11, escm: 11, lcol: 9, lcap: 11, splc: 18, splcv: 12, ssc: 18, sscv: 13, elev: 13, trap: 16, rca: 7, rcl: 7, rcpmaj: 9, rcpmin: 7, ocs: 8, oci: 9 };
+  return { M, W };
+}
+(function () { let sel = 'scm'; const draw = mk('mus', (S, out) => {
+  const thG = AN.G(S.svg);
+  const col = headNeck(S, NEUTRO, { base: [410, 480], s: .54 });
+  const A = LL(S), N = NeumannSVG.on(S.svg);
+  const th = SH.thorax(A, thG, { g: col.g, s: .54 });
+  const { M, W } = musPaths(col, th), V = (lv, q) => col.g(lv, q);
+  const order = ['trap', 'splc', 'ssc', 'elev', 'escm', 'esca', 'lcap', 'lcol', 'scm'];
+  order.forEach(id => { const g = AN.G(S.svg, { class: 'musc' + (id === sel ? '' : ' dimm') });
+    M[id].forEach((pts, i) => N.muscle(pts, W[id] * (i ? .7 : 1), { focus: id === sel, parent: g, tendon: [0.1, 0.1] })); });
+  /* ejes y brazo de momento */
+  const ax0 = col.g('C1', [2, -8]), ax5 = (() => { const a = V('C5', [0, -17]), b = V('C6', [0, 16]); return [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2]; })();
+  const line = M[sel][0];
+  const mom = (ax) => { for (let i = 0; i < line.length - 1; i++) { const p0 = line[i], p1 = line[i + 1]; if ((p0[1] - ax[1]) * (p1[1] - ax[1]) <= 0 && p0[1] !== p1[1]) {
+      const tt = (ax[1] - p0[1]) / (p1[1] - p0[1]), P = [p0[0] + tt * (p1[0] - p0[0]), ax[1]], d = [p1[0] - p0[0], p1[1] - p0[1]], m = Math.hypot(...d);
+      return { M: ((P[0] - ax[0]) * d[1] - (P[1] - ax[1]) * d[0]) / m, a: p0, b: p1 }; } } return null; };
+  const onSkull = ['scm', 'lcap', 'splc', 'ssc', 'trap'].includes(sel);
+  const momLine = (ax) => { const p0 = line[0], p1 = line[1], d = [p1[0] - p0[0], p1[1] - p0[1]], m = Math.hypot(...d); return { M: ((p0[0] - ax[0]) * d[1] - (p0[1] - ax[1]) * d[0]) / m, a: p0, b: p1 }; };
+  const r0 = onSkull ? momLine(ax0) : null, r5 = mom(ax5);
+  [[ax0, r0], [ax5, r5]].forEach(([ax, r]) => { if (r) N.arm(ax, r.a, r.b); N.axis(ax[0], ax[1]); });
+  S.t(ax0[0] + 60, ax0[1] - 40, 'eje C0-C1', { cls: 'sm' }); S.E('line', { x1: ax0[0] + 58, y1: ax0[1] - 44, x2: ax0[0] + 5, y2: ax0[1] - 4, class: 'ld' }); S.t(ax5[0] + 150, ax5[1] + 30, 'eje C5-C6', { cls: 'sm' }); S.E('line', { x1: ax5[0] + 148, y1: ax5[1] + 26, x2: ax5[0] + 5, y2: ax5[1] + 3, class: 'ld' });
+  S.t(12, 22, 'Perfil. Anterior a la izquierda. Músculo seleccionado en salmón.', { cls: 'mu' });
+  const act = r => r ? (Math.abs(r.M) < 3 ? 'casi sobre el eje' : r.M > 0 ? 'por detrás del eje: extensor' : 'por delante del eje: flexor') : 'no cruza este eje';
+  const m = MUS[sel];
+  out.innerHTML = K('Músculo', m[0]) + K('Línea de acción en C0-C1', act(r0)) + K('Línea de acción en C5-C6', act(r5)) +
+    '<table class="mini"><thead><tr><th>Flex.</th><th>Ext.</th><th>Incl.</th><th>Rot.</th></tr></thead><tbody><tr><td>' + m[1] + '</td><td>' + m[2] + '</td><td>' + m[3] + '</td><td>' + m[4] + '</td></tr></tbody></table>' +
+    '<div>' + m[5] + '</div>' + SRC('Tabla: material de clase (XXX gran activación, XX moderada, X leve, IL homolateral, CL contralateral). La posición respecto a los ejes sale del dibujo.'); });
+  segB('Músculo', v => { sel = v; draw() }); draw() })();
+
+/* 9. suboccipitales, vista posterior */
+const SUB = {
+  rcpmin: ['Recto posterior menor de la cabeza', ['-', 'XX', 'X'], ['-', '-', '-'], 'Del tubérculo posterior del atlas a la parte medial de la línea nucal inferior. Actúa solo sobre C0-C1.'],
+  rcpmaj: ['Recto posterior mayor de la cabeza', ['-', 'XXX', 'XX'], ['-', 'XXX', 'XX (IL)'], 'De la espinosa del axis a la parte lateral de la línea nucal inferior. Extiende C0-C1 y C1-C2 y rota C1-C2 hacia su lado.'],
+  oci: ['Oblicuo inferior de la cabeza', ['-', '-', '-'], ['-', 'XX', 'XXX (IL)'], 'De la espinosa del axis a la transversa del atlas. Es el rotador principal de C1-C2 hacia su lado y no cruza C0-C1.'],
+  ocs: ['Oblicuo superior de la cabeza', ['-', 'XXX', 'XXX'], ['-', '-', '-'], 'De la transversa del atlas al occipital, entre las líneas nucales. Extiende e inclina C0-C1.']
+};
+(function () { let sel = 'rcpmaj'; const draw = mk('sub', (S, out) => { const A = LL(S), N = NeumannSVG.on(S.svg), cx = 320;
+  const g = AN.G(S.svg, { transform: `translate(${cx} 30)` });
+  AN.bone(A, g, [AN.symm([[0, -40], [90, -40], [160, -30], [208, -6], [226, 26], [222, 60], [204, 88], [196, 120], [184, 106], [160, 92], [118, 80], [64, 70], [26, 66], [0, 68]])]);
+  AN.line(g, [[-150, 40], [-90, 30], [-40, 26], [-6, 30]], { op: .55, w: 1.1 }); AN.line(g, [[150, 40], [90, 30], [40, 26], [6, 30]], { op: .55, w: 1.1 });
+  AN.line(g, [[-140, 64], [-90, 56], [-40, 54], [-6, 58]], { op: .55, w: 1.1 }); AN.line(g, [[140, 64], [90, 56], [40, 54], [6, 58]], { op: .55, w: 1.1 });
+  AN.bone(A, g, [{ e: [0, 30, 9, 7] }], { small: true });
+  AN.bone(A, g, [AN.symm([[0, 120], [26, 116], [52, 110], [74, 104], [100, 100], [128, 98], [136, 108], [124, 118], [96, 120], [70, 126], [44, 128], [20, 128], [8, 134], [0, 136]])]);
+  AN.bone(A, g, [AN.symm([[0, 168], [24, 166], [50, 162], [70, 170], [66, 186], [44, 196], [26, 206], [18, 228], [10, 236], [0, 228]])]);
+  AN.bone(A, g, [AN.symm([[0, 262], [22, 260], [44, 258], [58, 266], [50, 278], [30, 284], [16, 294], [10, 308], [0, 302]])]);
+  S.t(cx - 205, 155, 'C1', { cls: 'b' }); S.t(cx - 120, 215, 'C2', { cls: 'b' }); S.t(cx - 100, 300, 'C3', { cls: 'b' });
+  const P = (x, y) => [cx + x, 30 + y];
+  const MM = {
+    ocs: [[P(-120, 104), P(-118, 70), P(-112, 44)], [P(120, 104), P(118, 70), P(112, 44)]],
+    rcpmin: [[P(-6, 128), P(-20, 96), P(-32, 60)], [P(6, 128), P(20, 96), P(32, 60)]],
+    rcpmaj: [[P(-10, 216), P(-40, 140), P(-78, 64)], [P(10, 216), P(40, 140), P(78, 64)]],
+    oci: [[P(-14, 214), P(-70, 160), P(-122, 116)], [P(14, 214), P(70, 160), P(122, 116)]]
+  };
+  const Wd = { ocs: 15, rcpmin: 15, rcpmaj: 18, oci: 20 };
+  ['oci', 'rcpmaj', 'rcpmin', 'ocs'].forEach(id => { const gm = AN.G(S.svg, { class: 'musc' + (id === sel ? '' : ' dimm') }); MM[id].forEach(p => N.muscle(p, Wd[id], { focus: id === sel, parent: gm, tendon: [0.12, 0.12] })); });
+  S.leftX = 150; S.rightX = 150;
+  S.LB([['ocs', 'Oblicuo superior', 'l', ...P(-118, 74)], ['rcpmin', 'Recto posterior menor', 'l', ...P(-22, 100)], ['rcpmaj', 'Recto posterior mayor', 'r', ...P(48, 150)], ['oci', 'Oblicuo inferior', 'r', ...P(90, 176)],
+    ['lni', 'Línea nucal inferior', 'r', ...P(120, 58)], ['lns', 'Línea nucal superior', 'r', ...P(130, 36)], ['eop', 'Protuberancia occipital externa', 'l', ...P(-6, 30)]]);
+  S.svg.querySelectorAll('[data-p="' + sel + '"]').forEach(e => e.classList.add('on'));
+  S.t(12, 22, 'Vista posterior. Músculos de ambos lados.', { cls: 'mu' });
+  const m = SUB[sel];
+  out.innerHTML = K('Músculo', m[0]) + '<table class="mini"><thead><tr><th></th><th>Flex.</th><th>Ext.</th><th>Incl. / Rot.</th></tr></thead><tbody><tr><td>C0-C1</td><td>' + m[1].join('</td><td>') + '</td></tr><tr><td>C1-C2</td><td>' + m[2].join('</td><td>') + '</td></tr></tbody></table>' +
+    '<div>' + m[3] + '</div><div>Los suboccipitales dan un control fino de C0-C1 y C1-C2. Su alta densidad de husos musculares sugiere un papel en la información sobre la posición y la velocidad de la cabeza, el equilibrio y la coordinación de ojos y cabeza (Neumann, cap. 10).</div>' +
+    SRC('Tabla: material de clase y Neumann, Fig. 10.29. En C0-C1 la última columna es inclinación y en C1-C2, rotación axial.'); });
+  segB('Suboccipital', v => { sel = v; draw() }); draw() })();
+
+</script><script>
+/* Figuras interactivas 10 y 11: artrocinemática con estructuras que limitan, y movimientos con los músculos que los producen. Región alta (C0-C2) y baja (C2-C7). */
+const TAUT = '#D91A14';
+function wavy(pts, amp, n) { /* línea ondulada para tejido laxo */
+  const out = []; for (let i = 0; i < pts.length - 1; i++) { const a = pts[i], b = pts[i + 1], dx = b[0] - a[0], dy = b[1] - a[1], L = Math.hypot(dx, dy), nx = -dy / L, ny = dx / L, k = n || Math.max(3, Math.round(L / 10));
+    for (let j = 0; j < k; j++) { const t = j / k, s = Math.sin(t * Math.PI * 2 * (k / 2)) * amp * (j % 2 ? 1 : -1); out.push([a[0] + dx * t + nx * s, a[1] + dy * t + ny * s]); } }
+  out.push(pts[pts.length - 1]); return out; }
+function tissue(A, p, pts, w, st) { return st === 'lax' ? AN.band(A, p, wavy(pts, 2.2), w * .7, { state: 'lax' }) : AN.band(A, p, pts, w, { state: st }); }
+function sArrow(S, a, b, col) { S.E('line', { x1: a[0], y1: a[1], x2: b[0], y2: b[1], stroke: col || '#2F6DB5', 'stroke-width': 3, 'stroke-linecap': 'round', 'marker-end': 'url(#' + S.svg.id + '-ah)' }); }
+function place(S, g, pt, to) { g.setAttribute('transform', `translate(${to[0] - pt[0]} ${to[1] - pt[1]})`); }
+const lab = (S, x, y, t, cls) => S.t(x, y, t, { cls: cls || 'sm' });
+
+const ART = {
+  flex: { alta: ['C0-C1: los cóndilos convexos ruedan hacia delante sobre las carillas cóncavas del atlas y se deslizan un poco hacia atrás. C1-C2: el anillo del atlas se inclina hacia delante, como un separador entre el cráneo y el axis.', 'Membrana tectoria, membrana atlantooccipital posterior (C0-C1) y ligamento transverso del atlas cuando contacta con el diente (C1-C2).', 'Unos 5° en C0-C1 y 5° en C1-C2'],
+    baja: ['Las carillas inferiores de cada vértebra se deslizan hacia arriba y adelante sobre las superiores de la de abajo. Se estiran todas las partes de la cápsula, se reduce el contacto articular y se separan láminas y espinosas.', 'Ligamento nucal, interespinosos y supraespinosos, ligamento amarillo, parte posterior del anillo fibroso y longitudinal posterior. La parte anterior del anillo se comprime.', '35-40° de C2 a C7'] },
+  ext: { alta: ['C0-C1: los cóndilos ruedan hacia atrás y se deslizan un poco hacia delante. C1-C2: el anillo del atlas se inclina hacia atrás.', 'Membrana y ligamento atlantooccipitales anteriores (C0-C1), ligamento de Barkow, membrana atlantoaxoidea anterior y contacto del arco anterior del atlas con el diente (C1-C2).', 'Unos 10° en C0-C1 y 10° en C1-C2'],
+    baja: ['Las carillas inferiores se deslizan hacia abajo y atrás. Se estira sobre todo la cápsula anterior y lateral, y al final del recorrido la carga se concentra en la parte inferior de las cigoapofisarias.', 'Las propias cigoapofisarias, las vísceras cervicales, la parte anterior del anillo fibroso y el longitudinal anterior.', '55-60° de C2 a C7'] },
+  rot: { alta: ['El atlas, con el ligamento transverso, gira alrededor del diente. Sus carillas inferiores, planas, se deslizan en una trayectoria curva sobre los hombros de las superiores del axis: la izquierda hacia delante y la derecha hacia atrás al girar a la derecha. C0-C1 casi no rota, así que el cráneo sigue al atlas casi grado a grado.', 'Ligamentos alares, sobre todo el contralateral, transverso del atlas, atlantoaxoideo accesorio y atlantodentario anterior, además de las cápsulas y los músculos. La rotación completa estira las dos arterias vertebrales.', '35-40° por lado en C1-C2, rotación insignificante en C0-C1'],
+    baja: ['La orientación de las carillas a 45° guía el giro. Las inferiores se deslizan hacia atrás y algo hacia abajo del lado de la rotación, y hacia delante y algo hacia arriba del lado contrario. La espinosa se desplaza al lado contrario y el giro se acompaña de inclinación homolateral.', 'Anillo fibroso y articulaciones cigoapofisarias.', '30-35° por lado de C2 a C7, más en los segmentos craneales'] },
+  inc: { alta: ['C0-C1: los cóndilos ruedan un poco hacia el lado de la inclinación sobre las carillas del atlas y se deslizan algo en sentido contrario, como corresponde a una superficie convexa sobre otra cóncava. En C1-C2 la inclinación es insignificante. El recto lateral de la cabeza es el inclinador propio de C0-C1.', 'Ligamentos atlantooccipitales laterales y occipital transverso (material de clase). Según Neumann, los alares probablemente frenan los extremos de todos los movimientos de C0-C1.', 'Unos 5° en C0-C1'],
+    baja: ['Las carillas inferiores del lado de la inclinación se deslizan hacia abajo y algo hacia atrás, y las del lado contrario hacia arriba y algo hacia delante. La inclinación se acompaña de rotación homolateral.', 'Ligamentos intertransversos y anillo fibroso del lado contrario, y articulaciones cigoapofisarias.', '30-35° por lado de C2 a C7'] }
+};
+
+(function () { let mv = 'flex', rg = 'alta', s = 80;
+  const draw = mk('art', (S, out) => { const A = LL(S), N = NeumannSVG.on(S.svg), t = s / 100;
+    let note = '';
+    if ((mv === 'flex' || mv === 'ext') && rg === 'alta') {
+      const f = mv === 'flex' ? -1 : 1, mag = mv === 'flex' ? 5 : 10, ang = Object.assign({}, NEUTRO);
+      ang['C0-C1'] += f * mag * t * 1.5; ang['C1-C2'] += f * mag * t * 1.5;
+      const g = AN.G(S.svg), col = SH.column(A, g, { base: [0, 0], s: 1.6, baseA: -18, ang, skullOpt: { noMand: true } });
+      place(S, g, col.g('C1', [0, 0]), [330, 300]); g.querySelectorAll('.skull').forEach(e => e.setAttribute('opacity', .6));
+      const P = q => { const r = col.g(...q); return r; }, C0 = q => col.g('C0', [q[0] * 2.6, q[1] * 2.6]);
+      const st = (a, b) => mv === 'flex' ? a : b;
+      tissue(A, g, [col.g('C1', [48, -3]), C0([24, -1])], 6, st('tense', 'lax'));
+      tissue(A, g, [col.g('C1', [-34, -8]), C0([-6, 1])], 6, st('lax', 'tense'));
+      tissue(A, g, [C0([62, -34]), col.g('C1', [66, 6]), col.g('C2', col.lv.C2.sp), col.g('C3', col.lv.C3.sp)], 4, st('tense', 'lax'));
+      const J = col.g('C1', [2, -8]), J2 = col.g('C1', [2, 12]);
+      AN.G(g); N.motion(J[0], J[1] - 4, 40, mv === 'flex' ? -40 : -140, mv === 'flex' ? -140 : -40, { w: 5, parent: g });
+      const sl = mv === 'flex' ? 1 : -1; sArrow(S, [J[0] - 26 * sl + 330 - col.g('C1', [0, 0])[0], J[1] + 4 + 300 - col.g('C1', [0, 0])[1]], [J[0] + 26 * sl + 330 - col.g('C1', [0, 0])[0], J[1] + 4 + 300 - col.g('C1', [0, 0])[1]]);
+      const off = [330 - col.g('C1', [0, 0])[0], 300 - col.g('C1', [0, 0])[1]], Jg = [J[0] + off[0], J[1] + off[1]];
+      lab(S, Jg[0] - 16, Jg[1] - 52, 'rueda', 'val'); lab(S, Jg[0] - 92, Jg[1] + 10, 'desliza', 'val');
+      const pm = col.g('C1', [48, -3]), am = col.g('C1', [-34, -8]), nu = col.g('C2', col.lv.C2.sp);
+      lab(S, pm[0] + off[0] + 40, pm[1] + off[1] + 16, 'membrana atlantooccipital posterior');
+      lab(S, am[0] + off[0] - 190, am[1] + off[1] + 40, 'membrana atlantooccipital anterior');
+      lab(S, nu[0] + off[0] + 40, nu[1] + off[1] + 30, 'ligamento nucal');
+      note = 'Ángulos del dibujo aumentados un 50 % para que se vean.';
+    } else if ((mv === 'flex' || mv === 'ext') && rg === 'baja') {
+      const f = mv === 'flex' ? -1 : 1, tot = mv === 'flex' ? 37.5 : 57.5, w = LVDATA.sag.slice(2), tw = w.reduce((a, b) => a + b, 0), ang = Object.assign({}, NEUTRO);
+      SEG.slice(2).forEach((n, i) => ang[n] += f * tot * t * w[i] / tw);
+      const g = AN.G(S.svg), col = SH.column(A, g, { base: [0, 0], s: 1.12, baseA: -18, ang, skull: false });
+      place(S, g, col.g('C5', [0, 0]), [320, 270]);
+      const st = (a, b) => mv === 'flex' ? a : b;
+      const lv = ['C2', 'C3', 'C4', 'C5', 'C6', 'C7'];
+      tissue(A, g, lv.map(L => col.g(L, [-28, 0])).concat([col.g('T1', [-28, 0])]), 4, st('lax', 'tense'));
+      tissue(A, g, lv.map(L => col.g(L, col.lv[L].sp)), 4, st('tense', 'lax'));
+      const dir = mv === 'flex' ? -1 : 1, d = [25 / 31.4, 19 / 31.4];
+      const off = (() => { const a = col.g('C5', [0, 0]); return [320 - a[0], 270 - a[1]]; })();
+      ['C3', 'C4', 'C5', 'C6', 'C7'].forEach(L => { const m = [41, -16 - 6]; const a = col.g(L, [m[0] - d[0] * 9 * dir, m[1] - d[1] * 9 * dir]), b = col.g(L, [m[0] + d[0] * 9 * dir, m[1] + d[1] * 9 * dir]);
+        sArrow(S, [a[0] + off[0], a[1] + off[1]], [b[0] + off[0], b[1] + off[1]]); });
+      const sp4 = col.g('C4', col.lv.C4.sp), an = col.g('C4', [-28, 0]), fc = col.g('C3', [60, -30]);
+      lab(S, sp4[0] + off[0] + 18, sp4[1] + off[1] - 6, 'ligamento nucal e interespinosos');
+      lab(S, an[0] + off[0] - 30, an[1] + off[1], 'longitudinal anterior', 'sm'); S.svg.lastChild.setAttribute('text-anchor', 'end');
+      lab(S, fc[0] + off[0] + 30, fc[1] + off[1] - 20, mv === 'flex' ? 'las carillas inferiores suben y van hacia delante' : 'las carillas inferiores bajan y van hacia atrás', 'val');
+      note = 'Ángulos del dibujo según los totales de Neumann, repartidos como en la figura 6.';
+    } else if (mv === 'rot' && rg === 'alta') {
+      const a = 37.5 * t, T = [360, 225, 1.35], D = [0, -54];
+      const g = AN.G(S.svg, { transform: AN.tf(T[0], T[1], 0, T[2]) });
+      const gh = AN.G(g, { opacity: .55 }); AN.facet(A, gh, [SH.ATL.facI, AN.mirror(SH.ATL.facI)]);
+      const ga = AN.G(g, { transform: `rotate(${a} ${D[0]} ${D[1]})` }); SH.atlasSup(A, ga);
+      AN.band(A, ga, [[-46, -34], [-24, -30], [0, -27], [24, -30], [46, -34]], 7, {});
+      AN.bone(A, g, [{ e: [0, -54, 24, 22] }], { small: true }); AN.facet(A, g, [{ e: [0, -74, 12, 3.5] }]);
+      const R = q => AN.rot(q, D, a);
+      tissue(A, g, [[-14, -62], R([-50, -66])], 7, t > .15 ? 'tense' : null); tissue(A, g, [[14, -62], R([50, -66])], 7, t > .15 ? 'lax' : null);
+      N.axis(T[0] + D[0] * T[2], T[1] + D[1] * T[2]);
+      N.motion(T[0], T[1] + D[1] * T[2], 112, -115, -115 + Math.max(a, 8) * 1.4, { w: 6 });
+      [[-82, -24, -1], [82, -24, 1]].forEach(([x, y]) => { const p0 = R([x, y]), r = [p0[0] - D[0], p0[1] - D[1]], L = Math.hypot(...r), tg = [-r[1] / L, r[0] / L];
+        sArrow(S, [T[0] + (p0[0] - tg[0] * 16) * T[2], T[1] + (p0[1] - tg[1] * 16) * T[2]], [T[0] + (p0[0] + tg[0] * 16) * T[2], T[1] + (p0[1] + tg[1] * 16) * T[2]]); });
+      lab(S, 20, 90, 'alar izquierdo\n(contralateral): tenso', 'val red'); lab(S, 590, 90, 'alar derecho: laxo');
+      lab(S, T[0] + 150, T[1] + 120, 'carillas del axis\n(debajo, en azul pálido)');
+      lab(S, 14, 420, 'Vista superior. Anterior arriba. Rotación hacia la derecha alrededor del diente.', 'mu');
+      note = 'Ángulo real del dibujo: ' + fx(Math.round(a)) + '°.';
+    } else if (mv === 'rot' && rg === 'baja') {
+      const a = 12 * t, T = [360, 250, 1.6], c = [0, -70];
+      const g = AN.G(S.svg, { transform: AN.tf(T[0], T[1], 0, T[2]) });
+      const gl = AN.G(g, { opacity: .45, transform: 'translate(0 8)' }); SH.vertSup(A, gl);
+      const gu = AN.G(g, { transform: `rotate(${a} ${c[0]} ${c[1]})` }); SH.vertSup(A, gu);
+      [[-60, -24], [60, -24]].forEach(q => { const p0 = AN.rot(q, c, a), r = [p0[0] - c[0], p0[1] - c[1]], L = Math.hypot(...r), tg = [-r[1] / L, r[0] / L];
+        sArrow(S, [T[0] + (p0[0] - tg[0] * 14) * T[2], T[1] + (p0[1] - tg[1] * 14) * T[2]], [T[0] + (p0[0] + tg[0] * 14) * T[2], T[1] + (p0[1] + tg[1] * 14) * T[2]]); });
+      N.motion(T[0], T[1] + c[1] * T[2], 175, -112, -112 + Math.max(a, 4) * 3, { w: 6 });
+      lab(S, T[0] + 150, T[1] - 20, 'lado derecho: la carilla\ninferior va hacia atrás', 'val'); lab(S, T[0] - 290, T[1] - 20, 'lado izquierdo: la carilla\ninferior va hacia delante', 'val');
+      lab(S, T[0] + 80, T[1] + 120, 'la espinosa se desplaza\nal lado contrario');
+      lab(S, 14, 420, 'Vista superior de C4 (girada) sobre C5 (atenuada). Rotación hacia la derecha.', 'mu');
+      note = 'Ángulo del dibujo exagerado (' + fx(Math.round(a)) + '°) para que se vea el deslizamiento.';
+    } else if (mv === 'inc' && rg === 'alta') {
+      const a = 10 * t, T = [250, 40, 1.7];
+      const g = AN.G(S.svg, { transform: AN.tf(T[0], T[1], 0, T[2]) });
+      const k = SH.coronal(A, g, { occRot: a, noCruc: true, noApic: true, lig: { alar: { l: t > .3 ? 'tense' : null, r: t > .3 ? 'lax' : null } } });
+      const R = k.R;
+      tissue(A, g, [[40, 108], R([46, 76])], 5, t > .2 ? 'tense' : null); tissue(A, g, [[200, 108], R([194, 76])], 5, t > .2 ? 'lax' : null);
+      const N2 = NeumannSVG.on(S.svg); N2.muscle([[T[0] + 196 * T[2], T[1] + 112 * T[2]], AN.rot([T[0] + 186 * T[2], T[1] + 80 * T[2]], [T[0] + 120 * T[2], T[1] + 98 * T[2]], a)], 14, { focus: true, tendon: [.15, .15] });
+      [[80, 92], [160, 92]].forEach(q => { const p0 = R(q); N.motion(T[0] + p0[0] * T[2], T[1] + (p0[1] + 6) * T[2], 26, 200, 340, { w: 4 });
+        sArrow(S, [T[0] + (p0[0] + 10) * T[2], T[1] + (p0[1] + 26) * T[2]], [T[0] + (p0[0] - 10) * T[2], T[1] + (p0[1] + 26) * T[2]]); });
+      lab(S, 20, 120, 'ligamento atlantooccipital\nlateral izquierdo: tenso', 'val red'); lab(S, 600, 250, 'recto lateral\nde la cabeza', 'val or');
+      lab(S, 590, 120, 'rueda hacia la derecha\ny desliza a la izquierda', 'val');
+      lab(S, 14, 430, 'Vista posterior. Inclinación hacia la derecha de C0 sobre C1.', 'mu');
+      note = 'Ángulo del dibujo al doble para que se vea.';
+    } else {
+      const a = 33 * t, W = LVDATA.inc.slice(2), tw = W.reduce((x, y) => x + y, 0);
+      const lvs = ['T1', 'C7', 'C6', 'C5', 'C4', 'C3', 'C2']; let cur = [360, 410], ang = 0; const P = {};
+      lvs.forEach((L, i) => { P[L] = { x: cur[0], y: cur[1], a: ang }; const up = L === 'C2' ? 46 : 44; cur = [cur[0] + Math.sin(ang * Math.PI / 180) * up, cur[1] - Math.cos(ang * Math.PI / 180) * up]; if (i < 6) ang += a * W[5 - i] / tw; });
+      lvs.forEach(L => { const p = P[L], gg = AN.G(S.svg, { transform: `translate(${p.x} ${p.y}) rotate(${p.a}) scale(1.45)` }); SH.vertPost(A, gg, L === 'T1' ? 7 : L === 'C2' ? 7 : +L[1], { sx: L === 'T1' ? 0 : -t * 6 }); });
+      const tip = (L, sd) => { const p = P[L], q = AN.rot([sd * 58 * 1.45, -6 * 1.45], [0, 0], p.a); return [p.x + q[0], p.y + q[1]]; };
+      const pil = (L, sd) => { const p = P[L], q = AN.rot([sd * 32 * 1.45, -16 * 1.45], [0, 0], p.a); return [p.x + q[0], p.y + q[1]]; };
+      ['C7', 'C6', 'C5', 'C4', 'C3', 'C2'].forEach((L, i) => { const lo = lvs[i]; tissue(A, S.svg, [tip(lo, -1), tip(L, -1)], 4, t > .2 ? 'tense' : null); tissue(A, S.svg, [tip(lo, 1), tip(L, 1)], 4, t > .2 ? 'lax' : null);
+        const r = pil(L, 1), l = pil(L, -1); sArrow(S, [r[0] + 8, r[1] - 8], [r[0] + 8, r[1] + 8]); sArrow(S, [l[0] - 8, l[1] + 8], [l[0] - 8, l[1] - 8]); });
+      lab(S, 40, 240, 'intertransversos\nizquierdos: tensos', 'val red'); lab(S, 520, 300, 'lado derecho: las carillas\ninferiores bajan', 'val'); lab(S, 40, 330, 'lado izquierdo: suben', 'val');
+      lab(S, 14, 430, 'Vista posterior de C2 a T1. Inclinación hacia la derecha.', 'mu');
+      note = 'Las espinosas se van al lado convexo por la rotación acoplada.';
+    }
+    if (mv !== 'rot' || rg === 'alta') {}
+    lab(S, 14, 22, { flex: 'Flexión', ext: 'Extensión', rot: 'Rotación', inc: 'Inclinación lateral' }[mv] + ' · región ' + (rg === 'alta' ? 'alta (C0-C2)' : 'baja (C2-C7)'), 'ttl');
+    if (mv === 'flex' || mv === 'ext') lab(S, 14, 430, 'Perfil. Anterior a la izquierda. Rojo: tenso. Gris ondulado: laxo.', 'mu');
+    const d = ART[mv][rg];
+    out.innerHTML = K('Artrocinemática', d[0]) + K('Limitan el movimiento', d[1]) + K('Rango (Neumann, Tabla 9.7)', d[2]) + SRC(note + ' Estructuras limitantes: tabla de la diapositiva 49 y Neumann, cap. 9.'); });
+  segB('Mov-art', v => { mv = v; draw() }); segB('Región-art', v => { rg = v; draw() }); rngB('ar-s', v => { s = v; draw() })(); draw() })();
+
+/* 11. movimientos y músculos que los producen. Vista lateral izquierda: se ven los músculos del lado izquierdo. */
+const MMV = {
+  flex: { alta: [['rca', 'Recto anterior de la cabeza', 'XX', 'flexor de C0-C1'], ['lcap', 'Largo de la cabeza', 'XX', 'flexiona y estabiliza la región superior']],
+    baja: [['scm', 'Esternocleidomastoideo', 'XXX', 'bilateral, por delante de los ejes por debajo de C3'], ['lcol', 'Largo del cuello', 'XX', 'reduce la lordosis'], ['lcap', 'Largo de la cabeza', 'XX', ''], ['esca', 'Escaleno anterior', 'X', 'brazo de momento flexor limitado']] },
+  ext: { alta: [['rcpmaj', 'Recto posterior mayor de la cabeza', 'XXX', 'C0-C1 y C1-C2'], ['ocs', 'Oblicuo superior de la cabeza', 'XXX', 'C0-C1'], ['splc', 'Esplenio de la cabeza', 'XXX', 'bilateral, extiende la región superior'], ['ssc', 'Semiespinoso de la cabeza', 'XXX', ''], ['rcpmin', 'Recto posterior menor de la cabeza', 'XX', 'C0-C1'], ['oci', 'Oblicuo inferior de la cabeza', 'XX', 'C1-C2'], ['scm', 'Esternocleidomastoideo', 'X', 'por encima de C3 pasa justo por detrás de los ejes']],
+    baja: [['splc', 'Esplenio de la cabeza', 'XXX', ''], ['splcv', 'Esplenio del cuello', 'XXX', ''], ['ssc', 'Semiespinoso de la cabeza', 'XXX', ''], ['sscv', 'Semiespinoso del cuello', 'XXX', 'con el de la cabeza, 35-40 % del momento extensor'], [null, 'Longísimo del cuello e iliocostal del cuello', 'XXX', 'no dibujados'], [null, 'Multífidos', 'XXX', 'no dibujados'], ['elev', 'Elevador de la escápula', 'XX', ''], ['trap', 'Trapecio', 'XX', ''], [null, 'Espinales, rotadores e interespinosos', 'XX', 'no dibujados']] },
+  inc: { alta: [['ocs', 'Oblicuo superior de la cabeza', 'XXX', 'C0-C1'], ['rcl', 'Recto lateral de la cabeza', 'XX', 'inclinador propio de C0-C1'], ['rcpmaj', 'Recto posterior mayor de la cabeza', 'XX', 'C0-C1'], ['rca', 'Recto anterior de la cabeza', 'X', ''], ['rcpmin', 'Recto posterior menor de la cabeza', 'X', '']],
+    baja: [['scm', 'Esternocleidomastoideo', 'XXX', 'inclinador dominante'], ['esca', 'Escaleno anterior', 'XXX', 'mayor brazo de momento de los escalenos'], [null, 'Iliocostal del cuello', 'XXX', 'no dibujado'], ['escm', 'Escaleno medio', 'XX', 'y escaleno posterior'], ['splc', 'Esplenio de la cabeza', 'XX', ''], ['splcv', 'Esplenio del cuello', 'XX', ''], ['ssc', 'Semiespinoso de la cabeza', 'XX', ''], ['elev', 'Elevador de la escápula', 'XX', ''], ['trap', 'Trapecio', 'XX', ''], [null, 'Longísimos e intertransversos', 'XX', 'no dibujados'], ['lcol', 'Largo del cuello', 'X', ''], ['lcap', 'Largo de la cabeza', 'X', ''], ['sscv', 'Semiespinoso del cuello', 'X', '']] },
+  ril: { alta: [['oci', 'Oblicuo inferior de la cabeza', 'XXX (IL)', 'rotador principal de C1-C2'], ['rcpmaj', 'Recto posterior mayor de la cabeza', 'XX (IL)', 'C1-C2']],
+    baja: [['splc', 'Esplenio de la cabeza', 'XXX (IL)', 'rotador dominante del par de esplenios'], ['splcv', 'Esplenio del cuello', 'XX (IL)', ''], ['elev', 'Elevador de la escápula', 'XX (IL)', ''], [null, 'Longísimos e iliocostal del cuello', 'XX (IL)', 'no dibujados'], ['esca', 'Escaleno anterior', 'X (IL)', 'y los otros escalenos'], ['escm', 'Escaleno medio', 'X (IL)', '']] },
+  rcl: { alta: [['scm', 'Esternocleidomastoideo', 'XXX (CL)', 'actúa sobre toda la región craneocervical'], ['trap', 'Trapecio', 'XX (CL)', ''], ['ssc', 'Semiespinoso de la cabeza', 'X (CL)', 'solo columna cervical, según la tabla de clase']],
+    baja: [['scm', 'Esternocleidomastoideo', 'XXX (CL)', ''], ['trap', 'Trapecio', 'XX (CL)', ''], [null, 'Multífidos y rotadores', 'XX (CL)', 'no dibujados'], ['sscv', 'Semiespinoso del cuello', 'X (CL)', ''], ['ssc', 'Semiespinoso de la cabeza', 'X (CL)', '']] }
+};
+const MVN = { flex: 'Flexión', ext: 'Extensión', inc: 'Inclinación hacia la izquierda', ril: 'Rotación hacia la izquierda', rcl: 'Rotación hacia la derecha' };
+function iconTop(S, x, y, a, lado) { const g = AN.G(S.svg, { transform: `translate(${x} ${y}) rotate(${a})` });
+  AN.el('ellipse', { cx: 0, cy: 0, rx: 34, ry: 42, fill: '#F7E0D0', stroke: '#C79C84', 'stroke-width': 1.4 }, g);
+  AN.el('path', { d: 'M-7,-41 L0,-54 L7,-41 Z', fill: '#F7E0D0', stroke: '#C79C84', 'stroke-width': 1.4 }, g);
+  AN.el('ellipse', { cx: -35, cy: -2, rx: 4, ry: 9, fill: '#F2CDB8', stroke: '#C79C84' }, g); AN.el('ellipse', { cx: 35, cy: -2, rx: 4, ry: 9, fill: '#F2CDB8', stroke: '#C79C84' }, g);
+  S.t(x, y + 66, 'vista superior', { cls: 'sm', a: 'middle' }); S.t(x - 52, y + 4, 'izq.', { cls: 'sm', a: 'end' }); S.t(x + 52, y + 4, 'der.', { cls: 'sm' }); }
+function iconPost(S, x, y, a) { const g = AN.G(S.svg, { transform: `translate(${x} ${y + 40}) rotate(${a}) translate(0 -40)` });
+  AN.el('ellipse', { cx: 0, cy: 0, rx: 34, ry: 40, fill: '#F7E0D0', stroke: '#C79C84', 'stroke-width': 1.4 }, g);
+  AN.el('path', { d: 'M-16,34 L-14,64 M16,34 L14,64', stroke: '#C79C84', 'stroke-width': 1.4, fill: 'none' }, g);
+  S.t(x, y + 84, 'vista posterior', { cls: 'sm', a: 'middle' }); S.t(x - 52, y + 4, 'izq.', { cls: 'sm', a: 'end' }); S.t(x + 52, y + 4, 'der.', { cls: 'sm' }); }
+const LVL = l => l.startsWith('XXX') ? 1 : l.startsWith('XX') ? .78 : .55;
+(function () { let mv = 'flex', rg = 'alta';
+  const draw = mk('mm', (S, out) => { const A = LL(S), N = NeumannSVG.on(S.svg), ang = Object.assign({}, NEUTRO), t = .75;
+    if (mv === 'flex' || mv === 'ext') { const f = mv === 'flex' ? -1 : 1;
+      if (rg === 'alta') { ang['C0-C1'] += f * (mv === 'flex' ? 5 : 10) * t * 1.6; ang['C1-C2'] += f * (mv === 'flex' ? 5 : 10) * t * 1.6; }
+      else { const tot = mv === 'flex' ? 37.5 : 57.5, w = LVDATA.sag.slice(2), tw = w.reduce((a, b) => a + b, 0); SEG.slice(2).forEach((n, i) => ang[n] += f * tot * t * w[i] / tw); } }
+    const thG = AN.G(S.svg), col = headNeck(S, ang, { base: [380, 478], s: .54 }), th = SH.thorax(A, thG, { g: col.g, s: .54 });
+    const { M, W } = musPaths(col, th), act = MMV[mv][rg], on = {}; act.forEach(r => { if (r[0] && !(r[0] in on)) on[r[0]] = LVL(r[2]); });
+    Object.keys(M).forEach(id => { const g = AN.G(S.svg, { class: 'musc', opacity: id in on ? on[id] : .1 }); M[id].forEach((pts, i) => N.muscle(pts, W[id] * (i ? .7 : 1) * (id in on ? 1 : .8), { focus: id in on, parent: g, tendon: [.1, .1] })); });
+    if (mv === 'ril' || mv === 'rcl') { const a = mv === 'ril' ? -35 : 35; iconTop(S, 590, 110, a); N.motion(590, 110, 58, mv === 'ril' ? -60 : -120, mv === 'ril' ? -120 : -60, { w: 5 }); }
+    if (mv === 'inc') { iconPost(S, 590, 90, -22); N.motion(590, 130, 64, -70, -110, { w: 5 }); }
+    if (mv === 'flex' || mv === 'ext') { const ax = rg === 'alta' ? col.g('C1', [2, -8]) : (() => { const a = col.g('C5', [0, -17]), b = col.g('C6', [0, 16]); return [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2]; })(); N.axis(ax[0], ax[1]); }
+    S.t(14, 24, MVN[mv] + ' · región ' + (rg === 'alta' ? 'alta (C0-C2)' : 'baja (C2-C7)'), { cls: 'ttl' });
+    S.t(14, 470, 'Vista lateral izquierda: se ven los músculos del lado izquierdo. En salmón, los que actúan.', { cls: 'sm' });
+    const rows = act.map(r => '<tr><td>' + r[1] + (r[0] ? '' : ' <span class="src">(no dibujado)</span>') + '</td><td>' + r[2] + '</td><td>' + (r[3] && r[3] !== 'no dibujados' && r[3] !== 'no dibujado' ? r[3] : '') + '</td></tr>').join('');
+    const extra = { ril: 'Al girar hacia la izquierda trabajan los rotadores homolaterales izquierdos (IL) y los contralaterales del lado derecho, que aquí no se ven: esternocleidomastoideo y trapecio derechos.', rcl: 'Al girar hacia la derecha trabajan los rotadores contralaterales del lado izquierdo (CL), que son los que se ven, junto con los homolaterales del lado derecho: esplenios, oblicuo inferior y recto posterior mayor derechos.', inc: 'En la inclinación trabajan los músculos del lado hacia el que se inclina la cabeza. Los del lado contrario controlan el recorrido.', flex: 'En la flexoextensión actúan los músculos de los dos lados a la vez.', ext: 'En la flexoextensión actúan los músculos de los dos lados a la vez.' }[mv];
+    out.innerHTML = K('Movimiento', MVN[mv]) + K('Región', rg === 'alta' ? 'craneocervical alta, C0-C1 y C1-C2' : 'columna cervical media e inferior, C2-C7') +
+      '<table class="mini" style="width:100%"><thead><tr><th style="text-align:left">Músculo</th><th>Acción</th><th style="text-align:left">Nota</th></tr></thead><tbody>' + rows + '</tbody></table><div>' + extra + '</div>' +
+      SRC(rg === 'alta' ? 'Región alta: tabla de la diapositiva 58 (Neumann, Fig. 10.29) y texto de Neumann, cap. 10, para esplenio, semiespinoso, largo de la cabeza y esternocleidomastoideo.' : 'Región baja: tablas de las diapositivas 55 y 61. XXX gran activación, XX moderada, X leve, IL homolateral, CL contralateral.'); });
+  segB('Mov-mm', v => { mv = v; draw() }); segB('Región-mm', v => { rg = v; draw() }); draw() })();
+
+</script><script>
+/* 12. Multífidos y músculos cervicales profundos: plano frontal (vista posterior o anterior), descomposición de la fuerza y corte transversal. */
+const PROF = {
+  ssc: { n: 'Semiespinoso del cuello', a: 15, cr: '6 a 8', t: ['-', 'XXX', 'X', 'X (CL)'], ins: 'De las apófisis transversas de T1 a T6 a las espinosas de C2 a C5. Los fascículos que llegan a la espinosa del axis son especialmente gruesos y sirven de base estable a los suboccipitales.', fn: 'Es la capa superficial del grupo transversoespinoso. Con el semiespinoso de la cabeza produce entre el 35 y el 40 % del momento extensor craneocervical, por su tamaño, su brazo de momento y su dirección casi vertical.' },
+  mult: { n: 'Multífidos', a: 20, cr: '2 a 4', t: ['-', 'XXX', 'X', 'XX (CL)'], ins: 'Conjunto de fascículos, no un músculo único, que va del sacro al axis. Cada fascículo sale de la región de la apófisis transversa y articular de una vértebra y llega a la espinosa de otra situada 2 a 4 niveles por encima. Ocupan el canal entre espinosas y transversas, por debajo del semiespinoso.', fn: 'Bilateral: extensión y control fino de cada segmento. Unilateral: inclinación con poca palanca, por su cercanía a la columna, y rotación contralateral secundaria. Desde una transversa fija, el multífido izquierdo lleva la espinosa de encima hacia la izquierda y la cara anterior del cuerpo gira a la derecha.' },
+  rotl: { n: 'Rotador largo', a: 45, cr: '2', t: ['-', 'XX', 'X', 'XX (CL)'], ins: 'De la apófisis transversa de una vértebra a la lámina y la base de la espinosa de la vértebra situada dos niveles por encima. Es la capa más profunda del grupo, junto con el rotador corto.', fn: 'Su fibra oblicua reparte la fuerza a partes iguales entre la componente vertical (extensión) y la horizontal (rotación contralateral). Los rotadores están mejor desarrollados en la región torácica.' },
+  rotb: { n: 'Rotador corto', a: 80, cr: '1', t: ['-', 'XX', 'X', 'XX (CL)'], ins: 'De la apófisis transversa a la lámina y la base de la espinosa de la vértebra inmediatamente superior.', fn: 'Casi horizontal: el 98 % de su fuerza va en dirección horizontal, así que actúa sobre todo como estabilizador y rotador fino del segmento, con escasa capacidad extensora.' },
+  isp: { n: 'Interespinosos', a: 0, cr: '1', t: ['-', 'XX', '-', '-'], ins: 'Pares de fascículos entre espinosas vecinas, a cada lado del ligamento interespinoso, con el que a menudo se confunden. Están más desarrollados en la región cervical.', fn: 'Tienen buena palanca y dirección para extender, pero su tamaño pequeño limita el momento que producen. Con una alta densidad de husos musculares, informan con precisión de la posición de cada segmento.' },
+  itr: { n: 'Intertransversos', a: 0, cr: '1', t: ['-', 'X', 'XX', '-'], ins: 'Entre apófisis transversas vecinas. En la región cervical cada uno se divide en un fascículo anterior y otro posterior, y entre ambos pasa el ramo ventral del nervio espinal.', fn: 'La contracción unilateral inclina la columna hacia su lado. El momento es pequeño, pero aporta estabilidad intervertebral e información sensitiva rica, sobre todo en la región craneocervical.' },
+  lcol: { n: 'Largo del cuello', a: null, cr: 'varios', t: ['XX', '-', 'X', '-'], ins: 'Fascículos pegados a la cara anterior de los cuerpos de C1 a T3, con inserciones en los cuerpos, los tubérculos anteriores de las transversas y el arco anterior del atlas. Es el único músculo que se inserta entero en la cara anterior de la columna.', fn: 'Funciona como un ligamento longitudinal anterior activo. Sus fibras anteriores flexionan y reducen la lordosis y las laterales estabilizan con los escalenos. Con el largo de la cabeza forma los flexores cervicales profundos.' },
+  lcap: { n: 'Largo de la cabeza', a: null, cr: 'varios', t: ['XX', '-', 'X', '-'], ins: 'De los tubérculos anteriores de las transversas de C3 a C6 a la parte basilar del occipital.', fn: 'Flexiona y estabiliza la región craneocervical superior. Su acción, el gesto de asentir, es la que se entrena en el test de flexión craneocervical.' }
+};
+(function () { let sel = 'mult', al = 20;
+  const draw = mk('prof', (S, out) => { const A = LL(S), N = NeumannSVG.on(S.svg), m = PROF[sel], ant = sel === 'lcol' || sel === 'lcap';
+    /* ---- panel izquierdo: vista posterior (o anterior para los flexores) ---- */
+    const X = 175, Y0 = 112, H = 42, sc = 1.3, LV = ['C2', 'C3', 'C4', 'C5', 'C6', 'C7', 'T1', 'T2', 'T3'];
+    const Y = i => Y0 + i * H, P = (i, q) => [X + q[0] * sc, Y(i) + q[1] * sc];
+    const tipY = L => (L === 'C7' || L[0] === 'T') ? 34 : 26;
+    const fasc = [];
+    if (!ant) {
+      LV.forEach((L, i) => { const g = AN.G(S.svg, { transform: AN.tf(X, Y(i), 0, sc) }); if (L === 'C2') AN.bone(A, g, [AN.symm([[0, -14], [16, -16], [30, -20], [46, -18], [56, -12], [54, -2], [42, 4], [28, 12], [16, 16]]), [[-14, 14], [14, 14], [16, 34], [8, 40], [0, 34], [-8, 40], [-16, 34]]]); else SH.vertPost(A, g, L[0] === 'T' ? 7 : +L[1]); });
+      S.t(X - 112, 30, 'Vista posterior', { cls: 'ttl' }); S.t(X - 112, 46, 'fascículos del lado izquierdo', { cls: 'sm' });
+      LV.forEach((L, i) => S.t(X + 92, Y(i) + 4, L, { cls: 'sm' }));
+      const ins = { ssc: [0, 1, 2, 3], mult: [0, 1, 2, 3, 4], rotl: [0, 1, 2, 3, 4], rotb: [0, 1, 2, 3, 4, 5], isp: [0, 1, 2, 3, 4, 5, 6], itr: [0, 1, 2, 3, 4, 5, 6] }[sel];
+      ins.forEach(i => { const L = LV[i]; let I, O;
+        if (sel === 'isp') { I = P(i, [-3, tipY(L) - 2]); O = P(i + 1, [-3, -8]); }
+        else if (sel === 'itr') { I = P(i, [-56, 2]); O = P(i + 1, [-56, -10]); }
+        else { const a = m.a * Math.PI / 180, n = { ssc: 6, mult: 3, rotl: 2 }[sel];
+          I = sel === 'ssc' ? P(i, [-4, tipY(L)]) : sel === 'mult' ? P(i, [-6, 18]) : P(i, [-12, 10]);
+          const Lf = sel === 'rotb' ? 52 : n * H / Math.cos(a); O = [I[0] - Lf * Math.sin(a), I[1] + Lf * Math.cos(a)]; }
+        fasc.push([O, I]); });
+    } else {
+      const LA = ['C2', 'C3', 'C4', 'C5', 'C6', 'C7', 'T1', 'T2'];
+      AN.bone(A, AN.G(S.svg), [{ e: [X, Y0 - 32, 16, 9] }], { small: true }); S.t(X + 22, Y0 - 30, 'arco anterior del atlas', { cls: 'sm' });
+      AN.bone(A, AN.G(S.svg), [[[X - 60, 54], [X + 60, 54], [X + 48, 70], [X - 48, 70]]], { small: true }); S.t(X + 64, 66, 'parte basilar', { cls: 'sm' });
+      LA.forEach((L, i) => { const g = AN.G(S.svg, { transform: AN.tf(X, Y(i), 0, sc) }); SH.vertAnt(A, g); S.t(X + 104, Y(i) + 4, L, { cls: 'sm' }); });
+      S.t(X - 112, 30, 'Vista anterior', { cls: 'ttl' }); S.t(X - 112, 46, 'fascículos del lado izquierdo (a la derecha del dibujo)', { cls: 'sm' });
+      if (sel === 'lcol') { fasc.push([P(7, [14, 0]), P(0, [14, 0])], [P(4, [64, -6]), [X + 10, Y0 - 26]], [P(7, [18, 6]), P(5, [62, -4])]); }
+      else { [1, 2, 3, 4].forEach(i => fasc.push([P(i, [66, -6]), [X + 26, 62]])); }
+    }
+    const gm = AN.G(S.svg);
+    fasc.forEach(([O, I]) => N.muscle([O, I], sel === 'ssc' ? 11 : sel === 'mult' ? 10 : sel === 'lcol' ? 10 : 8, { focus: true, parent: gm, tendon: [.12, .12] }));
+    if (!ant && (sel === 'mult' || sel === 'rotl' || sel === 'ssc')) { const i = 1; S.t(X - 168, Y(i) + 120, 'origen en\nla transversa', { cls: 'sm' }); S.t(X - 168, Y(i) - 10, 'inserción en\nla espinosa', { cls: 'sm' }); }
+
+    /* ---- panel central: descomposición de la fuerza ---- */
+    const cx = 450, cy = 330, Lv = 150;
+    S.t(370, 30, 'Dirección de la fibra', { cls: 'ttl' });
+    if (!ant) { const a = al * Math.PI / 180, fv = Math.cos(a), fh = Math.sin(a);
+      S.E('line', { x1: cx, y1: cy - 175, x2: cx, y2: cy + 20, class: 'refl' }); S.t(cx + 4, cy - 180, 'vertical', { cls: 'sm' });
+      N.force(cx, cy, cx - Lv * fh, cy - Lv * fv, { w: 6 });
+      if (fv > .04) N.force(cx, cy, cx, cy - Lv * fv, { w: 4, color: '#8FB3DE' });
+      if (fh > .04) N.force(cx, cy, cx - Lv * fh, cy, { w: 4, color: '#B8A8E6' });
+      if (al > 2) N.motion(cx, cy, 46, -90, -90 - al, { w: 3 });
+      S.t(cx - 10, cy - 54, 'α = ' + fx(al) + '°', { cls: 'val', a: 'end' });
+      S.t(cx + 8, cy - Lv * fv / 2, 'FV = cos α = ' + fx(Math.round(fv * 100)) + ' %', { cls: 'val' });
+      S.t(cx - Lv * fh / 2, cy + 22, 'FH = sen α = ' + fx(Math.round(fh * 100)) + ' %', { cls: 'val or', a: 'middle' });
+      S.t(372, 420, 'FV: extensión e inclinación.', { cls: 'sm' }); S.t(372, 436, 'FH: rotación y cizalla.', { cls: 'sm' });
+      S.t(372, 452, 'Neumann, Fig. 10.19.', { cls: 'sm' });
+    } else { S.t(372, 200, 'Fibras casi verticales,', { cls: 'sm' }); S.t(372, 216, 'por delante de los cuerpos:', { cls: 'sm' }); S.t(372, 232, 'su fuerza se dirige hacia', { cls: 'sm' }); S.t(372, 248, 'arriba y produce flexión.', { cls: 'sm' }); }
+
+    /* ---- panel derecho: corte transversal a nivel de C5 ---- */
+    const T = [760, 230, 1.45], gs = AN.G(S.svg, { transform: AN.tf(T[0], T[1], 0, T[2]) });
+    SH.vertSup(A, gs);
+    const CS = { lcol: [[16, -110, 12, 7]], lcap: [[60, -104, 14, 9]], itr: [[86, -88, 6, 5], [93, -42, 6, 5]], rotl: [[38, 34, 8, 5, -40]], rotb: [[26, 44, 6, 4, -40]], mult: [[50, 50, 14, 9, -35]], ssc: [[54, 72, 18, 10, -25]], isp: [[6, 76, 4, 6]] };
+    const sx = [1, -1];
+    AN.el('ellipse', { cx: T[0] + 44 * T[2], cy: T[1] + 96 * T[2], rx: 24 * T[2], ry: 10 * T[2], fill: '#C9837A', opacity: .35 }, S.svg); AN.el('ellipse', { cx: T[0] - 44 * T[2], cy: T[1] + 96 * T[2], rx: 24 * T[2], ry: 10 * T[2], fill: '#C9837A', opacity: .35 }, S.svg);
+    Object.keys(CS).forEach(id => CS[id].forEach(([x, y, rx, ry, r]) => sx.forEach(s => { const on = id === sel || (sel === 'rotl' && id === 'rotb') && false;
+      const c = [T[0] + s * x * T[2], T[1] + y * T[2]];
+      AN.el('ellipse', { cx: c[0], cy: c[1], rx: rx * T[2], ry: ry * T[2], transform: r ? `rotate(${s * r} ${c[0]} ${c[1]})` : null, fill: id === sel ? '#E89E7A' : '#B8473B', 'fill-opacity': id === sel ? 1 : .55, stroke: id === sel ? '#FFD133' : '#5E1E18', 'stroke-width': id === sel ? 2.5 : .8 }, S.svg); })));
+    [[94, -64], [-94, -64]].forEach(([x, y]) => AN.el('circle', { cx: T[0] + x * T[2], cy: T[1] + y * T[2], r: 4, fill: '#E9C440', stroke: '#8A6A1F' }, S.svg));
+    const ax = [T[0], T[1] - 66 * T[2]];
+    S.E('line', { x1: T[0] - 150, y1: ax[1], x2: T[0] + 150, y2: ax[1], class: 'refl' }); S.E('line', { x1: T[0], y1: T[1] - 175, x2: T[0], y2: T[1] + 150, class: 'refl' });
+    N.axis(ax[0], ax[1]);
+    S.t(T[0] - 220, 30, 'Corte transversal a nivel de C5', { cls: 'ttl' }); S.t(T[0] - 220, 46, 'vista superior, anterior arriba', { cls: 'sm' });
+    S.t(T[0] + 152, ax[1] - 6, 'eje medio-lateral', { cls: 'sm' }); S.t(T[0] + 152, ax[1] + 8, 'detrás: extiende', { cls: 'sm' }); S.t(T[0] + 152, ax[1] + 22, 'delante: flexiona', { cls: 'sm' });
+    S.t(T[0] + 4, T[1] + 168, 'eje anteroposterior: a un lado, inclina', { cls: 'sm', a: 'middle' });
+    S.t(T[0] - 100 * T[2], T[1] - 50 * T[2], 'ramo ventral', { cls: 'sm', a: 'end' });
+    S.t(T[0] + 64 * T[2], T[1] + 108 * T[2], 'semiespinoso de la cabeza', { cls: 'sm' });
+    if (['mult', 'rotl', 'rotb', 'ssc'].includes(sel)) { N.motion(T[0], T[1] - 66 * T[2], 60, 200, 250, { w: 4, color: '#B8A8E6' });
+      S.t(T[0] - 230, T[1] + 210, 'Contracción izquierda: la espinosa va a la', { cls: 'sm' }); S.t(T[0] - 230, T[1] + 226, 'izquierda y el cuerpo gira a la derecha (CL).', { cls: 'sm' }); }
+    const lbl = { lcol: [16, -110], lcap: [60, -104], itr: [86, -88], mult: [50, 50], ssc: [54, 72], rotl: [38, 34], rotb: [26, 44], isp: [6, 76] }[sel];
+    S.E('line', { x1: T[0] - lbl[0] * T[2], y1: T[1] + lbl[1] * T[2], x2: T[0] - 190, y2: T[1] + lbl[1] * T[2], class: 'ld' });
+    S.t(T[0] - 194, T[1] + lbl[1] * T[2] + 4, m.n, { cls: 'val red', a: 'end' });
+
+    out.innerHTML = K('Músculo', m.n) + K('Inserciones', m.ins) + K('Niveles que cruza', m.cr) +
+      (m.a == null ? '' : K('Ángulo de la fibra con la vertical (Neumann)', fx(m.a) + '°: FV ' + fx(Math.round(Math.cos(m.a * Math.PI / 180) * 100)) + ' %, FH ' + fx(Math.round(Math.sin(m.a * Math.PI / 180) * 100)) + ' %')) +
+      '<table class="mini"><thead><tr><th>Flex.</th><th>Ext.</th><th>Incl.</th><th>Rot.</th></tr></thead><tbody><tr><td>' + m.t.join('</td><td>') + '</td></tr></tbody></table>' +
+      '<div>' + m.fn + '</div>' + SRC('Anatomía y ángulos: Neumann, cap. 10 y Fig. 10.19. Tabla de acciones: diapositiva 61. Esquema sin escala. El deslizador del ángulo permite explorar otros valores.'); });
+  const r = rngB('pf-a', v => { al = v; draw() });
+  segB('Profundo', v => { sel = v; if (PROF[v].a != null) { al = PROF[v].a; const el = document.getElementById('pf-a'); if (el) { el.value = al; el.dispatchEvent(new Event('input')); return; } } draw() });
+  r(); draw() })();
+
+</script>
+<script>
+/* Navegación de la presentación 16:9: escala, teclado, hash #sN y modo #sN-solo para insertar una sola figura */
+(function () {
+  const stage = document.getElementById('stage'), slides = [...document.querySelectorAll('.slide')], num = document.getElementById('num');
+  let cur = 0;
+  const fit = () => { const k = Math.min(window.innerWidth / 1920, window.innerHeight / 1080); stage.style.transform = `scale(${k})`; };
+  window.addEventListener('resize', fit); fit();
+  try { window.renderAllFigs && renderAllFigs(); } catch (e) { console.error(e); }
+  function go(i, push) { cur = Math.max(0, Math.min(slides.length - 1, i)); slides.forEach((s, j) => { s.classList.toggle('on', j === cur); s.setAttribute('aria-hidden', j === cur ? 'false' : 'true'); });
+    num.textContent = cur ? cur + ' / ' + (slides.length - 1) : ''; if (push !== false) { const h = '#s' + cur + (document.body.classList.contains('solo') ? '-solo' : ''); if (location.hash !== h) history.replaceState(null, '', h); } }
+  function fromHash() { const m = /^#s(\d+)(-solo)?$/.exec(location.hash); document.body.classList.toggle('solo', !!(m && m[2])); go(m ? +m[1] : 0, false); }
+  window.addEventListener('hashchange', fromHash); fromHash();
+  document.getElementById('prev').onclick = () => go(cur - 1); document.getElementById('next').onclick = () => go(cur + 1); document.getElementById('home').onclick = () => go(0);
+  document.addEventListener('keydown', e => { if (e.target.closest('input,button') && (e.key === ' ' || e.key === 'Enter')) return; if (document.body.classList.contains('solo')) return;
+    if (['ArrowRight', 'PageDown'].includes(e.key) && !e.target.matches('input')) { go(cur + 1); e.preventDefault(); } if (['ArrowLeft', 'PageUp'].includes(e.key) && !e.target.matches('input')) { go(cur - 1); e.preventDefault(); } });
+  document.querySelectorAll('.ix a').forEach(a => a.addEventListener('click', e => { e.preventDefault(); go(+a.getAttribute('href').slice(2)); }));
+  document.querySelectorAll('.btxt').forEach(b => b.addEventListener('click', () => { const o = b.closest('.slide').querySelector(':scope > .out'); const on = !o.classList.contains('show'); o.classList.toggle('show', on); b.setAttribute('aria-expanded', on); b.textContent = on ? 'Ocultar texto' : 'Mostrar texto'; }));
+})();
+
+</script>
+</body></html>

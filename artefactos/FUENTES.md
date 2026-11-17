@@ -6,3 +6,4 @@
 | mano-abrir-fases.html | https://claude.ai/artifact/7e5zSfu4441yC9F9472Ryv (figura interactiva 8 de https://claude.ai/artifact/JBw1Chx1PoTEeox1TRdArw) |
 | mano-cerrar-fases.html | https://claude.ai/artifact/YB7jrq2KFLSNCdc5Y4R82A (figura interactiva 10 de la web de la mano) |
 | pulgar-oposicion-fases.html | https://claude.ai/artifact/F2yqByWynxCrmHZxg1rAy5 (figura interactiva 17 de la web de la mano) |
+| cervical-figuras-16x9.html | https://claude.ai/artifact/TVXHsaTth89Dqie5tH5VM7 (20 figuras; añadir #sN-solo para una sola) |
