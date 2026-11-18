@@ -41,6 +41,7 @@
   </div>
   <div class="pane on" id="p-lib">
     <select id="lib" size="6" style="flex:1;font-size:13px"></select>
+    <label style="display:flex;gap:6px;align-items:center">Pantalla nº (opcional) <input type="number" id="libn" min="1" step="1" style="width:70px;padding:4px"></label>
     <div class="note">Artefactos guardados en tu biblioteca de GitHub. Si actualizas uno, todas las presentaciones que lo usan muestran la versión nueva al abrirse. Se guarda una copia dentro del .pptx por si no hay internet.</div>
   </div>
   <div class="pane" id="p-file">
@@ -95,10 +96,12 @@
       var cached = get(KEY_CACHE);
       st.removeAttribute('src');
       if (cached) st.srcdoc = cached;
-      fetch('artefactos/' + encodeURIComponent(data) + '?t=' + Date.now(), { cache: 'no-store' })
+      var parts = data.split('#'), file = parts[0], n = parseInt(parts[1], 10);
+      fetch('artefactos/' + encodeURIComponent(file) + '?t=' + Date.now(), { cache: 'no-store' })
         .then(function (r) { if (!r.ok) throw 0; return r.text(); })
         .then(function (t) {
-          if (t !== cached) { st.srcdoc = t; put({ visorCache: t }, function () {}); }
+          if (n > 0) t = t.replace(/<head([^>]*)>/i, '<head$1><script>window.SLIDE=' + n + '<\/script>');
+          if (t !== cached) { st.srcdoc = t; if (t.length < 1500000) put({ visorCache: t }, function () {}); }
         })
         .catch(function () { if (!cached) { $('empty').style.display = 'flex'; $('empty').textContent = 'Sin conexión y sin copia guardada de ' + data; st.style.display = 'none'; } });
     }
@@ -119,7 +122,8 @@
   function openPanel() {
     $('msg').textContent = '';
     var mode = get(KEY_MODE), data = get(KEY_DATA) || '';
-    loadLib(mode === 'lib' ? data : null);
+    loadLib(mode === 'lib' ? data.split('#')[0] : null);
+    $('libn').value = mode === 'lib' && data.indexOf('#') > 0 ? data.split('#')[1] : '';
     if (mode === 'url') { selectTab('url'); $('url').value = data; }
     else if (mode === 'html') { selectTab('paste'); }
     else if (mode === 'html' && data) { $('code').value = data; }
@@ -158,6 +162,7 @@
     if (tab === 'lib') {
       mode = 'lib'; data = $('lib').value;
       if (!data) return err('Elige un artefacto de la lista');
+      if (parseInt($('libn').value, 10) > 0) data += '#' + parseInt($('libn').value, 10);
       return put({ visorMode: mode, visorData: data, visorCache: '' }, function (e) {
         if (e) return err('No se pudo guardar: ' + e);
         $('panel').style.display = 'none'; render();

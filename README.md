@@ -29,3 +29,4 @@ Abre `manifest.xml` con TextEdit y sustituye `USUARIO` por tu nombre de GitHub (
 - Al abrir la presentación, PowerPoint descarga el complemento desde GitHub, así que necesita internet. El HTML ya va dentro del .pptx.
 - El ordenador en el que presentes también tiene que tener el complemento cargado (pasos 3.1-3.5).
 - Límite aproximado de 1,8 MB por HTML.
+- En «Biblioteca», el campo «Pantalla nº» abre una sola pantalla de los archivos que tienen varias (por ejemplo, `mano-pulgar-figuras-16x9.html`). Déjalo vacío para ver el archivo completo.
