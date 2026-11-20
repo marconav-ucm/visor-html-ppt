@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Actividad: coger una llave</title>
+<style>
+  :root{
+    --bg:#eef1f4; --paper:#ffffff; --ink:#1d2430; --muted:#5b6575;
+    --c1:#2f6f9f; --c2:#b23a3a; --c3:#5a7d3a;
+    --hidden:#dfe4ea; --line:#cfd6de;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{width:100%;height:100%;background:#2a2f36;overflow:hidden;
+    font-family:"Century Gothic","Avenir Next","Segoe UI",Helvetica,Arial,sans-serif;color:var(--ink)}
+  #stage{position:absolute;width:1920px;height:1080px;left:0;top:0;transform-origin:0 0;
+    background:var(--paper);overflow:hidden}
+  #stage::before{content:"";position:absolute;right:-220px;top:-260px;width:720px;height:720px;
+    border-radius:50%;background:var(--bg);z-index:0}
+  header{position:relative;z-index:1;padding:22px 56px 6px;display:flex;align-items:flex-end;justify-content:space-between}
+  h1{font-size:40px;font-weight:400;line-height:1.05}
+  h1 b{font-weight:700}
+  .sub{font-size:18px;color:var(--muted);margin-top:6px}
+  .help{font-size:15px;color:var(--muted);text-align:right;line-height:1.5}
+  .help kbd{border:1px solid var(--line);border-radius:4px;padding:0 6px;background:#f7f8fa;font-family:inherit}
+  main{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr 1.12fr;gap:26px;padding:8px 56px 0;height:940px}
+  .col{display:flex;flex-direction:column;gap:8px;min-height:0}
+  .col h2{font-size:20px;font-weight:700;padding:6px 14px;color:#fff;border-radius:8px;letter-spacing:.2px}
+  .col h2 span{font-weight:400;opacity:.9}
+  .k1 h2{background:var(--c1)} .k2 h2{background:var(--c2)} .k3 h2{background:var(--c3)}
+  .card{position:relative;border:1.5px solid var(--line);border-radius:9px;padding:6px 12px 7px 42px;
+    cursor:pointer;background:#fff;transition:background .25s,border-color .25s;outline:none}
+  .card:focus-visible{box-shadow:0 0 0 3px #f2b84b}
+  .card .n{position:absolute;left:10px;top:7px;width:23px;height:23px;border-radius:50%;
+    font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;color:#fff}
+  .k1 .n{background:var(--c1)} .k2 .n{background:var(--c2)} .k3 .n{background:var(--c3)}
+  .card .t{font-size:17.5px;font-weight:700;line-height:1.25}
+  .card .b{font-size:16.5px;line-height:1.33;margin-top:2px;transition:opacity .35s,filter .35s}
+  .card .b em{font-style:normal;font-weight:700}
+  .card.oculta{background:var(--hidden);border-style:dashed}
+  .card.oculta .b{opacity:0;filter:blur(6px);height:0;margin:0;overflow:hidden}
+  .card.oculta .t::after{content:"  ?";color:var(--muted);font-weight:400}
+  .card.nueva{animation:flash 1s ease}
+  @keyframes flash{0%{background:#fff4d6}100%{background:#fff}}
+  .fig{display:flex;gap:10px;align-items:stretch}
+  .fig .card{flex:1}
+  .fig .b{display:flex;gap:12px;align-items:center}.fig .b .tx{flex:1.05}.fig svg{flex:1;width:50%;height:auto;display:block}
+  footer{position:absolute;z-index:1;left:56px;right:56px;bottom:14px;display:flex;justify-content:space-between;
+    font-size:13.5px;color:var(--muted)}
+  #prog{position:absolute;left:0;bottom:0;height:5px;background:var(--c3);width:0;transition:width .3s;z-index:2}
+</style>
+</head>
+<body>
+<div id="stage" role="main">
+  <header>
+    <div>
+      <h1>Actividad: <b>coger una llave</b></h1>
+      <p class="sub">Describan el movimiento articular y la acción muscular en cada fase. Apertura de la mano → pinza lateral (de llave) y mantenimiento.</p>
+    </div>
+    <p class="help">Clic en una tarjeta para desvelarla<br>
+      <kbd>→</kbd>/<kbd>espacio</kbd> siguiente · <kbd>←</kbd> ocultar última<br>
+      <kbd>A</kbd> mostrar todo · <kbd>R</kbd> reiniciar</p>
+  </header>
+
+  <main>
+    <!-- ===== COLUMNA 1 ===== -->
+    <section class="col k1" aria-label="Apertura de la mano, artrocinemática">
+      <h2>1 · Apertura de la mano <span>· artrocinemática</span></h2>
+
+      <div class="card oculta" tabindex="0"><span class="n"></span>
+        <p class="t">MCF de los dedos (extensión)</p>
+        <p class="b">Base <em>cóncava</em> de la falange proximal sobre cabeza <em>convexa</em> del metacarpiano: <em>rodamiento y deslizamiento dorsal</em>, en el mismo sentido. Eje medio-lateral por la cabeza del metacarpiano.</p>
+      </div>
+
+      <div class="card oculta" tabindex="0"><span class="n"></span>
+        <p class="t">IFP e IFD (extensión)</p>
+        <p class="b">Misma regla cóncavo sobre convexo: la base de la falange media y la de la distal <em>ruedan y deslizan hacia dorsal</em>. El ligamento retinacular oblicuo, tensado al extender la IFP, ayuda a extender la IFD y sincroniza las dos.</p>
+      </div>
+
+      <div class="card oculta" tabindex="0"><span class="n"></span>
+        <p class="t">CMC del pulgar: extensión (plano frontal)</p>
+        <p class="b">Metacarpiano <em>cóncavo</em> sobre el diámetro transverso <em>convexo</em> del trapecio: <em>rodamiento y deslizamiento radial</em> (lateral), con ligera rotación lateral automática.</p>
+      </div>
+
+      <div class="card oculta" tabindex="0"><span class="n"></span>
+        <p class="t">CMC del pulgar: abducción (plano sagital)</p>
+        <p class="b">Metacarpiano <em>convexo</em> sobre el diámetro longitudinal <em>cóncavo</em> del trapecio: <em>rodamiento palmar y deslizamiento dorsal</em>. Abre la primera comisura para recibir la llave.</p>
+      </div>
+
+      <div class="card oculta" tabindex="0"><span class="n"></span>
+        <p class="t">MCF e IF del pulgar (extensión)</p>
+        <p class="b">Cóncavo sobre convexo: <em>rodamiento y deslizamiento dorsal</em>. La MCF del pulgar apenas permite abducción y aducción, lo que da estabilidad longitudinal al radio.</p>
+      </div>
+
+      <div class="card oculta" tabindex="0"><span class="n"></span>
+        <p class="t">¿Qué frena la apertura en los dedos?</p>
+        <p class="b">Sobre todo la <em>tensión pasiva viscoelástica de los flexores extrínsecos</em> (FSD y FPD), no la gravedad. En la MCF, la <em>placa palmar</em> limita la hiperextensión y el cordón del colateral queda laxo. En la IFP, la placa palmar y los ligamentos <em>check-rein</em>.</p>
+      </div>
+
+      <div class="card oculta" tabindex="0"><span class="n"></span>
+        <p class="t">¿Qué frena la apertura en el pulgar?</p>
+        <p class="b">La extensión de la CMC tensa el <em>ligamento oblicuo anterior</em>. La abducción completa tensa el <em>ligamento intermetacarpiano</em>, el <em>colateral radial</em> y el <em>aductor del pulgar</em>.</p>
+      </div>
+    </section>
+
+    <!-- ===== COLUMNA 2 ===== -->
+    <section class="col k2" aria-label="Apertura de la mano, acción muscular">
+      <h2>2 · Apertura de la mano <span>· acción muscular</span></h2>
+
+      <div class="card oculta" tabindex="0"><span class="n"></span>
+        <p class="t">Fase inicial (dedos)</p>
+        <p class="b">El <em>extensor de los dedos</em> (con el extensor del índice y el del meñique) tira del aparato extensor y extiende <em>sobre todo la MCF</em>. Si actuara solo, hiperextendería la MCF y dejaría las IF en flexión (posición <em>extrínseco-plus</em>).</p>
+      </div>
+
+      <div class="card oculta" tabindex="0"><span class="n"></span>
+        <p class="t">Fase media (dedos)</p>
+        <p class="b"><em>Lumbricales e interóseos</em> (más actividad EMG en los lumbricales) tiran de las bandas laterales por las fibras oblicuas del capuchón dorsal y <em>extienden IFP e IFD</em>. Su <em>momento flexor en la MCF</em> impide la hiperextensión y permite al extensor de los dedos tensar el aparato extensor.</p>
+      </div>
+
+      <div class="card oculta" tabindex="0"><span class="n"></span>
+        <p class="t">Fase final (dedos)</p>
+        <p class="b">La activación se mantiene hasta la extensión completa y el capuchón dorsal <em>migra en sentido proximal</em>.</p>
+      </div>
+
+      <div class="card oculta" tabindex="0"><span class="n"></span>
+        <p class="t">¿Y la muñeca?</p>
+        <p class="b">Se activan los <em>flexores de muñeca</em> (flexor radial del carpo y otros) para compensar el potencial extensor del extensor de los dedos. La muñeca se flexiona un poco y el extensor de los dedos trabaja a una longitud más favorable.</p>
+      </div>
+
+      <div class="card oculta" tabindex="0"><span class="n"></span>
+        <p class="t">Pulgar</p>
+        <p class="b"><em>Abductor largo</em>: extiende la CMC (y en teoría la abduce). <em>Extensor corto</em>: extiende MCF y CMC. <em>Extensor largo</em>: extiende IF, MCF y CMC, y también aduce la CMC. <em>Abductor corto</em>: abduce la CMC.</p>
+      </div>
+
+      <div class="card oculta" tabindex="0"><span class="n"></span>
+        <p class="t">Estabilizador que no se ve</p>
+        <p class="b">El extensor largo y el abductor largo del pulgar desvían la muñeca hacia radial. El <em>flexor cubital del carpo</em> se activa para evitarlo (palpable junto al pisiforme al extender rápido el pulgar).</p>
+      </div>
+
+      <div class="card oculta" tabindex="0"><span class="n"></span>
+        <p class="t">Conexión clínica</p>
+        <p class="b">En la lesión del nervio cubital, sin intrínsecos, aparece la <em>mano en garra</em>: MCF hiperextendida e IF flexionadas. Si se bloquea la MCF en flexión, el extensor de los dedos sí extiende las IF.</p>
+      </div>
+    </section>
+
+    <!-- ===== COLUMNA 3 ===== -->
+    <section class="col k3" aria-label="Pinza de llave">
+      <h2>3 · Pinza de llave <span>· coger y mantener</span></h2>
+
+      <div class="card oculta" tabindex="0"><span class="n"></span>
+        <p class="t">CMC del pulgar al cerrar sobre la llave</p>
+        <p class="b"><em>Aducción</em>: convexo sobre cóncavo, rodamiento dorsal y deslizamiento palmar. <em>Flexión</em>: cóncavo sobre convexo, rodamiento y deslizamiento cubital (medial) con ligera rotación medial.</p>
+      </div>
+
+      <div class="card oculta" tabindex="0"><span class="n"></span>
+        <p class="t">MCF e IF del pulgar · dedo índice</p>
+        <p class="b">Pulgar: flexión de la MCF con <em>rodamiento y deslizamiento palmar</em>, IF próxima a la extensión. Índice: MCF, IFP e IFD en flexión (rodamiento y deslizamiento palmar). La flexión de la MCF tensa la cápsula dorsal y el cordón de los colaterales, y la articulación gana estabilidad para la presa.</p>
+      </div>
+
+      <div class="card oculta" tabindex="0"><span class="n"></span>
+        <p class="t">Músculos que cierran la pinza</p>
+        <p class="b"><em>Aductor del pulgar</em> (el principal), <em>flexor corto del pulgar</em> y resto de la eminencia tenar, con el <em>flexor largo del pulgar</em>. En el índice, <em>FSD, FPD e interóseos</em>. Los extensores radiales de la muñeca la estabilizan en ligera extensión.</p>
+      </div>
+
+      <div class="fig">
+        <div class="card oculta" tabindex="0"><span class="n"></span>
+          <p class="t">Mantener: el primer interóseo dorsal</p>
+          <p class="b"><span class="tx">El pulgar empuja el índice hacia cubital (F<sub>T</sub>). El <em>1.<sup>er</sup> interóseo dorsal</em> abduce la MCF del índice y genera la fuerza opuesta. Su brazo de momento interno es ≈1 cm y el de F<sub>T</sub> ≈5 cm, así que necesita <em>unas 5 veces la fuerza de pinza</em>.</span>
+          <svg viewBox="0 0 330 190" role="img" aria-label="Esquema de la pinza de llave: el pulgar aplica F T a unos 5 cm de la MCF del índice y el primer interóseo dorsal actúa a 1 cm">
+            <defs>
+              <marker id="ar" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#b23a3a"/></marker>
+              <marker id="ag" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#5a7d3a"/></marker>
+            </defs>
+            <rect x="4" y="78" width="70" height="24" rx="11" fill="#f1e2c6" stroke="#8a7350"/>
+            <text x="12" y="94" font-size="11" fill="#5b4a2f">2.º MC</text>
+            <rect x="84" y="78" width="236" height="24" rx="11" fill="#f1e2c6" stroke="#8a7350"/>
+            <text x="180" y="94" font-size="12" fill="#5b4a2f">índice</text>
+            <circle cx="79" cy="90" r="8" fill="#2f6f9f"/>
+            <text x="66" y="70" font-size="12" fill="#2f6f9f" font-weight="700">MCF</text>
+            <line x1="112" y1="22" x2="112" y2="72" stroke="#5a7d3a" stroke-width="4" marker-end="url(#ag)"/>
+            <text x="120" y="20" font-size="15" fill="#5a7d3a" font-weight="700">1.er interóseo dorsal</text>
+            <text x="120" y="38" font-size="13" fill="#5a7d3a">(abducción MCF)</text>
+            <rect x="245" y="102" width="62" height="8" fill="#9aa4ae"/>
+            <text x="282" y="126" font-size="13" fill="#5b6575">llave</text>
+            <line x1="276" y1="168" x2="276" y2="114" stroke="#b23a3a" stroke-width="4" marker-end="url(#ar)"/>
+            <text x="284" y="160" font-size="15" fill="#b23a3a" font-weight="700">F<tspan font-size="11" dy="3">T</tspan></text>
+            <line x1="79" y1="138" x2="112" y2="138" stroke="#5a7d3a" stroke-width="2.5"/>
+            <text x="80" y="132" font-size="14" fill="#5a7d3a" font-weight="700">≈1 cm</text>
+            <line x1="79" y1="182" x2="276" y2="182" stroke="#b23a3a" stroke-width="2" stroke-dasharray="5 4"/>
+            <text x="150" y="176" font-size="14" fill="#b23a3a" font-weight="700">≈5 cm</text>
+          </svg></p>
+        </div>
+      </div>
+
+      <div class="card oculta" tabindex="0"><span class="n"></span>
+        <p class="t">¿Le basta al primer interóseo dorsal?</p>
+        <p class="b">Con pinzas funcionales de más de 45 N haría falta ≈225 N. Con ≈3,8 cm² de sección y ≈28 N/cm², produce ≈106 N. Requiere ayuda del <em>2.º interóseo dorsal</em> y, quizá, de los <em>lumbricales radiales</em>.</p>
+      </div>
+
+      <div class="card oculta" tabindex="0"><span class="n"></span>
+        <p class="t">Conexión clínica</p>
+        <p class="b">Lesión del nervio cubital: aductor del pulgar e interóseos paralizados, la pinza de llave cae casi un 80 %. El paciente compensa con el flexor largo del pulgar y flexiona la IF (<em>signo de Froment</em>).</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span>Biomecánica del Aparato Locomotor · Grado en Fisioterapia · Universidad Complutense de Madrid</span>
+    <span>Fuente: Neumann DA. Kinesiology of the Musculoskeletal System. 3.ª ed. Cap. 8 (Mano), Fig. 8.15-8.17, 8.24, 8.51 y 8.65.</span>
+  </footer>
+  <div id="prog"></div>
+</div>
+
+<script>
+(function(){
+  const stage=document.getElementById('stage');
+  function fit(){
+    const s=Math.min(innerWidth/1920, innerHeight/1080);
+    stage.style.transform='scale('+s+')';
+    stage.style.left=((innerWidth-1920*s)/2)+'px';
+    stage.style.top=((innerHeight-1080*s)/2)+'px';
+  }
+  addEventListener('resize',fit); fit();
+
+  const cards=[...document.querySelectorAll('.card')];
+  cards.forEach((c,i)=>{
+    c.querySelector('.n').textContent=i+1;
+    c.setAttribute('role','button');
+    c.setAttribute('aria-expanded','false');
+  });
+  const pila=[];
+  const prog=document.getElementById('prog');
+  function upd(){
+    const v=cards.filter(c=>!c.classList.contains('oculta')).length;
+    prog.style.width=(100*v/cards.length)+'%';
+  }
+  function mostrar(c){
+    if(!c.classList.contains('oculta')) return;
+    c.classList.remove('oculta'); c.classList.add('nueva');
+    c.setAttribute('aria-expanded','true');
+    setTimeout(()=>c.classList.remove('nueva'),1000);
+    pila.push(c); upd();
+  }
+  function ocultar(c){
+    c.classList.add('oculta'); c.setAttribute('aria-expanded','false');
+    const i=pila.indexOf(c); if(i>-1) pila.splice(i,1); upd();
+  }
+  function alternar(c){ c.classList.contains('oculta')?mostrar(c):ocultar(c); }
+  cards.forEach(c=>{
+    c.addEventListener('click',()=>alternar(c));
+    c.addEventListener('keydown',e=>{ if(e.key==='Enter'){e.preventDefault();alternar(c);} });
+  });
+  document.addEventListener('keydown',e=>{
+    const k=e.key;
+    if(k==='ArrowRight'||k===' '||k==='PageDown'){
+      e.preventDefault();
+      const s=cards.find(c=>c.classList.contains('oculta')); if(s) mostrar(s);
+    } else if(k==='ArrowLeft'||k==='PageUp'){
+      e.preventDefault();
+      const u=pila[pila.length-1]; if(u) ocultar(u);
+    } else if(k==='a'||k==='A'){ cards.forEach(mostrar); }
+    else if(k==='r'||k==='R'){ cards.forEach(ocultar); pila.length=0; upd(); }
+  });
+})();
+</script>
+</body>
+</html>
