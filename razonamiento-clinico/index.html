@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Razonamiento clínico: el caso de Enrique (actividad de 1 hora)</title>
+<style>
+:root{
+  --bg:#f6f4ef;--panel:#fff;--ink:#1d2430;--mut:#5b6575;--line:#d9d5ca;
+  --blue:#0b4f8a;--blue2:#e6eef7;--ok:#1d7a4d;--okbg:#e3f3ea;--warn:#b4561b;--warnbg:#fbeadd;--bad:#b3261e;
+  --c0:#0b4f8a;--c1:#c2571a;--c2:#2f7d4f;--c3:#7a3fa0;--c4:#a08a1e;--c5:#b02a5b;--c6:#2b7f8f;--c7:#6b6b6b;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:#0d1117;overflow:hidden}
+body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--ink)}
+button{font:inherit;cursor:pointer}
+#deck{position:absolute;left:0;top:0;width:1920px;height:1080px;background:var(--bg);display:flex;flex-direction:column;transform-origin:0 0;font-size:30px;overflow:hidden}
+header{display:flex;align-items:center;gap:24px;padding:16px 56px;background:var(--blue);color:#fff;height:104px;flex:none}
+header .ph{font-weight:700;font-size:38px}
+header .meta{opacity:.85;font-size:24px}
+header .sp{flex:1}
+.timer{font-variant-numeric:tabular-nums;font-weight:700;font-size:46px;background:rgba(255,255,255,.15);padding:4px 24px;border-radius:14px;min-width:170px;text-align:center}
+.timer.low{background:var(--bad)}
+.bar{height:10px;background:#dfe6ee;display:flex;flex:none}
+.bar i{display:block;height:100%;background:var(--blue);opacity:.35}
+.bar i.done{opacity:1}
+.bar i.cur{opacity:.7;background:#e0a21a}
+.bar i+i{border-left:3px solid var(--bg)}
+main{flex:1;min-height:0;display:flex}
+.stage{flex:1;padding:34px 56px;overflow:hidden;min-width:0}
+h1{font-size:54px;margin:0 0 6px;line-height:1.1}
+.sub{color:var(--mut);margin:0 0 24px;font-size:30px}
+.task{background:var(--blue2);border-left:10px solid var(--blue);padding:18px 26px;border-radius:10px;margin:26px 0 0;font-size:30px}
+.grid{display:grid;gap:24px;grid-template-columns:repeat(3,1fr)}
+.card{background:var(--panel);border:2px solid var(--line);border-radius:18px;padding:22px 26px}
+.card h3{margin:0 0 12px;font-size:25px;color:var(--blue);text-transform:uppercase;letter-spacing:.05em}
+.card ul{margin:0;padding-left:30px;font-size:29px;line-height:1.3}
+.card li{margin:9px 0}
+.grid.two{grid-template-columns:repeat(2,1fr)}
+.grid.two .card ul{font-size:28px}
+.q{font-size:46px;font-weight:650;margin:0 0 24px;line-height:1.2}
+.opt{display:grid;grid-template-columns:76px 1fr 90px;align-items:center;gap:22px;background:var(--panel);border:3px solid var(--line);border-radius:18px;padding:14px 20px;margin:14px 0;position:relative;overflow:hidden}
+.opt .k{position:relative;z-index:1;width:60px;height:60px;border-radius:50%;background:var(--blue);color:#fff;display:grid;place-items:center;font-weight:700;font-size:32px}
+.opt .t{z-index:1;font-size:35px}
+.opt .n{z-index:1;text-align:right;font-weight:700;font-size:38px;color:var(--mut)}
+.opt .fill{position:absolute;left:0;top:0;bottom:0;background:var(--blue2);width:0;transition:width .5s}
+.opt .dots{position:absolute;right:120px;top:50%;transform:translateY(-50%);display:flex;gap:8px;z-index:1}
+.dot{width:26px;height:26px;border-radius:50%;display:inline-block}
+.opt.right{border-color:var(--ok);background:var(--okbg)}
+.opt.right .fill{background:#c4e6d2}
+.opt.right .k{background:var(--ok)}
+.reveal{margin-top:20px;background:var(--okbg);border-left:10px solid var(--ok);padding:18px 26px;border-radius:10px;font-size:29px;line-height:1.3}
+.reveal.neutral{background:var(--warnbg);border-left-color:var(--warn)}
+.reveal b.l{display:block;font-size:22px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
+.hint{color:var(--mut);font-size:24px;margin-top:10px}
+.facts{margin-bottom:18px}
+.facts ul{font-size:29px}
+.tk{display:grid;grid-template-columns:1fr 230px 70px;gap:16px;align-items:center;background:var(--panel);border:2px solid var(--line);border-radius:12px;padding:5px 22px;margin:6px 0;position:relative;overflow:hidden;font-size:26px}
+.tk .fill{position:absolute;left:0;top:0;bottom:0;background:var(--blue2);width:0;transition:width .5s}
+.tk>*{z-index:1}
+.shift{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.mini{font-size:24px;color:var(--mut)}
+/* mandos del docente, fuera de la diapositiva */
+#tools{position:fixed;left:10px;bottom:10px;display:flex;gap:6px;opacity:.25;transition:opacity .2s;z-index:20}
+#tools:hover{opacity:1}
+.tb{background:#222c3a;color:#fff;border:1px solid #4a5566;border-radius:8px;padding:6px 11px;font-size:14px}
+#side{position:fixed;right:0;top:0;bottom:0;width:340px;background:#fff;border-left:2px solid var(--line);padding:14px;overflow:auto;z-index:15;font-size:16px;display:none}
+#side.open{display:block}
+#side h4{margin:0 0 8px}
+.grow{display:flex;align-items:center;gap:6px;margin:6px 0}
+.gname{width:42px;height:32px;border-radius:7px;color:#fff;font-weight:700;display:grid;place-items:center;font-size:14px;flex:none}
+.gopts{display:flex;gap:4px;flex-wrap:wrap}
+.gb{min-width:34px;height:32px;border:2px solid var(--line);background:#fff;border-radius:7px;font-weight:700;color:var(--ink)}
+.gb.sel{background:var(--blue);border-color:var(--blue);color:#fff}
+.tokrow{display:flex;align-items:center;gap:8px;margin:5px 0;font-size:14px}
+.tokrow .lab{flex:1;line-height:1.2}
+.tokrow .st{display:flex;align-items:center;gap:4px}
+.tokrow .st button{width:28px;height:28px;border-radius:6px;border:1px solid var(--line);background:#fff}
+.tokrow .st span{width:18px;text-align:center;font-weight:700}
+.sel-g{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px}
+.sel-g button{border:2px solid var(--line);background:#fff;border-radius:8px;padding:3px 9px;font-weight:700}
+.btn{background:var(--blue);color:#fff;border:0;border-radius:9px;padding:9px 16px;font-weight:600}
+.btn.alt{background:#fff;color:var(--blue);border:2px solid var(--blue)}
+.set{position:fixed;inset:0;background:rgba(20,28,40,.6);display:none;place-items:center;z-index:30}
+.set.show{display:grid}
+.set .box{background:#fff;border-radius:14px;padding:22px 26px;max-width:560px;width:92%;font-size:16px}
+.set h2{margin:0 0 10px}
+.set label{display:flex;align-items:center;gap:10px;margin:10px 0}
+.set input[type=number]{width:70px;font:inherit;padding:4px}
+.ctrl{display:flex;gap:10px;margin:10px 0}
+.msg{display:none}
+.cmp h1{font-size:46px;margin-bottom:10px}.cmp .shift{font-size:24px}.cmp .reveal .hint{display:none}
+.cmp .facts{padding:14px 22px;margin-bottom:10px}
+.cmp .facts ul{font-size:25px}.cmp .facts li{margin:3px 0}
+.cmp .q{font-size:34px;margin:0 0 6px}
+.cmp .opt{padding:7px 18px;margin:8px 0;grid-template-columns:60px 1fr 80px}
+.cmp .opt .k{width:46px;height:46px;font-size:26px}.cmp .opt .t{font-size:29px}
+.cmp .reveal{font-size:25px;padding:12px 22px;margin-top:12px}
+.grid.two .card ul{font-size:26px}.grid.two .card li{margin:5px 0}
+</style>
+</head>
+<body>
+<div id="deck">
+<header>
+  <div><div class="ph" id="phName"></div><div class="meta" id="phMeta"></div></div>
+  <div class="sp"></div>
+  <div class="timer" id="timer">00:00</div>
+</header>
+<div class="bar" id="bar"></div>
+<main><section class="stage" id="stage"><div class="msg" id="msg"></div><div id="body"></div></section></main>
+</div>
+<div id="tools">
+  <button class="tb" id="tBtn">Iniciar</button>
+  <button class="tb" id="pBtn">Registro (P)</button>
+  <button class="tb" id="vBtn">Votos (V)</button>
+  <button class="tb" id="rBtn">Solución (R)</button>
+  <button class="tb" id="bBtn">Anterior</button>
+  <button class="tb" id="nBtn">Siguiente</button>
+  <button class="tb" id="hBtn">Ajustes</button>
+</div>
+<aside id="side"></aside>
+<div class="set" id="set"><div class="box">
+  <h2>Cómo se usa</h2>
+  <ul>
+    <li>Los grupos anotan su respuesta en papel y la levantan a la vez. Tú la registras con P.</li>
+    <li>Teclas: flechas o espacio para avanzar y retroceder, V muestra los votos, R revela la solución, T inicia o pausa el reloj, P abre el registro de grupos, F pantalla completa.</li>
+    <li>Cierra el registro antes de mostrar los votos. Los datos se guardan en este navegador.</li>
+  </ul>
+  <label>Número de grupos <input type="number" id="nG" min="2" max="8"></label>
+  <div class="ctrl"><button class="btn" id="setOk">Cerrar</button><button class="btn alt" id="reset">Borrar todos los votos</button></div>
+</div></div>
+<script>
+"use strict";
+const COLS=["--c0","--c1","--c2","--c3","--c4","--c5","--c6","--c7"];
+const PH=[
+ {n:"1. El caso",min:8},
+ {n:"2. Hipótesis tras la entrevista",min:14},
+ {n:"3. Factores y precauciones",min:11},
+ {n:"4. Examen físico",min:9},
+ {n:"5. Hallazgos del examen",min:10},
+ {n:"6. Decisión final",min:3},
+ {n:"7. Pronóstico",min:5}
+];
+const HYP=[
+ "Tendinopatía del origen común de los extensores",
+ "Síndrome compresivo periférico (nervio radial y ramas)",
+ "Dolor nociplástico o componente central secundario",
+ "Dolor referido desde la columna cervical (C5 a C7)",
+ "Disfunción articular radiocapitelar"
+];
+const FCL=["Factor contribuyente","Precaución clínica","Aspecto biopsicosocial"];
+const FIND=["Apoya la tendinopatía","Apoya origen cervical o neural","Inconcluso o sin cambio"];
+function fcl(txt,ans,note){return {ph:2,type:"vote",title:"Clasifiquen este dato",q:txt,opts:FCL,ans:ans,note:note,label:"Solución docente"}}
+const S=[
+ {ph:0,type:"info",title:"Enrique, 46 años",sub:"Entrevista I. Perfil y presentación clínica",
+  cards:[
+   {h:"Perfil",l:["Consultor de seguridad en el puerto de Las Palmas de Gran Canaria","Aficiones: golf, jardinería y bricolaje","Diagnóstico médico: epicondilalgia lateral (codo de tenista)"]},
+   {h:"Problema principal",l:["Dolor lateral en el codo derecho (dominante), intermitente, profundo y sordo, a veces muy agudo","Dificultad para usar teclado y ratón y para actividades con prensión fuerte","No puede jugar al golf y evita jardinería y bricolaje"]},
+   {h:"Mapa corporal",l:["Cefalea derecha intermitente y sorda, y zona cervical y trapecio derechos (sensaciones viejas)","Sensaciones en el brazo derecho al quedarse dormido por la noche (sensaciones viejas, sin hormigueo ni entumecimiento)"]}
+  ],task:"Cada grupo anota en su hoja 3 datos que cree que condicionarán el razonamiento. Se comparan al final de la fase."},
+ {ph:0,type:"info",title:"Historia clínica",sub:"Entrevista II. Inicio, evolución y antecedentes",
+  cards:[
+   {h:"Inicio",l:["Hace 1 año, punzada en el codo derecho al mover una estantería","Agravamiento progresivo tras una inspección naval con tareas de prensión forzada"]},
+   {h:"Evolución",l:["Hace 10 meses, primera infiltración de corticoides con alivio parcial","Hace 6 meses, fisioterapia (estiramientos y fortalecimiento de extensores) sin cambios","Hace 4 meses, segunda infiltración con mejoría parcial y síntomas estables desde entonces"]},
+   {h:"Antecedentes y estado actual",l:["Accidente de coche frontal hace 25 años con cefalea derecha, dolor cervical bajo y de trapecio superior derecho y parestesias en el brazo derecho","Rx cervicales normales y sin tratamiento efectivo","Frustrado por la falta de mejora y por no poder jugar al golf","Sin red flags, sin disfunción arterial cervical y sin signos psicosociales relevantes"]}
+  ],task:"Subrayen qué datos de la historia apoyan una hipótesis local de codo y cuáles apuntan a otra estructura."},
+ {ph:0,type:"info",title:"Comportamiento de los síntomas",sub:"Entrevista III. Qué los provoca, qué los alivia",
+  cards:[
+   {h:"Carga y actividad",l:["Ordenador: tolera 20 min y los síntomas remiten en 10 min de reposo, sin sensibilización acumulada durante el día","Prensión forzada (menos de 5 kg): pasa de pesadez a dolor agudo que cede enseguida, pero la molestia puede durar hasta 60 min","Agravan: más peso, agarre amplio, codo en extensión y mayor pronosupinación"]},
+   {h:"Patrón diario",l:["Mañana: rigidez lateral del codo derecho que mejora en 20 min con movimiento (hasta 60 min sin él)","Final del día: fatiga y pesadez que desaparecen a la mañana siguiente","Adaptaciones: pausas, modificación de tareas, AINEs y crioterapia ocasional"]},
+   {h:"Neurosensitivo y funcional",l:["Parestesias transitorias en el brazo derecho con movimientos por encima de la cabeza, estables desde el accidente","PSFS: limitación en trabajo con ordenador, jardinería y gesto de swing en golf"]}
+  ],task:"Con todo lo que han leído, empiecen a pensar en el tipo de dolor dominante y en la irritabilidad."},
+
+ {ph:1,type:"vote",title:"Tipo de dolor",q:"¿Qué tipo de dolor es el más dominante en Enrique?",
+  opts:["Nociceptivo","Neuropático periférico","Nociplástico","Mixto, nociceptivo con componente neuropático periférico"],ans:3,label:"Solución docente",
+  note:"El patrón es localizado y mecánicamente reproducible (nociceptivo), con un posible componente neuropático periférico por la sensibilización neural tras el accidente. No hay variabilidad clínica significativa ni signos de disfunción central activa."},
+ {ph:1,type:"vote",title:"Hipótesis más probable",q:"Tras la entrevista, ¿cuál es la hipótesis más probable?",
+  opts:HYP,ans:0,label:"Solución docente",
+  note:"Tendinopatía del origen común de los extensores. Tipo de dolor: nociceptivo, con posible componente neuropático periférico."},
+ {ph:1,type:"vote",title:"Hipótesis más remota",q:"¿Y cuál es la hipótesis más remota?",
+  opts:HYP,ans:2,label:"Solución docente",
+  note:"Dolor nociplástico o componente central secundario, sin variabilidad clínica significativa ni signos de disfunción central activa. La implicación cervical (C5 a C7) queda como posibilidad a explorar."},
+ {ph:1,type:"info",title:"Cierre de la fase: las tres hipótesis",sub:"Solución docente para contrastar con lo votado",
+  cards:[
+   {h:"Más probable",l:["Tendinopatía del origen común de los extensores","Dolor nociceptivo (localizado, mecánicamente reproducible)","Neuropático periférico por sensibilización neural tras el accidente, con signos leves"]},
+   {h:"Menos probable",l:["Síndrome compresivo periférico (nervio radial y ramas)","Dolor neuropático periférico, más dominante, con disfunción mecanosensitiva neural significativa"]},
+   {h:"Más remota",l:["Dolor nociplástico o componente central secundario","Posible implicación cervical (C5 a C7)"]}
+  ],task:"Pregunta para el debate: ¿qué dato de la entrevista habría cambiado el orden de sus hipótesis?"},
+
+ fcl("Tracción y prensión forzada al mover la estantería",0,"Mecanismo de lesión por tracción y prensión forzada."),
+ fcl("Sobrecarga posterior en la inspección naval",0,"La sobrecarga siguió a la lesión inicial y la agravó."),
+ fcl("Sensibilidad neural y cervical previa tras el accidente de coche",0,"Pudo facilitar la cronificación."),
+ fcl("Sin banderas rojas y con baja irritabilidad clínica",1,"Permite explorar con tolerancia, pero conviene mantener las precauciones de la evaluación."),
+ fcl("No usar técnicas agresivas o de alta velocidad al inicio",1,"Precaución clínica inicial. En esta fase no se planificó testar la estabilidad cervical alta."),
+ fcl("El paciente asocia sus síntomas cervicales con la falta de respuesta al tratamiento",2,"Perspectiva del paciente. Explorar el cuello puede fortalecer la alianza terapéutica y la adherencia."),
+ fcl("El tratamiento previo se centró solo en el codo",2,"Hay estructuras no exploradas hasta ahora, lo que conecta con la frustración y las expectativas."),
+ fcl("Frustración por la falta de mejora y por no poder jugar al golf",2,"Aspecto biopsicosocial a tener en cuenta desde el primer día."),
+
+ {ph:3,type:"tokens",title:"Presupuesto de examen físico",
+  q:"Cada grupo dispone de 4 fichas para repartir entre estas pruebas (máximo 2 en una misma prueba). ¿Qué examinarían primero?",
+  max:4,per:2,
+  items:[
+   "Movimiento activo y pasivo de codo y antebrazo",
+   "Deslizamientos accesorios radiocapitelares",
+   "Palpación del tendón común de los extensores",
+   "Fuerza de prensión y extensión isométrica de muñeca",
+   "Neurodinámica del miembro superior (ULNT mediano y radial)",
+   "Movimientos y cuadrante de la columna cervical (C5 a C7)",
+   "Palpación de trapecio superior, elevador de la escápula, tríceps y supinador",
+   "Movilidad de la primera costilla",
+   "Nervio radial y mediano: palpación y sensibilidad",
+   "Escalas y expectativas del paciente (PSFS, frustración)"
+  ]},
+ {ph:3,type:"info",title:"Solución docente: examen físico propuesto",sub:"Cuatro grupos de fuentes posibles de síntomas",
+  cards:[
+   {h:"Articulaciones y estructuras óseas",l:["Humerorradial, humerocubital y radiocubital proximal","Codo: extensión, flexión y prono-supinación","Columna cervical, especialmente C5 a C7"]},
+   {h:"Tejidos blandos del área",l:["Tendón del origen común de los extensores","Extensores de muñeca y dedos","Trapecio superior, elevador de la escápula, tríceps y supinador","Nervio radial y sus ramas, nervio mediano"]},
+   {h:"Estructuras que pueden referir dolor",l:["Segmentos cervicales medios e inferiores (C5 a C7)","Plexo braquial (tests neurodinámicos)","Trapecio superior y estructuras costotransversas (1ª costilla)"]},
+   {h:"Otras condiciones a considerar",l:["Disfunción cervical con componente mecánico","Sensibilización periférica y posiblemente central","Déficit de fuerza por inhibición dolorosa frente a disfunción neurológica","Frustración, expectativas y alianza terapéutica"]}
+  ],task:"Comparen con el reparto de fichas de la clase. ¿Qué quedó sin explorar y por qué?"},
+
+ {ph:4,type:"find",title:"Hallazgo 1: codo y antebrazo",
+  facts:["Limitación en extensión, flexión y supinación del codo derecho, con dolor o rigidez","Pronación sin restricciones","Mayor rigidez y dolor en extensión pasiva con el antebrazo supinado","Deslizamientos radiocapitelares A-P y P-A muy rígidos y dolorosos (peor A-P)"],
+  note:"Hay afectación local clara del codo. Por sí sola no separa tendinopatía de disfunción articular radiocapitelar, así que conviene cruzarla con los hallazgos de carga."},
+ {ph:4,type:"find",title:"Hallazgo 2: fuerza y dolor",
+  facts:["Prensión disminuida y dolorosa, más en extensión que en flexión","Extensión isométrica de muñeca débil y dolorosa, más en extensión","Flexión isométrica de codo (C6) débil y dolorosa, resultado inconcluso"],
+  note:"La prueba de carga reproduce el dolor lateral, lo que encaja con la tendinopatía. La flexión de codo (C6) queda inconclusa porque el dolor limita distinguir inhibición dolorosa de déficit neurológico."},
+ {ph:4,type:"find",title:"Hallazgo 3: neurodinámica",
+  facts:["ULNT mediano: síntomas a 40° de extensión que aumentan con inclinación cervical contralateral","ULNT radial: provoca dolor, sin cambios con la diferenciación estructural"],
+  note:"El ULNT mediano sensibilizado con el movimiento cervical sugiere un componente neural o cervical. En el ULNT radial la diferenciación estructural no cambia el dolor, así que no confirma el nervio radial como fuente."},
+ {ph:4,type:"find",title:"Hallazgo 4: columna cervical",
+  facts:["Limitación de extensión y rotación derecha con síntomas cervicales bajos","Cuadrante cervical derecho limitado y sintomático","Los movimientos cervicales no provocan síntomas en el codo","Palpación C5 a C7: rigidez y dolor trapezial y cervical bajo","Primera costilla derecha rígida, con síntomas locales"],
+  note:"Hay disfunción cervical y costal real, pero no reproduce el síntoma del codo. Más que fuente directa parece un factor contribuyente que merece tratamiento, algo coherente con la alianza terapéutica."},
+
+ {ph:5,type:"vote",title:"Decisión final",q:"Tras el examen físico, ¿cuál es ahora la hipótesis más probable?",
+  opts:HYP,ans:null,label:"",compare:1,
+  note:""},
+
+ {ph:6,type:"tokens",title:"Factores de pronóstico (Jones, 2018)",
+  q:"Cada grupo reparte 3 fichas (máximo 2 por factor) entre los factores que más pesan en el pronóstico de Enrique.",
+  max:3,per:2,
+  items:["Comportamiento, experiencias y perspectiva del paciente","Incentivos externos o desincentivos","Alcance de la discapacidad","Naturaleza del problema","Alcance de la patología y las deficiencias físicas","Estatus socioeconómico","Dominancia del tipo de dolor","Estado de curación del tejido","Irritabilidad","Evolución y tiempo","Salud general del paciente y otras patologías"],
+  closing:"El pronóstico no es una ciencia exacta. No hay solución única, se argumenta el reparto."}
+];
+
+/* estado */
+let st={i:0,ng:6,votes:{},tok:{},showV:{},showA:{},run:false,endsAt:0,left:null};
+const lt={};
+let db=null,teacher=true,canWrite=true,myG=null,selGt=0,ready=false,first=true,panel=false;
+const forceStudent=false;
+try{const g=localStorage.getItem("rc-g");if(g!=null)myG=parseInt(g)}catch(e){}
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const L=n=>String.fromCharCode(65+n);
+function fmt(s){s=Math.max(0,s);return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")}
+function note(e){const m=$("msg");m.textContent=(e&&e.code==="invalid_argument")?"No se pudo guardar. Probablemente tu acceso es solo de lectura, pide a quien dirige la sesión que te comparta como colaborador.":"Problema de conexión. Los cambios se reintentarán al volver la red.";m.classList.add("show");setTimeout(()=>m.classList.remove("show"),6000)}
+function localSave(){if(db)return;try{localStorage.setItem("rc-enrique",JSON.stringify({st:st,lt:lt}))}catch(e){}}
+
+/* sincronización */
+let pushing=false,again=false;
+async function pushState(){
+  if(!teacher){return}
+  if(!db){localSave();return}
+  if(pushing){again=true;return}
+  pushing=true;
+  try{await db.doc("state/live").set({i:st.i,ng:st.ng,showV:st.showV,showA:st.showA,run:st.run,endsAt:st.endsAt,left:st.left})}catch(e){note(e)}
+  pushing=false;if(again){again=false;pushState()}
+}
+const wq={};
+function qWrite(id,fn){wq[id]=(wq[id]||Promise.resolve()).then(fn).catch(note)}
+function writeVote(s,g,c){
+  if(!db){localSave();return}
+  const id=s+"-"+g;
+  qWrite(id,()=>c==null?db.doc("votes/"+id).delete():db.doc("votes/"+id).set({s:s,g:g,c:c}));
+}
+function writeTok(s,g,obj){
+  if(!db){localSave();return}
+  const id=s+"-"+g;const tot=Object.values(obj).reduce((a,b)=>a+b,0);
+  qWrite(id,()=>tot===0?db.doc("votes/"+id).delete():db.doc("votes/"+id).set({s:s,g:g,t:obj}));
+}
+function applyState(d){
+  if(!d)return;
+  if(typeof d.i==="number"&&d.i>=0&&d.i<S.length)st.i=d.i;
+  if(typeof d.ng==="number")st.ng=d.ng;
+  st.showV=d.showV||{};st.showA=d.showA||{};st.run=!!d.run;st.endsAt=d.endsAt||0;st.left=d.left==null?null:d.left;
+  if(teacher&&st.left!=null)lt[S[st.i].ph]=st.left;
+}
+function applyVotes(snap){
+  const v={},t={};
+  snap.docs.forEach(d=>{const x=d.data();if(!x)return;if(x.t){(t[x.s]=t[x.s]||{})[x.g]=x.t}else if(x.c!=null){(v[x.s]=v[x.s]||{})[x.g]=x.c}});
+  st.votes=v;st.tok=t;
+}
+
+/* temporizador */
+function remaining(){const p=S[st.i].ph;if(st.run)return Math.max(0,Math.round((st.endsAt-Date.now())/1000));if(teacher&&lt[p]!=null)return lt[p];if(!teacher&&st.left!=null)return st.left;return PH[p].min*60}
+function drawTimer(){
+  const p=S[st.i].ph,l=remaining(),full=PH[p].min*60;
+  $("timer").textContent=fmt(l);$("timer").classList.toggle("low",l<=60&&(st.run||l<full));
+  if(teacher){$("tBtn").textContent=st.run?"Pausar":(l<full?"Reanudar":"Iniciar");
+    if(st.run&&l===0){lt[p]=0;st.run=false;st.left=0;pushState()}}
+}
+function toggleTimer(){
+  const p=S[st.i].ph;
+  if(st.run){lt[p]=remaining();st.run=false;st.left=lt[p]}
+  else{const l=lt[p]!=null?lt[p]:PH[p].min*60;st.endsAt=Date.now()+l*1000;st.run=true;st.left=l}
+  pushState();drawTimer();
+}
+setInterval(()=>{if(ready)drawTimer()},500);
+
+function go(d){
+  if(!teacher)return;
+  const n=st.i+d;if(n<0||n>=S.length)return;
+  const pOld=S[st.i].ph,pNew=S[n].ph;
+  if(pOld!==pNew){if(st.run){lt[pOld]=remaining();st.run=false}}
+  st.i=n;st.left=lt[pNew]!=null?lt[pNew]:PH[pNew].min*60;
+  pushState();render();
+}
+function cnt(opts,i){const v=st.votes[i]||{};const c=opts.map(()=>0);for(let g=0;g<st.ng;g++){if(v[g]!=null&&c[v[g]]!=null)c[v[g]]++}return c}
+function gdot(g){return `<span class="dot" style="background:var(${COLS[g]})"></span>`}
+const curG=()=>teacher?selGt:myG;
+
+function render(){
+  if(!ready){$("body").innerHTML='<p class="sub">Conectando…</p>';return}
+  const step=S[st.i],p=step.ph;
+  $("phName").textContent=PH[p].n;
+  $("phMeta").textContent=`Paso ${st.i+1} de ${S.length}, fase de ${PH[p].min} min`;
+  $("bar").innerHTML=S.map((s,i)=>`<i style="flex:1" class="${i<st.i?"done":i===st.i?"cur":""}"></i>`).join("");
+  drawTimer();
+  let h="";
+  const nav="";
+  const sv=!!st.showV[st.i],sa=!!st.showA[st.i];
+  if(step.type==="info"){
+    h+=`<h1>${esc(step.title)}</h1><p class="sub">${esc(step.sub)}</p><div class="grid ${step.cards.length===4?"two":""}">`+
+      step.cards.map(c=>`<div class="card"><h3>${esc(c.h)}</h3><ul>${c.l.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div>`).join("")+`</div>`+
+      (step.task?`<div class="task">${esc(step.task)}</div>`:"")+nav;
+  }else if(step.type==="vote"||step.type==="find"){
+    const isF=step.type==="find",opts=isF?FIND:step.opts;
+    const c=cnt(opts,st.i),tot=c.reduce((a,b)=>a+b,0)||1;
+    const mine=(!teacher&&myG!=null)?(st.votes[st.i]||{})[myG]:null;
+    h+=`<h1>${esc(step.title)}</h1>`;
+    if(isF)h+=`<div class="card facts"><h3>Datos del examen</h3><ul>${step.facts.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div><p class="q">¿Qué sostiene este hallazgo?</p>`;
+    else h+=`<p class="q">${esc(step.q)}</p>`;
+    h+=opts.map((o,k)=>{
+      const right=sa&&step.ans===k;
+      const dots=sv?(()=>{let d="";const v=st.votes[st.i]||{};for(let g=0;g<st.ng;g++)if(v[g]===k)d+=gdot(g);return `<span class="dots">${d}</span>`})():"";
+      return `<div class="opt ${right?"right":""} ${mine===k?"mine":""}"><div class="fill" style="width:${sv?c[k]/tot*100:0}%"></div><div class="k">${L(k)}</div><div class="t">${esc(o)}</div>${dots}<div class="n">${sv?c[k]:""}</div></div>`;
+    }).join("");
+    if(sa&&step.note)h+=`<div class="reveal ${isF?"neutral":""}"><b class="l">${isF?"Lectura orientativa para el debate, no es una solución única":esc(step.label)}</b>${esc(step.note)}</div>`;
+    if(step.compare&&sa){
+      const ref=S.findIndex(s=>s.title==="Hipótesis más probable"),c0=cnt(HYP,ref);
+      h+=`<div class="reveal neutral"><b class="l">Cambio respecto a la hipótesis más probable de la fase 2</b><div class="shift"><div><div class="mini">Antes del examen</div>${HYP.map((o,k)=>`<div>${L(k)}: <b>${c0[k]}</b> ${c0[k]===1?"grupo":"grupos"}</div>`).join("")}</div><div><div class="mini">Después del examen</div>${HYP.map((o,k)=>`<div>${L(k)}: <b>${c[k]}</b> ${c[k]===1?"grupo":"grupos"}</div>`).join("")}</div></div><div class="hint">Pidan a un grupo que haya cambiado de opción que explique qué hallazgo le hizo cambiar.</div></div>`;
+    }
+    h+=nav;
+  }else if(step.type==="tokens"){
+    const t=st.tok[st.i]||{};
+    const sums=step.items.map((_,k)=>{let s=0;for(let g=0;g<st.ng;g++)s+=(t[g]&&t[g][k])||0;return s});
+    const mx=Math.max(1,...sums);
+    h+=`<h1>${esc(step.title)}</h1><p class="q" style="font-size:34px">${esc(step.q)}</p>`;
+    h+=step.items.map((it,k)=>{
+      let d="";if(sv){for(let g=0;g<st.ng;g++){const n=(t[g]&&t[g][k])||0;for(let j=0;j<n;j++)d+=gdot(g)}}
+      return `<div class="tk"><div class="fill" style="width:${sv?sums[k]/mx*100:0}%"></div><div>${esc(it)}</div><div>${d}</div><div style="text-align:right;font-weight:700">${sv?sums[k]:""}</div></div>`;
+    }).join("");
+    if(step.closing&&sv)h+=`<div class="reveal neutral">${esc(step.closing)}</div>`;
+    h+=nav;
+  }
+  $("body").className=(step.type==="find"||step.compare)?"cmp":"";$("body").innerHTML=h;
+  renderSide();
+}
+function tg(k){if(!teacher)return;st[k][st.i]=!st[k][st.i];pushState();render()}
+function groupSel(){
+  const g=curG();
+  return `<div class="sel-g">${Array.from({length:st.ng},(_,k)=>`<button class="${k===g?"sel":""}" style="${k===g?`background:var(${COLS[k]});border-color:var(${COLS[k]})`:""}" onclick="selG(${k})">G${k+1}</button>`).join("")}</div>`;
+}
+function renderSide(){
+  const sd=$("side"),step=S[st.i];
+  const hide=!panel||step.type==="info";
+  sd.classList.toggle("open",!hide);if(hide)return;
+  let h="";
+  if(!teacher){
+    h+=`<h4>${myG==null?"Elige el número de tu grupo":"Tu grupo"}</h4>`+groupSel();
+    if(myG!=null&&!canWrite)h+=`<div class="msg show">Solo puedes ver. Para votar necesitas acceso de colaborador.</div>`;
+    else if(myG!=null&&step.type!=="info"){
+      const locked=!!st.showV[st.i];
+      if(locked)h+=`<div class="hint">Votación cerrada.</div>`;
+      if(step.type==="tokens"){
+        const t=st.tok[st.i]||{},r=t[myG]||{},used=Object.values(r).reduce((a,b)=>a+b,0);
+        h+=`<div class="mini" style="margin-bottom:6px">Fichas usadas: <b>${used}</b> de ${step.max}</div>`;
+        h+=step.items.map((it,k)=>`<div class="tokrow"><div class="lab">${esc(it)}</div><div class="st"><button ${locked?"disabled":""} onclick="tokAdd(${k},-1)">−</button><span>${r[k]||0}</span><button ${locked?"disabled":""} onclick="tokAdd(${k},1)">+</button></div></div>`).join("");
+      }else{
+        const opts=step.type==="find"?FIND:step.opts,cur=(st.votes[st.i]||{})[myG];
+        h+=opts.map((o,k)=>`<button class="sbtn ${cur===k?"sel":""}" ${locked?"disabled":""} onclick="setV(${myG},${k})"><b>${L(k)}</b> ${esc(o)}</button>`).join("");
+        h+=`<div class="hint">Pulsen de nuevo la misma opción para borrar. Respondan una sola persona por grupo.</div>`;
+      }
+    }
+  }else{
+    h+=`<h4>Registro de grupos</h4>`;
+    if(step.type==="tokens"){
+      const t=st.tok[st.i]||{},g=selGt,r=t[g]||{};
+      h+=groupSel();
+      const used=Object.values(r).reduce((a,b)=>a+b,0);
+      h+=`<div class="mini" style="margin-bottom:6px">Fichas usadas por G${g+1}: <b>${used}</b> de ${step.max}</div>`;
+      h+=step.items.map((it,k)=>`<div class="tokrow"><div class="lab">${esc(it)}</div><div class="st"><button onclick="tokAdd(${k},-1)">−</button><span>${r[k]||0}</span><button onclick="tokAdd(${k},1)">+</button></div></div>`).join("");
+    }else{
+      const opts=step.type==="find"?FIND:step.opts,v=st.votes[st.i]||{};
+      h+=Array.from({length:st.ng},(_,g)=>`<div class="grow"><div class="gname" style="background:var(${COLS[g]})">G${g+1}</div><div class="gopts">${opts.map((o,k)=>`<button class="gb ${v[g]===k?"sel":""}" onclick="setV(${g},${k})">${L(k)}</button>`).join("")}</div></div>`).join("");
+      h+=`<div class="hint">Los grupos con acceso votan solos desde el móvil. Aquí puedes registrar a mano los que no.</div>`;
+    }
+  }
+  sd.innerHTML=h;
+}
+function selG(k){
+  if(teacher)selGt=k;else{myG=k;try{localStorage.setItem("rc-g",String(k))}catch(e){}}
+  render();
+}
+function setV(g,k){
+  if(g==null)return;
+  if(!teacher&&st.showV[st.i])return;
+  const v=st.votes[st.i]||(st.votes[st.i]={});
+  v[g]=v[g]===k?null:k;
+  writeVote(st.i,g,v[g]);render();
+}
+function tokAdd(k,d){
+  const step=S[st.i],g=curG();if(g==null)return;
+  if(!teacher&&st.showV[st.i])return;
+  const t=st.tok[st.i]||(st.tok[st.i]={}),r=t[g]||(t[g]={});
+  const used=Object.values(r).reduce((a,b)=>a+b,0),cur=r[k]||0;
+  if(d>0&&(used>=step.max||cur>=step.per))return;
+  if(d<0&&cur<=0)return;
+  r[k]=cur+d;writeTok(st.i,g,r);render();
+}
+async function resetAll(){
+  st.votes={};st.tok={};st.showV={};st.showA={};st.i=0;st.run=false;st.left=null;Object.keys(lt).forEach(k=>delete lt[k]);
+  if(db){try{const snap=await db.collection("votes").get();await Promise.all(snap.docs.map(d=>db.doc("votes/"+d.id).delete()))}catch(e){note(e)}}
+  pushState();$("set").classList.remove("show");render();
+}
+$("tBtn").onclick=toggleTimer;
+$("pBtn").onclick=()=>{panel=!panel;renderSide()};
+$("hBtn").onclick=()=>{$("nG").value=st.ng;$("set").classList.add("show")};
+$("setOk").onclick=()=>{const n=Math.min(8,Math.max(2,parseInt($("nG").value)||6));st.ng=n;$("set").classList.remove("show");pushState();render()};
+$("reset").onclick=resetAll;
+document.addEventListener("keydown",e=>{
+  if(!teacher||e.target.tagName==="INPUT")return;
+  const k=e.key;
+  if(k==="ArrowRight"||k===" "){e.preventDefault();go(1)}
+  else if(k==="ArrowLeft")go(-1);
+  else if(k==="v"||k==="V")tg("showV");
+  else if(k==="r"||k==="R"){const s=S[st.i];if(s.note||s.compare)tg("showA")}
+  else if(k==="t"||k==="T")toggleTimer();
+  else if(k==="p"||k==="P"){panel=!panel;renderSide()}
+});
+
+/* escala 16:9 y arranque */
+function fit(){const k=Math.min(innerWidth/1920,innerHeight/1080),d=$("deck");d.style.transform="scale("+k+")";d.style.left=((innerWidth-1920*k)/2)+"px";d.style.top=((innerHeight-1080*k)/2)+"px"}
+addEventListener("resize",fit);fit();
+$("vBtn").onclick=()=>tg("showV");
+$("rBtn").onclick=()=>{const s=S[st.i];if(s.note||s.compare)tg("showA")};
+$("bBtn").onclick=()=>go(-1);$("nBtn").onclick=()=>go(1);
+document.addEventListener("keydown",e=>{if(e.key==="f"||e.key==="F"){if(document.fullscreenElement)document.exitFullscreen();else document.documentElement.requestFullscreen().catch(()=>{})}});
+try{const o=JSON.parse(localStorage.getItem("rc-enrique")||"null");if(o&&o.st){Object.assign(st,o.st);Object.assign(lt,o.lt||{});st.run=false}}catch(e){}
+if(st.i>=S.length)st.i=0;
+ready=true;render();
+</script>
+</body>
+</html>
