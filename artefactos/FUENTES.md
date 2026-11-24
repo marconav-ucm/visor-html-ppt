@@ -9,3 +9,4 @@
 | cervical-figuras-16x9.html | https://claude.ai/artifact/TVXHsaTth89Dqie5tH5VM7 (20 figuras; añadir #sN-solo para una sola) |
 | mano-pulgar-figuras-16x9.html | https://claude.ai/artifact/HPryhtjeSiWwerrqt7GjD4 (35 pantallas, 11 figuras interactivas de https://claude.ai/artifact/FT4ZcPkMmhKpUZdaY7JGQ5. Pantalla nº en el visor o #N en la dirección) |
 | razonamiento-clinico-enrique-16x9.html | Creado a partir de la presentación «3. Organización del Razonamiento Clínico» (versión sin conexión de https://claude.ai/artifact/97ABcyUZM2pTvaM8VKBv46) |
+| roleplay-marcador-fallos-16x9.html | Creado a partir de «4. Evaluación Clínica en Fisioterapia» (equipos de observación: Conexiones, Preguntas y Estructura) |
