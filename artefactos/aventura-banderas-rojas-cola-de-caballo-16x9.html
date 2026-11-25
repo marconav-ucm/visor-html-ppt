@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aventura: banderas rojas y cola de caballo, elige tu caso</title>
+<style>
+:root{--bg:#f6f4ef;--panel:#fff;--ink:#1d2430;--mut:#5b6575;--line:#d9d5ca;--blue:#0b4f8a;--blue2:#e6eef7;--red:#b3261e;--red2:#fbe4e1;--ok:#1d7a4d;--okbg:#e3f3ea;--warn:#b4561b;--warnbg:#fbeadd;--gold:#c99a12}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:#0d1117;overflow:hidden}
+body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--ink)}
+button{font:inherit;cursor:pointer}
+#deck{position:absolute;left:0;top:0;width:1920px;height:1080px;background:var(--bg);transform-origin:0 0;display:flex;flex-direction:column;font-size:30px;overflow:hidden}
+header{background:var(--red);color:#fff;height:96px;flex:none;display:flex;align-items:center;padding:0 56px;gap:28px}
+header h1{margin:0;font-size:42px}
+header .sp{flex:1}
+.pill{background:rgba(255,255,255,.18);border-radius:14px;padding:6px 20px;font-size:26px;white-space:nowrap}
+.pill b{font-size:30px}
+.meter{background:var(--panel);border-bottom:2px solid var(--line);height:88px;flex:none;display:flex;align-items:center;gap:16px;padding:0 56px}
+.meter .lab{font-size:24px;color:var(--mut);width:190px;line-height:1.1}
+.fl{display:flex;gap:10px;flex-wrap:wrap;flex:1}
+.chip{font-size:23px;border-radius:999px;padding:5px 16px;background:var(--red2);color:var(--red);border:2px solid var(--red);font-weight:700;white-space:nowrap}
+.none{font-size:24px;color:var(--mut)}
+main{flex:1;min-height:0;display:grid;grid-template-columns:1020px 1fr;gap:26px;padding:22px 56px 10px}
+.scene{background:var(--panel);border:2px solid var(--line);border-radius:22px;padding:22px 28px;display:flex;flex-direction:column;min-height:0}
+.scene h2{margin:0 0 6px;font-size:40px;color:var(--red)}
+.stage{display:flex;gap:18px;align-items:flex-end;height:200px;flex:none;margin:6px 0 4px;background:linear-gradient(#eaf1f7,#dfe7ef);border-radius:16px;overflow:hidden;padding:0 20px}
+.stage svg{height:190px;flex:none}
+.quote{margin:10px 0 0;border-left:10px solid var(--blue);background:var(--blue2);border-radius:10px;padding:10px 18px;font-size:26px;line-height:1.26;font-style:italic;flex:none}
+.narr{font-size:27px;line-height:1.28;margin-top:10px;overflow:hidden}
+.note{margin-top:auto;background:var(--warnbg);border-left:10px solid var(--warn);border-radius:10px;padding:10px 18px;font-size:25px;line-height:1.25}
+.opts{display:flex;flex-direction:column;gap:11px;min-height:0;overflow:hidden}
+.opts h3{margin:4px 0 0;font-size:30px;color:var(--mut)}
+.opt{background:var(--panel);border:3px solid var(--blue);color:var(--ink);border-radius:18px;padding:12px 20px;text-align:left;font-size:27px;line-height:1.22;display:flex;gap:16px;align-items:center}
+.opt:hover{background:var(--blue2)}
+.opt .k{flex:none;width:52px;height:52px;border-radius:50%;background:var(--blue);color:#fff;display:grid;place-items:center;font-weight:800;font-size:28px}
+.opt.go{border-color:var(--red)}.opt.go .k{background:var(--red)}
+.opt.used{opacity:.4;pointer-events:none;text-decoration:line-through}
+.opts.cmp{gap:7px}.opts.cmp .opt{padding:6px 16px;font-size:24px}.opts.cmp .opt .k{width:38px;height:38px;font-size:21px}.opts.cmp h3{font-size:26px;margin:0}
+footer{height:90px;flex:none;display:flex;align-items:center;gap:14px;padding:0 56px 8px;justify-content:flex-end}
+.fb{background:#fff;border:2px solid var(--blue);color:var(--blue);border-radius:12px;padding:8px 18px;font-size:23px}
+.menu{grid-column:1/-1;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(2,1fr);gap:22px;min-height:0}
+.cc{background:var(--panel);border:3px solid var(--line);border-radius:22px;padding:18px 24px;text-align:left;display:flex;flex-direction:column;gap:6px;min-height:0;overflow:hidden}
+.cc:hover{border-color:var(--red);background:#fffaf9}
+.cc h2{margin:0;font-size:36px;color:var(--ink)}
+.cc p{margin:0;font-size:25px;line-height:1.25;color:var(--mut)}
+.cc .st{margin-top:auto;font-size:34px;color:var(--gold);letter-spacing:3px}
+.cc .st i{color:#d5d5d5;font-style:normal}
+.cc.tip{border-style:dashed;justify-content:center;background:transparent}
+.end{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:26px;min-height:0}
+.stars{font-size:70px;letter-spacing:6px;color:var(--gold)}
+.stars i{color:#d5d5d5;font-style:normal}
+.lesson{margin:0;padding-left:30px;font-size:26px;line-height:1.28}
+.lesson li{margin:7px 0}
+.card2{background:var(--panel);border:2px solid var(--line);border-radius:22px;padding:22px 28px;min-height:0;overflow:hidden}
+.card2 h2{margin:0 0 8px;font-size:38px}
+.tb{width:100%;border-collapse:collapse;font-size:24px}
+.tb th,.tb td{border-bottom:2px solid var(--line);padding:6px 10px;text-align:left}
+.tb th{color:var(--blue)}
+.modal{position:absolute;inset:0;background:rgba(20,28,40,.7);display:none;place-items:center;z-index:9}
+.modal.show{display:grid}
+.modal .box{background:#fff;border-radius:22px;padding:30px 40px;width:1400px;max-height:960px;overflow:hidden}
+.modal h2{margin:0 0 10px;font-size:42px;color:var(--red)}
+.log{margin-top:8px;overflow:hidden;display:flex;flex-direction:column;gap:8px;min-height:0}
+.turn p{margin:0}
+.turn .me{font-size:23px;color:var(--blue);line-height:1.2}
+.turn .pt{font-size:25px;font-style:italic;background:var(--blue2);border-left:8px solid var(--blue);border-radius:8px;padding:6px 14px;margin-top:3px;line-height:1.24}
+.turn:not(.cur){opacity:.6}
+.turn:not(.cur) .pt{font-size:22px}
+.react{font-size:24px;color:var(--warn);font-style:italic;background:var(--warnbg);border-radius:8px;padding:5px 14px}
+.opts.two{display:grid;grid-template-columns:1fr 1fr;gap:7px 12px;align-content:start}
+.opts.two h3{grid-column:1/-1;font-size:24px;margin:4px 0 0}
+.opts.two .opt{padding:6px 14px;font-size:22px;line-height:1.15;min-height:54px}
+.opts.two .wide{grid-column:1/-1;min-height:48px}
+.opt.sp{border-color:var(--ok)}.opt.sp .k{background:var(--ok)}
+.opts.cmp{gap:7px}
+#tr{display:flex;align-items:center;gap:10px;font-size:22px;color:var(--mut)}
+#tr b{color:var(--ink);width:120px}
+.tb2{display:flex;gap:4px}.tb2 i{width:16px;height:30px;border-radius:4px;background:#e2e2e2;display:block}
+.tb2 i.g{background:#2e9d62}.tb2 i.y{background:#e0b000}.tb2 i.r{background:#c8372d}
+.claim{background:#fffbe6;border:3px solid #b8a64b;border-radius:10px;padding:10px 18px;margin-top:6px}
+.claim p{margin:4px 0 0;font-size:25px;font-style:italic;line-height:1.28}
+</style>
+</head>
+<body>
+<div id="deck">
+  <header><h1 id="ttl">Aventura: banderas rojas y cola de caballo</h1><div class="sp"></div><div class="pill" id="pq"></div></header>
+  <div class="meter"><div class="lab">Hallazgos positivos</div><div class="fl" id="fl"></div><div id="tr"></div></div>
+  <main id="main"></main>
+  <footer><button class="fb" id="chuleta">Tarjeta de la cola de caballo</button><button class="fb" id="menu">Elegir otro caso</button></footer>
+  <div class="modal" id="modal"><div class="box" id="mbox"></div></div>
+</div>
+<script>
+"use strict";
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const FL={bilat:"Dolor en las dos piernas",evo:"Empeora",num:"Silla de montar",wk:"Debilidad",blad:"Vejiga",bowel:"Intestino",sex:"Función sexual"};
+const ACT=[
+ {t:"Iniciar el tratamiento",d:"Sin hallazgos preocupantes."},
+ {t:"Tratar con observación y red de seguridad documentada",d:"Pocos hallazgos: se revisa si algo cambia."},
+ {t:"RM urgente y red de seguridad documentada, sin iniciar la terapia",d:"Algunos hallazgos: derivación con urgencia."},
+ {t:"RM urgente y protocolo de emergencia: derivar hoy, sin terapia",d:"Muchos hallazgos: derivación con emergencia."}
+];
+const SENS=["num","bw","sx"];
+const QS=[
+ {id:"ini",g:"Dolor actual",s:"Cómo y cuándo empezó",q:"¿Cuándo y cómo empezó todo esto? ¿Hubo algún golpe, esfuerzo o movimiento concreto?"},
+ {id:"loc",g:"Dolor actual",s:"Dónde duele y si baja a las piernas",q:"¿Dónde sientes exactamente el dolor? ¿Te baja a las piernas, a una o a las dos?"},
+ {id:"evo",g:"Dolor actual",s:"Cómo ha evolucionado",q:"¿Cómo ha ido cambiando desde que empezó? ¿Mejor, igual o peor?"},
+ {id:"ptn",g:"Dolor actual",s:"Qué lo empeora y qué lo mejora",q:"¿Qué te empeora el dolor y qué te lo mejora? ¿Cómo son las noches?"},
+ {id:"esc",g:"Dolor actual",s:"Intensidad de 0 a 10",q:"Si 0 es sin dolor y 10 el peor que has sentido, ¿cuánto dirías que es?"},
+ {id:"epi",g:"Antecedentes",s:"Episodios anteriores",q:"¿Has tenido antes dolor de espalda o ciática? ¿Cómo se resolvió?"},
+ {id:"med",g:"Antecedentes",s:"Medicación y tratamientos previos",q:"¿Qué estás tomando y qué tratamientos has probado hasta ahora?"},
+ {id:"hx",g:"Antecedentes",s:"Edad, cirugías y salud general",q:"Aparte de lo de la espalda, ¿cómo es tu salud en general? ¿Te han operado alguna vez?"},
+ {id:"trb",g:"Antecedentes",s:"Trabajo y vida diaria",q:"¿A qué te dedicas y cómo está afectando esto a tu día a día?"},
+ {id:"wk",g:"Cribado de banderas rojas",s:"Debilidad en las piernas",q:"¿Notas debilidad, o que alguna pierna te falla al apoyar?"},
+ {id:"bl",g:"Cribado de banderas rojas",s:"Vejiga",q:"¿Cómo orinas? ¿Vacías del todo, te cuesta empezar o se te ha escapado alguna vez?"},
+ {id:"num",g:"Cribado de banderas rojas",s:"Zonas dormidas: ingle, genitales, al limpiarse",q:"¿Notas adormecida la zona de la ingle, los genitales o al limpiarte, como si no sintieras igual?"},
+ {id:"bw",g:"Cribado de banderas rojas",s:"Intestino",q:"¿Algún cambio al ir de vientre? ¿Notas cuándo tienes ganas?"},
+ {id:"sx",g:"Cribado de banderas rojas",s:"Función sexual",q:"¿Has notado cambios en la función sexual últimamente?"}
+];
+const EX=[
+ {id:"mov",s:"Movilidad lumbar y reproducción del dolor",q:"Te pido que flexiones, extiendas e inclines el tronco."},
+ {id:"slr",s:"Elevación de la pierna recta (Lasègue)",q:"Voy a elevarte la pierna estirada con cuidado."},
+ {id:"fz",s:"Fuerza por miotomas L2-S1",q:"Empuja contra mi mano: cadera, rodilla, tobillo y dedo gordo."},
+ {id:"rfl",s:"Reflejos rotuliano y aquíleo",q:"Voy a comprobar los reflejos."},
+ {id:"sens",s:"Sensibilidad por dermatomas",q:"Dime si notas igual el roce a ambos lados de las piernas."},
+ {id:"per",s:"Sensibilidad perineal, con consentimiento",q:"Necesito comprobar la sensibilidad de la zona perineal. Te explico cómo y puedes parar cuando quieras."},
+ {id:"mar",s:"Marcha de talones y de puntas",q:"Camina primero sobre los talones y luego sobre las puntas."}
+];
+const DEF={ptn:["Peor sentado mucho rato y al agacharme. Caminando mejora un poco.",""],esc:["Un 6 de 10 en los peores momentos.",""],epi:["Algún dolor de espalda puntual hace años, nada que me parara.",""],med:["Paracetamol e ibuprofeno de vez en cuando. Alivian un poco.",""],wk:["No noto debilidad.",""],bl:["Orino normal.",""],num:["No, nada dormido ni hormigueo.",""],bw:["Normal.",""],sx:["Sin cambios.",""],
+ mov:["Flexión limitada por el dolor, extensión tolerada, sin desviación.",""],slr:["Lasègue negativo en ambas piernas.",""],fz:["Fuerza 5/5 en los miotomas L2-S1.",""],rfl:["Reflejos rotulianos y aquíleos simétricos.",""],sens:["Sensibilidad superficial conservada.",""],per:["Sensibilidad perineal conservada.",""],mar:["Marcha de talones y de puntas sin alteración.",""]};
+const CASES=[
+ {id:"lucia",n:"Lucía, 52 años",sub:"Dolor lumbar y en las dos piernas que va a más",mood:"tenso",f:1,correct:2,
+  obs:"Lucía entra caminando sin ayuda. Se sienta con cuidado en el borde de la silla y cambia de postura cada pocos segundos. Trae el volante de su médico: lumbociática. Sin pruebas de imagen.",
+  story:"«Llevo semanas con la espalda fatal, y las piernas también. Cada semana estoy peor. Al principio era solo la espalda, pero ahora me baja por las dos piernas.»",storyFlag:"bilat",sh:"«Me duele la espalda.»",
+  a:{ini:["Fue poco a poco, sin un golpe concreto. Primero la zona lumbar y a las pocas semanas empezaron las piernas.",""],loc:["Me duele la espalda baja y las dos piernas, por detrás del muslo, a las dos a la vez.","bilat"],evo:["Cada semana a más. Al principio solo la espalda y ahora esto.","evo"],ptn:["Peor sentada y por las noches. Caminando, algo mejor.",""],hx:["52 años, sin cirugías. Tensión normal. Trabajo en un banco.",""],trb:["Voy a trabajar, pero me cuesta estar sentada ocho horas y he dejado de ir a andar.",""],wk:["Débil no, pero me canso antes al caminar.",""],bl:["Hace cuatro semanas se me escapó el pis una vez, sin darme cuenta. Me dio vergüenza. No ha vuelto a pasar.","blad"],slr:["Lasègue positivo a unos 50° en ambas piernas.",""]},
+  ok:"Pides una RM urgente y dejas por escrito el plan: si vuelve a perder orina, nota la zona de la ingle dormida o nota debilidad, acude a urgencias ese mismo día. Lucía entiende el porqué y sabe qué vigilar.",
+  ovr:"Derivarla hoy por el protocolo de emergencia es seguro, pero con neurología normal y un único episodio pasado, la RM urgente con red de seguridad bastaba y no satura el circuito de emergencias.",
+  rev:"Tres semanas después, Lucía vuelve. Ha tenido otros episodios de incontinencia y nota dormida la zona de la ingle. Con dolor bilateral creciente y un episodio de incontinencia, la RM urgente y la red de seguridad estaban justificadas.",
+  late:"Pides ahora la RM urgente y la derivación. Se llega a tiempo de actuar, pero con más déficit del que habría tenido si lo hubieras visto antes.",
+  bad:"Citas a Lucía otra semana con la misma pauta. Acaba en urgencias con retención urinaria. La compresión que era incipiente ya no lo es.",
+  ls:["Dolor bilateral creciente y un episodio de incontinencia: algunos hallazgos, RM urgente y red de seguridad.","Una neurología normal no descarta un cuadro que está empezando.","La red de seguridad se explica a la paciente y se documenta."]},
+ {id:"carmen",n:"Carmen, 38 años",sub:"Derivada como urgente con dolor lumbar",mood:"ok",f:1,correct:0,
+  obs:"Carmen llega con una derivación marcada como urgente. Camina con soltura, se sienta sin dificultad y parece más preocupada por la palabra «urgente» que por la espalda.",
+  story:"«Mi médico me ha mandado urgente, pero a mí lo que me duele es la espalda. Hace tres semanas, después de una mudanza, y no se me quita.»",storyFlag:"",sh:"«Me duele la espalda.»",
+  a:{ini:["Hace tres semanas, tras una mudanza. Noté un tirón al levantar una caja.",""],loc:["Solo la espalda baja, en el centro. Las piernas están bien.",""],evo:["Igual. Ni mejor ni peor.",""],ptn:["Peor al inclinarme. Andando mejora.",""],hx:["38 años, sin cirugías ni antecedentes. Hago pilates.",""],trb:["Soy administrativa. Sigo con mi vida, solo que me da miedo moverme mal.",""]},
+  ok:"Inicias el tratamiento. Ninguna pregunta de la tarjeta es positiva y la neurología es normal. Le explicas qué cambiaría tu plan si aparece algo nuevo. Carmen mejora en pocas semanas.",
+  ovr:"La RM urgente y la derivación no encuentran nada. Carmen sale con más miedo, se ocupa un hueco urgente y la imagen de una lumbalgia sin banderas no cambia el tratamiento.",
+  ls:["Derivada como urgente no significa urgente: aquí ninguna pregunta de la tarjeta era positiva.","Sin hallazgos, se inicia el tratamiento.","Pedir imagen sin banderas rojas no mejora el resultado y sí cuesta tiempo y miedo."]},
+ {id:"elena",n:"Elena, 44 años",sub:"Dolor de pierna que empeora y que empieza en la otra",mood:"tenso",f:1,correct:1,
+  obs:"Elena entra caminando bien, con la pierna derecha algo rígida. Se sienta con la espalda recta y las manos apretadas. Se la ve inquieta.",
+  story:"«Me duele la pierna y cada día baja más. Ahora me empieza a molestar también la otra. Me da miedo que sea algo grave.»",storyFlag:"bilat",sh:"«Me duele la pierna.»",
+  a:{ini:["Hace dos semanas, sin causa clara. Empezó en la espalda y bajó a la pierna derecha.",""],loc:["La pierna derecha, por debajo de la rodilla. Y desde hace unos días noto dolor también en la otra.","bilat"],evo:["Va a peor y baja cada vez más.","evo"],ptn:["Peor al toser y sentada. Andando mejora.",""],epi:["Alguna lumbalgia leve hace años.",""],hx:["44 años, sin cirugías. Soy profesora.",""],trb:["Voy trabajando, aunque estar de pie en clase me cuesta.",""],slr:["Lasègue positivo a 45° en la derecha.",""]},
+  ok:"Inicias el tratamiento con observación. Le explicas el plan y lo dejas escrito: si aparece adormecimiento en la ingle, cambios al orinar o al ir de vientre o debilidad, debe actuar ese mismo día. A la semana el dolor cede. Elena sabía exactamente qué vigilar.",
+  ovr:"La RM urgente no muestra compresión relevante. Es seguro, pero con neurología normal y nada positivo de la tarjeta, la observación con red de seguridad bastaba.",
+  rev:"Una semana después Elena nota hormigueo en el pie y debilidad. No sabía si era grave y esperó cuatro días para llamar. Con dolor de pierna que empeora y empieza en la otra, la clave era el plan por escrito.",
+  late:"Pides la RM urgente y derivas. Se llega a tiempo, pero se han perdido días por no haber dejado claro cuándo actuar.",
+  bad:"Sigues igual y la citas otra semana. Elena llega a urgencias con alteración de la vejiga.",
+  ls:["Dolor de pierna que empeora y empieza en la otra, sin hallazgos de la tarjeta ni déficit: observación y red de seguridad.","Lo importante es discutirla y documentarla: la persona debe saber que tiene que actuar de inmediato si empeora."]},
+ {id:"rosa",n:"Rosa, 47 años",sub:"Adormecimiento en la zona perineal desde hace una semana",mood:"tenso",f:1,correct:3,t0:4,
+  obs:"Rosa entra despacio y se sienta de lado. Habla bajo y evita mirarte a los ojos. Se nota incómoda, y no por la espalda.",
+  story:"«Llevo semanas con dolor lumbar y va a más. Tengo dolor también en las dos piernas. No sé si es importante, pero hace una semana noto algo raro abajo.»",storyFlag:"bilat",sh:"«Me duele la espalda.»",
+  a:{ini:["Hace unas semanas, de forma gradual. Un dolor lumbar que fue a más.",""],loc:["Espalda y las dos piernas, y cada vez más.","bilat"],evo:["Va a más. Y hace una semana noté algo raro abajo.","evo"],ptn:["Peor sentada, haga lo que haga.",""],hx:["47 años, sin cirugías. Soy peluquera.",""],trb:["Paso muchas horas de pie. Ahora trabajo menos horas.",""],num:["Sí. El lado izquierdo de la ingle y de la zona del periné, como dormido. Hace una semana.","num"],bl:["Hace cuatro semanas se me escapó el pis una vez. No ha vuelto.","blad"],sx:["No he notado cambios, aunque tampoco estoy para eso.",""],per:["Sensibilidad disminuida en el lado izquierdo del periné.","num"]},
+  ok:"Llamas al hospital, activas el protocolo de emergencia y derivas hoy con la información: periné izquierdo adormecido desde hace una semana, dolor en las dos piernas creciente y un episodio de incontinencia hace cuatro semanas. Rosa se va con un plan claro y acompañada.",
+  rev:"Rosa no vuelve a consulta: a las 48 horas llega a urgencias sin poder orinar. La anestesia perineal ya era la bandera que pedía actuar hoy. Una RM «urgente» con cita en unos días no equivale a una emergencia.",
+  late:"Reaccionas y activas ahora la emergencia. Se llega, pero tarde: habría sido mejor que Rosa saliera de tu consulta directamente al hospital.",
+  bad:"La sigues citando. Rosa ingresa con retención urinaria y pérdida de sensibilidad más extensa.",
+  ls:["Anestesia perineal, incontinencia previa y dolor bilateral creciente: muchos hallazgos, emergencia y no iniciar la terapia.","Una cita de RM en días no es un protocolo de emergencia.","Preguntar por la zona perineal con palabras concretas saca el dato que nadie cuenta solo."]},
+ {id:"gabriel",n:"Gabriel, 45 años",sub:"«Lumbociática aguda» de la mutua, después de bajar cajas",mood:"tenso",f:0,correct:3,
+  obs:"Gabriel entra con la pierna derecha semiflexionada y el paso descompensado. Se sienta con dificultad y apoya el peso en el lado izquierdo. No trae informe, solo el volante de su mutua.",
+  story:"«Perdona que venga así... desde hace tres días tengo un dolor en la espalda que me baja por la pierna. Ya he tenido ciática, pero esto es distinto: hoy la pierna me ha empezado a fallar al apoyar.»",storyFlag:"wk",sh:"«Me duele la espalda y la pierna.»",
+  a:{ini:["Empezó el viernes bajando cajas en el almacén: un tirón brutal en la zona lumbar.",""],loc:["Toda la pierna derecha, hasta el talón. Y desde ayer algo raro, hormigueo, en la izquierda.","bilat"],evo:["Cada día peor.","evo"],ptn:["Peor sentado y al toser. De pie, algo mejor.",""],epi:["Tuve una ciática hace dos años y se pasó con reposo.",""],hx:["45 años, sin cirugías. Trabajo en un almacén.",""],trb:["Cargo cajas todo el día. Llevo tres días de baja.",""],wk:["La pierna derecha me falla al apoyar, como si temblara.","wk"],bl:["Me cuesta empezar y me quedo con la sensación de que no vacío del todo.","blad"],num:["Sí, desde esta mañana, en la zona donde me siento y al limpiarme. Como si llevara un cojín.","num"],bw:["Hoy casi ni noté que tenía ganas.","bowel"],sx:["Esta semana no ha ido bien. Lo achaqué al dolor.","sex"],slr:["Lasègue positivo a 30° en la derecha, con dolor que baja a la pierna.",""],fz:["Dorsiflexión y flexión plantar del pie derecho 3/5. El resto 5/5.","wk"],rfl:["Aquíleo derecho disminuido. El resto simétrico.",""],sens:["Sensibilidad disminuida en la cara externa del pie derecho.",""],per:["Sensibilidad disminuida en la zona perineal.","num"],mar:["No puede mantener la marcha de puntas con la pierna derecha.","wk"]},
+  ok:"Gabriel sale hacia urgencias con tu informe y la sospecha por delante: dolor lumbar con síntomas en las piernas, alteración vesical, alteración perineal y debilidad. No has iniciado terapia. Nadie le ha dicho «no te preocupes».",
+  rev:"Gabriel vuelve el miércoles caminando peor. No puede orinar y la sensibilidad de la zona perineal ha empeorado. Con tantos hallazgos, esperar dos días ya era demasiado.",
+  late:"Derivas ahora a urgencias. Llega más tarde de lo que podía: el cuadro es más avanzado de lo que viste el primer día.",
+  bad:"Sigues con la misma pauta. Su mujer lo lleva a urgencias de madrugada con el cuadro muy avanzado.",
+  ls:["Muchos hallazgos: derivación con emergencia y no comenzar la terapia.","La incidencia estimada es 0,002 % en atención primaria, pero las preguntas por vejiga, intestino, zona perineal y función sexual se hacen igual.","Una pregunta abierta saca los datos que no caben en una «ciática de siempre»."]}
+];
+const CM=[
+ {t:"Le cuentas lo que has encontrado y por qué decides así. Le dices qué debe vigilar y cuándo actuar, y le dejas el plan por escrito.",ok:1},
+ {t:"«No te preocupes, seguro que no es nada. Ya veremos cómo evoluciona.»",ok:0,fb:"La frase tranquilizadora sin plan deja al paciente sin saber qué vigilar."},
+ {t:"«Esto puede ser gravísimo. Si no se opera ya, podrías quedarte sin poder controlar nada.»",ok:0,fb:"Alarmar sin explicar genera miedo y no ayuda a decidir ni a actuar."}
+];
+let S={screen:"menu",ci:0,asked:{},found:{},log:[],start:null,intro:null,hidden:{},comm:null,act:0,end:null,pend:null,done:{},trust:5,react:"",warned:false,exin:false,closed:false,rx:null};
+function load(){try{const d=JSON.parse(localStorage.getItem("cc-aventura")||"{}");if(d&&typeof d==="object")S.done=d}catch(e){}}
+function save(){try{localStorage.setItem("cc-aventura",JSON.stringify(S.done))}catch(e){}}
+load();
+const C=()=>CASES[S.ci];
+function face(mood,f){
+  const m={ok:"M 92 150 Q 110 164 128 150",tenso:"M 94 156 Q 110 150 126 156",grave:"M 94 160 Q 110 146 126 160"}[mood]||"M 94 156 Q 110 150 126 156";
+  const brow=mood==="grave"||mood==="tenso"?'<path d="M 82 108 L 100 114 M 138 108 L 120 114" stroke="#3a2a1a" stroke-width="5" fill="none" stroke-linecap="round"/>':'<path d="M 82 112 L 100 110 M 138 112 L 120 110" stroke="#3a2a1a" stroke-width="5" fill="none" stroke-linecap="round"/>';
+  const hair=f?'<path d="M 54 150 Q 44 58 110 58 Q 176 58 166 150 Q 168 100 150 86 Q 110 76 70 86 Q 52 100 54 150 Z" fill="#6a3a22"/>':'<path d="M 58 112 Q 60 62 110 64 Q 160 62 162 112 Q 150 84 110 86 Q 70 84 58 112 Z" fill="#4a3a2a"/>';
+  return `<svg viewBox="0 0 220 240"><path d="M 20 240 Q 30 190 110 186 Q 190 190 200 240 Z" fill="${f?"#a45a7a":"#4b6b7a"}"/><rect x="92" y="168" width="36" height="26" fill="#e7b894"/><ellipse cx="110" cy="124" rx="52" ry="58" fill="#f0c4a0"/>${hair}<circle cx="90" cy="126" r="6" fill="#222"/><circle cx="130" cy="126" r="6" fill="#222"/>${brow}<path d="${m}" stroke="#7a2a1a" stroke-width="5" fill="none" stroke-linecap="round"/></svg>`;
+}
+function doc(){return `<svg viewBox="0 0 220 240"><path d="M 20 240 Q 30 190 110 186 Q 190 190 200 240 Z" fill="#1f8f8a"/><rect x="92" y="168" width="36" height="26" fill="#e0b08a"/><ellipse cx="110" cy="124" rx="50" ry="56" fill="#e8b994"/><path d="M 60 110 Q 62 66 110 66 Q 158 66 160 110 Q 148 88 110 88 Q 72 88 60 110 Z" fill="#2a2018"/><circle cx="92" cy="126" r="5.5" fill="#222"/><circle cx="128" cy="126" r="5.5" fill="#222"/><path d="M 86 112 L 100 111 M 134 112 L 120 111" stroke="#2a2018" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M 96 150 Q 110 158 124 150" stroke="#7a2a1a" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M 74 186 Q 74 214 100 218" stroke="#1d2430" stroke-width="5" fill="none"/></svg>`}
+const stars=n=>`${"★".repeat(n)}<i>${"★".repeat(3-n)}</i>`;
+const stage=()=>`<div class="stage">${doc()}${face(moodT(),C().f)}</div>`;
+function reset(){S.asked={};S.found={};S.log=[];S.start=null;S.intro=null;S.hidden={};S.comm=null;S.end=null;S.pend=null;S.trust=CASES[S.ci].t0||5;S.react="";S.warned=false;S.exin=false;S.closed=false;S.rx=null}
+const NEG=["Se cruza de brazos y suspira.","Mira hacia la puerta.","Aparta la mirada y responde más bajo.","Se remueve en la silla.","Mira el reloj un momento."];
+const POS=["Se relaja un poco en la silla.","Asiente y suelta aire.","Te mira a los ojos por primera vez.","Los hombros bajan un poco."];
+let nr=0;
+function bump(n,txt){
+  S.trust=Math.max(0,Math.min(10,S.trust+n));
+  S.react=txt||(n<0?NEG[nr++%NEG.length]:n>0?POS[nr++%POS.length]:"");
+}
+const moodT=()=>S.trust>=6?"ok":S.trust>=3?"tenso":"grave";
+const tlab=()=>S.trust>=7?"Abierto":S.trust>=5?"Receptivo":S.trust>=3?"Reservado":"Cerrado";
+function chk(){
+  if(S.trust<=0){walkout();return true}
+  if(S.trust<=2&&!S.warned){S.warned=true;S.screen="warn";render();return true}
+  return false;
+}
+function phase(){return({obs:"Entrada",int:"Entrevista",rx:"Entrevista",warn:"Entrevista",walk:"Final",exin:"Exploración",sens:"Entrevista",exam:"Exploración",decide:"Decisión",comm:"Comunicación",review:"Seguimiento",end:"Final"})[S.screen]||""}
+function header(){
+  const f=Object.keys(S.found),m=S.screen==="menu";
+  $("fl").innerHTML=m?'<span class="none">Elige un caso para empezar.</span>':f.length?f.map(k=>`<span class="chip">${esc(FL[k])}</span>`).join(""):'<span class="none">Todavía ninguno. Escucha y pregunta con intención.</span>';
+  $("pq").innerHTML=m?"Casos <b>"+Object.keys(S.done).length+" / "+CASES.length+"</b>":esc(phase());
+  $("ttl").textContent=m?"Aventura: banderas rojas y cola de caballo":"Aventura: "+C().n;
+  $("menu").style.visibility=m?"hidden":"visible";
+  $("tr").innerHTML=m?"":`<span class="tl">Confianza</span><span class="tb2">${Array.from({length:10},(_,i)=>`<i class="${i<S.trust?(S.trust>=7?"g":S.trust>=4?"y":"r"):""}"></i>`).join("")}</span><b>${tlab()}</b>`;
+}
+function logHtml(){
+  return (S.react?`<div class="react">${esc(S.react)}</div>`:"")+S.log.slice(-3).map((l,i,a)=>`<div class="turn ${i===a.length-1?"cur":""}"><p class="me"><b>Tú:</b> ${esc(l.q)}</p><p class="pt">${esc(l.a)}</p></div>`).join("");
+}
+function render(){
+  header();
+  const main=$("main"),c=C()||{};
+  if(S.screen==="menu"){
+    main.innerHTML=`<div class="menu">${CASES.map((x,i)=>`<button class="cc" data-i="${i}"><h2>${esc(x.n)}</h2><p>${esc(x.sub)}</p><div class="st">${S.done[x.id]!==undefined?stars(S.done[x.id]):"Sin jugar"}</div></button>`).join("")}<div class="cc tip"><p><b>Una consulta de principio a fin.</b> Observas la entrada, haces la entrevista, exploras, decides y se lo cuentas al paciente. Si dejas de derivar cuando hacía falta, lo vas a ver.</p></div></div>`;
+    main.querySelectorAll(".cc[data-i]").forEach(b=>b.onclick=()=>{S.ci=+b.dataset.i;reset();S.screen="obs";render()});
+  }else if(S.screen==="obs"){
+    main.innerHTML=`<section class="scene"><h2>${esc(c.n)}</h2>${stage()}<div class="narr">${esc(c.obs)}</div><div class="note ok" style="margin-top:auto;background:var(--blue2);border-left-color:var(--blue)">Lo primero que se ve ya es clínica: cómo entra, cómo se sienta, cómo se mueve.</div></section><section class="opts"><h3>Empiezas la entrevista</h3><button class="opt" data-k="o"><span class="k">A</span><span>Saludas, te presentas y abres: «Cuéntame con tus palabras qué te pasa y qué te preocupa.»</span></button><button class="opt" data-k="c"><span class="k">B</span><span>Saludas y vas directo: «¿Dónde te duele?»</span></button></section>`;
+    main.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{
+      const o=b.dataset.k==="o";S.start=o?"open":"closed";
+      S.log.push({q:o?"Cuéntame con tus palabras qué te pasa y qué te preocupa.":"¿Dónde te duele?",a:o?c.story:c.sh});
+      if(o&&c.storyFlag)S.found[c.storyFlag]=1;
+      bump(o?1:-1);
+      if(o){S.rx={ctx:"story"};S.screen="rx"}else S.screen="int";
+      if(!chk())render()});
+  }else if(S.screen==="int"){
+    const gs=[...new Set(QS.map(q=>q.g))];
+    main.innerHTML=`<section class="scene"><h2>Entrevista</h2>${stage()}<div class="log">${logHtml()}</div></section><section class="opts two">${gs.map(g=>`<h3>${esc(g)}</h3>`+QS.filter(q=>q.g===g).map(q=>{const i=QS.indexOf(q);return `<button class="opt ${S.asked[q.id]?"used":""}" data-i="${i}"><span>${esc(q.s)}</span></button>`}).join("")).join("")}<button class="opt wide ${S.closed?"used":""}" id="cl"><span>Cerrar la entrevista: «¿Hay algo más que quiera contarme?»</span></button><button class="opt go wide" id="nx"><span>Pasar a la exploración física</span></button></section>`;
+    main.querySelectorAll(".opt[data-i]").forEach(b=>b.onclick=()=>ask(+b.dataset.i));
+    $("cl").onclick=closeInt;
+    $("nx").onclick=()=>{S.screen="exam";render()};
+  }else if(S.screen==="sens"){
+    main.innerHTML=`<section class="scene"><h2>Preguntas íntimas</h2>${stage()}<div class="narr">Vas a preguntar por la zona genital, el intestino o la función sexual. ${esc(c.n.split(",")[0])} puede sentirse incómodo y quizá no lo cuente por iniciativa propia.</div></section><section class="opts"><h3>¿Cómo lo planteas?</h3><button class="opt sp" data-k="g"><span class="k">A</span><span>«Voy a hacerte unas preguntas más íntimas. Las hago siempre que hay dolor lumbar con síntomas en las piernas, porque ayudan a descartar algo importante.»</span></button><button class="opt" data-k="a"><span class="k">B</span><span>Preguntas directamente, sin avisar.</span></button></section>`;
+    main.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{S.intro=b.dataset.k;bump(S.intro==="g"?1:-2,S.intro==="g"?"":"Se queda en silencio un segundo. No esperaba esa pregunta.");const p=S.pend;S.pend=null;S.screen="int";if(!chk())ask(p)});
+  }else if(S.screen==="rx"){
+    const st=S.rx.ctx==="story";
+    main.innerHTML=`<section class="scene"><h2>${st?"Acaba de contarte su historia":"Acaba de contarte algo difícil"}</h2>${stage()}<div class="log">${logHtml()}</div></section><section class="opts"><h3>¿Qué le dices?</h3>${RXO(st).map((o,i)=>`<button class="opt" data-i="${i}"><span class="k">${"ABC"[i]}</span><span>${esc(o.t)}</span></button>`).join("")}</section>`;
+    main.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{const o=RXO(st)[+b.dataset.i];bump(o.d,o.r);S.log.push({q:o.t.replace(/[«»]/g,""),a:o.p});S.screen="int";if(!chk())render()});
+  }else if(S.screen==="exin"){
+    main.innerHTML=`<section class="scene"><h2>Antes de explorar</h2>${stage()}<div class="narr">Vas a tocar al paciente y pedirle que se mueva, y quizá tengas que explorar la zona perineal. Cómo lo plantees cambia cuánto colabora.</div></section><section class="opts"><h3>¿Cómo empiezas?</h3><button class="opt sp" data-k="g"><span class="k">A</span><span>«Voy a explorar la espalda, las piernas y la sensibilidad. Te explico cada prueba antes de hacerla y puedes parar cuando quieras.»</span></button><button class="opt" data-k="a"><span class="k">B</span><span>«Súbete a la camilla y quítate el pantalón.»</span></button></section>`;
+    main.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{S.exin=true;bump(b.dataset.k==="g"?1:-1);S.screen="exam";if(!chk())render()});
+  }else if(S.screen==="warn"){
+    main.innerHTML=`<section class="scene"><h2>El ambiente se tensa</h2><div class="stage">${doc()}${face("grave",c.f)}</div><div class="quote">«Mire, me estoy agobiando. No sé si me está escuchando.»</div><div class="narr">El paciente se echa hacia atrás y mira la puerta. Si sigues así, se irá.</div></section><section class="opts"><h3>¿Cómo reaccionas?</h3><button class="opt sp" data-k="r"><span class="k">A</span><span>Paras, lo reconoces y te disculpas: «Tienes razón, perdona. Vamos más despacio. Dime qué te preocupa más.»</span></button><button class="opt" data-k="i"><span class="k">B</span><span>Sigues con tu esquema: «Solo son unas preguntas más y acabamos.»</span></button></section>`;
+    main.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{const r=b.dataset.k==="r";bump(r?3:-3,r?"Se reacomoda en la silla y vuelve a mirarte.":"Se levanta a medias y recoge la bolsa.");S.screen=S.back||"int";if(!chk())render()});
+  }else if(S.screen==="walk"){
+    const e=S.end;
+    main.innerHTML=`<div class="end"><div class="card2"><h2>${esc(e.ti)}</h2><div class="stars">${stars(0)}</div><p style="font-size:26px;line-height:1.3;margin:10px 0">${esc(e.tx)}</p><div class="claim"><b>Hoja de reclamaciones</b><p>${esc(e.claim)}</p></div></div><div class="card2"><h2>Lo que te llevas</h2><ul class="lesson">${walkLs().map(x=>`<li>${esc(x)}</li>`).join("")}</ul><div style="display:flex;gap:14px;margin-top:14px"><button class="opt" id="again" style="font-size:24px;padding:8px 18px">Repetir este caso</button><button class="opt go" id="other" style="font-size:24px;padding:8px 18px">Elegir otro caso</button></div></div></div>`;
+    $("again").onclick=()=>{reset();S.screen="obs";render()};
+    $("other").onclick=()=>{S.screen="menu";render()};
+  }else if(S.screen==="exam"){
+    main.innerHTML=`<section class="scene"><h2>Exploración física</h2>${stage()}<div class="log">${logHtml()}</div></section><section class="opts cmp"><h3>¿Qué exploras?</h3>${EX.map((q,i)=>`<button class="opt ${S.asked[q.id]?"used":""}" data-i="${i}"><span class="k">${i+1}</span><span>${esc(q.s)}</span></button>`).join("")}<button class="opt" id="bk"><span class="k">←</span><span>Volver a la entrevista</span></button><button class="opt go" id="dec"><span class="k">→</span><span>Ya decido qué hago con este paciente</span></button></section>`;
+    main.querySelectorAll(".opt[data-i]").forEach(b=>b.onclick=()=>exam(+b.dataset.i));
+    $("bk").onclick=()=>{S.screen="int";render()};
+    $("dec").onclick=()=>{S.screen="decide";render()};
+  }else if(S.screen==="decide"){
+    const n=Object.keys(S.found).length;
+    main.innerHTML=`<section class="scene"><h2>Hora de decidir</h2>${stage()}<div class="narr">Tienes ${n} ${n===1?"hallazgo positivo":"hallazgos positivos"} y has hecho ${Object.keys(S.asked).length} ${Object.keys(S.asked).length===1?"pregunta o prueba":"preguntas y pruebas"}. Decide con lo que sabes. Puedes tratar, observar, pedir la RM o derivar hoy.</div></section><section class="opts"><h3>¿Qué decides?</h3>${ACT.map((a,i)=>`<button class="opt ${i===3?"go":""}" data-i="${i}" style="flex-direction:column;align-items:flex-start;gap:4px"><span style="font-weight:800">${"ABCD"[i]}. ${esc(a.t)}</span><span style="font-size:22px;color:var(--mut)">${esc(a.d)}</span></button>`).join("")}<button class="opt" id="back"><span class="k">←</span><span>Volver a explorar</span></button></section>`;
+    main.querySelectorAll(".opt[data-i]").forEach(b=>b.onclick=()=>{S.act=+b.dataset.i;S.screen="comm";render()});
+    $("back").onclick=()=>{S.screen="exam";render()};
+  }else if(S.screen==="comm"){
+    main.innerHTML=`<section class="scene"><h2>Se lo cuentas a ${esc(c.n.split(",")[0])}</h2>${stage()}<div class="narr">Has decidido: <b>${esc(ACT[S.act].t)}</b>. Falta decírselo.</div></section><section class="opts"><h3>¿Cómo se lo explicas?</h3>${CM.map((m,i)=>`<button class="opt" data-i="${i}"><span class="k">${"ABC"[i]}</span><span>${esc(m.t)}</span></button>`).join("")}</section>`;
+    main.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{S.comm=CM[+b.dataset.i];afterDecision()});
+  }else if(S.screen==="review"){
+    main.innerHTML=`<section class="scene"><h2>Unos días después</h2><div class="stage">${doc()}${face("grave",c.f)}</div><div class="narr">${esc(c.rev)}</div><div class="note">Decidiste: ${esc(ACT[S.act].t)}. El cuadro pedía: ${esc(ACT[c.correct].t)}.</div></section><section class="opts"><h3>¿Y ahora?</h3><button class="opt go" id="fix"><span class="k">A</span><span>Rectificar: ${esc(ACT[c.correct].t)}</span></button><button class="opt" id="keep"><span class="k">B</span><span>Mantener el plan y volver a citarla</span></button></section>`;
+    $("fix").onclick=()=>finish("late");$("keep").onclick=()=>finish("bad");
+  }else{
+    const e=S.end,miss=missed();
+    const ls=c.ls.slice();
+    if(S.comm&&!S.comm.ok)ls.push(S.comm.fb);
+    if(S.hidden.n)ls.push("Preguntaste sin avisar por la zona íntima y el paciente se cerró. Explicar el porqué de la pregunta cambia lo que cuenta.");
+    main.innerHTML=`<div class="end"><div class="card2"><h2>${esc(e.ti)}</h2><div class="stars">${stars(e.st)}</div><p style="font-size:26px;line-height:1.3;margin:10px 0">${esc(e.tx)}</p><div class="stage" style="height:180px">${doc()}${face(e.st>=2?"ok":"grave",c.f)}</div></div><div class="card2"><h2>Lo que te llevas</h2><ul class="lesson">${ls.map(x=>`<li>${esc(x)}</li>`).join("")}</ul><p style="font-size:24px;margin:10px 0 4px"><b>Decisión correcta:</b> ${esc(ACT[c.correct].t)}.</p>${miss.length?`<p style="font-size:23px;margin:0;color:var(--mut)">Sin descubrir: ${miss.map(k=>esc(FL[k].toLowerCase())).join(", ")}.</p>`:`<p style="font-size:23px;margin:0;color:var(--ok)">Descubriste todos los hallazgos del caso.</p>`}<div style="display:flex;gap:14px;margin-top:14px"><button class="opt" id="again" style="font-size:24px;padding:8px 18px">Repetir este caso</button><button class="opt go" id="other" style="font-size:24px;padding:8px 18px">Elegir otro caso</button></div></div></div>`;
+    $("again").onclick=()=>{reset();S.screen="obs";render()};
+    $("other").onclick=()=>{S.screen="menu";render()};
+  }
+}
+const EVA=["Eh... no sé. Bien, supongo.","No, no, nada.","Prefiero no hablar de eso.","Mmm. Creo que no."];
+const RXO=(st)=>st?[
+ {t:"«Entiendo la preocupación. Vamos a ir viendo cada cosa con calma.»",d:1,r:"",p:"Gracias. Es que no sé qué pensar."},
+ {t:"«Seguro que no es para tanto.»",d:-2,r:"Frunce los labios.",p:"Ya. Pues a mí me preocupa."},
+ {t:"Asientes y sigues con la siguiente pregunta, sin comentar nada.",d:-1,r:"Esperaba que dijeras algo y no llega.",p:"..."}
+]:[
+ {t:"«Gracias por contármelo, sé que no es fácil hablar de esto.»",d:1,r:"",p:"Gracias a ti. Me daba apuro decirlo."},
+ {t:"«Eso es muy común, no tiene importancia.»",d:-2,r:"Baja la mirada.",p:"Ya... pues a mí me parece importante."},
+ {t:"Sigues con la siguiente pregunta sin comentar nada.",d:-1,r:"Aprieta los labios.",p:"..."}
+];
+function closeInt(){
+  const c=C();if(S.closed)return;
+  S.closed=true;
+  const exids=EX.map(e=>e.id),lost=Object.keys(c.a).filter(k=>!exids.includes(k)).map(k=>c.a[k]).filter(r=>r[1]&&!S.found[r[1]]);
+  const open=S.trust>=6;
+  let a="No, creo que ya está todo.";
+  if(open&&lost.length){const r=lost[0];S.found[r[1]]=1;a="Pues ya que me lo preguntas... "+r[0];S.hidden.n=0}
+  else if(open)a="Creo que te he contado todo. Gracias por escucharme.";
+  S.log.push({q:"¿Hay algo más que quiera contarme?",a});
+  bump(open?1:0);
+  render();
+}
+function walkout(){
+  const c=C();
+  S.end={ti:"El paciente se marcha",st:0,tx:c.n.split(",")[0]+" se levanta, recoge sus cosas y dice que prefiere que le vea otro profesional. Sale sin esperar respuesta.",claim:c.f?"Me he sentido ignorada y apurada. No me ha escuchado ni me ha explicado qué iba a hacerme. No pienso volver a esa consulta.":"Me he sentido ignorado y apurado. No me ha escuchado ni me ha explicado qué iba a hacerme. No pienso volver a esa consulta."};
+  S.screen="walk";
+  const prev=S.done[c.id];if(prev===undefined||0>prev)S.done[c.id]=0;
+  save();render();
+}
+function walkLs(){
+  const ms=missed();
+  const a=["Sin confianza no hay anamnesis: el paciente se calla, contesta lo mínimo y acaba marchándose.","Las preguntas íntimas funcionan cuando antes has escuchado y las has explicado."];
+  if(ms.length)a.push("Con esa persona sin colaborar, quedaron sin descubrir: "+ms.map(k=>FL[k].toLowerCase()).join(", ")+".");
+  a.push("Una reclamación no sustituye al diagnóstico: el cuadro seguirá su curso sin que nadie lo haya visto.");
+  return a;
+}
+function missed(){
+  const c=C(),all={};
+  Object.keys(c.a).forEach(k=>{if(c.a[k][1])all[c.a[k][1]]=1});
+  return Object.keys(all).filter(k=>!S.found[k]);
+}
+function ask(i){
+  const q=QS[i],c=C();
+  if(S.asked[q.id])return;
+  if(SENS.includes(q.id)&&!S.intro){S.pend=i;S.screen="sens";render();return}
+  S.asked[q.id]=1;
+  S.back="int";
+  if(SENS.includes(q.id)){
+    const early=QS.filter(x=>x.g==="Dolor actual"&&S.asked[x.id]).length;
+    if(early<2&&!S.early){S.early=1;bump(-1,"Parpadea. Ha cambiado de tema muy deprisa.")}
+  }
+  let r=c.a[q.id]||DEF[q.id]||["Sin novedades.",""];
+  const sens=SENS.includes(q.id)||q.id==="bl";
+  if(r[1]&&((sens&&S.trust<=3)||(S.trust<=2&&q.id!=="loc"&&q.id!=="evo"))){
+    S.hidden.n=1;r=[EVA[(Object.keys(S.asked).length)%EVA.length],""];
+  }
+  const warmth=!r[1]&&S.trust>=7&&c.a[q.id]?"":"";
+  if(r[1])S.found[r[1]]=1;
+  S.log.push({q:q.q,a:r[0]});
+  if(r[1]&&sens&&S.trust>3){S.rx={ctx:"disc"};S.screen="rx";if(!chk())render();return}
+  if(!chk())render();
+}
+function exam(i){
+  const q=EX[i],c=C();
+  if(S.asked[q.id])return;
+  if(!S.exin){S.screen="exin";render();return}
+  if(q.id==="per"&&S.trust<=3){S.log.push({q:q.q,a:"Prefiero que no. No me siento a gusto con eso."});S.react="Se tapa con los brazos.";render();return}
+  S.asked[q.id]=1;
+  S.back="exam";
+  const r=c.a[q.id]||DEF[q.id];
+  if(r[1])S.found[r[1]]=1;
+  S.log.push({q:q.q,a:r[0]});
+  render();
+}
+function afterDecision(){
+  const c=C(),d=S.act-c.correct;
+  if(d<0){S.screen="review";render()}else finish(d===0?"ok":"over");
+}
+function finish(kind){
+  const c=C(),d=S.act-c.correct;let e;
+  if(kind==="ok")e={ti:"Decisión acertada",st:3,tx:c.ok};
+  else if(kind==="over")e={ti:d===1?"Seguro, pero de más":"Derivación excesiva",st:d===1?2:1,tx:c.ovr};
+  else if(kind==="late")e={ti:"Rectificar a tiempo cuenta, pero no es lo mismo",st:Math.max(0,2+d),tx:c.late};
+  else e={ti:"El cuadro avanza",st:0,tx:c.bad};
+  if(S.comm&&!S.comm.ok)e.st=Math.max(0,e.st-1);
+  S.end=e;S.screen="end";
+  const prev=S.done[c.id];if(prev===undefined||e.st>prev)S.done[c.id]=e.st;
+  save();render();
+}
+$("menu").onclick=()=>{S.screen="menu";render()};
+$("chuleta").onclick=()=>{
+  $("mbox").innerHTML=`<h2>Tarjeta de indicadores de la cola de caballo</h2><table class="tb"><tr><th>Indicador</th><th>Sensibilidad</th><th>Especificidad</th></tr><tr><td>Retención de orina</td><td>0,90</td><td>0,95</td></tr><tr><td>Anestesia en silla de montar</td><td>0,75</td><td>...</td></tr><tr><td>Déficit sensitivo o motor en pies</td><td>0,80</td><td>...</td></tr></table><p style="font-size:25px;line-height:1.3"><b>Alta sospecha:</b> dolor radicular unilateral o bilateral, sensibilidad dermatómica disminuida, debilidad motora, sensibilidad reducida en silla de montar, alteración de vejiga, intestino o función sexual, y dolor que comienza en un lado y progresa a los dos.</p><p style="font-size:25px;line-height:1.3"><b>Según el nivel de preocupación:</b> bajo, comenzar la terapia. Pocos hallazgos, comenzar con observación y revisar si cambian. Algunos, derivar con urgencia y no comenzar la terapia. Muchos, derivar con emergencia y no comenzar la terapia.</p><button class="fb" onclick="document.getElementById('modal').classList.remove('show')">Cerrar</button>`;
+  $("modal").classList.add("show");
+};
+function fit(){const k=Math.min(innerWidth/1920,innerHeight/1080),d=$("deck");d.style.transform="scale("+k+")";d.style.left=((innerWidth-1920*k)/2)+"px";d.style.top=((innerHeight-1080*k)/2)+"px"}
+addEventListener("resize",fit);fit();render();
+</script>
+</body>
+</html>

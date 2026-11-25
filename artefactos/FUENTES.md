@@ -10,3 +10,5 @@
 | mano-pulgar-figuras-16x9.html | https://claude.ai/artifact/HPryhtjeSiWwerrqt7GjD4 (35 pantallas, 11 figuras interactivas de https://claude.ai/artifact/FT4ZcPkMmhKpUZdaY7JGQ5. Pantalla nº en el visor o #N en la dirección) |
 | razonamiento-clinico-enrique-16x9.html | Creado a partir de la presentación «3. Organización del Razonamiento Clínico» (versión sin conexión de https://claude.ai/artifact/97ABcyUZM2pTvaM8VKBv46) |
 | roleplay-marcador-fallos-16x9.html | Creado a partir de «4. Evaluación Clínica en Fisioterapia» (equipos de observación: Conexiones, Preguntas y Estructura) |
+| aventura-banderas-rojas-cola-de-caballo-16x9.html | Creado a partir de «5. Triaje en Fisioterapia. Evaluación Subjetiva y Sistema de Banderas» (tarjeta de la cola de caballo, cuatro casos de razonamiento y caso de Gabriel S.) |
+| aventura-banderas-amarillas-16x9.html | Creado a partir de «5. Triaje en Fisioterapia. Evaluación Subjetiva y Sistema de Banderas» (ABCDE, cuatro niveles de actuación y frases de comunicación) |

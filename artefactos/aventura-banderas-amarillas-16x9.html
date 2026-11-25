@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aventura: Marta y las banderas amarillas</title>
+<style>
+:root{--bg:#f6f4ef;--panel:#fff;--ink:#1d2430;--mut:#5b6575;--line:#d9d5ca;--blue:#0b4f8a;--blue2:#e6eef7;--y:#c99a12;--y2:#fdf0bd;--ydk:#6e5200;--ok:#1d7a4d;--okbg:#e3f3ea;--warn:#b4561b;--warnbg:#fbeadd;--red:#b3261e}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:#0d1117;overflow:hidden}
+body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--ink)}
+button{font:inherit;cursor:pointer}
+#deck{position:absolute;left:0;top:0;width:1920px;height:1080px;background:var(--bg);transform-origin:0 0;display:flex;flex-direction:column;font-size:30px;overflow:hidden}
+header{background:var(--ydk);color:#fff;height:96px;flex:none;display:flex;align-items:center;padding:0 56px;gap:28px}
+header h1{margin:0;font-size:42px}
+header .sp{flex:1}
+.pill{background:rgba(255,255,255,.18);border-radius:14px;padding:6px 20px;font-size:26px;white-space:nowrap}
+.pill b{font-size:30px}
+.abcde{background:var(--panel);border-bottom:2px solid var(--line);height:96px;flex:none;display:flex;align-items:center;gap:14px;padding:0 56px}
+.abcde .lab{font-size:24px;color:var(--mut);width:210px;line-height:1.1}
+.tile{flex:1;height:64px;border-radius:12px;background:#ececec;color:#8a8a8a;display:flex;align-items:center;gap:12px;padding:0 14px;font-size:23px;font-weight:600}
+.tile b{width:42px;height:42px;border-radius:50%;background:#d6d6d6;color:#fff;display:grid;place-items:center;font-size:24px;flex:none}
+.tile.on{background:var(--y2);color:var(--ydk)}
+.tile.on b{background:var(--y)}
+main{flex:1;min-height:0;display:grid;grid-template-columns:1020px 1fr;gap:26px;padding:22px 56px 10px}
+.scene{background:var(--panel);border:2px solid var(--line);border-radius:22px;padding:22px 28px;display:flex;flex-direction:column;min-height:0}
+.scene h2{margin:0 0 6px;font-size:40px;color:var(--ydk)}
+.stage{display:flex;gap:18px;align-items:flex-end;height:200px;flex:none;margin:6px 0 4px;background:linear-gradient(#fbf3d6,#f1e6bd);border-radius:16px;overflow:hidden;padding:0 20px}
+.stage svg{height:190px;flex:none}
+.quote{margin:10px 0 0;border-left:10px solid var(--y);background:var(--y2);border-radius:10px;padding:10px 18px;font-size:26px;line-height:1.26;font-style:italic;flex:none}
+.narr{font-size:27px;line-height:1.28;margin-top:10px;overflow:hidden}
+.note{margin-top:auto;background:var(--warnbg);border-left:10px solid var(--warn);border-radius:10px;padding:10px 18px;font-size:25px;line-height:1.25}
+.note.ok{background:var(--okbg);border-left-color:var(--ok)}
+.log{margin-top:8px;font-size:22px;line-height:1.22;overflow:hidden}
+.log div{border-top:2px solid var(--line);padding:5px 0}
+.log b{color:var(--ydk)}
+.opts{display:flex;flex-direction:column;gap:11px;min-height:0;overflow:hidden}
+.opts h3{margin:4px 0 0;font-size:30px;color:var(--mut)}
+.opt{background:var(--panel);border:3px solid var(--blue);color:var(--ink);border-radius:18px;padding:12px 20px;text-align:left;font-size:27px;line-height:1.22;display:flex;gap:16px;align-items:center}
+.opt:hover{background:var(--blue2)}
+.opt .k{flex:none;width:52px;height:52px;border-radius:50%;background:var(--blue);color:#fff;display:grid;place-items:center;font-weight:800;font-size:28px}
+.opt.go{border-color:var(--ydk)}.opt.go .k{background:var(--ydk)}
+.opt.used{opacity:.4;pointer-events:none;text-decoration:line-through}
+.opts.cmp{gap:7px}.opts.cmp .opt{padding:5px 16px;font-size:23px}.opts.cmp .opt .k{width:38px;height:38px;font-size:21px}.opts.cmp h3{font-size:26px;margin:0}
+footer{height:90px;flex:none;display:flex;align-items:center;gap:14px;padding:0 56px 8px;justify-content:flex-end}
+.fb{background:#fff;border:2px solid var(--blue);color:var(--blue);border-radius:12px;padding:8px 18px;font-size:23px}
+.end{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:26px;min-height:0}
+.card2{background:var(--panel);border:2px solid var(--line);border-radius:22px;padding:22px 28px;min-height:0;overflow:hidden}
+.card2 h2{margin:0 0 8px;font-size:38px;color:var(--ydk)}
+.stars{font-size:70px;letter-spacing:6px;color:var(--y)}
+.stars i{color:#d5d5d5;font-style:normal}
+.lesson{margin:0;padding-left:30px;font-size:25px;line-height:1.26}
+.lesson li{margin:6px 0}
+.thermo{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:10px 0}
+.thermo div{min-height:64px;flex-direction:column;border-radius:10px;background:#ececec;display:flex;align-items:center;justify-content:center;font-size:21px;color:#777;font-weight:600;text-align:center;line-height:1}
+.thermo .t0{background:#d6efdf;color:#17613b}.thermo .t1{background:#fdeeb0;color:#7a5a00}.thermo .t2{background:#ffd3a6;color:#8a3d00}.thermo .t3{background:#f7b3ad;color:#7a0f08}
+.thermo .real{outline:4px solid var(--ink);outline-offset:2px}
+.thermo .mine::after{content:"▲ tu elección";font-size:17px;margin-top:3px}
+.react{font-size:24px;color:var(--warn);font-style:italic;background:var(--warnbg);border-radius:8px;padding:5px 14px;margin-top:8px}
+.tg{display:flex;align-items:center;gap:8px;font-size:21px}
+.tg .b{display:flex;gap:3px}.tg .b i{width:12px;height:24px;border-radius:3px;background:rgba(255,255,255,.3);display:block}
+.tg .b i.g{background:#7be0a4}.tg .b i.y{background:#ffd54a}.tg .b i.r{background:#ff8a80}
+.claim{background:#fffbe6;border:3px solid #b8a64b;border-radius:10px;padding:10px 18px;margin-top:8px}
+.claim p{margin:4px 0 0;font-size:25px;font-style:italic;line-height:1.28}
+.opt.sp{border-color:var(--ok)}.opt.sp .k{background:var(--ok)}
+</style>
+</head>
+<body>
+<div id="deck">
+  <header><h1>Aventura: las banderas amarillas de Marta</h1><div class="sp"></div><div class="pill">Fichas de pregunta <b id="fich"></b></div><div class="pill tg" id="trust"></div></header>
+  <div class="abcde" id="abcde"></div>
+  <main id="main"></main>
+  <footer><button class="fb" id="rst">Otra Marta</button></footer>
+</div>
+<script>
+"use strict";
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const DOM={A:"Actitudes y creencias",B:"Comportamiento",C:"Compensación y contexto",D:"Diagnóstico",E:"Emociones"};
+const LV=[
+ {n:"Fisioterapia convencional",c:"Bajo impacto de las banderas amarillas y sin síntomas de enfermedad mental.",p:"Autoeficacia, ánimo y motivación, y consejo de mantenerse activo."},
+ {n:"Fisioterapia con base psicológica",c:"Impacto moderado de las banderas amarillas y sin síntomas de enfermedad mental.",p:"Autoeficacia, estrategias cognitivo-conductuales, afrontamiento y entrevista motivacional."},
+ {n:"Fisioterapia con derivación",c:"Impacto moderado o alto de las banderas amarillas y síntomas de enfermedad mental.",p:"Fisioterapia junto con derivación a otros profesionales de la salud."},
+ {n:"Derivación inmediata",c:"Signos de enfermedad severa, incluida depresión o conductas suicidas. La fisioterapia no es la terapia de elección.",p:"Derivación urgente a otros profesionales de la salud."}
+];
+const PH=[
+ "Puedo ver que ha sido difícil lidiar con el dolor, lo que te dificulta realizar actividades importantes para ti. Podemos tratar de encontrar estrategias que estén destinadas a hacer frente al dolor.",
+ "He escuchado tu preocupación al realizar actividad física y moverte. Con cambios graduales para moverte, podemos trabajar juntos para evaluar cómo se sienten algunos movimientos. Si encontramos la mejor manera de aumentar tu actividad física, aumentaremos la probabilidad de mejorar y mantener tu función.",
+ "El dolor afecta de muchas maneras a tu vida. Para que tuvieses un tratamiento más completo sería interesante incorporar a otro profesional al equipo. Yo sigo contigo, pero así aumentamos la probabilidad de alcanzar tus objetivos.",
+ "Gracias por contármelo. Me preocupa cómo te sientes y quiero que te vea hoy mismo alguien especializado. No te dejo sola con esto: vamos a organizarlo ahora, aquí contigo."
+];
+const BAD=[
+ "No te preocupes, eso se pasa. Con unos ejercicios estarás bien.",
+ "Lo tuyo es más psicológico que físico, así que te voy a mandar al psicólogo."
+];
+const V=[
+ {key:"conv",lv:0,mood:"ok",open:"«Hola. Vengo por la espalda otra vez, pero voy tirando.»",
+  prof:"Tiene estrés en el trabajo pero adapta la exigencia y las actividades que le aumentan el dolor. Vive con su familia, que la ayuda bastante. Intenta hacer cosas aunque a veces le duela un poco, hace ejercicio ocasionalmente y piensa apuntarse al gimnasio."},
+ {key:"psico",lv:1,mood:"tenso",open:"«Hola... vengo por la espalda. La verdad es que no me siento segura haciendo cosas.»",
+  prof:"Teme que la espalda le duela más si hace cosas activas, se cansa mucho y no sabe si podrá seguir trabajando. Sus hijos dependen mucho de ella y su marido ayuda poco en casa. Aun así siempre camina y casi nunca coge el coche."},
+ {key:"deriv",lv:2,mood:"triste",open:"«Hola. Me duele mucho. A ver si me puedes ayudar.»",
+  prof:"Siente mucho dolor, a veces no va al trabajo, está estresada y triste y teme que la despidan. En casa pasan apuros económicos. No suele hacer ejercicio, pero es quien saca al perro."},
+ {key:"urg",lv:3,mood:"grave",open:"(Entra despacio y casi no te mira.) «Hola.»",
+  prof:"Siente mucho dolor y hace lo mínimo por miedo a que le duela más. Ha perdido dos trabajos por el dolor, vive atrapada en casa, apenas come y duerme, y en casa no la ayudan ni la apoyan. No sabe si puede seguir viviendo así."}
+];
+const Q=[
+ {id:"fear",q:"¿Tiene miedo de realizar alguna actividad o movimiento concreto?",s:"Miedo a actividades o movimientos",tg:"AB",
+  a:["Un poco de cuidado con levantar peso, pero hago casi de todo. Si me duele, lo adapto.","Sí, muchísimo. Me da miedo hacer algo muy activo porque luego me duele más la espalda. Prefiero no arriesgar.","Me da miedo moverme porque cuanto más me muevo, peor. Hay días que ni me levanto.","Todo. Prefiero no hacer nada, por si acaso. Hago lo mínimo."]},
+ {id:"mean",q:"¿Qué significa para usted su dolor? ¿Qué cree que le pasa?",s:"Qué significa el dolor",tg:"AD",
+  a:["Que tengo la espalda delicada y tengo que cuidarla, pero se pasa.","No sé si seré capaz de seguir trabajando así. Creo que tengo la espalda destrozada.","Creo que no se va a quitar nunca y que me van a echar del trabajo por esto.","Que esto no se va a ir nunca. Ya no puedo más."]},
+ {id:"feel",q:"¿Cómo le hace sentirse el dolor?",s:"Cómo le hace sentirse",tg:"E",
+  a:["Algo estresada con el trabajo, pero me organizo. Tengo días mejores y peores.","Muy cansada y con miedo a que me duela más luego. Mi marido ayuda poco y los niños dependen mucho de mí.","Triste y estresada. Me paso el día preocupada por si me despiden.","Fatal. Hay días que no sé si puedo seguir viviendo así."],
+  low:["Bien, estresada.","Cansada.","Triste.","Mal. Cansada."]},
+ {id:"eff",q:"¿Qué efecto tiene el dolor en su vida? Trabajo, casa, familia.",s:"Efecto en trabajo, casa y familia",tg:"BC",
+  a:["Voy adaptando el trabajo y en casa me ayudan bastante. Quiero apuntarme al gimnasio.","Me canso mucho y no sé si podré seguir trabajando. Aun así siempre voy andando a todos lados, casi nunca cojo el coche.","Algunos días no voy a trabajar. En casa estamos justos de dinero y eso me agobia más.","He perdido dos trabajos por el dolor y vivo atrapada en casa."]},
+ {id:"hab",q:"¿Cómo está durmiendo y comiendo? ¿Qué hace cuando le duele?",s:"Sueño, comida y qué hace cuando duele",tg:"BE",
+  a:["Duermo bien, salvo cuando me duele mucho. Me muevo un poco y se pasa.","Duermo regular. Me quedo quieta un rato, pero luego salgo a caminar igualmente.","Duermo poco. Saco al perro y poco más, no hago ejercicio.","Apenas como y apenas duermo. Me quedo en casa sin hacer nada."]},
+ {id:"work",q:"¿Cómo lleva el trabajo y la situación económica en casa?",s:"Trabajo y economía",tg:"C",
+  a:["Hay estrés pero puedo adaptar la exigencia. No tengo problemas de dinero.","Me preocupa no poder seguir. De dinero vamos bien.","Me da miedo que me echen. Tenemos apuros económicos.","Ya he perdido dos trabajos. El dinero es otro problema."]},
+ {id:"sup",q:"¿Quién la ayuda en casa y cómo la apoyan con el dolor?",s:"Apoyo en casa",tg:"CE",
+  a:["Vivo con mi familia y me ayudan bastante.","Mis hijos dependen mucho de mí y mi marido ayuda poco.","Me apoyan, pero cada uno anda con sus propias preocupaciones por el dinero.","Nadie. En casa no me ayudan con las tareas ni me apoyan con el dolor."]},
+ {id:"vul",q:"¿Qué grado de vulnerabilidad cree que tiene su zona lumbar?",s:"Vulnerabilidad de la zona lumbar",tg:"A",
+  a:["La noto bien en general. Tengo que cuidarla.","Muy frágil. Cualquier esfuerzo me la puede estropear.","Rota por dentro, creo, aunque dicen que no.","Para mí está destrozada, no hay nada que hacer."]},
+ {id:"dx",q:"¿Qué le han dicho del diagnóstico? ¿Qué espera del tratamiento?",s:"Diagnóstico y expectativas",tg:"D",
+  a:["Que es un dolor mecánico. Espero fortalecerme y aprender a manejarlo.","Que no tengo nada grave, pero yo no me lo creo del todo.","Que no hay nada grave, pero yo no me lo creo.","Lo que me digan me da igual. Nada funciona."]},
+ {id:"safe",q:"A veces, cuando el dolor se vive tan mal, hay personas que piensan que no pueden seguir así. ¿Le ha pasado algo parecido?",s:"Pregunta directa sobre no poder seguir así",tg:"E",
+  a:["No, qué va. Estoy estresada, pero nada de eso.","No, no llego a eso. Estoy cansada, pero no.","No, eso no. Estoy muy baja de ánimo, pero no pienso en eso.","Sí... a veces pienso que no sé si puedo seguir viviendo así."]}
+];
+const OPEN=[
+ {t:"«El dolor es complejo y afecta a las personas de muchas maneras. Estas preguntas me ayudan a diseñar el mejor plan de tratamiento para ti.»",r:1},
+ {t:"«Estas preguntas se las hago a todo el mundo. Nos ayudan a hacer el tratamiento correcto, para la persona correcta y en el momento correcto.»",r:1},
+ {t:"«Ahora unas preguntas para descartar que lo tuyo sea psicológico.»",r:-2},
+ {t:"«Bueno, vamos directos a la camilla, que el tiempo vuela.»",r:-1}
+];
+function face(mood){
+  const M={ok:"M 92 150 Q 110 164 128 150",tenso:"M 94 156 Q 110 150 126 156",triste:"M 94 160 Q 110 146 126 160",grave:"M 96 162 Q 110 150 124 162"};
+  const brow=mood==="grave"||mood==="triste"||mood==="tenso"?'<path d="M 80 112 L 100 108 M 140 112 L 120 108" stroke="#3a2a1a" stroke-width="5" fill="none" stroke-linecap="round"/>':'<path d="M 82 108 L 100 108 M 138 108 L 120 108" stroke="#3a2a1a" stroke-width="5" fill="none" stroke-linecap="round"/>';
+  return `<svg viewBox="0 0 220 240"><path d="M 20 240 Q 30 190 110 186 Q 190 190 200 240 Z" fill="#a45a7a"/><rect x="92" y="168" width="36" height="26" fill="#e7b894"/><ellipse cx="110" cy="124" rx="50" ry="56" fill="#f0c4a0"/><path d="M 56 130 Q 50 60 110 60 Q 170 60 164 130 Q 166 100 150 86 Q 110 76 70 86 Q 54 100 56 130 Z" fill="#6a3a22"/><circle cx="90" cy="126" r="6" fill="#222"/><circle cx="130" cy="126" r="6" fill="#222"/>${brow}<path d="${M[mood]||M.tenso}" stroke="#7a2a1a" stroke-width="5" fill="none" stroke-linecap="round"/></svg>`;
+}
+function doc(){return `<svg viewBox="0 0 220 240"><path d="M 20 240 Q 30 190 110 186 Q 190 190 200 240 Z" fill="#1f8f8a"/><rect x="92" y="168" width="36" height="26" fill="#e0b08a"/><ellipse cx="110" cy="124" rx="50" ry="56" fill="#e8b994"/><path d="M 60 110 Q 62 66 110 66 Q 158 66 160 110 Q 148 88 110 88 Q 72 88 60 110 Z" fill="#2a2018"/><circle cx="92" cy="126" r="5.5" fill="#222"/><circle cx="128" cy="126" r="5.5" fill="#222"/><path d="M 86 112 L 100 111 M 134 112 L 120 111" stroke="#2a2018" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M 96 150 Q 110 158 124 150" stroke="#7a2a1a" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M 74 186 Q 74 214 100 218" stroke="#1d2430" stroke-width="5" fill="none"/></svg>`}
+
+const NEG=["Se cruza de brazos y suspira.","Mira hacia la puerta.","Aparta la mirada y responde más bajo.","Se remueve en la silla.","Mira el reloj un momento."];
+const POS=["Se relaja un poco en la silla.","Asiente y suelta aire.","Te mira a los ojos por primera vez.","Los hombros bajan un poco."];
+let nr=0;
+function bump(n,txt){S.trust=Math.max(0,Math.min(10,S.trust+n));S.react=txt||(n<0?NEG[nr++%NEG.length]:n>0?POS[nr++%POS.length]:"")}
+const moodT=()=>S.trust>=6?curV().mood==="grave"||curV().mood==="triste"?curV().mood:"ok":S.trust>=3?"tenso":"grave";
+const tlab=()=>S.trust>=7?"Abierta":S.trust>=5?"Receptiva":S.trust>=3?"Reservada":"Cerrada";
+function chk(){
+  if(S.trust<=0){walkout();return true}
+  if(S.trust<=2&&!S.warned){S.warned=true;S.stage="warn";render();return true}
+  return false;
+}
+const EMO=["mean","feel","eff","sup","safe","fear","vul"];
+const RXO=[
+ {t:"«Puedo ver que ha sido difícil lidiar con el dolor.»",d:1,r:"",p:"Gracias. Es que a veces siento que nadie me entiende."},
+ {t:"«No te preocupes, eso se pasa.»",d:-2,r:"Frunce los labios.",p:"Ya... eso me dicen todos."},
+ {t:"«Lo que tienes que hacer es moverte más y ya está.»",d:-2,r:"Aparta la mirada.",p:"Ya lo sé. No es tan fácil."}
+];
+function walkout(){
+  S.end={ti:"La paciente se marcha",st:0,tx:"Marta se levanta, recoge sus cosas y dice que prefiere que le vea otro profesional. Sale sin esperar respuesta.",claim:"Me he sentido juzgada y ninguneada. No me han escuchado ni me han explicado por qué me hacían esas preguntas. No pienso volver."};
+  S.stage="walk";render();
+}
+let S,order=[0,1,2,3],oi=-1;
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function newPatient(){
+  if(oi<0||oi>=order.length-1){let o=shuffle([0,1,2,3]);if(oi>=0&&o[0]===order[order.length-1])o.push(o.shift());order=o;oi=0}else oi++;
+  S={v:order[oi],stage:"intro",trust:5,react:"",warned:false,fich:5,asked:{},log:[],dom:{},risk:false,pick:null,comm:null,cm:null,hist:[],rx:null,hidden:false,end:null};
+}
+const curV=()=>V[S.v];
+function fichas(){return 5-S.log.length}
+function render(){
+  $("fich").textContent=S.log.length+" / 5";$("trust").innerHTML=`Confianza <span class="b">${Array.from({length:10},(_,i)=>`<i class="${i<S.trust?(S.trust>=7?"g":S.trust>=4?"y":"r"):""}"></i>`).join("")}</span><b>${tlab()}</b>`;
+  $("abcde").innerHTML='<div class="lab">Banderas amarillas (ABCDE)</div>'+Object.keys(DOM).map(k=>`<div class="tile ${S.dom[k]?"on":""}"><b>${k}</b>${DOM[k]}</div>`).join("");
+  const main=$("main");const v=curV();
+  const sm=(txt)=>{const m=txt.match(/^.*?[.?!](\s|$)/);return m?m[0].trim():txt};
+  if(S.stage==="intro"){
+    main.innerHTML=`<section class="scene"><h2>Marta, 42 años</h2><div class="stage">${doc()}${face(v.mood)}</div><div class="quote">${esc(v.open)}</div><div class="narr">Dolor lumbar y antecedente de depresión. Hoy no te toca solo la espalda: toca cribar banderas amarillas. Ninguna ficha te dirá en qué nivel está Marta, eso lo vas a descubrir tú.</div></section><section class="opts"><button class="opt go" id="go"><span class="k">→</span><span>Empezar la consulta</span></button></section>`;
+    $("go").onclick=()=>{S.stage="open";render()};
+  }else if(S.stage==="open"){
+    main.innerHTML=`<section class="scene"><h2>1. ¿Cómo introduces las preguntas?</h2><div class="stage">${doc()}${face(v.mood)}</div><div class="narr">Vas a explorar cómo vive Marta el dolor. Lo primero es cómo le explicas por qué se lo preguntas.</div></section><section class="opts"><h3>¿Qué le dices?</h3>${OPEN.map((o,i)=>`<button class="opt" data-i="${i}"><span class="k">${"ABCD"[i]}</span><span>${esc(o.t)}</span></button>`).join("")}</section>`;
+    main.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{const o=OPEN[+b.dataset.i];S.openPick=+b.dataset.i;bump(o.r,o.r<0?"Se echa hacia atrás en la silla.":"");S.stage="hub";if(!chk())render()});
+  }else if(S.stage==="hub"){
+    const last=S.log[S.log.length-1];
+    const fb=S.openPick===2?"Marta se pone a la defensiva. Contestará lo mínimo.":S.openPick===3?"Sin explicación, Marta no sabe a qué viene todo.":"Marta se relaja un poco. Sabe por qué le preguntas.";
+    const mood=moodT();
+    main.innerHTML=`<section class="scene"><h2>2. Entrevista: ${S.log.length} de 5 preguntas</h2><div class="stage">${doc()}${face(mood)}</div>${S.react?`<div class="react">${esc(S.react)}</div>`:""}${last?`<div class="narr"><p style="margin:0 0 8px;color:var(--blue)"><b>Tú:</b> «${esc(last.q)}»</p></div><div class="quote">«${esc(last.a)}»</div>${last.rx?`<div class="quote" style="margin-top:6px">«${esc(last.rx)}»</div>`:""}`:`<div class="narr">${fb}</div>`}<div class="log">${S.log.slice(0,-1).slice(-2).map(l=>`<div><b>${esc(l.s)}:</b> ${esc(l.a)}${l.rx?` <i>(${esc(l.rx)})</i>`:""}</div>`).join("")}</div></section><section class="opts cmp"><h3>Elige hasta 5 preguntas (te quedan ${5-S.log.length})</h3>${Q.map((q,i)=>`<button class="opt ${S.asked[q.id]?"used":""}" data-i="${i}"><span class="k">${i+1}</span><span>${esc(q.s)}</span></button>`).join("")}<button class="opt go" id="fin"><span class="k">→</span><span>Terminar la entrevista y clasificar</span></button></section>`;
+    main.querySelectorAll(".opt[data-i]").forEach(b=>b.onclick=()=>ask(+b.dataset.i));
+    $("fin").onclick=()=>{S.stage="classify";render()};
+  }else if(S.stage==="rx"){
+    const l=S.log[S.log.length-1];
+    main.innerHTML=`<section class="scene"><h2>Marta acaba de contarte algo importante</h2><div class="stage">${doc()}${face(moodT())}</div><div class="narr"><p style="margin:0 0 8px;color:var(--blue)"><b>Tú:</b> «${esc(l.q)}»</p></div><div class="quote">«${esc(l.a)}»</div></section><section class="opts"><h3>¿Qué le dices?</h3>${RXO.map((o,i)=>`<button class="opt" data-i="${i}"><span class="k">${"ABC"[i]}</span><span>${esc(o.t)}</span></button>`).join("")}</section>`;
+    main.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{const o=RXO[+b.dataset.i];bump(o.d,o.r);S.log[S.log.length-1].rx=o.p;S.stage="hub";if(!chk())render()});
+  }else if(S.stage==="warn"){
+    main.innerHTML=`<section class="scene"><h2>El ambiente se tensa</h2><div class="stage">${doc()}${face("grave")}</div><div class="quote">«Mire, me estoy agobiando. No sé si me está escuchando.»</div><div class="narr">Marta se echa hacia atrás y mira la puerta. Si sigues así, se irá.</div></section><section class="opts"><h3>¿Cómo reaccionas?</h3><button class="opt sp" data-k="r"><span class="k">A</span><span>Paras y lo reconoces: «Tienes razón, perdona. Vamos más despacio. Dime qué te preocupa más.»</span></button><button class="opt" data-k="i"><span class="k">B</span><span>Sigues con tu esquema: «Solo son unas preguntas más y acabamos.»</span></button></section>`;
+    main.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{const r=b.dataset.k==="r";bump(r?3:-3,r?"Se reacomoda en la silla y vuelve a mirarte.":"Se levanta a medias y recoge la bolsa.");S.stage="hub";if(!chk())render()});
+  }else if(S.stage==="walk"){
+    const e=S.end,ms=Object.keys(S.dom).length;
+    main.innerHTML=`<div class="end"><div class="card2"><h2>${esc(e.ti)}</h2><div class="stars">${"★".repeat(0)}<i>★★★</i></div><p style="font-size:26px;line-height:1.3;margin:10px 0">${esc(e.tx)}</p><div class="claim"><b>Hoja de reclamaciones</b><p>${esc(e.claim)}</p></div></div><div class="card2"><h2>Lo que te llevas</h2><ul class="lesson"><li>Sin confianza no hay entrevista: la persona se cierra, contesta lo mínimo y se marcha.</li><li>Minimizar el dolor o dar consejos antes de escuchar rompe la conversación. Validar lo que cuenta la abre.</li><li>Marta quedaba en ${esc(LV[curV().lv].n.toLowerCase())}. Sin su colaboración no se pudo valorar ni el plan ni el riesgo.</li></ul><div style="margin-top:14px"><button class="opt go" id="again" style="font-size:24px;padding:8px 18px">Otra Marta</button></div></div></div>`;
+    $("again").onclick=()=>{newPatient();render()};
+  }else if(S.stage==="classify"||S.stage==="comm"){
+    const notes=S.log.length?S.log.map(l=>`<div><b>${esc(l.s)}:</b> ${esc(l.a)}</div>`).join(""):"<div>No has preguntado nada. Vas a decidir a ciegas.</div>";
+    if(S.stage==="classify"){
+      main.innerHTML=`<section class="scene"><h2>3. ¿En qué nivel clasificas a Marta?</h2><div class="narr" style="margin:0 0 6px">Estas son tus notas. Compara lo que has oído con los criterios de cada nivel.</div><div class="log" style="font-size:23px">${notes}</div></section><section class="opts"><h3>Nivel de actuación</h3>${LV.map((l,i)=>`<button class="opt" data-i="${i}" style="flex-direction:column;align-items:flex-start;gap:4px"><span style="font-weight:800">${"ABCD"[i]}. ${esc(l.n)}</span><span style="font-size:22px;color:var(--mut)">${esc(l.c)}</span></button>`).join("")}</section>`;
+      main.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{S.pick=+b.dataset.i;S.stage="comm";S.opts=buildComm();render()});
+    }else{
+      main.innerHTML=`<section class="scene"><h2>4. ¿Cómo se lo cuentas?</h2><div class="narr" style="margin:0 0 6px">Has clasificado a Marta en <b>${esc(LV[S.pick].n.toLowerCase())}</b>. Ahora toca decírselo con palabras que no la hundan.</div><div class="stage">${doc()}${face(moodT())}</div></section><section class="opts"><h3>¿Qué le dices?</h3>${S.opts.map((o,i)=>`<button class="opt" data-i="${i}" style="font-size:24px"><span class="k">${"ABCD"[i]}</span><span>${esc(o.t)}</span></button>`).join("")}</section>`;
+      main.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{S.cm=S.opts[+b.dataset.i];S.stage="end";render()});
+    }
+  }else{
+    const real=v.lv,exact=S.pick===real,adj=Math.abs(S.pick-real)===1;
+    const pc=exact?3:adj?1:0;
+    const pCom=S.cm.pts;
+    const pInt=(Object.keys(S.dom).length>=3?1:0)+(S.trust>=6?1:0);
+    let tot=pc+pCom+pInt;
+    let stars=tot>=6?3:tot>=4?2:tot>=2?1:0;
+    const missedRisk=real===3&&S.pick<3;
+    if(missedRisk)stars=Math.min(stars,1);
+    const asked=S.log.length;
+    const ls=[];
+    ls.push(exact?`Clasificación acertada: ${LV[real].n.toLowerCase()}. ${LV[real].p}`:`Marta estaba en ${LV[real].n.toLowerCase()}. ${LV[real].c} Plan: ${LV[real].p}`);
+    if(missedRisk)ls.push("Preguntar directamente por no poder seguir así no empeora nada y es lo que permite ver el riesgo.");
+    else if(real===3&&S.risk)ls.push("Preguntaste por lo difícil y la respuesta cambió el plan. Con riesgo, derivación urgente y no dejar sola a la persona.");
+    ls.push(S.trust>=6?"Explicar el porqué de las preguntas y validar lo que contaba abrió la conversación.":"Sin explicar el porqué de las preguntas, las respuestas se quedan cortas.");
+    ls.push(Object.keys(S.dom).length>=3?`Cubriste ${Object.keys(S.dom).length} de los 5 apartados de ABCDE.`:`Solo cubriste ${Object.keys(S.dom).length} de los 5 apartados de ABCDE. A más apartados, menos sorpresas.`);
+    ls.push(S.cm.pts===2?"La frase final acompañó al plan y no estigmatizó.":S.cm.pts===1?"La frase encajaba con otro nivel. Ajusta el mensaje al plan que has elegido de verdad.":"Esa frase minimiza o etiqueta a Marta. El dolor es complejo y causa sufrimiento, y así se le dice.");
+    const thermo=LV.map((l,i)=>`<div class="t${i} ${i===real?"real":""} ${i===S.pick?"mine":""}">${esc(l.n)}</div>`).join("");
+    main.innerHTML=`<div class="end"><div class="card2"><h2>${stars===3?"Cribado de manual":stars===2?"Buen ojo clínico":stars===1?"Para repasar":"Hay que volver a empezar"}</h2><div class="stars">${"★".repeat(stars)}<i>${"★".repeat(3-stars)}</i></div><p style="font-size:25px;line-height:1.28;margin:8px 0"><b>Así era Marta:</b> ${esc(v.prof)}</p><div class="thermo">${thermo}</div><p style="font-size:22px;color:var(--mut);margin:0">Marcado con borde, el nivel correcto.</p></div><div class="card2"><h2>Lo que te llevas</h2><ul class="lesson">${ls.map(x=>`<li>${esc(x)}</li>`).join("")}</ul><p style="font-size:23px;margin:10px 0 0;color:var(--mut)">Puntos: clasificación ${pc} de 3, frase ${pCom} de 2, entrevista ${pInt} de 2.</p></div></div>`;
+  }
+}
+function ask(i){
+  const q=Q[i];if(S.asked[q.id]||S.log.length>=5)return;
+  S.asked[q.id]=1;
+  const lv=curV().lv;
+  let a=q.a[lv];
+  const first=x=>{const m=x.match(/^.*?[.?!](\s|$)/);return m?m[0].trim():x};
+  let hidden=false;
+  if(S.trust<=2&&lv>=2&&(q.id==="safe"||q.id==="feel"||q.id==="mean")){a=["No sé... mal, supongo.","Prefiero no hablar de eso.","Mmm. No sé qué decir."][S.log.length%3];hidden=true;S.hidden=true}
+  else if(q.low&&S.trust<=3)a=q.low[lv];
+  else if(S.trust<=3)a=first(a);
+  q.tg.split("").forEach(k=>{if(!hidden)S.dom[k]=1});
+  if(lv===3&&!hidden&&(q.id==="safe"||(q.id==="feel"&&S.trust>=4)))S.risk=true;
+  S.log.push({q:q.q,a:a,s:q.s});
+  if(!hidden&&EMO.includes(q.id)&&S.trust>=3&&lv>=1){S.stage="rx";if(!chk())render();return}
+  if(S.log.length>=5)S.stage="hub";
+  if(!chk())render();
+}
+function buildComm(){
+  const real=curV().lv,opts=[{t:PH[real],pts:S.pick===real?2:1}];
+  // frase del nivel que ha elegido el jugador si es distinta, o la adyacente
+  let adj=S.pick!==real?S.pick:(real===0?1:real===3?2:(Math.random()<.5?real-1:real+1));
+  opts.push({t:PH[adj],pts:1});
+  if(S.pick!==real){opts[0].pts=2;opts[1].pts=1}
+  opts.push({t:BAD[0],pts:0});opts.push({t:BAD[1],pts:0});
+  return shuffle(opts);
+}
+$("rst").onclick=()=>{newPatient();render()};
+function fit(){const k=Math.min(innerWidth/1920,innerHeight/1080),d=$("deck");d.style.transform="scale("+k+")";d.style.left=((innerWidth-1920*k)/2)+"px";d.style.top=((innerHeight-1080*k)/2)+"px"}
+addEventListener("resize",fit);fit();newPatient();render();
+</script>
+</body>
+</html>
